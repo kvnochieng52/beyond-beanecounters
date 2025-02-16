@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
+use App\Models\Gender;
 use App\Models\Lead;
 use Illuminate\Http\Request;
 
@@ -20,7 +22,11 @@ class LeadController extends Controller
      */
     public function create()
     {
-        //
+        return view('lead.create')->with([
+            'genders' => Gender::where('is_active', 1)->pluck('gender_name', 'id'),
+            'countries' => Country::where('is_active', 1)->pluck('country_name', 'id'),
+
+        ]);
     }
 
     /**
