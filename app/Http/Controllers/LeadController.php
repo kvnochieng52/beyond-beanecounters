@@ -26,7 +26,9 @@ class LeadController extends Controller
      */
     public function index()
     {
-        //
+        return view('lead.index')->with([
+            'leads' => Lead::getLeads()
+        ]);
     }
 
     /**
