@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
             $table->bigInteger("defaulter_type_id")->nullable();
-            $table->string("full_names")->nullable();
+            $table->string("title")->nullable();
             $table->text("id_passport_number")->nullable();
             $table->text("account_number")->nullable();
             $table->bigInteger("gender_id")->nullable();
@@ -37,7 +37,7 @@ return new class extends Migration
             $table->bigInteger('institution_id')->nullable();
             $table->decimal('amount')->nullable();
             $table->decimal('balance')->nullable();
-            $table->bigInteger("lead_type_id")->nullable();
+            // $table->bigInteger("lead_type_id")->nullable();
             $table->bigInteger("currency_id")->nullable();
             $table->bigInteger("status_id")->nullable();
             $table->bigInteger("stage_id")->nullable();

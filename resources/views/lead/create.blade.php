@@ -33,6 +33,12 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-12">
+                <hr />
+            </div>
+        </div>
+
         <div class="individual_type defaulter_type" style="display: none">
             @include('lead.create._individual_type')
         </div>
@@ -76,21 +82,17 @@
 
         $('#defaulter_type').on('change', function() {
             var selectedValue = $(this).val();
-         //   $('.defaulter_type :input').attr('disabled', true);
 
+
+            $(".defaulter_type_store").val(selectedValue);
+    
             $('.defaulter_type').hide();
 
             if(selectedValue==1){
                 $('.individual_type').show();
-                $('.individual_type :input').attr('disabled', false);
             }else{
                $('.entity_type').show(); 
-               $('.entity_type :input').attr('disabled', false);
             }
-
-           $('.user_form').bootstrapValidator('resetForm', true);
-
-           $('.entity_type_store').val(selectedValue);
            
         });
     })

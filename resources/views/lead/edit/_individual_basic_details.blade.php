@@ -1,5 +1,6 @@
-<form action="{{ route('lead.store') }}" method="POST" class="user_form">
-    @csrf {{-- Add CSRF protection --}}
+<form action="{{ route('lead.update', $lead->id) }}" method="POST" class="user_form">
+    @csrf
+    @method('PUT')
 
     <div class="row">
         <div class="col-md-12">
@@ -13,6 +14,7 @@
                 {!! Html::label('Full Names*', 'full_names') !!}
                 {!! Html::text('full_names')->class('form-control')
                 ->placeholder('Enter Full Names')
+                ->value($lead->title)
                 ->required()
                 !!}
             </div>
@@ -23,6 +25,7 @@
                 {!! Html::label('ID Number*', 'id_number') !!}
                 {!! Html::text('id_number')->class('form-control')
                 ->placeholder('Enter ID Number')
+                ->value($lead->id_passport_number)
                 ->required()
                 !!}
             </div>
@@ -34,6 +37,7 @@
                 {!! Html::label('Telephone*', 'telephone') !!}
                 {!! Html::text('telephone')->class('form-control')
                 ->placeholder('Enter Telephone')
+                ->value($lead->telephone)
                 ->required()
                 !!}
             </div>
@@ -51,8 +55,11 @@
         <div class="col-md-4">
             <div class="form-group">
                 {!! Html::label('Alternate Telephone', 'alternate_telephone') !!}
-                {!! Html::text('alternate_telephone')->class('form-control')
+                {!!
+                Html::text('alternate_telephone')
+                ->class('form-control')
                 ->placeholder('Enter Alternate Telephone')
+                ->value($lead->alternate_telephone)
 
                 !!}
             </div>
@@ -63,6 +70,7 @@
                 {!! Html::label('Email*', 'email') !!}
                 {!! Html::email('email')->class('form-control')
                 ->placeholder('Enter Email')
+                ->value($lead->email)
                 ->required()
                 !!}
             </div>
@@ -70,8 +78,13 @@
         <div class="col-md-4">
             <div class="form-group">
                 {!! Html::label('Gender *', 'Gender') !!}
-                {!! Html::select('gender',
-                $genders)->class('form-control')->placeholder('--Specify--')->required() !!}
+                {!! Html::select('gender',$genders)
+                ->class('form-control')
+                ->placeholder('--Specify--')
+                ->value($lead->gender_id)
+                ->required()
+
+                !!}
             </div>
         </div>
     </div>
@@ -92,8 +105,11 @@
         <div class="col-md-12">
             <div class="form-group">
                 {!! Html::label('Address', 'address') !!}
-                {!! Html::textarea('address')->class('form-control')
+                {!!
+                Html::textarea('address')
+                ->class('form-control')
                 ->placeholder('Enter Address')
+                ->value($lead->address)
                 !!}
             </div>
 
@@ -107,8 +123,11 @@
                 {!! Html::label('Country', 'country') !!}
                 {!!
                 Html::select('country',
-                $countries)->class('form-control select2')->placeholder('--Specify--')
+                $countries)
+                ->class('form-control select2')
+                ->placeholder('--Specify--')
                 ->style("width:100%")
+                ->value($lead->country_id)
                 !!}
             </div>
 
@@ -117,8 +136,11 @@
         <div class="col-md-4">
             <div class="form-group">
                 {!! Html::label('Town', 'town') !!}
-                {!! Html::text('town')->class('form-control')
+                {!!
+                Html::text('town')
+                ->class('form-control')
                 ->placeholder('Enter town')
+                ->value($lead->town)
                 !!}
             </div>
 
@@ -143,8 +165,11 @@
         <div class="col-md-4">
             <div class="form-group">
                 {!! Html::label('Occupation', 'occupation') !!}
-                {!! Html::text('occupation')->class('form-control')
+                {!!
+                Html::text('occupation')
+                ->class('form-control')
                 ->placeholder('Enter Occupation')
+                ->value($lead->occupation)
                 !!}
             </div>
 
@@ -155,6 +180,7 @@
                 {!! Html::label('Company', 'company') !!}
                 {!! Html::text('company')->class('form-control')
                 ->placeholder('Enter Company')
+                ->value($lead->company_name)
                 !!}
             </div>
 
@@ -182,6 +208,7 @@
                 {!! Html::label('Next of Kin Name', 'kin_name') !!}
                 {!! Html::text('kin_name')->class('form-control')
                 ->placeholder('Enter Next Of Kin Name')
+                ->value($lead->kin_full_names)
                 !!}
             </div>
 
@@ -192,6 +219,7 @@
                 {!! Html::label('Telephone', 'kin_telephone') !!}
                 {!! Html::text('kin_telephone')->class('form-control')
                 ->placeholder('Enter Next of Kin Telephone')
+                ->value($lead->kin_telephone)
                 !!}
             </div>
 
@@ -202,6 +230,7 @@
                 {!! Html::label('Email', 'kin_email') !!}
                 {!! Html::text('kin_email')->class('form-control')
                 ->placeholder('Enter Next of Kin Email')
+                ->value($lead->kin_email)
                 !!}
             </div>
 
@@ -213,6 +242,7 @@
                 {!! Html::label('Relation', 'kin_relation') !!}
                 {!! Html::text('kin_relation')->class('form-control')
                 ->placeholder('Enter Next of Kin Relation')
+                ->value($lead->kin_relationship)
                 !!}
             </div>
 
@@ -225,8 +255,8 @@
 
     <div class="row">
         <div class="col-md-12">
-            <input type="hidden" class="defaulter_type_store" name="defaulter_type_store" value="">
-            <button type="submit" class="btn btn-primary"><strong>CONTINUE</strong></button>
+            <input type="hidden" name="step" value="1">
+            <button type="submit" class="btn btn-primary"><strong>SUBMIT</strong></button>
         </div>
 
 
