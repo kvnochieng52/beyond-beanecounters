@@ -14,7 +14,7 @@ class DefaulterTypesSeeder extends Seeder
     public function run(): void
     {
         DB::table('defaulter_types')->insert([
-            ['defaulter_type_name' => 'Individuals', "is_active" => 1, "order" => 1],
+            ['defaulter_type_name' => 'Individual', "is_active" => 1, "order" => 1],
             ['defaulter_type_name' => 'Business', "is_active" => 1, "order" => 1],
             ['defaulter_type_name' => 'Government Agency', "is_active" => 1, "order" => 1],
             ['defaulter_type_name' => 'Non Profit', "is_active" => 1, "order" => 1],

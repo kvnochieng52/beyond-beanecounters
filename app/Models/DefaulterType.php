@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class DefaulterType extends Model
 {
     use HasFactory;
+
+    const INDIVIDUAL = 1;
 }

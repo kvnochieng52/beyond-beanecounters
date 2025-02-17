@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string("email")->nullable();
             $table->string("alternate_email")->nullable();
             $table->bigInteger("country_id")->nullable();
-            $table->bigInteger("lead_type_id")->nullable();
             $table->string("town")->nullable();
             $table->text("address")->nullable();
             $table->string("occupation")->nullable();
@@ -38,6 +37,7 @@ return new class extends Migration
             $table->bigInteger('institution_id')->nullable();
             $table->decimal('amount')->nullable();
             $table->decimal('balance')->nullable();
+            $table->bigInteger("lead_type_id")->nullable();
             $table->bigInteger("currency_id")->nullable();
             $table->bigInteger("status_id")->nullable();
             $table->bigInteger("stage_id")->nullable();
