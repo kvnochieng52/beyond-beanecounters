@@ -1,4 +1,15 @@
 <div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center pb-3">
+            <h2 class="card-title pb-2">Basic Details</h2>
+            <a href="/lead/{{$leadDetails->id}}/edit" class="btn btn-info btn-sm">
+                <i class="fa fa-fw fa-edit"></i> Edit
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-md-6">
         <table class="table table-bordered table-striped">
             <tr>
