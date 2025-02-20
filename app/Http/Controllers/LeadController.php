@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\Currency;
 use App\Models\DefaulterType;
+use App\Models\Department;
 use App\Models\Gender;
 use App\Models\Institution;
 use App\Models\Lead;
@@ -130,7 +131,12 @@ class LeadController extends Controller
      */
     public function show(Lead $lead)
     {
-        //
+
+        //dd(Lead::getLeadByID($lead->id));
+        return view('lead.show')->with([
+            'leadDetails' => Lead::getLeadByID($lead->id),
+            'INDIVIDUAL_DEFAULTER_TYPE_CODE' => DefaulterType::INDIVIDUAL,
+        ]);
     }
 
     /**
@@ -163,6 +169,7 @@ class LeadController extends Controller
             'agentsList' => User::where('is_active', 1)
                 ->select(DB::raw("CONCAT(name, ' - ', agent_id) as name"), 'id')
                 ->pluck('name', 'id'),
+            'departments' => Department::where('is_active', 1)->pluck('department_name', 'id')
 
         ]);
     }
@@ -206,6 +213,7 @@ class LeadController extends Controller
                 $lead->category_id = $request['category'];
                 $lead->priority_id = $request['priority'];
                 $lead->assigned_agent = $request['agent'];
+                $lead->assigned_department = $request['department'];
                 $lead->updated_by = Auth::user()->id;
                 $lead->save();
 

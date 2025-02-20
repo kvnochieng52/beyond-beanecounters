@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string("kin_email")->nullable();
             $table->string("kin_relationship")->nullable();
             $table->bigInteger("assigned_agent")->nullable();
+            $table->bigInteger("assigned_department")->nullable();
             $table->bigInteger('institution_id')->nullable();
             $table->decimal('amount')->nullable();
             $table->decimal('balance')->nullable();

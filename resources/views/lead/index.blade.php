@@ -35,7 +35,13 @@
                 @foreach ($leads as $key => $lead)
                 <tr>
                     <td>{{ $leads->firstItem() + $key }}</td>
-                    <td><strong>#{{ $lead->id }}</strong></td>
+                    <td>
+                        <a href="/lead/{{$lead->id}}">
+
+                            <strong>#{{ $lead->id }}</strong>
+
+                        </a>
+                    </td>
                     <td>
                         <a href="/lead/{{$lead->id}}"><strong>{{ $lead->title }}</strong></a><br />
                         <small>Agent: {{ $lead->assigned_agent_name }}</small>

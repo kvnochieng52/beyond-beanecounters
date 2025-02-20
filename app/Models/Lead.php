@@ -38,7 +38,9 @@ class Lead extends Model
             'lead_categories.lead_category_name',
             'lead_priorities.lead_priority_name',
             'lead_priorities.color_code AS lead_priority_color_code',
+            'lead_priorities.description AS lead_priority_description',
             'lead_industries.lead_industry_name',
+            'departments.department_name',
 
         ])
             ->leftJoin('defaulter_types', 'leads.defaulter_type_id', 'defaulter_types.id')
@@ -52,7 +54,18 @@ class Lead extends Model
             ->leftJoin('lead_stages', 'leads.stage_id', 'lead_stages.id')
             ->leftJoin('lead_categories', 'leads.category_id', 'lead_categories.id')
             ->leftJoin('lead_priorities', 'leads.priority_id', 'lead_priorities.id')
-            ->leftJoin('lead_industries', 'leads.industry_id', 'lead_industries.id');
+            ->leftJoin('lead_industries', 'leads.industry_id', 'lead_industries.id')
+            ->leftJoin('departments', 'leads.assigned_department', 'departments.id');
+    }
+
+
+
+
+
+
+    public static function getLeadByID($leadID)
+    {
+        return self::query()->where('leads.id', $leadID)->first();
     }
 
 

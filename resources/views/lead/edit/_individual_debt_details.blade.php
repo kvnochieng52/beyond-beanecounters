@@ -181,6 +181,21 @@
             </div>
         </div>
 
+        <div class="col-md-4">
+            <div class="form-group">
+                {!! Html::label('Assign to Department', 'department') !!}
+                <div style="width: 100%">
+                    {!! Html::select('department', $departments)
+                    ->class('select2')
+                    ->placeholder('--Specify--')
+                    ->attribute('style', 'width: 100%; padding: 10px;')
+                    ->value($lead->assigned_department)
+                    //->required()
+                    !!}
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
