@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityStatus;
+use App\Models\ActivityType;
 use App\Models\Country;
 use App\Models\Currency;
 use App\Models\DefaulterType;
@@ -133,9 +135,18 @@ class LeadController extends Controller
     {
 
         //dd(Lead::getLeadByID($lead->id));
+
+
         return view('lead.show')->with([
             'leadDetails' => Lead::getLeadByID($lead->id),
             'INDIVIDUAL_DEFAULTER_TYPE_CODE' => DefaulterType::INDIVIDUAL,
+            'activityTypes' => ActivityType::where('is_active', 1)->orderBy('order', 'ASC')->get(),
+            'priorities' => LeadPriority::where('is_active', 1)->pluck('lead_priority_name', 'id'),
+            'departments' => Department::where('is_active', 1)->pluck('department_name', 'id'),
+            'agentsList' => User::where('is_active', 1)
+                ->select(DB::raw("CONCAT(name, ' - ', agent_id) as name"), 'id')
+                ->pluck('name', 'id'),
+            'activityStatuses' => ActivityStatus::where('is_active', 1)->pluck('activity_status_name', 'id')
         ]);
     }
 

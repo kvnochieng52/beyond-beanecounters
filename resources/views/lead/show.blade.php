@@ -139,12 +139,24 @@
 
 <link rel="stylesheet" href="/css/validator/bootstrapValidator.min.css" />
 <link rel="stylesheet" href="/css/datepicker/datepicker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
 
 <style>
     .table td,
     .table th {
         padding: 4px;
+    }
+
+    .form-check-inline {
+        /* margin-right: 20px; */
+        /* Adjust the value as needed */
+    }
+
+
+    .ui-timepicker-container {
+        z-index: 1056 !important;
+        /* Higher than Bootstrap modal's default (1055) */
     }
 </style>
 @stop
@@ -154,34 +166,80 @@
 <script src="/js/validator/bootstrapValidator.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/datepicker/bootstrap-datepicker.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
 <script>
     $(document).ready(function() {
-        
-            $('.user_form')
-                .bootstrapValidator({
-                excluded: [':disabled'],
-                feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-                },
-            });
-    
-            $('.select2').select2();
 
-            $('.date').datepicker({
-                autoclose: true,
-                format: 'dd-mm-yyyy',
-                todayHighlight: true,
-              //  startView: 2, // Show the year selection by default
-                minViewMode: 0, // Ensure month and year are selectable
-                orientation: "top auto" // Prevents cutoff in small screens
-            }).on('changeDate show', function(e) {
-                $('.user_form').bootstrapValidator('revalidateField', 'date');
-            });
-        })
+    // Initialize Select2
+    $('.select2').select2();
+
+    // Initialize Datepicker
+    $('.date').datepicker({
+        autoclose: true,
+        format: 'dd-mm-yyyy',
+        todayHighlight: true,
+        orientation: "top auto"
+    });
+
+    // Initialize Timepicker
+    $('.timepicker').timepicker({
+        timeFormat: 'hh:mm p',
+        interval: 30,
+        dropdown: true,
+        scrollbar: true,
+        orientation: 'top'
+    });
+
+    // Function to toggle fields based on selected activity type
+    function toggleFields(activityType) {
+        const showFields = [1, 2, 6].includes(parseInt(activityType));
+
+        $('.priority-group, .due-date-group, .department-group, .agent-group, .status-group').toggle(showFields);
+        $('#setStartDateLabel').text(showFields ? 'Set Start Date' : 'Schedule');
+    }
+
+    // On activityType change
+    $(document).on('change', 'input[name="activityType"]', function() {
+        toggleFields($(this).val());
+    });
+
+    // Toggle Start Date Inputs
+    $('#setStartDate').on('change', function() {
+        $('#startDateInputs').toggleClass('d-none', !this.checked);
+    });
+
+    // Toggle Due Date Inputs
+    $('#setDueDate').on('change', function() {
+        $('#dueDateInputs').toggleClass('d-none', !this.checked);
+    });
+
+    // Form validation
+    $('.user_form').on('submit', function(e) {
+
+       // e.preventDefault();
+        // let isValid = true;
+
+        // $(this).find('[required]').each(function() {
+        //     if (!$(this).val().trim()) {
+        //         $(this).addClass('is-invalid');
+        //         isValid = false;
+        //     } else {
+        //         $(this).removeClass('is-invalid');
+        //     }
+        // });
+
+        // if (!isValid) {
+          
+        //     alert('Please fill in all required fields.');
+        // }
+    });
+
+
+
+ 
+});
+
 </script>
 
 
