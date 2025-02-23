@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\ActivityStatus;
 use App\Models\ActivityType;
 use App\Models\Country;
@@ -146,7 +147,8 @@ class LeadController extends Controller
             'agentsList' => User::where('is_active', 1)
                 ->select(DB::raw("CONCAT(name, ' - ', agent_id) as name"), 'id')
                 ->pluck('name', 'id'),
-            'activityStatuses' => ActivityStatus::where('is_active', 1)->pluck('activity_status_name', 'id')
+            'activityStatuses' => ActivityStatus::where('is_active', 1)->pluck('activity_status_name', 'id'),
+            'leadListActivities' => Activity::getLeadActivities($lead->id)
         ]);
     }
 

@@ -59,6 +59,14 @@
                             </li>
 
 
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-four-status-tab" data-toggle="pill"
+                                    href="#custom-tabs-four-status" role="tab" aria-controls="custom-tabs-four-status"
+                                    aria-selected="false">
+                                    DOSUMENTS</a>
+                            </li>
+
+
                             {{-- <li class="nav-item">
                                 <a class="nav-link" id="custom-tabs-four-customer-tab" data-toggle="pill"
                                     href="#custom-tabs-four-customer" role="tab"
@@ -84,7 +92,7 @@
 
                                 @endif
                             </div>
-                            <div class="tab-pane fade {{ request()->get('page') == 'debts' ? 'show active' : '' }}"
+                            <div class="tab-pane fade {{ request()->get('page') == 'activities' ? 'show active' : '' }}"
                                 id="custom-tabs-four-activities" role="tabpanel"
                                 aria-labelledby="custom-tabs-four-activities-tab">
                                 @include('lead.show._activities')
@@ -103,27 +111,6 @@
 
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
         </div>
     </div>
@@ -157,6 +144,115 @@
     .ui-timepicker-container {
         z-index: 1056 !important;
         /* Higher than Bootstrap modal's default (1055) */
+    }
+
+    .errorDisp p {
+        margin-bottom: 0px !important
+    }
+
+    .timeline {
+        position: relative;
+        margin: 20px 0;
+        padding-left: 50px;
+        /* Space for icons and line */
+    }
+
+    .timeline::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 30px;
+        /* Position the line closer to the icon */
+        width: 4px;
+        height: 100%;
+        /* background-color: #7f5af0; */
+        border-radius: 2px;
+    }
+
+    .timeline-entry {
+        position: relative;
+        margin-bottom: 40px;
+    }
+
+    .timeline-date {
+        position: absolute;
+        top: 0;
+        left: -8px;
+        font-size: 13px
+    }
+
+    .timeline-icon {
+        position: absolute;
+        top: 0;
+        left: -20px;
+        /* Same as the line’s left value */
+        transform: translate(-50%, 0);
+        /* Center icon over the line */
+        width: 40px;
+        height: 40px;
+        background-color: #c2c2c2;
+        color: #fff;
+        border-radius: 50%;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 2;
+        /* Ensure icon is above the line */
+    }
+
+    .timeline-time {
+        font-size: 14px;
+        font-weight: bold;
+        color: #5c5c5c;
+        margin-bottom: 8px;
+        margin-left: 15px;
+        /* Space from the line */
+    }
+
+    .timeline-content {
+        background-color: #fff;
+        padding: 15px 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin-left: 20px;
+        /* Align content to the right of the icon and line */
+        position: relative;
+    }
+
+    .timeline-content::before {
+        content: "";
+        position: absolute;
+        top: 18px;
+        left: -12px;
+        /* Pointer towards the line */
+        border-width: 8px;
+        border-style: solid;
+        border-color: transparent #fff transparent transparent;
+    }
+
+    .timeline-content h2 {
+        font-size: 18px;
+        color: #333;
+        margin: 0 0 10px;
+    }
+
+    .timeline-content p {
+        font-size: 14px;
+        color: #555;
+        margin: 0;
+    }
+
+    @media (max-width: 600px) {
+        .timeline {
+            padding-left: 40px;
+        }
+
+        .timeline-time,
+        .timeline-content {
+            margin-left: 70px;
+        }
     }
 </style>
 @stop
@@ -215,25 +311,56 @@
     });
 
     // Form validation
-    $('.user_form').on('submit', function(e) {
+    $('.activity_form').on('submit', function(e) {
+    e.preventDefault();
 
-       // e.preventDefault();
-        // let isValid = true;
+    // Disable the submit button and show progress
+    let submitBtn = $(this).find('button[type="submit"]');
+    submitBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Submitting...');
 
-        // $(this).find('[required]').each(function() {
-        //     if (!$(this).val().trim()) {
-        //         $(this).addClass('is-invalid');
-        //         isValid = false;
-        //     } else {
-        //         $(this).removeClass('is-invalid');
-        //     }
-        // });
+    let errorHtml = "";
+    let activityType = $('input[name="activityType"]:checked').val();
+    let activityTitle = $('#activity_title').val();
+    let description = $('#description').val();
+    let priority = $('#priority').val();
+    let startDate = $('#start_date').val();
+    let startTime = $('#start_time').val();
+    let endDate = $('#end_date').val();
+    let endTime = $('#end_time').val();
+    let department = $('#department').val();
+    let agent = $('#agent').val();
+    let status = $('#status').val();
+    let addToCalendar = $('#addToCalendar').prop('checked');
 
-        // if (!isValid) {
-          
-        //     alert('Please fill in all required fields.');
-        // }
-    });
+    $('.errorDisp').hide().html('');
+
+    if (activityTitle === '') {
+        errorHtml += "<p>Please Enter Activity Title</p>";
+    }
+
+    if (description === '') {
+        errorHtml += "<p>Please Enter Activity Text or Description</p>";
+    }
+
+    if ([1, 2, 6].includes(parseInt(activityType))) {
+        if (priority === '') {
+            errorHtml += "<p>Please Select Activity Priority</p>";
+        }
+        if (status === '') {
+            errorHtml += "<p>Please Select Activity Status</p>";
+        }
+    }
+
+    if (errorHtml) {
+        $('.errorDisp').html(errorHtml).show(); // Display errors
+        submitBtn.prop('disabled', false).html('Submit'); // Re-enable button on error
+    } else {
+        // Simulate an AJAX call or form processing (replace with actual submission logic)
+        setTimeout(() => {
+            this.submit(); // Submit form after processing
+        }, 1000); // Simulated delay
+    }
+});
 
 
 

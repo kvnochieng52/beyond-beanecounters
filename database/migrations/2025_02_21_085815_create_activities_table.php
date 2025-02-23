@@ -14,15 +14,16 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->text("activity_title")->nullable();
+            $table->text("description")->nullable();
+            $table->integer("priority_id")->nullable();
             $table->dateTime("start_date_time")->nullable();
             $table->dateTime("due_date_time")->nullable();
             $table->integer("activity_type_id")->nullable();
-            $table->text("description")->nullable();
-            $table->integer("priority_id")->nullable();
             $table->bigInteger("lead_id")->nullable();
             $table->bigInteger("assigned_department_id")->nullable();
             $table->bigInteger("assigned_user_id")->nullable();
             $table->bigInteger("status_id")->nullable();
+            $table->integer("calendar_add")->nullable();
             $table->bigInteger('created_by')->nullable();
             $table->bigInteger('updated_by')->nullable();
             $table->timestamps();

@@ -26,6 +26,14 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('/lead', LeadController::class);
 
+    Route::prefix('activity')->group(
+        function () {
+            Route::post('/store-activity', [App\Http\Controllers\ActivityController::class, 'storeActivity'])->name('store-activity');
+        }
+    );
+
+
+
     // Route::prefix('debt')->group(function () {
     //     Route::post('/store-debt', [App\Http\Controllers\DebtController::class, 'storeDebt'])->name('debt.storeDebt');
     // });
