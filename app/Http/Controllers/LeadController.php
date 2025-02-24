@@ -17,6 +17,8 @@ use App\Models\LeadIndustry;
 use App\Models\LeadPriority;
 use App\Models\LeadStage;
 use App\Models\LeadStatus;
+use App\Models\Payment;
+use App\Models\PaymentStatus;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -135,7 +137,7 @@ class LeadController extends Controller
     public function show(Lead $lead)
     {
 
-        //dd(Lead::getLeadByID($lead->id));
+        //dd(Activity::getLeadInTimeLine($lead->id)->toArray());
 
 
         return view('lead.show')->with([
@@ -148,7 +150,9 @@ class LeadController extends Controller
                 ->select(DB::raw("CONCAT(name, ' - ', agent_id) as name"), 'id')
                 ->pluck('name', 'id'),
             'activityStatuses' => ActivityStatus::where('is_active', 1)->pluck('activity_status_name', 'id'),
-            'leadListActivities' => Activity::getLeadActivities($lead->id)
+            'leadListActivities' => Activity::getLeadActivities($lead->id),
+            'leadTimeLineActivities' => Activity::getLeadInTimeLine($lead->id),
+            'paymentStatuses' => PaymentStatus::where('is_active', 1)->pluck('payment_status_name', 'id')
         ]);
     }
 

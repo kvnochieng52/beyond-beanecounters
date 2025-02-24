@@ -53,10 +53,10 @@ class Activity extends Model
 
 
 
-    public function getLeadInTimeLine($leadID)
+    public static function getLeadInTimeLine($leadID)
     {
         $query = self::query()->where('lead_id', $leadID)
-            ->orderBy('activities.created_at', 'asc')
+            ->orderBy('activities.created_at', 'desc')
             ->get()
             ->groupBy('created_date');
         return $query;

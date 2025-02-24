@@ -188,8 +188,8 @@
         /* Same as the line’s left value */
         transform: translate(-50%, 0);
         /* Center icon over the line */
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
         background-color: #c2c2c2;
         color: #fff;
         border-radius: 50%;

@@ -16,7 +16,17 @@
 
 
 
+@if(request()->get('view') == 'list')
+
 @include('lead.show.activities._list')
 
-{{-- @include('lead.show.activities._timeline') --}}
+@elseif(request()->get('view') == 'timeline')
+
+@include('lead.show.activities._timeline')
+
+@else
+@include('lead.show.activities._list')
+
+@endif
+
 @include('modals.activities._new_activity_modal')
