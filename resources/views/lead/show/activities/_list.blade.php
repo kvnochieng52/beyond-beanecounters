@@ -27,8 +27,6 @@
                 </span></td>
 
 
-
-
         </tr>
 
 
@@ -38,3 +36,8 @@
 
 
 </table>
+
+
+<div class="mt-3">
+    {{ $leadListActivities->withQueryString()->links() }}
+</div>

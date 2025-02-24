@@ -125,6 +125,21 @@
             </tr>
 
             <tr>
+                <th>Lead Stage</th>
+                <td>{{strtoupper($leadDetails->lead_stage_name)}}</td>
+            </tr>
+
+            <tr>
+                <th>Lead Conversion Level</th>
+                <td>{{strtoupper($leadDetails->lead_conversion_name)}}</td>
+            </tr>
+
+            <tr>
+                <th>Lead Conversion Level</th>
+                <td>{{strtoupper($leadDetails->lead_engagement_level_name)}}</td>
+            </tr>
+
+            <tr>
                 <th>Assigned Agent</th>
                 <td>{{$leadDetails->assigned_agent_name}}</td>
             </tr>

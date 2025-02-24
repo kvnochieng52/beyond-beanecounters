@@ -37,6 +37,7 @@ return new class extends Migration
             $table->bigInteger("assigned_department")->nullable();
             $table->bigInteger('institution_id')->nullable();
             $table->decimal('amount')->nullable();
+            $table->decimal('additional_charges')->default(0);
             $table->decimal('balance')->nullable();
             // $table->bigInteger("lead_type_id")->nullable();
             $table->bigInteger("currency_id")->nullable();

@@ -13,10 +13,13 @@ use App\Models\Gender;
 use App\Models\Institution;
 use App\Models\Lead;
 use App\Models\LeadCategory;
+use App\Models\LeadConversionStatus;
+use App\Models\LeadEngagementLevel;
 use App\Models\LeadIndustry;
 use App\Models\LeadPriority;
 use App\Models\LeadStage;
 use App\Models\LeadStatus;
+use App\Models\LeadStatusHistory;
 use App\Models\Payment;
 use App\Models\PaymentStatus;
 use App\Models\User;
@@ -152,7 +155,13 @@ class LeadController extends Controller
             'activityStatuses' => ActivityStatus::where('is_active', 1)->pluck('activity_status_name', 'id'),
             'leadListActivities' => Activity::getLeadActivities($lead->id),
             'leadTimeLineActivities' => Activity::getLeadInTimeLine($lead->id),
-            'paymentStatuses' => PaymentStatus::where('is_active', 1)->pluck('payment_status_name', 'id')
+            'paymentStatuses' => PaymentStatus::where('is_active', 1)->pluck('payment_status_name', 'id'),
+            'payments' => Payment::getLeadPayments($lead->id),
+            'leadStages' => LeadStage::where('is_active', 1)->pluck('lead_stage_name', 'id'),
+            'leadStatuses' => LeadStatus::where('is_active', 1)->pluck('lead_status_name', 'id'),
+            'leadConversionLevels' => LeadConversionStatus::where('is_active', 1)->pluck('lead_conversion_name', 'id'),
+            'leadEngagementLevels' => LeadEngagementLevel::where('is_active', 1)->pluck('lead_engagement_level_name', 'id'),
+            'leadsStatusHistory' => LeadStatusHistory::getLeadHistory($lead->id)
         ]);
     }
 
@@ -298,6 +307,41 @@ class LeadController extends Controller
 
                 break;
         }
+    }
+
+
+    public function updateStatus(Request $request)
+    {
+        $this->validate($request, [
+            'lead_stage' => 'required',
+            'lead_status' => 'required',
+            'lead_conversion' => 'required',
+            'lead_engagement' => 'required',
+        ]);
+
+
+        Lead::where('id', $request['leadID'])->update([
+            'stage_id' => $request['lead_stage'],
+            'status_id' => $request['lead_status'],
+            'conversion_status_id' => $request['lead_conversion'],
+            'engagement_level_id' => $request['lead_engagement'],
+            'updated_by' => Auth::user()->id,
+            'updated_at' => Carbon::now(),
+        ]);
+
+
+        $leadHistory = new LeadStatusHistory();
+        $leadHistory->lead_id = $request['leadID'];
+        $leadHistory->lead_status_id = $request['lead_status'];
+        $leadHistory->lead_stage_id = $request['lead_stage'];
+        $leadHistory->lead_conversion_id = $request['lead_conversion'];
+        $leadHistory->lead_engagement_level = $request['lead_engagement'];
+        $leadHistory->description = $request['description'];
+        $leadHistory->created_by = Auth::user()->id;
+        $leadHistory->updated_by = Auth::user()->id;
+        $leadHistory->save();
+
+        return redirect('/lead/' . $request['leadID'] . '?section=status')->with('success', 'Status Saved Successfully');
     }
 
     /**

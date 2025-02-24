@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('lead_status_histories', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('lead_id')->nullable();
-            $table->decimal('amount')->nullable();
-            $table->decimal('balance_before')->nullable();
-            $table->decimal('balance_after')->nullable();
-            $table->text('transaction_id')->nullable();
-            $table->text("description")->nullable();
-            $table->integer("status_id")->nullable();
+            $table->integer('lead_status_id')->nullable();
+            $table->integer('lead_stage_id')->nullable();
+            $table->integer('lead_conversion_id')->nullable();
+            $table->integer('lead_engagement_level')->nullable();
+            $table->text('description')->nullable();
             $table->bigInteger('created_by')->nullable();
             $table->bigInteger('updated_by')->nullable();
             $table->timestamps();
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('lead_status_histories');
     }
 };

@@ -11,4 +11,53 @@
 </div>
 
 
+
+<div class="row">
+
+    <div class="col-md-12">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Amount Paid</th>
+                    <th>Balance Before</th>
+                    <th>Balance after</th>
+                    <th>Agent</th>
+                    <th>Date</th>
+                    <th>Trans ID</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                @foreach ($payments as $key=>$payment)
+                <tr>
+                    <td>{{$key+1}}</td>
+                    <td>{{$leadDetails->currency_name}} {{number_format($payment->amount,0)}}</td>
+                    <td>{{$leadDetails->currency_name}} {{number_format($payment->balance_before,0)}}</td>
+                    <td>{{$leadDetails->currency_name}} {{number_format($payment->balance_after,0)}}</td>
+                    <td>{{$payment->agent_name}}</td>
+                    <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('d-m-Y H:i:s') }}</td>
+                    <td>{{$payment->trans_id}}</td>
+                    <td><span class="badge bg-{{$payment->color_code}}">
+                            {{$payment->payment_status_name}}</span></td>
+                </tr>
+
+                @endforeach
+            </tbody>
+        </table>
+
+
+
+        <div class="mt-3">
+            {{-- {{ $payments->appends(request()->query())->links() }} --}}
+
+            {{ $payments->withQueryString()->links() }}
+        </div>
+
+    </div>
+</div>
+
+
 @include('modals.payments._new_payment_modal')

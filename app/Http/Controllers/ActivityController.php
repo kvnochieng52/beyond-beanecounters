@@ -43,6 +43,6 @@ class ActivityController extends Controller
         $activity->updated_by = Auth::user()->id;
         $activity->save();
 
-        return redirect('/lead/' . $request['leadID'] . '?page=activities')->with('success', 'Activity Saved Successfully');
+        return redirect('/lead/' . $request['leadID'] . '?section=activities')->with('success', 'Activity Saved Successfully');
     }
 }

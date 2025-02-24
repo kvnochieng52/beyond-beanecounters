@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class PaymentStatus extends Model
 {
     use HasFactory;
+    const PAID = 2;
 }

@@ -30,41 +30,49 @@
                     <div class="card-header p-0 border-bottom-0">
                         <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link {{ empty(request()->get('page')) ? 'active' : '' }}"
+                                {{-- <a class="nav-link {{ empty(request()->get('page')) ? 'active' : '' }}"
                                     id="custom-tabs-four-basic-tab" data-toggle="pill" href="#custom-tabs-four-basic"
                                     role="tab" aria-controls="custom-tabs-four-basic" aria-selected="true">BASIC
+                                    DETAILS</a> --}}
+
+
+
+                                <a class="nav-link {{ empty(request()->get('section')) ? 'active' : '' }}"
+                                    id="custom-tabs-four-basic-tab" href="/lead/{{$leadDetails->id}}" role="tab"
+                                    aria-controls="custom-tabs-four-basic" aria-selected="true">BASIC
                                     DETAILS</a>
                             </li>
 
 
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->get('page') == 'activities' ? 'active' : '' }}"
-                                    id="custom-tabs-four-activities-tab" data-toggle="pill"
-                                    href="#custom-tabs-four-activities" role="tab"
+                                <a class="nav-link {{ request()->get('section') == 'activities' ? 'active' : '' }}"
+                                    id="custom-tabs-four-activities-tab"
+                                    href="/lead/{{$leadDetails->id}}?section=activities"
                                     aria-controls="custom-tabs-four-activities" aria-selected="false">
                                     ACTIVITIES</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-four-payment-history-tab" data-toggle="pill"
-                                    href="#custom-tabs-four-payment-history" role="tab"
+                                <a class="nav-link {{ request()->get('section') == 'payments' ? 'active' : '' }}"
+                                    id="custom-tabs-four-payment-history-tab"
+                                    href="/lead/{{$leadDetails->id}}?section=payments" role="tab"
                                     aria-controls="custom-tabs-four-payment-history" aria-selected="false">
                                     PAYMENT HISTORY</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-four-status-tab" data-toggle="pill"
-                                    href="#custom-tabs-four-status" role="tab" aria-controls="custom-tabs-four-status"
-                                    aria-selected="false">
+                                <a class="nav-link {{ request()->get('section') == 'status' ? 'active' : '' }}"
+                                    id="custom-tabs-four-status-tab" role="tab" aria-controls="custom-tabs-four-status"
+                                    href="/lead/{{$leadDetails->id}}?section=status" aria-selected="false">
                                     STATUS</a>
                             </li>
 
 
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" id="custom-tabs-four-status-tab" data-toggle="pill"
                                     href="#custom-tabs-four-status" role="tab" aria-controls="custom-tabs-four-status"
                                     aria-selected="false">
-                                    DOSUMENTS</a>
-                            </li>
+                                    DOCUMENTS</a>
+                            </li> --}}
 
 
                             {{-- <li class="nav-item">
@@ -80,7 +88,7 @@
                     <div class="card-body">
 
                         <div class="tab-content" id="custom-tabs-four-tabContent">
-                            <div class="tab-pane fade {{ empty(request()->get('page')) ? 'show active' : '' }}"
+                            <div class="tab-pane fade {{ empty(request()->get('section')) ? 'show active' : '' }}"
                                 id="custom-tabs-four-basic" role="tabpanel"
                                 aria-labelledby="custom-tabs-four-basic-tab">
 
@@ -92,17 +100,19 @@
 
                                 @endif
                             </div>
-                            <div class="tab-pane fade {{ request()->get('page') == 'activities' ? 'show active' : '' }}"
+                            <div class="tab-pane fade {{ request()->get('section') == 'activities' ? 'show active' : '' }}"
                                 id="custom-tabs-four-activities" role="tabpanel"
                                 aria-labelledby="custom-tabs-four-activities-tab">
                                 @include('lead.show._activities')
                             </div>
-                            <div class="tab-pane fade" id="custom-tabs-four-payment-history" role="tabpanel"
+                            <div class="tab-pane fade {{ request()->get('section') == 'payments' ? 'show active' : '' }}"
+                                id="custom-tabs-four-payment-history" role="tabpanel"
                                 aria-labelledby="custom-tabs-four-payment-history-tab">
                                 @include('lead.show._payment_history')
                             </div>
 
-                            <div class="tab-pane fade" id="custom-tabs-four-status" role="tabpanel"
+                            <div class="tab-pane fade {{ request()->get('section') == 'status' ? 'show active' : '' }}"
+                                id="custom-tabs-four-status" role="tabpanel"
                                 aria-labelledby="custom-tabs-four-status-tab">
                                 @include('lead.show._status')
                             </div>
@@ -266,6 +276,16 @@
 
 <script>
     $(document).ready(function() {
+
+    $('.user_form')
+        .bootstrapValidator({
+        excluded: [':disabled'],
+        feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+        },
+    });
 
     // Initialize Select2
     $('.select2').select2();

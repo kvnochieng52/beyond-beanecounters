@@ -52,5 +52,11 @@
             @endforeach
 
         </div>
+
+        {{-- <div class="mt-3">
+            {{ $leadTimeLineActivities->links() }}
+        </div> --}}
     </div>
+
+
 </div>

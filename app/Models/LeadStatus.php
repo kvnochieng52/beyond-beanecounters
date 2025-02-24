@@ -10,4 +10,6 @@ class LeadStatus extends Model
     use HasFactory;
 
     const PENDING = 1;
+    const PAID = 2;
+    const PARTIALLY_PAID = 3;
 }

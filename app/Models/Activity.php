@@ -59,6 +59,7 @@ class Activity extends Model
             ->orderBy('activities.created_at', 'desc')
             ->get()
             ->groupBy('created_date');
+        //  ->paginate(3);
         return $query;
     }
 }

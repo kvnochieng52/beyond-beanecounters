@@ -41,6 +41,8 @@ class Lead extends Model
             'lead_priorities.description AS lead_priority_description',
             'lead_industries.lead_industry_name',
             'departments.department_name',
+            'lead_conversion_statuses.lead_conversion_name',
+            'lead_engagement_levels.lead_engagement_level_name',
 
         ])
             ->leftJoin('defaulter_types', 'leads.defaulter_type_id', 'defaulter_types.id')
@@ -55,7 +57,9 @@ class Lead extends Model
             ->leftJoin('lead_categories', 'leads.category_id', 'lead_categories.id')
             ->leftJoin('lead_priorities', 'leads.priority_id', 'lead_priorities.id')
             ->leftJoin('lead_industries', 'leads.industry_id', 'lead_industries.id')
-            ->leftJoin('departments', 'leads.assigned_department', 'departments.id');
+            ->leftJoin('departments', 'leads.assigned_department', 'departments.id')
+            ->leftJoin('lead_conversion_statuses', 'leads.conversion_status_id', 'lead_conversion_statuses.id')
+            ->leftJoin('lead_engagement_levels', 'leads.engagement_level_id', 'lead_engagement_levels.id');
     }
 
 

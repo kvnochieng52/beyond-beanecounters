@@ -11,8 +11,8 @@
 </div>
 
 
-<a href="/lead/{{$leadDetails->id}}?page=activities&view=list"><i class="fas fa-list"></i> List</a> &nbsp; &nbsp;
-<a href="/lead/{{$leadDetails->id}}?page=activities&view=timeline"><i class="fas fa-route"></i>Timeline</a>
+<a href="/lead/{{$leadDetails->id}}?section=activities&view=list"><i class="fas fa-list"></i> List</a> &nbsp; &nbsp;
+<a href="/lead/{{$leadDetails->id}}?section=activities&view=timeline"><i class="fas fa-route"></i>Timeline</a>
 
 
 
