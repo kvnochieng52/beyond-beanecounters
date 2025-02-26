@@ -1,0 +1,2 @@
+title,id_passport_number,account_number,defaulter_type,gender,telephone,alternate_telephone,email,alternate_email,country,town,address,occupation,company_name,description,kin_full_names,kin_telephone,kin_email,kin_relationship,assigned_agent_id,institution,amount,additional_charges,balance,currency,priority,due_date
+Mr,AB123456,ACC001,Individual,Male,712345678,,test@example.com,,Kenya,Nairobi,Some Address,Engineer,ABC Ltd,Test description,John Doe,712345679,john@example.com,Brother,12345678,EQUITY BANK,1000,50,950,USD,High,01/12/2024

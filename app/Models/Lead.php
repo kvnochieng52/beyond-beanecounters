@@ -8,7 +8,39 @@ use Illuminate\Database\Eloquent\Model;
 class Lead extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'title',
+        'id_passport_number',
+        'account_number',
+        'defaulter_type_id',
+        'gender_id',
+        'telephone',
+        'alternate_telephone',
+        'email',
+        'alternate_email',
+        'country_id',
+        'town',
+        'address',
+        'occupation',
+        'company_name',
+        'description',
+        'kin_full_names',
+        'kin_telephone',
+        'kin_email',
+        'kin_relationship',
+        'assigned_agent',
+        'institution_id',
+        'amount',
+        'additional_charges',
+        'balance',
+        'currency_id',
+        'status_id',
+        'stage_id',
+        'priority_id',
+        'due_date',
+        'created_by',
+        'updated_by',
+    ];
 
 
     public static function query()
