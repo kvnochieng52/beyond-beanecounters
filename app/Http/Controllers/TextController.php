@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendSmsJob;
 use App\Models\Contact;
+use App\Models\ContactList;
 use App\Models\Text;
 use App\Models\TextStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -19,6 +22,9 @@ class TextController extends Controller
 
     public function index(Request $request)
     {
+
+
+
         if ($request->ajax()) {
             $query = Text::select('texts.*', 'text_statuses.text_status_name', 'text_statuses.color_code')
                 ->leftJoin('text_statuses', 'texts.status', '=', 'text_statuses.id');
@@ -86,6 +92,9 @@ class TextController extends Controller
 
         $text->status = TextStatus::PENDING; // Default status, can be updated later
         $text->save();
+
+
+        SendSmsJob::dispatch($text);
 
         return redirect()->route('text.index')->with('success', 'SMS Campaign saved successfully.');
     }

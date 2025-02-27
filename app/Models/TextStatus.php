@@ -10,4 +10,5 @@ class TextStatus extends Model
     use HasFactory;
 
     const PENDING = 1;
+    const SENT = 3;
 }
