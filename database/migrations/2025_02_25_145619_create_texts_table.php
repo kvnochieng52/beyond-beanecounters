@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('status')->nullable();
             $table->bigInteger('created_by')->nullable();
             $table->bigInteger('updated_by')->nullable();
+            $table->bigInteger('contacts_count')->nullable();
             $table->timestamps();
         });
     }

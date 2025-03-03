@@ -10,5 +10,8 @@ class TextStatus extends Model
     use HasFactory;
 
     const PENDING = 1;
+    const QUEUED = 2;
     const SENT = 3;
+    const FAILED = 4;
+    const CANCELLED = 5;
 }

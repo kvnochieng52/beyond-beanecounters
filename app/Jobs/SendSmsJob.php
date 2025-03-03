@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\ContactList;
+use App\Models\Queue;
 use App\Models\Text;
 use App\Models\TextStatus;
 use Illuminate\Bus\Queueable;
@@ -120,6 +121,14 @@ class SendSmsJob implements ShouldQueue
         foreach ($contacts as $contact) {
             Log::info("Sending SMS to: {$contact['phone']} - Message: {$contact['message']}");
             // Implement actual SMS sending API here.
+
+            Queue::create([
+                'text_id' => $this->text->id,
+                'message' => $contact['message'],
+                'status' => TextStatus::SENT, // Assuming 0 = Pending, 1 = Sent, 2 = Failed
+                'created_by' => $this->text->created_by,
+                'updated_by' => $this->text->updated_by,
+            ]);
         }
 
         $this->text->status = TextStatus::SENT;

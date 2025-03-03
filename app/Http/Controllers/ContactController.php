@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\ContactList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -77,5 +78,54 @@ class ContactController extends Controller
         $contact->delete();
 
         return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully.');
+    }
+
+
+    public function getContacts(Request $request)
+    {
+        //     $contactIds = $request->contact_ids;
+
+        //     if (is_string($contactIds)) {
+        //         $contactIds = json_decode($contactIds, true);
+        //     }
+
+        //     if (!$contactIds || !is_array($contactIds) || empty($contactIds)) {
+        //         return response()->json(['success' => false, 'message' => 'No contacts found.', 'contacts' => $contactIds]);
+        //     }
+
+        //     $contacts = Contact::whereIn('id', $contactIds)->get(['id', 'title']);
+
+
+        //     $contactTitle = optional($contacts->first())->title ?? 'Unknown';
+
+        //     return response()->json([
+        //         'success' => true,
+        //         'contacts' => $contacts,
+        //         'contact_title' => $contactTitle
+        //     ]);
+        // }
+
+
+        $contactIds = $request->contact_ids;
+
+        // Ensure $contactIds is an array
+        if (is_string($contactIds)) {
+            $contactIds = json_decode($contactIds, true);
+        }
+
+        if (!$contactIds || !is_array($contactIds) || empty($contactIds)) {
+            return response()->json(['success' => false, 'message' => 'No contacts found.']);
+        }
+
+        $contacts = Contact::whereIn('contacts.id', $contactIds)
+            ->leftJoin('contact_lists', 'contacts.id', '=', 'contact_lists.contact_id')
+            ->select('contacts.id', 'contacts.title', DB::raw('COUNT(contact_lists.id) as contact_list_count'))
+            ->groupBy('contacts.id', 'contacts.title')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'contacts' => $contacts
+        ]);
     }
 }

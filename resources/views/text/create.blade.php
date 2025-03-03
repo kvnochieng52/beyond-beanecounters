@@ -95,8 +95,10 @@
 
 
             <div id="smsErrors" class="alert alert-danger d-none"></div>
-
+            <input type="hidden" name="sms_contacts_count" id="sms_contacts_count">
             <button type="submit" class="btn btn-primary mt-3">PREVIEW SMS</button>
+
+
         </form>
     </div>
 </div>
@@ -421,6 +423,9 @@ $('#smsForm').on('submit', function(e) {
                     </tbody>
                 </table>
                 `);
+
+
+                $('#sms_contacts_count').val(response.totalContacts);
                 
                 // Populate modal body
                 $('#previewSMSModal .modal-body').html('').append(alertDiv, table);
@@ -434,6 +439,10 @@ $('#smsForm').on('submit', function(e) {
 
                 // Show the modal after successful request
                // $('#previewSMSModal').modal('show');
+
+
+               
+               
             },
             error: function(xhr) {
                 const errorMsg = xhr.responseJSON?.message || 'An error occurred. Please try again.';

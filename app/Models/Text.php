@@ -10,6 +10,28 @@ class Text extends Model
     use HasFactory;
 
 
+
+    public static function query()
+    {
+        return  Text::select(
+            'texts.*',
+            'text_statuses.text_status_name',
+            'text_statuses.color_code',
+            'users.name as created_by_name'
+        )
+            ->leftJoin('text_statuses', 'texts.status', '=', 'text_statuses.id')
+            ->leftJoin('users', 'texts.created_by', '=', 'users.id')
+            ->orderBy('texts.id', 'DESC');
+    }
+
+
+
+    public static function getTextByID($textID)
+    {
+        return self::query()->where('texts.id', $textID)->first();
+    }
+
+
     public static function isValidPhoneNumber(string $number)
     {
         // Remove spaces and non-digit characters

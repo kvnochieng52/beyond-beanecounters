@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\SendSmsJob;
 use App\Models\Contact;
 use App\Models\ContactList;
+use App\Models\Queue;
 use App\Models\Text;
 use App\Models\TextStatus;
 use Illuminate\Http\Request;
@@ -23,13 +24,19 @@ class TextController extends Controller
     public function index(Request $request)
     {
 
-
-
         if ($request->ajax()) {
-            $query = Text::select('texts.*', 'text_statuses.text_status_name', 'text_statuses.color_code')
-                ->leftJoin('text_statuses', 'texts.status', '=', 'text_statuses.id');
+            $query = Text::select(
+                'texts.*',
+                'text_statuses.text_status_name',
+                'text_statuses.color_code',
+                'users.name as created_by_name'
+            )
+                ->leftJoin('text_statuses', 'texts.status', '=', 'text_statuses.id')
+                ->leftJoin('users', 'texts.created_by', '=', 'users.id')
+                ->orderBy('texts.id', 'DESC');
 
             return DataTables::of($query)
+                ->addIndexColumn()
                 ->addColumn('status', function ($row) {
                     return '<span class="badge badge-' . $row->color_code . '">' . $row->text_status_name . '</span>';
                 })
@@ -65,6 +72,7 @@ class TextController extends Controller
         $text->text_title = $request->title;
         $text->contact_type = $request->contact_source;
         $text->message = $request->message;
+        $text->contacts_count = $request->sms_contacts_count;
         $text->created_by = auth()->id(); // Assuming authentication is used
         $text->updated_by = auth()->id();
 
@@ -104,7 +112,24 @@ class TextController extends Controller
      */
     public function show(Text $text)
     {
-        //
+
+        $sentMessagesCount = Queue::where('text_id', $text->id)->where('status', TextStatus::SENT)->count();
+        $undeliveredMessagesCount = Queue::where('text_id', $text->id)->where('status', TextStatus::FAILED)->count();
+        $blackListedMessagesCount = 0;
+        $queuedMessagesCount = $text->contacts_count - ($sentMessagesCount + $undeliveredMessagesCount);
+
+        $totalContacts = $text->contacts_count;
+        $percentage = ceil(($sentMessagesCount + $undeliveredMessagesCount + $blackListedMessagesCount) / $totalContacts * 100);
+
+
+        return view('text.show')->with([
+            'text' => Text::getTextByID($text->id),
+            'sentMessagesCount' => $sentMessagesCount,
+            'undeliveredMessagesCount' => $undeliveredMessagesCount,
+            'blackListedMessagesCount' => $blackListedMessagesCount,
+            'queuedMessagesCount' => $queuedMessagesCount,
+            'percentage' => $percentage
+        ]);
     }
 
     /**

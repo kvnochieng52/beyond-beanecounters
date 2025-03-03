@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\QueueController;
 use App\Http\Controllers\TextController;
 
 /*
@@ -30,6 +31,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/lead', LeadController::class);
     Route::resource('/text', TextController::class);
     Route::resource('contacts', ContactController::class);
+
+    Route::post('/get-contacts', [ContactController::class, 'getContacts']);
+
 
     Route::prefix('leads')->group(
         function () {
@@ -65,6 +69,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/upload_csv', [TextController::class, 'uploadCsv'])->name('texts-upload-csv');
         Route::post('/preview-sms', [TextController::class, 'previewSms'])->name('preview-sms');
     });
+
+
+
+    Route::prefix('queue')->group(function () {
+        Route::get('/export', [QueueController::class, 'export'])->name('queue.export');
+    });
+
 
 
     // Route::prefix('debt')->group(function () {
