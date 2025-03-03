@@ -12,6 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use AfricasTalking\SDK\AfricasTalking;
 
 class SendSmsJob implements ShouldQueue
 {
@@ -109,26 +110,39 @@ class SendSmsJob implements ShouldQueue
     private function replacePlaceholders($message, $contactData)
     {
         foreach ($contactData as $key => $value) {
-            $placeholder = '{' . trim($key) . '}'; // Ensure it matches {title}, {currency}, etc.
+            $placeholder = '{' . trim($key) . '}';
             $message = str_replace($placeholder, $value, $message);
         }
         return $message;
     }
 
-
     private function sendSmsToContacts(array $contacts)
     {
-        foreach ($contacts as $contact) {
-            Log::info("Sending SMS to: {$contact['phone']} - Message: {$contact['message']}");
-            // Implement actual SMS sending API here.
+        $username = 'sandbox';
+        $apiKey = 'atsk_4a781f01f2993900998a885155ef6f6eae81b012b43da9e715473f59f1025a7473ad18d0'; // Replace with actual sandbox API key
+        $AT = new AfricasTalking($username, $apiKey);
+        $sms = $AT->sms();
 
-            Queue::create([
-                'text_id' => $this->text->id,
-                'message' => $contact['message'],
-                'status' => TextStatus::SENT, // Assuming 0 = Pending, 1 = Sent, 2 = Failed
-                'created_by' => $this->text->created_by,
-                'updated_by' => $this->text->updated_by,
-            ]);
+        foreach ($contacts as $contact) {
+            try {
+                $response = $sms->send([
+                    'to' => $contact['phone'],
+                    'message' => $contact['message'],
+                    'from' => 'BEYOND_SMS', // Replace with sender ID if applicable
+                ]);
+
+                Log::info("SMS Response: " . json_encode($response));
+
+                Queue::create([
+                    'text_id' => $this->text->id,
+                    'message' => $contact['message'],
+                    'status' => TextStatus::SENT,
+                    'created_by' => $this->text->created_by,
+                    'updated_by' => $this->text->updated_by,
+                ]);
+            } catch (\Exception $e) {
+                Log::error("Failed to send SMS to {$contact['phone']}: " . $e->getMessage());
+            }
         }
 
         $this->text->status = TextStatus::SENT;
