@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\LeadController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -7,6 +8,8 @@ use App\Http\Controllers\BulkController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\TextController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +80,22 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 
+
+
+
+
+    Route::prefix('admin')->group(function () {
+        Route::controller(UserController::class)->group(function () {
+            Route::get('/roles/create', 'role_create');
+            Route::get('/roles', 'role_index');
+            Route::get('/roles/{role_id}/edit', 'role_edit');
+            Route::post('/roles/destroy_role', 'destroy_role');
+            Route::post('/roles/role_store', 'role_store');
+            Route::post('/roles/update_role', 'update_role');
+        });
+
+        Route::resource('/users', UserController::class)->names('admin.users');
+    });
 
     // Route::prefix('debt')->group(function () {
     //     Route::post('/store-debt', [App\Http\Controllers\DebtController::class, 'storeDebt'])->name('debt.storeDebt');
