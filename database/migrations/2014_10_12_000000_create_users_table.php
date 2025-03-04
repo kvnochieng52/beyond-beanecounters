@@ -16,15 +16,19 @@ return new class extends Migration
             $table->string('name');
             $table->string('telephone')->nullable();
             $table->string('id_number')->nullable();
-            $table->string('agent_id')->nullable();
+            $table->string('agent_code')->nullable();
             $table->string('email')->unique();
             $table->integer('is_active')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->bigInteger('created_by')->nullable();
+            $table->bigInteger('updated_by')->nullable();
+            $table->integer('has_reset_password')->nullable();
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

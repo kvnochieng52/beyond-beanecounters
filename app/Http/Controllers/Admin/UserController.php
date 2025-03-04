@@ -36,7 +36,7 @@ class UserController extends Controller
         $users = User::leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
             ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
             ->get([
-                'users.email',
+                'users.*',
                 'users.id',
                 'users.name as user_full_names',
                 'users.created_at',
@@ -57,8 +57,10 @@ class UserController extends Controller
      */
     public function create()
     {
+
+        // dd(DB::table('roles')->pluck('name', 'id'));
         return view('admin.user.create')->with([
-            'roles'  => DB::table('roles')->pluck('name', 'id')->all(),
+            'roles'  => DB::table('roles')->pluck('name', 'id'),
             'perm_groups' => PermissionGroup::getPermissionsWithGroup(),
             'regions' => Region::where('is_active', 1)->pluck('region_name', 'id'),
 
@@ -78,17 +80,22 @@ class UserController extends Controller
             'full_names' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed',
+            'telephone' => 'required',
+            'id_number' => 'required',
         ]);
         $user = new User;
         $user->name = $request->input('full_names');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->telephone = $request->input('telephone');
+        $user->id_number = $request->input('id_number');
         $user->is_active = $request->input('is_active');
-        $user->business_id = $request->input('business');
         $user->created_by = Auth::user()->id;
         $user->updated_by = Auth::user()->id;
         $user->has_reset_password = 0;
+        $user->save();
+
+        $user->agent_code = 'BBE' . $user->id;
         $user->save();
 
 
@@ -154,9 +161,9 @@ class UserController extends Controller
             ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
             ->where('users.id', $user->id)
             ->first([
-                'users.email',
+                'users.*',
                 'users.id',
-                'users.business_id',
+                // 'users.business_id',
                 'users.name as user_full_names',
                 'users.created_at',
                 'roles.id as role',
@@ -193,12 +200,14 @@ class UserController extends Controller
 
 
         return view('admin.user.edit')->with([
-            'roles'  => DB::table('roles')->pluck('name', 'id')->all(),
+            'roles'  => DB::table('roles')->pluck('name', 'id'),
             'user'  => $user,
             'perm_groups' => PermissionGroup::getPermissionsWithGroup(),
             'user_permissions' => $user_permissions,
             'user_role' => $user_role,
             'selected_user_roles' => DB::table('model_has_roles')->where(['model_id' => $user->id])->pluck('role_id')->toArray(),
+
+            'selected_user_regions' => UserRegion::where(['user_id' => $user->id])->pluck('region_id')->toArray(),
             'regions' => Region::where('is_active', 1)->pluck('region_name', 'id'),
             'userRegions' => UserRegion::where('user_id', $user->id)->pluck('region_id')->toArray()
             // 'user_permissions' => DB::table('model_has_permissions')->where(['model_id' => $user->id])->pluck('permission_id')->all(),
@@ -217,13 +226,15 @@ class UserController extends Controller
         $this->validate($request, [
             'full_names' => 'required',
             'email' => 'required|email',
-            'password' => 'confirmed'
+            'telephone' => 'required',
+            'id_number' => 'required',
         ]);
 
         $user->name = $request->input('full_names');
         $user->email = $request->input('email');
         $user->telephone = $request->input('telephone');
         $user->is_active = $request->input('is_active');
+        $user->id_number = $request->input('id_number');
         $user->has_reset_password = 0;
 
         if (!empty($request->input('password'))) {

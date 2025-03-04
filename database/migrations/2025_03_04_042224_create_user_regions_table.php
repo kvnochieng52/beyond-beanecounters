@@ -9,11 +9,12 @@ return new class extends Migration {
     {
         Schema::create('user_regions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
-            $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('cascade');
+            $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('region_id')->nullable();
             $table->timestamps();
         });
     }
+
 
     public function down()
     {

@@ -14,6 +14,7 @@
                     <tr>
                         <th>#</th>
                         <th>Full Names</th>
+                        <th>Agent Code</th>
                         <th>Email</th>
                         <th>Telephone</th>
                         <th>Role</th>
@@ -25,8 +26,10 @@
                     @foreach ($users as $key=>$user)
                     <tr>
                         <td>{{$key+1}}</td>
-                        <td><a href="{{ url('admin/users/'.$user->id.'/edit') }}"><b>{{$user->user_full_names}}</b></a>
+                        <td>
+                            <a href="{{ url('admin/users/'.$user->id.'/edit') }}"><b>{{$user->user_full_names}}</b></a>
                         </td>
+                        <td>{{$user->agent_code}}</td>
                         <td>{{$user->email}}</td>
                         <td>{{$user->telephone}}</td>
                         <td>{{$user->role}}</td>

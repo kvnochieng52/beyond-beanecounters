@@ -34,9 +34,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/lead', LeadController::class);
     Route::resource('/text', TextController::class);
     Route::resource('contacts', ContactController::class);
-
     Route::post('/get-contacts', [ContactController::class, 'getContacts']);
-
 
     Route::prefix('leads')->group(
         function () {
@@ -59,13 +57,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/store-calendar', [App\Http\Controllers\CalendarController::class, 'storeCalendar'])->name('store-calendar');
     Route::post('/delete-calendar', [App\Http\Controllers\CalendarController::class, 'deleteCalendar'])->name('calendar.delete');
 
-
-
     Route::prefix('bulk')->group(function () {
         Route::get('/upload', [BulkController::class, 'showUploadForm'])->name('bulk-upload-form');
         Route::post('/upload', [BulkController::class, 'upload'])->name('bulk-upload');
     });
-
 
     Route::prefix('texts')->group(function () {
         //  Route::get('/upload', [BulkController::class, 'showUploadForm'])->name('bulk-upload-form');
@@ -73,29 +68,25 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/preview-sms', [TextController::class, 'previewSms'])->name('preview-sms');
     });
 
-
-
     Route::prefix('queue')->group(function () {
         Route::get('/export', [QueueController::class, 'export'])->name('queue.export');
     });
 
-
-
-
-
-
     Route::prefix('admin')->group(function () {
         Route::controller(UserController::class)->group(function () {
-            Route::get('/roles/create', 'role_create');
-            Route::get('/roles', 'role_index');
-            Route::get('/roles/{role_id}/edit', 'role_edit');
-            Route::post('/roles/destroy_role', 'destroy_role');
-            Route::post('/roles/role_store', 'role_store');
-            Route::post('/roles/update_role', 'update_role');
+            Route::get('/roles/create', 'role_create')->name('admin.roles.create');
+            Route::get('/roles', 'role_index')->name('admin.roles.index');
+            Route::get('/roles/{role_id}/edit', 'role_edit')->name('admin.roles.edit');
+            Route::post('/roles/destroy_role', 'destroy_role')->name('admin.roles.destroy');
+            Route::post('/roles/role_store', 'role_store')->name('admin.roles.store');
+            Route::post('/roles/update_role', 'update_role')->name('admin.roles.update');
         });
 
         Route::resource('/users', UserController::class)->names('admin.users');
     });
+
+
+
 
     // Route::prefix('debt')->group(function () {
     //     Route::post('/store-debt', [App\Http\Controllers\DebtController::class, 'storeDebt'])->name('debt.storeDebt');
