@@ -14,7 +14,8 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdditionalCostRuleController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CalendarController;
-
+use App\Http\Controllers\DueNotificationController;
+use App\Http\Controllers\InstitutionController;
 
 Auth::routes();
 
@@ -27,6 +28,13 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     Route::post('/get-contacts', [ContactController::class, 'getContacts']);
 
     Route::resource('additional-cost-rules', AdditionalCostRuleController::class)->names('additional-cost-rules');
+    Route::resource('institutions', InstitutionController::class);
+
+    Route::resource('due-notifications', DueNotificationController::class);
+
+
+    Route::get('institutions-data', [InstitutionController::class, 'getInstitutions'])->name('institutions.getInstitutions');
+
 
 
 

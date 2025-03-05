@@ -15,7 +15,7 @@
     </div>
 
     <div class="card-body">
-        Test
+        details
     </div>
 </div>
 

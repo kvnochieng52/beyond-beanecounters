@@ -52,13 +52,13 @@ class Lead extends Model
             'countries.country_name',
             'AGENT_JOIN.name AS assigned_agent_name',
             'AGENT_JOIN.id_number AS assigned_agent_id_number',
-            'AGENT_JOIN.agent_id AS assigned_agent_code',
+            'AGENT_JOIN.agent_code AS assigned_agent_code',
             'AGENT_JOIN.telephone AS assigned_agent_telephone',
             'AGENT_JOIN.email AS assigned_agent_email',
 
             'CREATED_BY_JOIN.name AS created_by_name',
             'CREATED_BY_JOIN.id_number AS created_by_id_number',
-            'CREATED_BY_JOIN.agent_id AS created_by_code',
+            'CREATED_BY_JOIN.agent_code AS created_by_code',
             'CREATED_BY_JOIN.telephone AS created_by_telephone',
             'CREATED_BY_JOIN.email AS created_by_email',
 

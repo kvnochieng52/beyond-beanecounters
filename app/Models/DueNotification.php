@@ -5,19 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Institution extends Model
+class DueNotification extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'institution_name',
-        'address',
-        'email',
-        'website',
-        'telephone',
-        'contact_person',
+        'title',
+        'message',
+        'moment',
+        'days',
         'is_active',
-        'description',
         'created_by',
         'updated_by'
     ];
