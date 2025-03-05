@@ -6,6 +6,8 @@ use App\Models\Lead;
 use App\Models\LeadStatus;
 use App\Models\Payment;
 use App\Models\PaymentStatus;
+use App\Models\Transaction;
+use App\Models\TransactionType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +40,17 @@ class PaymentController extends Controller
 
         $balance = $leadDetails->balance - $request['amount'];
         if ($request['payment_status'] == PaymentStatus::PAID) {
+
+
+            Transaction::create([
+                'lead_id' => $request['leadID'],
+                'transaction_type' => TransactionType::PAYMENT,
+                'amount' => $request['amount'] * -1,
+                'description' => "Cash Payment",
+                'created_by' => Auth::id(),
+                'updated_by' => Auth::id(),
+            ]);
+
             $statusID = $balance >= $leadDetails->amount ? LeadStatus::PAID : LeadStatus::PARTIALLY_PAID;
         } else {
             $statusID = LeadStatus::PENDING;

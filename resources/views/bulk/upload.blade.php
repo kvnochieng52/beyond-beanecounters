@@ -21,11 +21,11 @@
 </div>
 @endif
 
-@if($errors->any())
+{{-- @if($errors->any())
 <div class="alert alert-danger">
     {{ implode('', $errors->all(':message')) }}
 </div>
-@endif
+@endif --}}
 
 <div class="card">
     <div class="card-header">
@@ -38,25 +38,68 @@
                     Entity</strong></a>
         </p>
 
-        <div class="form-group mt-3">
-            <label>Select Defaulter Type*</label><br>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="lead_type" id="individual" value="1" required>
-                <label class="form-check-label" for="individual">Individual</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="lead_type" id="entity" value="2" required>
-                <label class="form-check-label" for="entity">Entity</label>
-            </div>
-        </div>
+
         <form action="{{ route('bulk-upload') }}" method="POST" enctype="multipart/form-data" class="user_form">
+
+
             @csrf
 
-            <div class="form-group">
-                <label for="csv_file">Select CSV File*</label>
-                <input type="file" name="csv_file" class="form-control" required>
+            <div class="form-group mt-3">
+                <label>Select Defaulter Type*</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="lead_type" id="individual" value="1">
+                    <label class="form-check-label" for="individual">Individual</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="lead_type" id="entity" value="2">
+                    <label class="form-check-label" for="entity">Entity</label>
+                </div>
             </div>
 
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="csv_file">Select CSV File*</label>
+                        <input type="file" name="csv_file" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        {!! Html::label('Insitution', 'institution') !!}
+                        <div style="width: 100%">
+                            {!! Html::select('institution', $institutions)
+                            ->class('form-control select2')
+                            ->placeholder('--Specify--')
+                            ->attribute('style', 'width: 100%; padding: 10px;')
+                            // ->value($lead->institution_id)
+
+                            !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        {!! Html::label('Rules', 'rules[]') !!}
+                        <div style="width: 100%">
+                            {!! Html::select('rules[]', $rules)
+                            ->class('form-control select2')
+                            // ->placeholder('--Specify--')
+                            ->attribute('style', 'width: 100%; padding: 10px;')
+                            ->attribute('multiple','multiple')
+                            // ->value($lead->rules_id)
+
+                            !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
             <button type="submit" class="btn btn-primary mt-3">Upload</button>
@@ -71,6 +114,15 @@
 <style>
     .alert {
         margin-top: 20px;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #007bff !important;
+        border: 1px solid #32a2ed !important;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        color: #ffffff;
     }
 </style>
 @stop

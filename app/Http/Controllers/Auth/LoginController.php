@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,29 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+        if ($user->two_factor_code) {
+            $user->generateTwoFactorCode();
+            $user->sendTwoFactorCode();
+
+            return redirect()->route('2fa.verify');
+        }
+
+        return redirect()->intended('/');
+    }
+
+
+    public function logout(Request $request)
+    {
+        $user = Auth::user();
+        $user->update(['two_factor_code' => null, 'two_factor_expires_at' => null]);
+
+        Auth::logout();
+        session()->forget('2fa_verified'); // Clear 2FA session
+
+        return redirect('/');
     }
 }

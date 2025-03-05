@@ -8,54 +8,48 @@ use App\Http\Controllers\BulkController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\TextController;
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
+use App\Http\Controllers\TwoFactorController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AdditionalCostRuleController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CalendarController;
 
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', '2fa']], function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::resource('/lead', LeadController::class);
     Route::resource('/text', TextController::class);
     Route::resource('contacts', ContactController::class);
     Route::post('/get-contacts', [ContactController::class, 'getContacts']);
 
+    Route::resource('additional-cost-rules', AdditionalCostRuleController::class)->names('additional-cost-rules');
+
+
+
     Route::prefix('leads')->group(
         function () {
-            Route::post('/leads-update-status', [App\Http\Controllers\LeadController::class, 'updateStatus'])->name('leads-update-status');
+            Route::post('/leads-update-status', [LeadController::class, 'updateStatus'])->name('leads-update-status');
         }
     );
 
     Route::prefix('activity')->group(
         function () {
-            Route::post('/store-activity', [App\Http\Controllers\ActivityController::class, 'storeActivity'])->name('store-activity');
+            Route::post('/store-activity', [ActivityController::class, 'storeActivity'])->name('store-activity');
         }
     );
     Route::prefix('payment')->group(
         function () {
-            Route::post('/store-payment', [App\Http\Controllers\PaymentController::class, 'storePayment'])->name('store-payment');
+            Route::post('/store-payment', [PaymentController::class, 'storePayment'])->name('store-payment');
         }
     );
-    Route::get('/calendars', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendars.index');
-    Route::get('/calendars/create', [App\Http\Controllers\CalendarController::class, 'create'])->name('calendars.create');
-    Route::post('/store-calendar', [App\Http\Controllers\CalendarController::class, 'storeCalendar'])->name('store-calendar');
-    Route::post('/delete-calendar', [App\Http\Controllers\CalendarController::class, 'deleteCalendar'])->name('calendar.delete');
+    Route::get('/calendars', [CalendarController::class, 'index'])->name('calendars.index');
+    Route::get('/calendars/create', [CalendarController::class, 'create'])->name('calendars.create');
+    Route::post('/store-calendar', [CalendarController::class, 'storeCalendar'])->name('store-calendar');
+    Route::post('/delete-calendar', [CalendarController::class, 'deleteCalendar'])->name('calendar.delete');
 
     Route::prefix('bulk')->group(function () {
         Route::get('/upload', [BulkController::class, 'showUploadForm'])->name('bulk-upload-form');
@@ -63,7 +57,6 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('texts')->group(function () {
-        //  Route::get('/upload', [BulkController::class, 'showUploadForm'])->name('bulk-upload-form');
         Route::post('/upload_csv', [TextController::class, 'uploadCsv'])->name('texts-upload-csv');
         Route::post('/preview-sms', [TextController::class, 'previewSms'])->name('preview-sms');
     });
@@ -81,14 +74,14 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/roles/role_store', 'role_store')->name('admin.roles.store');
             Route::post('/roles/update_role', 'update_role')->name('admin.roles.update');
         });
-
         Route::resource('/users', UserController::class)->names('admin.users');
     });
-
-
-
-
-    // Route::prefix('debt')->group(function () {
-    //     Route::post('/store-debt', [App\Http\Controllers\DebtController::class, 'storeDebt'])->name('debt.storeDebt');
-    // });
 });
+
+Route::prefix('2fa')->group(
+    function () {
+        Route::get('/', [TwoFactorController::class, 'showVerifyForm'])->name('2fa.verify');
+        Route::post('/', [TwoFactorController::class, 'verifyTwoFactorCode']);
+        Route::post('/resend', [TwoFactorController::class, 'resend'])->name('2fa.resend');
+    }
+);
