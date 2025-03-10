@@ -18,6 +18,10 @@ return new class extends Migration
             $table->decimal("amount")->nullable();
             $table->text("description")->nullable();
             $table->bigInteger("rule_id")->nullable();
+            $table->decimal('balance_before')->nullable();
+            $table->decimal('balance_after')->nullable();
+            $table->text('transaction_id')->nullable();
+            $table->integer("status_id")->nullable();
             $table->bigInteger("created_by")->nullable();
             $table->bigInteger("updated_by")->nullable();
             $table->timestamps();

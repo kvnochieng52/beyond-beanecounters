@@ -56,7 +56,7 @@
                                     id="custom-tabs-four-payment-history-tab"
                                     href="/lead/{{$leadDetails->id}}?section=payments" role="tab"
                                     aria-controls="custom-tabs-four-payment-history" aria-selected="false">
-                                    PAYMENT HISTORY</a>
+                                    PAYMENTS</a>
                             </li>
 
 
@@ -285,6 +285,10 @@
             margin-left: 70px;
         }
     }
+
+    .trans_options {
+        display: none
+    }
 </style>
 @stop
 
@@ -297,6 +301,20 @@
 
 <script>
     $(document).ready(function() {
+     $('#transactionsTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route("transactions.data") }}',
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'description', name: 'description' },
+            { data: 'amount', name: 'amount' },
+            { data: 'transaction_type_title', name: 'transaction_types.transaction_type_title' },
+            { data: 'created_by_name', name: 'users.name' }, // Display Created By Name
+            { data: 'created_at', name: 'created_at' }
+        ]
+    });
+
 
     $('.user_form')
         .bootstrapValidator({
@@ -402,6 +420,28 @@
         }, 1000); // Simulated delay
     }
 });
+
+
+ $('#transactionTypes').on('change', function() {
+        var selectedValue = $(this).val();
+
+
+        $('.trans_type_select').val(selectedValue)
+        $('.trans_options').hide();
+        if(selectedValue==1){
+            $('._penalty').show()
+        }
+
+        if(selectedValue==2){
+        $('._payment').show()
+        }
+
+        if(selectedValue==3){
+        $('._discount').show()
+        }
+        
+    });
+
 
 
 

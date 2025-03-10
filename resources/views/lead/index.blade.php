@@ -13,7 +13,26 @@
     </div>
 
     <div class="card-body">
-        <table class="table table-bordered table-striped">
+
+        <table id="leadsTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>T/No.</th>
+                    <th>Names/Title</th>
+                    <th>Defaulter Type</th>
+                    <th>ID Number</th>
+                    <th>Telephone</th>
+                    <th>Amount</th>
+                    <th>Balance</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Stage</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        </table>
+        {{-- <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>#</th>
@@ -77,12 +96,10 @@
                 </tr>
                 @endforeach
             </tbody>
-        </table>
+        </table> --}}
 
         <!-- Pagination -->
-        <div class="mt-3">
-            {{ $leads->links('') }}
-        </div>
+
     </div>
 </div>
 @stop
@@ -95,27 +112,82 @@
 <script src="/js/validator/bootstrapValidator.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('.user_form').bootstrapValidator({
-            excluded: [':disabled'],
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-        });
-
-        $('.select2').select2();
-
-        $('#defaulter_type').on('change', function() {
-            var selectedValue = $(this).val();
-            $(".defaulter_type_store").val(selectedValue);
-            $('.defaulter_type').hide();
-
-            if (selectedValue == 1) {
-                $('.individual_type').show();
-            } else {
-                $('.entity_type').show();
-            }
+        $('#leadsTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('lead.index') }}",
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                { 
+                    data: 'id', 
+                    name: 'id',
+                    render: function(data, type, row) {
+                        return `<a href="/lead/${row.id}"><strong>#${data}</strong></a>`;
+                    }
+                },
+                { 
+                    data: 'title', 
+                    name: 'title',
+                    render: function(data, type, row) {
+                        return `<a href="/lead/${row.id}"><strong>${data}</strong></a><br />
+                                <small>Agent: ${row.assigned_agent_name}</small>`;
+                    }
+                },
+                { data: 'defaulter_type_name', name: 'defaulter_type_name' },
+                { data: 'id_passport_number', name: 'id_passport_number' },
+                { data: 'telephone', name: 'telephone' },
+                { 
+                    data: 'amount', 
+                    name: 'amount',
+                    render: function(data) {
+                        return new Intl.NumberFormat().format(data);
+                    }
+                },
+                { 
+                    data: 'balance', 
+                    name: 'balance',
+                    render: function(data) {
+                        return new Intl.NumberFormat().format(data);
+                    }
+                },
+                { 
+                    data: 'priority_id', 
+                    name: 'priority_id',
+                    render: function(data, type, row) {
+                        return `<a href="/lead/${row.id}">
+                                    <span class="badge text-white bg-${row.lead_priority_color_code}">
+                                        ${row.lead_priority_name}
+                                    </span>
+                                </a>`;
+                    }
+                },
+                { 
+                    data: 'status_id', 
+                    name: 'status_id',
+                    render: function(data, type, row) {
+                        return `<a href="/lead/${row.id}">
+                                    <span class="badge text-white bg-${row.lead_status_color_code}">
+                                        ${row.lead_status_name}
+                                    </span>
+                                </a>`;
+                    }
+                },
+                { data: 'lead_stage_name', name: 'lead_stage_name' },
+                { 
+                    data: 'actions', 
+                    name: 'actions', 
+                    orderable: false, 
+                    searchable: false,
+                    render: function(data, type, row) {
+                        return `<a href="/lead/${row.id}/edit" class="btn btn-warning btn-xs">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="#" class="btn btn-danger btn-xs" onclick="confirmDelete(${row.id})">
+                                    <i class="fa fa-trash"></i>
+                                </a>`;
+                    }
+                }
+            ]
         });
     });
 </script>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\ActivityStatus;
 use App\Models\ActivityType;
+use App\Models\AdditionalCostRuleType;
 use App\Models\Country;
 use App\Models\Currency;
 use App\Models\DefaulterType;
@@ -21,24 +22,49 @@ use App\Models\LeadStage;
 use App\Models\LeadStatus;
 use App\Models\LeadStatusHistory;
 use App\Models\Payment;
+use App\Models\PaymentMethod;
 use App\Models\PaymentStatus;
 use App\Models\Transaction;
+use App\Models\TransactionStatus;
+use App\Models\TransactionType;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class LeadController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('lead.index')->with([
-            'leads' => Lead::getLeads()
-        ]);
+
+
+        if ($request->ajax()) {
+            $leads = Lead::query()->orderBy('id', 'DESC');
+
+            return DataTables::of($leads)
+                ->addIndexColumn()
+                ->addColumn('actions', function ($lead) {
+                    return '
+                    <a href="/lead/' . $lead->id . '/edit" class="btn btn-warning btn-xs">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a href="#" class="btn btn-danger btn-xs" onclick="confirmDelete(' . $lead->id . ')">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                ';
+                })
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
+
+
+
+        return view('lead.index');
     }
 
     /**
@@ -143,6 +169,8 @@ class LeadController extends Controller
 
 
 
+
+
         return view('lead.show')->with([
             'leadDetails' => Lead::getLeadByID($lead->id),
             'INDIVIDUAL_DEFAULTER_TYPE_CODE' => DefaulterType::INDIVIDUAL,
@@ -155,17 +183,18 @@ class LeadController extends Controller
             'activityStatuses' => ActivityStatus::where('is_active', 1)->pluck('activity_status_name', 'id'),
             'leadListActivities' => Activity::getLeadActivities($lead->id),
             'leadTimeLineActivities' => Activity::getLeadInTimeLine($lead->id),
-            'paymentStatuses' => PaymentStatus::where('is_active', 1)->pluck('payment_status_name', 'id'),
+
             'payments' => Payment::getLeadPayments($lead->id),
             'leadStages' => LeadStage::where('is_active', 1)->pluck('lead_stage_name', 'id'),
             'leadStatuses' => LeadStatus::where('is_active', 1)->pluck('lead_status_name', 'id'),
             'leadConversionLevels' => LeadConversionStatus::where('is_active', 1)->pluck('lead_conversion_name', 'id'),
             'leadEngagementLevels' => LeadEngagementLevel::where('is_active', 1)->pluck('lead_engagement_level_name', 'id'),
             'leadsStatusHistory' => LeadStatusHistory::getLeadHistory($lead->id),
-            'transactions' => Transaction::where('led_id', $lead->id)
-                ->leftJoin('transaction_types', 'transactions.transaction_type', 'transaction_types.id')
-                ->where('transactions.lead_id', $lead->id)
-                ->get(),
+            'transactionTypes' => TransactionType::where('is_active', 1)->pluck('transaction_type_title', 'id'),
+            'paymentStatuses' => TransactionStatus::where('is_active', 1)->whereIn('id', [TransactionStatus::PENDING, TransactionStatus::PAID, TransactionStatus::FAILED, TransactionStatus::CANCELLED])->pluck('status_name', 'id'),
+            'paymentMethods' => PaymentMethod::where('is_active', 1)->pluck('method_name', 'id'),
+            'costTypes' => AdditionalCostRuleType::where('is_active', 1)->pluck('rule_type_name', 'id'),
+
         ]);
     }
 
@@ -189,7 +218,7 @@ class LeadController extends Controller
                 ->pluck('name', 'id'),
             'industries' => LeadIndustry::where('is_active', 1)->pluck('lead_industry_name', 'id'),
             'agentsList' => User::where('is_active', 1)
-                ->select(DB::raw("CONCAT(name, ' - ', agent_id) as name"), 'id')
+                ->select(DB::raw("CONCAT(name, ' - ', agent_code) as name"), 'id')
                 ->pluck('name', 'id'),
             'departments' => Department::where('is_active', 1)->pluck('department_name', 'id')
 
@@ -234,7 +263,7 @@ class LeadController extends Controller
                 $lead->due_date = Carbon::parse($request['due_date'])->format("Y-m-d");
                 $lead->category_id = $request['category'];
                 $lead->priority_id = $request['priority'];
-                $lead->assigned_agent = $request['agent'];
+                $lead->assigned_agent = !empty($request['agent']) ? $request['agent'] : Auth::user()->id;
                 $lead->assigned_department = $request['department'];
                 $lead->updated_by = Auth::user()->id;
                 $lead->save();

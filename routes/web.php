@@ -39,6 +39,8 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
 
     Route::get('/transactions/data', [TransactionController::class, 'getTransactions'])->name('transactions.data');
 
+    Route::post('/transactions/store', [TransactionController::class, 'storeTransaction'])->name('transactions.store');
+
 
     Route::prefix('leads')->group(
         function () {

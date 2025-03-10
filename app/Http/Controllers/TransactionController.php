@@ -3,11 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Models\TransactionType;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class TransactionController extends Controller
 {
+
+    public function storeTransaction(Request $request)
+    {
+        $transactionType = $request['trans_type_select'];
+
+        if ($transactionType == TransactionType::PAYMENT) {
+            $transaction = new Transaction();
+
+            $transaction->lead_id = $request['lead_id'];
+            $transaction->transaction_type = $transactionType;
+            $transaction->amount = $request['amount'];
+            //$transaction->description = $request['amount'];
+        }
+    }
+
+
+
     public function getTransactions(Request $request)
     {
         if ($request->ajax()) {
