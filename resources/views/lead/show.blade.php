@@ -59,12 +59,26 @@
                                     PAYMENT HISTORY</a>
                             </li>
 
+
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->get('section') == 'transactions' ? 'active' : '' }}"
+                                    id="custom-tabs-four-transaction-transactions-tab"
+                                    href="/lead/{{$leadDetails->id}}?section=transactions" role="tab"
+                                    aria-controls="custom-tabs-four-transaction-history" aria-selected="false">
+                                    TRANSACTIONS</a>
+                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->get('section') == 'status' ? 'active' : '' }}"
                                     id="custom-tabs-four-status-tab" role="tab" aria-controls="custom-tabs-four-status"
                                     href="/lead/{{$leadDetails->id}}?section=status" aria-selected="false">
                                     STATUS</a>
                             </li>
+
+
+
+
 
 
                             {{-- <li class="nav-item">
@@ -109,6 +123,13 @@
                                 id="custom-tabs-four-payment-history" role="tabpanel"
                                 aria-labelledby="custom-tabs-four-payment-history-tab">
                                 @include('lead.show._payment_history')
+                            </div>
+
+
+                            <div class="tab-pane fade {{ request()->get('section') == 'transactions' ? 'show active' : '' }}"
+                                id="custom-tabs-four-transaction-history" role="tabpanel"
+                                aria-labelledby="custom-tabs-four-transaction-history-tab">
+                                @include('lead.show._transaction_history')
                             </div>
 
                             <div class="tab-pane fade {{ request()->get('section') == 'status' ? 'show active' : '' }}"

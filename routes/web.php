@@ -16,6 +16,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DueNotificationController;
 use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\TransactionController;
 
 Auth::routes();
 
@@ -36,6 +37,7 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     Route::get('institutions-data', [InstitutionController::class, 'getInstitutions'])->name('institutions.getInstitutions');
 
 
+    Route::get('/transactions/data', [TransactionController::class, 'getTransactions'])->name('transactions.data');
 
 
     Route::prefix('leads')->group(

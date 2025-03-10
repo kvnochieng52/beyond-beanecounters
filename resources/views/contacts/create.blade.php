@@ -27,7 +27,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="is_active">Status</label>
-                                <select name="is_active" class="form-control" required>
+                                <select name="is_active" class="form-control custom-select" required>
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
                                 </select>

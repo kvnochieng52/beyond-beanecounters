@@ -25,11 +25,11 @@ class Activity extends Model
             'departments.department_name',
             'AGENT_JOIN.name AS assigned_agent_name',
             'AGENT_JOIN.id_number AS assigned_agent_id_number',
-            'AGENT_JOIN.agent_id AS assigned_agent_code',
+            'AGENT_JOIN.agent_code AS assigned_agent_code',
 
             'CREATED_BY_JOIN.name AS created_by_name',
             'CREATED_BY_JOIN.id_number AS created_by_id_number',
-            'CREATED_BY_JOIN.agent_id AS created_by_code',
+            'CREATED_BY_JOIN.agent_code AS created_by_code',
             'CREATED_BY_JOIN.telephone AS created_by_telephone',
             'CREATED_BY_JOIN.email AS created_by_email',
             DB::raw('DATE(activities.created_at) as created_date'),

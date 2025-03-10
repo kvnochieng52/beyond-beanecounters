@@ -22,6 +22,7 @@ use App\Models\LeadStatus;
 use App\Models\LeadStatusHistory;
 use App\Models\Payment;
 use App\Models\PaymentStatus;
+use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -140,7 +141,6 @@ class LeadController extends Controller
     public function show(Lead $lead)
     {
 
-        //dd(Activity::getLeadInTimeLine($lead->id)->toArray());
 
 
         return view('lead.show')->with([
@@ -150,7 +150,7 @@ class LeadController extends Controller
             'priorities' => LeadPriority::where('is_active', 1)->pluck('lead_priority_name', 'id'),
             'departments' => Department::where('is_active', 1)->pluck('department_name', 'id'),
             'agentsList' => User::where('is_active', 1)
-                ->select(DB::raw("CONCAT(name, ' - ', agent_id) as name"), 'id')
+                ->select(DB::raw("CONCAT(name, ' - ', agent_code) as name"), 'id')
                 ->pluck('name', 'id'),
             'activityStatuses' => ActivityStatus::where('is_active', 1)->pluck('activity_status_name', 'id'),
             'leadListActivities' => Activity::getLeadActivities($lead->id),
@@ -161,7 +161,11 @@ class LeadController extends Controller
             'leadStatuses' => LeadStatus::where('is_active', 1)->pluck('lead_status_name', 'id'),
             'leadConversionLevels' => LeadConversionStatus::where('is_active', 1)->pluck('lead_conversion_name', 'id'),
             'leadEngagementLevels' => LeadEngagementLevel::where('is_active', 1)->pluck('lead_engagement_level_name', 'id'),
-            'leadsStatusHistory' => LeadStatusHistory::getLeadHistory($lead->id)
+            'leadsStatusHistory' => LeadStatusHistory::getLeadHistory($lead->id),
+            'transactions' => Transaction::where('led_id', $lead->id)
+                ->leftJoin('transaction_types', 'transactions.transaction_type', 'transaction_types.id')
+                ->where('transactions.lead_id', $lead->id)
+                ->get(),
         ]);
     }
 
@@ -177,21 +181,13 @@ class LeadController extends Controller
             'countries' => Country::where('is_active', 1)->pluck('country_name', 'id'),
             'defaulterTypes' => DefaulterType::where('is_active', 1)->pluck('defaulter_type_name', 'id'),
             'individualDefaulterType' => DefaulterType::INDIVIDUAL,
-
-
-            //here
-
             'leadCategories' => LeadCategory::Where('is_active', 1)->pluck('lead_category_name', 'id'),
             'institutions' => Institution::Where('is_active', 1)->pluck('institution_name', 'id'),
             'currencies' => Currency::Where('is_active', 1)->pluck('currency_name', 'id'),
             'priorities' => LeadPriority::where('is_active', 1)
                 ->select(DB::raw("CONCAT(lead_priority_name, ' - ', description) as name"), 'id')
                 ->pluck('name', 'id'),
-
-            //for company
             'industries' => LeadIndustry::where('is_active', 1)->pluck('lead_industry_name', 'id'),
-            // 'leadStatus' => LeadStatus::where('is_active', 1)->pluck('id', 'lead_status_name')
-
             'agentsList' => User::where('is_active', 1)
                 ->select(DB::raw("CONCAT(name, ' - ', agent_id) as name"), 'id')
                 ->pluck('name', 'id'),
