@@ -22,6 +22,8 @@ return new class extends Migration
             $table->decimal('balance_after')->nullable();
             $table->text('transaction_id')->nullable();
             $table->integer("status_id")->nullable();
+            $table->integer("payment_method")->nullable();
+            $table->integer("transaction_method")->nullable();
             $table->bigInteger("created_by")->nullable();
             $table->bigInteger("updated_by")->nullable();
             $table->timestamps();

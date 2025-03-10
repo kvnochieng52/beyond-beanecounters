@@ -14,13 +14,18 @@ class TransactionController extends Controller
     {
         $transactionType = $request['trans_type_select'];
 
+
+        $transTypeDetails = TransactionType::where('id', $transactionType)->first();
+
         if ($transactionType == TransactionType::PAYMENT) {
             $transaction = new Transaction();
 
             $transaction->lead_id = $request['lead_id'];
             $transaction->transaction_type = $transactionType;
             $transaction->amount = $request['amount'];
-            //$transaction->description = $request['amount'];
+            $transaction->description = $transTypeDetails->transaction_type_title . " -Manual- " . $request['description'];
+            $transaction->transaction_id = $request['transID'];
+            $transaction->status_id = $request['payment_status'];
         }
     }
 
