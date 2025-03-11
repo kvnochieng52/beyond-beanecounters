@@ -75,7 +75,7 @@
         </div>
 
     </div>
-    <input type="hidden" name="trans_type_select" id="trans_type_select">
+    <input type="hidden" name="trans_type_select" class="trans_type_select">
     <input type="hidden" name="leadID" value="{{$leadDetails->id}}">
 
     <button type="submit" class="btn btn-info">Submit Details</button>

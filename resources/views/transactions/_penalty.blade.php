@@ -7,9 +7,9 @@
 
         <div class="col-md-4">
             <div class="form-group">
-                {!! Html::label('Cost Type*', 'cost_type') !!}
+                {!! Html::label('Penalty Type*', 'penalty_type') !!}
                 {!!
-                Html::select('cost_type', $costTypes)
+                Html::select('penalty_type', $costTypes)
                 ->class('form-control custom-select')
                 ->placeholder('--Specify--')
                 ->style("width:100%")
@@ -19,8 +19,8 @@
         </div>
 
         <div class="col-md-4">
-            <label for="type" class="form-label">Type</label>
-            <select class="form-control custom-select" name="type" required>
+            <label for="type" class="form-label">Charge Type</label>
+            <select class="form-control custom-select" name="charge_type" required>
                 <option value="">--Specify--</option>
                 <option value="Fixed amount">Fixed amount</option>
                 <option value="Percentage">Percentage</option>
@@ -64,7 +64,7 @@
         </div>
     </div>
 
-    <input type="hidden" name="trans_type_select" id="trans_type_select">
+    <input type="hidden" name="trans_type_select" class="trans_type_select">
     <input type="hidden" name="leadID" value="{{$leadDetails->id}}">
 
     <button type="submit" class="btn btn-info">Submit Details</button>

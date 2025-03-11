@@ -51,13 +51,13 @@
                                     aria-controls="custom-tabs-four-activities" aria-selected="false">
                                     ACTIVITIES</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link {{ request()->get('section') == 'payments' ? 'active' : '' }}"
                                     id="custom-tabs-four-payment-history-tab"
                                     href="/lead/{{$leadDetails->id}}?section=payments" role="tab"
                                     aria-controls="custom-tabs-four-payment-history" aria-selected="false">
                                     PAYMENTS</a>
-                            </li>
+                            </li> --}}
 
 
 
@@ -119,11 +119,12 @@
                                 aria-labelledby="custom-tabs-four-activities-tab">
                                 @include('lead.show._activities')
                             </div>
-                            <div class="tab-pane fade {{ request()->get('section') == 'payments' ? 'show active' : '' }}"
+                            {{-- <div
+                                class="tab-pane fade {{ request()->get('section') == 'payments' ? 'show active' : '' }}"
                                 id="custom-tabs-four-payment-history" role="tabpanel"
                                 aria-labelledby="custom-tabs-four-payment-history-tab">
                                 @include('lead.show._payment_history')
-                            </div>
+                            </div> --}}
 
 
                             <div class="tab-pane fade {{ request()->get('section') == 'transactions' ? 'show active' : '' }}"
@@ -301,19 +302,26 @@
 
 <script>
     $(document).ready(function() {
-     $('#transactionsTable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route("transactions.data") }}',
-        columns: [
-            { data: 'id', name: 'id' },
-            { data: 'description', name: 'description' },
-            { data: 'amount', name: 'amount' },
-            { data: 'transaction_type_title', name: 'transaction_types.transaction_type_title' },
-            { data: 'created_by_name', name: 'users.name' }, // Display Created By Name
-            { data: 'created_at', name: 'created_at' }
-        ]
-    });
+       $('#transactionsTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{{ route("transactions.data") }}',
+                data: function (d) {
+                    d.lead_id = '{{ $leadDetails->id }}'; // Pass lead_id
+                }
+            },
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'description', name: 'description' },
+                { data: 'amount', name: 'amount' },
+                { data: 'transaction_type_title', name: 'transaction_types.transaction_type_title' },
+                { data: 'created_by_name', name: 'users.name' },
+                { data: 'status_label', name: 'transaction_statuses.status_name', orderable: false, searchable: false },
+                { data: 'created_at', name: 'created_at' }
+            ]
+        });
+
 
 
     $('.user_form')

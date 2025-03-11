@@ -14,7 +14,7 @@ class ActivityTypesSeeder extends Seeder
     public function run(): void
     {
         DB::table('activity_types')->insert([
-            ['activity_type_title' => 'Task', 'is_active' => 1, 'order' => 1, 'icon' => 'file'],
+            ['activity_type_title' => 'Notes', 'is_active' => 1, 'order' => 1, 'icon' => 'file'],
             ['activity_type_title' => 'Log Call', 'is_active' => 1, 'order' => 2, 'icon' => 'phone'],
             ['activity_type_title' => 'SMS', 'is_active' => 1, 'order' => 3, 'icon' => 'sms'],
             ['activity_type_title' => 'Email', 'is_active' => 1, 'order' => 4, 'icon' => 'envelope'],

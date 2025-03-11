@@ -19,7 +19,8 @@
             <th>Description</th>
             <th>Amount</th>
             <th>Transaction Type</th>
-            <th>By</th> <!-- New Column -->
+            <th>By</th>
+            <th>Status</th> <!-- New Column -->
             <th>Date</th>
         </tr>
     </thead>

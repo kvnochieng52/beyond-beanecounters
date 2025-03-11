@@ -167,10 +167,6 @@ class LeadController extends Controller
     public function show(Lead $lead)
     {
 
-
-
-
-
         return view('lead.show')->with([
             'leadDetails' => Lead::getLeadByID($lead->id),
             'INDIVIDUAL_DEFAULTER_TYPE_CODE' => DefaulterType::INDIVIDUAL,
@@ -193,7 +189,7 @@ class LeadController extends Controller
             'transactionTypes' => TransactionType::where('is_active', 1)->pluck('transaction_type_title', 'id'),
             'paymentStatuses' => TransactionStatus::where('is_active', 1)->whereIn('id', [TransactionStatus::PENDING, TransactionStatus::PAID, TransactionStatus::FAILED, TransactionStatus::CANCELLED])->pluck('status_name', 'id'),
             'paymentMethods' => PaymentMethod::where('is_active', 1)->pluck('method_name', 'id'),
-            'costTypes' => AdditionalCostRuleType::where('is_active', 1)->pluck('rule_type_name', 'id'),
+            'costTypes' => AdditionalCostRuleType::where('is_active', 1)->where('id', '!=', 5)->pluck('rule_type_name', 'id'),
 
         ]);
     }

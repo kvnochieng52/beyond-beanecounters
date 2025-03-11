@@ -75,6 +75,7 @@ class Lead extends Model
             'departments.department_name',
             'lead_conversion_statuses.lead_conversion_name',
             'lead_engagement_levels.lead_engagement_level_name',
+            // 'leads.amount as amount'
 
         ])
             ->leftJoin('defaulter_types', 'leads.defaulter_type_id', 'defaulter_types.id')

@@ -17,6 +17,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DueNotificationController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransBulkController;
 
 Auth::routes();
 
@@ -95,5 +96,14 @@ Route::prefix('2fa')->group(
         Route::get('/', [TwoFactorController::class, 'showVerifyForm'])->name('2fa.verify');
         Route::post('/', [TwoFactorController::class, 'verifyTwoFactorCode']);
         Route::post('/resend', [TwoFactorController::class, 'resend'])->name('2fa.resend');
+    }
+);
+
+
+Route::prefix('trans-bulk')->group(
+    function () {
+        Route::get('upload', [TransBulkController::class, 'upload'])->name('trans.bulk.upload');
+        Route::post('process', [TransBulkController::class, 'process'])->name('trans.bulk.process');
+        Route::get('/', [TransBulkController::class, 'index'])->name('trans_bulk.index');
     }
 );
