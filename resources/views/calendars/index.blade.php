@@ -16,7 +16,7 @@
             <div class="card-body">
 
                 <div class="row">
-                    <div class="col-md-11">
+                    <div class="col-md-8">
                         <div id='calendar'></div>
                     </div>
                 </div>
