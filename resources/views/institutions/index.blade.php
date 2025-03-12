@@ -1,15 +1,19 @@
 @extends('adminlte::page')
 @section('title', 'Institutions')
-@section('content_header')
+{{-- @section('content_header')
 <h1>Institutions</h1>
-@stop
+@stop --}}
 @section('content')
-<a href="{{ route('institutions.create') }}" class="btn btn-primary mb-3">Add Institution</a>
+
 @if(session('success'))
 <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
 <div class="card">
+    <div class="card-header">
+        <h3 class="card-title mb-0">Manage Institutions</h3>
+        <a href="{{ route('institutions.create') }}" class="btn btn-info float-right">New Institution</a>
+    </div>
     <div class="card-body">
         <table id="institutions-table" class="table table-bordered table-striped">
             <thead>

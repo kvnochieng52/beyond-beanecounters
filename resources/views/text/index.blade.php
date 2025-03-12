@@ -2,12 +2,16 @@
 
 @section('title', 'SMS Details')
 
-@section('content_header')
+{{-- @section('content_header')
 <h1>SMS Details</h1>
-@stop
+@stop --}}
 
 @section('content')
 <div class="card">
+
+    <div class="card-header">
+        <h4 class="card-title">Manage SMS</h4>
+    </div>
     <div class="card-body">
         <table class="table table-bordered table-striped" id="smsTable">
             <thead>

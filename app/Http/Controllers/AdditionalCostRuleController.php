@@ -151,4 +151,8 @@ class AdditionalCostRuleController extends Controller
         $additionalCostRule->delete();
         return redirect()->route('additional-cost-rules.index')->with('success', 'Rule deleted successfully.');
     }
+
+
+
+    public function scheduledRules(Request $request) {}
 }

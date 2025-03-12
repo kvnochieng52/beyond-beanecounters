@@ -9,16 +9,14 @@
 @section('content')
 
 <div class="card">
-
-    <div class="card-header">
-        <h3>Notifications</h3>
-        <a href="{{ route('due-notifications.create') }}" class="btn btn-success">Create Notification</a>
+    <div class="card-header" style="width: 100%;">
+        <h3 class="card-title">Notifications</h3>
+        <a href="{{ route('due-notifications.create') }}" class="btn btn-info float-right">Create Notification</a>
     </div>
-
     <div class="card-body">
 
         @include('notices')
-        <table id="notifications-table" class="table table-bordered">
+        <table id="notifications-table" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>ID</th>

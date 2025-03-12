@@ -2,13 +2,17 @@
 
 @section('title', 'Contacts')
 
-@section('content_header')
+{{-- @section('content_header')
 <h1>Contacts</h1>
-@stop
+@stop --}}
 
 @section('content')
 
 <div class="card">
+
+    <div class="card-header">
+        <h4 class="card-title">Contacts</h4>
+    </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
@@ -20,7 +24,7 @@
 
 
 
-                <table class="table table-bordered">
+                <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>#</th>

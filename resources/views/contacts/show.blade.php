@@ -2,12 +2,15 @@
 
 @section('title', 'View Contact')
 
-@section('content_header')
+{{-- @section('content_header')
 <h1>View Contact</h1>
-@stop
+@stop --}}
 
 @section('content')
 <div class="card">
+    <div class="card-header">
+        <h4 class="card-title">View Contact</h4>
+    </div>
     <div class="card-header">
         <strong>{{ $contact->title }}</strong>
         <a href="{{ route('contacts.index') }}" class="btn btn-secondary btn-sm float-right">Back</a>

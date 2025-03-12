@@ -8,6 +8,9 @@
 
 @section('content')
 <div class="card">
+    <div class="card-header">
+        <h4 class="card-title">New SMS</h4>
+    </div>
     <div class="card-body">
         <form action="{{ route('text.store') }}" method="POST" enctype="multipart/form-data" id="smsForm">
             @csrf

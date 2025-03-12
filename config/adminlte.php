@@ -315,83 +315,283 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
+
+
         [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
+            'text' => 'Dashboard',
+            'url' => '/',
+            'icon' => 'nav-icon fas fa-tachometer-alt',
+            //'can' => 'manage-blog',
         ],
+
+
         [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
+            'text' => 'Leads',
+            'icon' => 'fas fa-fw fa-user-plus',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'text' => 'New Lead',
+                    'url' => '/lead/create',
+
                 ],
                 [
-                    'text' => 'level_one',
+                    'text' => 'Manage Leads',
+                    'url' => '/lead',
+                ],
+
+                [
+                    'text' => 'Leads Bulk Tool',
+                    'url' => '/bulk/upload',
+                ],
+            ]
+        ],
+
+
+        [
+            'text' => 'Lead Status',
+            'icon' => 'fas fa-fw fa-list',
+            'submenu' => [
+                [
+                    'text' => 'Pending',
                     'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
+                    'icon' => "far fa-fw fa-circle text-info"
+
+                ],
+
+                [
+                    'text' => 'Paid',
+                    'url' => '#',
+                    'icon' => "far fa-fw fa-circle text-success"
+
+                ],
+
+                [
+                    'text' => 'Partially Paid',
+                    'url' => '#',
+                    'icon' => "far fa-fw fa-circle text-warning"
+
+                ],
+
+                [
+                    'text' => 'Overdue',
+                    'url' => '#',
+                    'icon' => "far fa-fw fa-circle text-danger"
+
+                ],
+
+                [
+                    'text' => 'Legal Escalation',
+                    'url' => '#',
+                    'icon' => "far fa-fw fa-circle text-info"
+
+                ],
+
+                [
+                    'text' => 'Disputed',
+                    'url' => '#',
+                    'icon' => "far fa-fw fa-circle text-primary"
+
+                ],
+
+
+            ]
+        ],
+
+        [
+            'text' => 'Activities',
+            'url' => '#',
+            'icon' => 'far fa-fw fa-clock',
+            //'can' => 'manage-blog',
+        ],
+
+
+        [
+            'text' => 'Calendar',
+            'url' => '/calendars',
+            'icon' => 'far fa-fw fa-calendar-alt',
+            //'can' => 'manage-blog',
+        ],
+
+
+
+        [
+            'text' => 'SMS',
+            'icon' => 'fas fa-fw fa-sms',
+            'submenu' => [
+                [
+                    'text' => 'New SMS',
+                    'url' => '/text/create',
+
                 ],
                 [
-                    'text' => 'level_one',
+                    'text' => 'Manage SMS',
+                    'url' => '/text',
+                ],
+
+                [
+                    'text' => 'Contacts',
+                    'url' => '/contacts',
+                ],
+            ]
+        ],
+
+
+
+
+
+        [
+            'text' => 'Institutions',
+            'icon' => 'fas fa-fw fa-building',
+            'submenu' => [
+                [
+                    'text' => 'New Insitution',
+                    'url' => '/institutions/create',
+
+                ],
+                [
+                    'text' => 'Manage Insitutions',
+                    'url' => '/institutions',
+                ],
+
+
+            ]
+        ],
+
+        [
+            'text' => 'Tools & Settings',
+            'icon' => 'fas fa-fw fa-cog',
+            'submenu' => [
+                [
+                    'text' => 'Rules/Discounts',
+                    'url' => '/additional-cost-rules',
+
+                ],
+
+                [
+                    'text' => 'Bulk Transactions Tool',
+                    'url' => '/trans-bulk',
+
+                ],
+
+                [
+                    'text' => 'Lead Due Notifications',
+                    'url' => '/due-notifications',
+
+                ],
+
+
+
+            ]
+        ],
+
+
+        [
+            'text' => 'Reports',
+            'icon' => 'fas fa-fw fa-file',
+            'submenu' => [
+                [
+                    'text' => 'Leads',
+                    'url' => '#',
+
+                ],
+                [
+                    'text' => 'Leads',
                     'url' => '#',
                 ],
-            ],
+
+
+            ]
         ],
-        ['header' => 'labels'],
+
+
+
+
+
+
         [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
+            'text' => 'Users',
+            'icon' => 'fas fa-fw fa-users',
+            'submenu' => [
+                [
+                    'text' => 'New User',
+                    'url' => '/admin/users/create',
+
+                ],
+                [
+                    'text' => 'Manage Users',
+                    'url' => '/admin/users',
+                ],
+
+                [
+                    'text' => 'Roles',
+                    'url' => '/admin/roles',
+                ],
+
+
+            ]
         ],
+
+        ['header' => 'LEAD STATUS'],
+
+
+
         [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
+            'text' => 'Pending',
             'url' => '#',
+            'icon' => "far fa-fw fa-circle text-info"
+
         ],
+
         [
-            'text' => 'information',
-            'icon_color' => 'cyan',
+            'text' => 'Paid',
             'url' => '#',
+            'icon' => "far fa-fw fa-circle text-success"
+
         ],
+
+        [
+            'text' => 'Partially Paid',
+            'url' => '#',
+            'icon' => "far fa-fw fa-circle text-warning"
+
+        ],
+
+        [
+            'text' => 'Overdue',
+            'url' => '#',
+            'icon' => "far fa-fw fa-circle text-danger"
+
+        ],
+
+        [
+            'text' => 'Legal Escalation',
+            'url' => '#',
+            'icon' => "far fa-fw fa-circle text-info"
+
+        ],
+
+        [
+            'text' => 'Disputed',
+            'url' => '#',
+            'icon' => "far fa-fw fa-circle text-primary"
+
+        ],
+
+
+
+
+
+
+
+        // [
+        //     'text' => 'pages',
+        //     'url' => 'admin/pages',
+        //     'icon' => 'far fa-fw fa-file',
+        //     'label' => 4,
+        //     'label_color' => 'success',
+        //     'can' => 'manage-blog',
+        // ],
+
     ],
 
     /*

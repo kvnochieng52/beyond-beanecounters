@@ -1,11 +1,14 @@
 @extends('adminlte::page')
 @section('title', 'Add Institution')
-@section('content_header')
+{{-- @section('content_header')
 <h1>Add Institution</h1>
-@stop
+@stop --}}
 @section('content')
 
 <div class="card">
+    <div class="card-header">
+        <h3 class="card-title">New Institution</h4>
+    </div>
 
     <div class="card-body">
         <form action="{{ route('institutions.store') }}" method="POST">

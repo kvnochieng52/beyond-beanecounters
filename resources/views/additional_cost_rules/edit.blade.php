@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit Additional Cost Rule')
+@section('title', 'Edit Rule')
 
 @section('content_header')
 {{-- <h1>Edit Additional Cost Rule</h1> --}}
@@ -10,7 +10,9 @@
 
 <div class="card">
     <div class="card-header">
-        <h3>Edit Rule</h3>
+
+        <h5 class="card-title">Edit Rule</h5>
+
     </div>
 
     <div class="card-body">

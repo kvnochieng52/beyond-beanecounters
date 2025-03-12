@@ -30,18 +30,14 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     Route::post('/get-contacts', [ContactController::class, 'getContacts']);
 
     Route::resource('additional-cost-rules', AdditionalCostRuleController::class)->names('additional-cost-rules');
+    Route::get('scheduled-rules', [AdditionalCostRuleController::class, 'scheduledRules'])->name('scheduled-rules');
+
     Route::resource('institutions', InstitutionController::class);
 
     Route::resource('due-notifications', DueNotificationController::class);
-
-
     Route::get('institutions-data', [InstitutionController::class, 'getInstitutions'])->name('institutions.getInstitutions');
-
-
     Route::get('/transactions/data', [TransactionController::class, 'getTransactions'])->name('transactions.data');
-
     Route::post('/transactions/store', [TransactionController::class, 'storeTransaction'])->name('transactions.store');
-
 
     Route::prefix('leads')->group(
         function () {
@@ -89,6 +85,14 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
         });
         Route::resource('/users', UserController::class)->names('admin.users');
     });
+
+    Route::prefix('trans-bulk')->group(
+        function () {
+            Route::get('upload', [TransBulkController::class, 'upload'])->name('trans.bulk.upload');
+            Route::post('process', [TransBulkController::class, 'process'])->name('trans.bulk.process');
+            Route::get('/', [TransBulkController::class, 'index'])->name('trans_bulk.index');
+        }
+    );
 });
 
 Route::prefix('2fa')->group(
@@ -96,14 +100,5 @@ Route::prefix('2fa')->group(
         Route::get('/', [TwoFactorController::class, 'showVerifyForm'])->name('2fa.verify');
         Route::post('/', [TwoFactorController::class, 'verifyTwoFactorCode']);
         Route::post('/resend', [TwoFactorController::class, 'resend'])->name('2fa.resend');
-    }
-);
-
-
-Route::prefix('trans-bulk')->group(
-    function () {
-        Route::get('upload', [TransBulkController::class, 'upload'])->name('trans.bulk.upload');
-        Route::post('process', [TransBulkController::class, 'process'])->name('trans.bulk.process');
-        Route::get('/', [TransBulkController::class, 'index'])->name('trans_bulk.index');
     }
 );

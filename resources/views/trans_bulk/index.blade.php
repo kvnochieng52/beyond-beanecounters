@@ -9,7 +9,8 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3>Uploaded Transactions</h3>
+        <h3 class="card-title mb-0">Uploaded Transactions</h3>
+        <a href="/trans-bulk/upload" class="btn btn-info float-right">Create New</a>
     </div>
     <div class="card-body">
         @include('notices')

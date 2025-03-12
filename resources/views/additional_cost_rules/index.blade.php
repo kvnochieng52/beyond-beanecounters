@@ -10,12 +10,12 @@
 
 <div class="card">
     <div class="card-header">
-        <h3>Additional Cost Rules</h3>
-        <a href="{{ route('additional-cost-rules.create') }}" class="btn btn-primary float-right">Add Rule</a>
+        <h3 class="card-title">Rules/Discounts</h3>
+        <a href="{{ route('additional-cost-rules.create') }}" class="btn btn-info float-right">Add Rule</a>
     </div>
 
     <div class="card-body">
-        <table id="costRulesTable" class="table table-bordered">
+        <table id="costRulesTable" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>Title</th>
