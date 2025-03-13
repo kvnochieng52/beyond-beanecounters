@@ -353,42 +353,42 @@ return [
             'submenu' => [
                 [
                     'text' => 'Pending',
-                    'url' => '#',
+                    'url' => '/leads/status/1',
                     'icon' => "far fa-fw fa-circle text-info"
 
                 ],
 
                 [
                     'text' => 'Paid',
-                    'url' => '#',
+                    'url' => '/leads/status/2',
                     'icon' => "far fa-fw fa-circle text-success"
 
                 ],
 
                 [
                     'text' => 'Partially Paid',
-                    'url' => '#',
+                    'url' => '/leads/status/3',
                     'icon' => "far fa-fw fa-circle text-warning"
 
                 ],
 
                 [
                     'text' => 'Overdue',
-                    'url' => '#',
+                    'url' => '/leads/status/4',
                     'icon' => "far fa-fw fa-circle text-danger"
 
                 ],
 
                 [
                     'text' => 'Legal Escalation',
-                    'url' => '#',
+                    'url' => '/leads/status/5',
                     'icon' => "far fa-fw fa-circle text-info"
 
                 ],
 
                 [
                     'text' => 'Disputed',
-                    'url' => '#',
+                    'url' => '/leads/status/6',
                     'icon' => "far fa-fw fa-circle text-primary"
 
                 ],
@@ -537,42 +537,42 @@ return [
 
         [
             'text' => 'Pending',
-            'url' => '#',
+            'url' => '/leads/status/1',
             'icon' => "far fa-fw fa-circle text-info"
 
         ],
 
         [
             'text' => 'Paid',
-            'url' => '#',
+            'url' => '/leads/status/2',
             'icon' => "far fa-fw fa-circle text-success"
 
         ],
 
         [
             'text' => 'Partially Paid',
-            'url' => '#',
+            'url' => '/leads/status/3',
             'icon' => "far fa-fw fa-circle text-warning"
 
         ],
 
         [
             'text' => 'Overdue',
-            'url' => '#',
+            'url' => '/leads/status/4',
             'icon' => "far fa-fw fa-circle text-danger"
 
         ],
 
         [
             'text' => 'Legal Escalation',
-            'url' => '#',
+            'url' => '/leads/status/5',
             'icon' => "far fa-fw fa-circle text-info"
 
         ],
 
         [
             'text' => 'Disputed',
-            'url' => '#',
+            'url' => '/leads/status/6',
             'icon' => "far fa-fw fa-circle text-primary"
 
         ],

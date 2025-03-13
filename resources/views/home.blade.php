@@ -19,8 +19,8 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text"> Total Leads</span>
-                                <h5 class="info-box-number text-danger"><a href="subscribers/npd_subs"
-                                        class="text-danger">0</a>
+                                <h5 class="info-box-number text-success"><a href="/lead"
+                                        class="text-success">{{$totalLeads}}</a>
                                 </h5>
 
 
@@ -35,8 +35,8 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Agents</span>
-                                <h5 class="info-box-number text-danger"><a href="subscribers/npd_subs"
-                                        class="text-danger">0</a>
+                                <h5 class="info-box-number text-success"><a href="#"
+                                        class="text-success">{{$totalAgents}}</a>
                                 </h5>
 
 
@@ -51,8 +51,8 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text"> Institutions</span>
-                                <h5 class="info-box-number text-danger"><a href="subscribers/npd_subs"
-                                        class="text-danger">0</a>
+                                <h5 class="info-box-number text-success"><a href="/institutions"
+                                        class="text-success">{{$institutions}}</a>
                                 </h5>
 
 
@@ -71,47 +71,52 @@
                 <div class="row">
                     <div class="col-sm-2 col-6">
                         <div class="description-block border-right">
-
-                            <h5 class="text-info"><a href="subscribers/status/0">18491</a></h5>
-                            <span class="description-text">Pending </span>
+                            <h5 class="text-info"><a href="{{ url('leads/status/1') }}">{{ $leadStats['pending']
+                                    }}</a></h5>
+                            <span class="description-text">Pending</span>
                         </div>
-                    </div> <!-- /.col -->
-                    <div class="col-sm-2 col-6">
-                        <div class="description-block border-right">
-                            <h5 class="text-info"><a href="subscribers/status/1">0</a>
-                            </h5>
-                            <span class="description-text">PAID </span>
-                        </div> <!-- /.description-block -->
                     </div>
-                    <!-- /.col -->
+
                     <div class="col-sm-2 col-6">
                         <div class="description-block border-right">
-                            <h5 class="text-info"><a href="subscribers/status/2">1</a>
-                            </h5>
-                            <span class="description-text">Partially Paid </span>
-                        </div> <!-- /.description-block -->
+                            <h5 class="text-info"><a href="{{ url('leads/status/2') }}">{{ $leadStats['paid']
+                                    }}</a></h5>
+                            <span class="description-text">PAID</span>
+                        </div>
                     </div>
+
                     <div class="col-sm-2 col-6">
                         <div class="description-block border-right">
-                            <h5 class="text-info"><a href="subscribers/status/2">1</a>
+                            <h5 class="text-info"><a href="{{ url('leads/status/3') }}">{{
+                                    $leadStats['partially_paid'] }}</a>
                             </h5>
+                            <span class="description-text">Partially Paid</span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 col-6">
+                        <div class="description-block border-right">
+                            <h5 class="text-info"><a href="{{ url('leads/status/4') }}">{{ $leadStats['overdue']
+                                    }}</a></h5>
                             <span class="description-text">Overdue</span>
-                        </div> <!-- /.description-block -->
+                        </div>
                     </div>
+
                     <div class="col-sm-2 col-6">
                         <div class="description-block border-right">
-                            <h5 class="text-info"><a href="subscribers/status/2">1</a>
+                            <h5 class="text-info"><a href="{{ url('leads/status/5') }}">{{
+                                    $leadStats['legal_escalation'] }}</a>
                             </h5>
-                            <span class="description-text">Legal Escalation </span>
-                        </div> <!-- /.description-block -->
+                            <span class="description-text">Legal Escalation</span>
+                        </div>
                     </div>
-                    <!-- /.col -->
+
                     <div class="col-sm-2 col-6">
                         <div class="description-block">
-                            <h5 class="text-info"><a href="subscribers/status/4">37</a>
-                            </h5>
+                            <h5 class="text-info"><a href="{{ url('leads/status/6') }}">{{ $leadStats['disputed']
+                                    }}</a></h5>
                             <span class="description-text">Disputed</span>
-                        </div> <!-- /.description-block -->
+                        </div>
                     </div>
                 </div>
 
@@ -144,22 +149,23 @@
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a href="#" class="nav-link text-dark">
-                            Pending SMS <span class="float-right badge bg-primary">31</span>
+                            Pending SMS <span class="float-right badge bg-info">{{$smsStats['pending']}}</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link text-dark">
-                            Delivered SMS <span class="float-right badge bg-info">5</span>
+                            Delivered SMS <span class="float-right badge bg-success">{{$smsStats['delivered']}}</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link text-dark text-dark">
-                            Undelivered SMS <span class="float-right badge bg-success">12</span>
+                            Undelivered SMS <span
+                                class="float-right badge bg-danger">{{$smsStats['undelivered']}}</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link text-dark">
-                            SMS IN Queue <span class="float-right badge bg-danger">842</span>
+                            SMS IN Queue <span class="float-right badge bg-warning">{{$smsStats['inQueue']}}</span>
                         </a>
                     </li>
                 </ul>
@@ -180,116 +186,45 @@
                 <table class="table table-striped table-valign-middle">
                     <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Sales</th>
-                            <th>More</th>
+                            <th>T/No</th>
+                            <th>Names</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Stage</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
+
+                        @foreach($recentLeads as $lead)
+
+
                         <tr>
                             <td>
-                                <img src="dist/img/default-150x150.png" alt="Product 1"
-                                    class="img-circle img-size-32 mr-2">
-                                Some Product
+                                <a href="/lead/{{$lead->id}}"><strong>#{{$lead->id}}</strong></a>
                             </td>
-                            <td>$13 USD</td>
+                            <td>{{$lead->title}}</td>
+                            <td>{{$lead->defaulter_type_name}}</td>
+                            <td><strong>{{ $lead->currency_name }} {{ number_format($lead->amount, 0, '.', ',')
+                                    }}</strong></td>
                             <td>
-                                <small class="text-success mr-1">
-                                    <i class="fas fa-arrow-up"></i>
-                                    12%
-                                </small>
-                                12,000 Sold
-                            </td>
-                            <td>
-                                <a href="#" class="text-muted">
-                                    <i class="fas fa-search"></i>
+                                <a href="/lead/{{$lead->id}}">
+                                    <span class="badge text-white bg-{{$lead->lead_status_color_code}}">
+                                        {{$lead->lead_status_name}}
+                                    </span>
                                 </a>
                             </td>
-                        </tr>
-                        <tr>
+
+                            <td>{{$lead->lead_stage_name}}</td>
                             <td>
-                                <img src="dist/img/default-150x150.png" alt="Product 1"
-                                    class="img-circle img-size-32 mr-2">
-                                Another Product
-                            </td>
-                            <td>$29 USD</td>
-                            <td>
-                                <small class="text-warning mr-1">
-                                    <i class="fas fa-arrow-down"></i>
-                                    0.5%
-                                </small>
-                                123,234 Sold
-                            </td>
-                            <td>
-                                <a href="#" class="text-muted">
-                                    <i class="fas fa-search"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="dist/img/default-150x150.png" alt="Product 1"
-                                    class="img-circle img-size-32 mr-2">
-                                Amazing Product
-                            </td>
-                            <td>$1,230 USD</td>
-                            <td>
-                                <small class="text-danger mr-1">
-                                    <i class="fas fa-arrow-down"></i>
-                                    3%
-                                </small>
-                                198 Sold
-                            </td>
-                            <td>
-                                <a href="#" class="text-muted">
-                                    <i class="fas fa-search"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="dist/img/default-150x150.png" alt="Product 1"
-                                    class="img-circle img-size-32 mr-2">
-                                Perfect Item
-                                <span class="badge bg-danger">NEW</span>
-                            </td>
-                            <td>$199 USD</td>
-                            <td>
-                                <small class="text-success mr-1">
-                                    <i class="fas fa-arrow-up"></i>
-                                    63%
-                                </small>
-                                87 Sold
-                            </td>
-                            <td>
-                                <a href="#" class="text-muted">
-                                    <i class="fas fa-search"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="dist/img/default-150x150.png" alt="Product 1"
-                                    class="img-circle img-size-32 mr-2">
-                                Perfect Item
-                                <span class="badge bg-danger">NEW</span>
-                            </td>
-                            <td>$199 USD</td>
-                            <td>
-                                <small class="text-success mr-1">
-                                    <i class="fas fa-arrow-up"></i>
-                                    63%
-                                </small>
-                                87 Sold
-                            </td>
-                            <td>
-                                <a href="#" class="text-muted">
+                                <a href="/lead/{{$lead->id}}" class="text-muted">
                                     <i class="fas fa-search"></i>
                                 </a>
                             </td>
                         </tr>
 
+                        @endforeach
                     </tbody>
                 </table>
 
@@ -310,10 +245,11 @@
                 <table class="table table-striped table-valign-middle">
                     <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Sales</th>
-                            <th>More</th>
+                            <th>Title</th>
+                            <th>Defaulter Name</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>A. Status</th>
                         </tr>
                     </thead>
 
@@ -340,27 +276,28 @@
     document.addEventListener("DOMContentLoaded", function () {
         var ctx = document.getElementById('leadsStatusDonutChart').getContext('2d');
 
+        var data = {
+            labels: ["Pending", "Paid", "Partially Paid", "Overdue", "Legal Escalation", "Disputed"],
+            datasets: [{
+                data: [
+                    {{ $leadStats['pending'] }},
+                    {{ $leadStats['paid'] }},
+                    {{ $leadStats['partially_paid'] }},
+                    {{ $leadStats['overdue'] }},
+                    {{ $leadStats['legal_escalation'] }},
+                    {{ $leadStats['disputed'] }}
+                ],
+                backgroundColor: ["#36A2EB", "#4BC0C0", "#FF6384", "#FF9F40", "#FFCD56", "#9966FF"],
+            }]
+        };
+
         new Chart(ctx, {
             type: 'doughnut',
-            data: {
-                labels: ['Pending', 'Paid', 'Partially Paid', 'Overdue', 'Legal Escalation', 'Disputed'],
-                datasets: [{
-                    data: [18491, 0, 1, 1, 1, 37], 
-                    backgroundColor: ['#17a2b8', '#28a745', '#ffc107', '#dc3545', '#6610f2', '#17a2b8'],
-                    hoverOffset: 2 
-                }]
-            },
+            data: data,
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        position: 'bottom', // Moves legend below the chart
-                        labels: {
-                            font: {
-                                size: 12
-                            }
-                        }
+                        position: 'bottom' // Moves the legend below the chart
                     }
                 }
             }

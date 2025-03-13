@@ -42,6 +42,8 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     Route::prefix('leads')->group(
         function () {
             Route::post('/leads-update-status', [LeadController::class, 'updateStatus'])->name('leads-update-status');
+            Route::get('/status/{status_id}', [LeadController::class, 'leadByStatus'])->name('lead.leadByStatus');
+            Route::get('/leadByStatusData', [LeadController::class, 'leadByStatusData'])->name('lead.leadByStatusData');
         }
     );
 

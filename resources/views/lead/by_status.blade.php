@@ -32,73 +32,7 @@
                 </tr>
             </thead>
         </table>
-        {{-- <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>T/No.</th>
-                    <th>Names/Title</th>
-                    <th>Defaulter Type</th>
-                    <th>ID Number</th>
-                    <th>Telephone</th>
-                    <th>Amount</th>
-                    <th>Balance</th>
-                    <th>Priority</th>
-                    <th>Status</th>
-                    <th>Stage</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
 
-            <tbody>
-                @foreach ($leads as $key => $lead)
-                <tr>
-                    <td>{{ $leads->firstItem() + $key }}</td>
-                    <td>
-                        <a href="/lead/{{$lead->id}}">
-
-                            <strong>#{{ $lead->id }}</strong>
-
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/lead/{{$lead->id}}"><strong>{{ $lead->title }}</strong></a><br />
-                        <small>Agent: {{ $lead->assigned_agent_name }}</small>
-                    </td>
-                    <td>{{ $lead->defaulter_type_name }}</td>
-                    <td>{{ $lead->id_passport_number }}</td>
-                    <td>{{ $lead->telephone }}</td>
-                    <td>{{ $lead->currency_name }} {{ number_format($lead->amount, 0) }}</td>
-                    <td>{{ $lead->currency_name }} {{ number_format($lead->balance, 0) }}</td>
-                    <td>
-                        <a href="/lead/{{$lead->id}}">
-                            <span class="badge bg-{{ $lead->lead_priority_color_code }}">
-                                {{$lead->lead_priority_name}}
-                            </span>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/lead/{{$lead->id}}">
-                            <span class="badge bg-{{ $lead->lead_status_color_code }}">
-                                {{ $lead->lead_status_name}}
-                            </span>
-                        </a>
-                    </td>
-                    <td>{{ $lead->lead_stage_name }}</td>
-                    <td>
-                        <a href="/lead/{{$lead->id}}/edit" class="btn btn-warning btn-xs">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                        <a href="#" class="btn btn-danger btn-xs" onclick="confirmDelete({{ $lead->id }})">
-                            <i class="fa fa-trash"></i>
-                        </a>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table> --}}
-
-        <!-- Pagination -->
 
     </div>
 </div>
@@ -112,10 +46,23 @@
 <script src="/js/validator/bootstrapValidator.min.js"></script>
 <script>
     $(document).ready(function() {
+    let status = "{{ $status }}"; // Pass status from Blade to JavaScript
+
+   // console.log("STATUS IS: "+status);
+
     $('#leadsTable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('lead.index') }}",
+        ajax: {
+            url: "{{ route('lead.leadByStatusData') }}",
+            data: function(d) {
+                d.status = status; // Append status to the request
+            },
+            error: function(xhr, error, thrown) {
+                console.log("DataTables Error:", error);
+                console.log("XHR Response:", xhr.responseText);
+            }
+        },
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
             { 
@@ -136,7 +83,7 @@
             { data: 'defaulter_type_name', name: 'defaulter_type_name' },
             { data: 'id_passport_number', name: 'id_passport_number' },
             { data: 'telephone', name: 'telephone' },
-            { 
+             { 
                 data: 'amount', 
                 name: 'amount',
                 render: function(data, type, row) {
@@ -191,6 +138,7 @@
         ]
     });
 });
+
 
 </script>
 @stop

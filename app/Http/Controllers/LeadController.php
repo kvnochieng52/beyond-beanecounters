@@ -372,4 +372,38 @@ class LeadController extends Controller
     {
         //
     }
+
+
+    public function leadByStatus($status)
+    {
+
+        return view('lead.by_status')->with([
+            'status' => $status // Pass status to the view
+        ]);
+    }
+
+
+
+    public function leadByStatusData(Request $request)
+    {
+        $status = $request->input('status'); // Retrieve status from request
+
+        $leads = Lead::query()
+            ->where('status_id', $status) // Apply filter
+            ->orderBy('id', 'DESC');
+
+        return DataTables::of($leads)
+            ->addIndexColumn()
+            ->addColumn('actions', function ($lead) {
+                return '
+                <a href="/lead/' . $lead->id . '/edit" class="btn btn-warning btn-xs">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <a href="#" class="btn btn-danger btn-xs" onclick="confirmDelete(' . $lead->id . ')">
+                    <i class="fa fa-trash"></i>
+                </a>';
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
+    }
 }
