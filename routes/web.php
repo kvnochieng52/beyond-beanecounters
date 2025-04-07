@@ -21,7 +21,7 @@ use App\Http\Controllers\TransBulkController;
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth', '2fa']], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::resource('/lead', LeadController::class);
@@ -38,6 +38,8 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     Route::get('institutions-data', [InstitutionController::class, 'getInstitutions'])->name('institutions.getInstitutions');
     Route::get('/transactions/data', [TransactionController::class, 'getTransactions'])->name('transactions.data');
     Route::post('/transactions/store', [TransactionController::class, 'storeTransaction'])->name('transactions.store');
+    Route::get('/transactions/{id}/edit', [TransactionController::class, 'editTransaction'])->name('transactions.edit');
+    Route::post('/transactions/update', [TransactionController::class, 'updateTransaction'])->name('transactions.update');
 
     Route::prefix('leads')->group(
         function () {
@@ -49,7 +51,12 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
 
     Route::prefix('activity')->group(
         function () {
+            Route::get('/', [ActivityController::class, 'allActivity'])->name('all-activity');
+            Route::get('/{activity}/edit', [ActivityController::class, 'allEditActivity'])->name('all-edit-activity');
             Route::post('/store-activity', [ActivityController::class, 'storeActivity'])->name('store-activity');
+            Route::post('/edit-activity/{activity}', [ActivityController::class, 'editActivity'])->name('edit-activity');
+            Route::post('/update-all-activity/{activity}', [ActivityController::class, 'updateAllActivity'])->name('update-activity');
+            Route::delete('/destroy/{activity}', [ActivityController::class, 'destroy'])->name('activity.destroy');
         }
     );
     Route::prefix('payment')->group(
@@ -70,6 +77,10 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     Route::prefix('texts')->group(function () {
         Route::post('/upload_csv', [TextController::class, 'uploadCsv'])->name('texts-upload-csv');
         Route::post('/preview-sms', [TextController::class, 'previewSms'])->name('preview-sms');
+        Route::post('/text/{id}/edit', [TextController::class, 'edit'])->name('text.edit');
+        Route::post('/preview-sms-edit', [TextController::class, 'previewSmsEdit'])->name('preview-sms-edit');
+        Route::put('/text/{id}', [TextController::class, 'update'])->name('text.update');
+        Route::post('/text/{id}/cancel', [TextController::class, 'cancel'])->name('text.cancel');
     });
 
     Route::prefix('queue')->group(function () {

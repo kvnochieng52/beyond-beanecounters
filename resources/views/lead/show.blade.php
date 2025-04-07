@@ -318,9 +318,92 @@
                 { data: 'transaction_type_title', name: 'transaction_types.transaction_type_title' },
                 { data: 'created_by_name', name: 'users.name' },
                 { data: 'status_label', name: 'transaction_statuses.status_name', orderable: false, searchable: false },
-                { data: 'created_at', name: 'created_at' }
+                { data: 'created_at', name: 'created_at' },
+                 // ✅ Edit button column
+                {data: null,name: 'action',orderable: false,searchable: false,render: function (data, type, row) {
+                return `
+                    <button class="btn btn-warning btn-xs edit-transaction-btn" data-id="${row.id}" data-transaction="${row.transaction_type_title}" data-penaltyTypeId="${row.penalty_type_id}">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>`;
+            }
+        }
+
             ]
         });
+
+        // Handle Edit Button Click
+        $(document).on('click', '.edit-transaction-btn', function () {
+            var transactionId = $(this).data('id');
+            var transactionTypeTitle = $(this).data('transaction');
+            var penaltyType = $(this).data('penaltyTypeId');
+
+
+
+           // Optionally set display in read-only input
+          $('#edit_transaction_modal input[name="transactionTypesEdit"]').val(transactionTypeTitle);
+
+            // Open modal
+            $('#edit_transaction_modal').modal('show');
+
+            // Load transaction details
+            $.ajax({
+                url: '/transactions/' + transactionId + '/edit',
+                method: 'GET',
+                success: function (response) {
+                    console.log(response)
+                    // === PAYMENT FIELDS ===
+                    $('#edit_transaction_modal input[name="amount"]').val(response.amount);
+                    $('#edit_transaction_modal input[name="transID"]').val(response.transaction_id);
+                    $('#edit_transaction_modal input[name="transRecordId"]').val(response.id);
+                    $('#edit_transaction_modal select[name="payment_method"]').val(response.payment_method).trigger('change');
+                    $('#edit_transaction_modal select[name="payment_status"]').val(response.status_id).trigger('change');
+                    $('#edit_transaction_modal textarea[name="description"]').val(response.description);
+
+                    // === PENALTY FIELDS ===
+                    $('#edit_transaction_modal select[name="penalty_type"]').val(response.penalty_type_id).trigger('change');
+
+                    $('#edit_transaction_modal input[name="trans_type_select"]').val(response.transaction_type);
+
+                    $('#edit_transaction_modal select[name="charge_type"]').val(response.charge_type).trigger('change');
+
+                    $('#edit_transaction_modal input[name="value"]').val(response.amount);
+
+                    // === Show alert if penalty_type === 1
+                    if (response.penalty_type_id == 1) {
+                        $('.penalty-note').removeClass('d-none');
+                    } else {
+                        $('.penalty-note').addClass('d-none');
+                    }
+                    // Map text title to numeric ID
+                    let transactionTypeMap = {
+                        'Penalty': 1,
+                        'Payment': 2,
+                        'Discount': 3
+                    };
+
+                   let transactionTypeId = transactionTypeMap[transactionTypeTitle.trim()] || 0;
+
+                   // Show correct section
+                  handleTransactionTypeDisplay(transactionTypeId);
+
+                  $('#edit_transaction_modal input[name="transactionTypesEdit"]').val(transactionTypeText);
+
+                }
+            });
+        });
+
+        // Helper Function to toggle form sections
+        function toggleTransactionSections(typeId) {
+            $('.trans_options').hide();
+
+            if (typeId == 1) {
+                $('._payment').show();
+            } else if (typeId == 2) {
+                $('._penalty').show();
+            } else if (typeId == 3) {
+                $('._discount').show();
+            }
+        }
 
 
 
@@ -375,6 +458,16 @@
     // Toggle Due Date Inputs
     $('#setDueDate').on('change', function() {
         $('#dueDateInputs').toggleClass('d-none', !this.checked);
+    });
+
+        // Toggle Start Date Inputs Edit
+        $('#setStartDateEdit').on('change', function() {
+        $('#startDateInputsEdit').toggleClass('d-none', !this.checked);
+    });
+
+    // Toggle Due Date Inputs Edit
+    $('#setDueDateEdit').on('change', function() {
+        $('#dueDateInputsEdit').toggleClass('d-none', !this.checked);
     });
 
     // Form validation
@@ -447,16 +540,31 @@
         if(selectedValue==3){
         $('._discount').show()
         }
-        
+
     });
 
+    function handleTransactionTypeDisplay(value) {
+    $('.trans_options').hide(); // hide all by default
+
+    if (value == 1) {
+        $('._penalty').show();
+    } else if (value == 2) {
+        $('._payment').show();
+    } else if (value == 3) {
+        $('._discount').show();
+    }
+}
 
 
 
- 
+
+
+
 });
 
 </script>
+
+
 
 
 @stop

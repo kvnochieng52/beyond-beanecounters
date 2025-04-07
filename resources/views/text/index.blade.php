@@ -27,7 +27,7 @@
                     <th>Date</th>
                     <th>Agent</th>
                     <th>Status</th>
-                    {{-- <th></th> --}}
+                    <th>Action</th>
                 </tr>
             </thead>
         </table>
@@ -111,21 +111,21 @@
             { targets: 2, width: "25%", className: "wrap-text" }
         ],
         columns: [
-            { 
-                data: 'DT_RowIndex', 
+            {
+                data: 'DT_RowIndex',
                 name: 'DT_RowIndex',
-                orderable: false, 
-                searchable: false 
+                orderable: false,
+                searchable: false
             },
-            { 
-                data: 'text_title', 
+            {
+                data: 'text_title',
                 name: 'text_title',
                 render: function(data, type, row) {
                     return `<strong><a href="/text/${row.id}" class="text-primary">${data}</a></strong>`;
                 }
             },
             { data: 'message', name: 'message' },
-            { 
+            {
                 data: 'recepient_contacts',
                 name: 'recepient_contacts',
                 orderable: false,
@@ -133,16 +133,16 @@
                 render: function(data, type, row) {
                     if (row.contact_type === 'csv') {
                         return `<a href="${row.csv_file_path}" class="btn btn-secondary btn-sm" target="_blank">view</a>`;
-                    } 
+                    }
                     else if (row.contact_type === 'manual') {
-                        return `<button class="btn btn-secondary btn-sm view-manual-contacts" 
+                        return `<button class="btn btn-secondary btn-sm view-manual-contacts"
                                     data-contacts="${row.recepient_contacts}">
                                     view
                                 </button>`;
                     }
                     else if (row.contact_type === 'saved') {
-                        // return `<button class="btn btn-secondary btn-sm view-saved-contacts" 
-                        //             data-contact-list='${JSON.stringify(row.contact_list)}' 
+                        // return `<button class="btn btn-secondary btn-sm view-saved-contacts"
+                        //             data-contact-list='${JSON.stringify(row.contact_list)}'
                         //             data-text-id="${row.id}">
                         //             View Contacts
                         //         </button>`;
@@ -155,24 +155,36 @@
                     return '';
                 }
             },
-            { 
+            {
                 data: 'created_at',
                 render: function(data) {
                     return data ? moment(data).format('DD-MM-YYYY hh:mm A') : '';
                 },
                 name: 'created_at'
             },
-            { 
-                data: 'created_by_name', 
+            {
+                data: 'created_by_name',
                 name: 'created_by_name'
             },
-            { 
+            {
                 data: 'status',
                 name: 'status',
                 orderable: false,
                 searchable: false,
                 render: function(data, type, row) {
                     return `<a href="/text/${row.id}" class="text-primary">${data}</a>`;
+                }
+            },
+            {
+                data: 'id',
+                name: 'id',
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row) {
+                      return `
+                     <a href="/text/${row.id}/edit" class="btn btn-warning btn-xs edit-btn">Edit</a>
+                     <button type="button" class="btn btn-danger btn-xs cancel-btn" data-id="${row.id}">Cancel</button>
+                   `;
                 }
             }
         ],
@@ -266,6 +278,36 @@
 
 
 });
+
+$(document).on('click', '.cancel-btn', function(e) {
+    e.preventDefault();
+    let textId = $(this).data('id');
+
+
+    if (!confirm('Are you sure you want to cancel this SMS?')) {
+        return;
+    }
+
+    $.ajax({
+        url: '/texts/text/'+ textId +'/cancel',
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
+        },
+        success: function(response) {
+            if (response.success) {
+                alert('SMS canceled successfully!');
+                $('#smsTable').DataTable().ajax.reload(); // Reload table
+            } else {
+                alert('Failed to cancel SMS.');
+            }
+        },
+        error: function() {
+            alert('Error occurred while canceling SMS.');
+        }
+    });
+});
+
 
 
 

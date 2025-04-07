@@ -399,7 +399,7 @@ return [
 
         [
             'text' => 'Activities',
-            'url' => '#',
+            'url' => '/activity',
             'icon' => 'far fa-fw fa-clock',
             //'can' => 'manage-blog',
         ],
