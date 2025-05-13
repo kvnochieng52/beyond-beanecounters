@@ -1,0 +1,2052 @@
+original_ticket_id,account_no,sub_name,sub_phone,channel_name,ticket_type_name,category_name,sub_category_name,description,shift_location,department_name,customer_no,customer_alternative_no,sub_status,current_pkg,last_pkg,bill_cycle,sub_node,master_node,ticket_status_name,name,schedule_site_visit,created_at,updated_at
+3815135,1070819,Sheila Chepkemoy,,Inbound,Service enquiry,FRONTLINE RETENTION,Available Offers/Promos,"Agent...Billy
+call reason... frontline retention
+Finding: available offer
+ActionTaken: escalated to retention
+Resolution: client advised on escalation
+Voc: is there an offer available",,North Region ,254754358883,,CRN,,,,FJL59-23,ROY,Escalated Open,Apiyo Gillan,,2025-03-24 08:56:15,2025-03-24 08:56:15
+3822145,1074597,Dan Owino Obongo,0715268580,Inbound,Service enquiry,INTERNET,Credit Request,kindly assist.,,West & SouthWest Support ESC,254735264599,,ACT,,,,STD101H,Not Available,Escalated Open,Olive Tanui,,2025-03-24 08:44:55,2025-03-24 08:44:55
+3822717,1076150,Prince Isaiah Wafula,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent: Roosevelt
+Issue: Internet
+Findings: Area outage confirmedTicket No #108179; RYU103 & RYU105A,C,E,FH down
+Resolution: Advised client on area outage 
+VOC: I am following up on my connection it is not working
+254783368137",,,254783368137,,ACT,,,,RYU104E,Not Available,Closed on FCR,Roosevelt Otieno,no,2025-03-24 00:04:02,2025-03-24 00:04:02
+3822720,205401,Jackline Wanjiku Hiuhu,,Inbound,Service Complaint,INTERNET,No Browsing IP,"Agent name: Jackson
+Call reason :client unable to browse... no ip
+voc: its not reconnnected yet
+Action taken: modem rebooted... Ip picked..
+Resolution: client advised to confirm connection
+254714408968",,,254714408968,,ACT,J2,J2,20,UMA124G,uma124,Closed on FCR,Jackson Muthii,no,2025-03-24 00:10:10,2025-03-24 00:10:10
+3822723,938145,Esther Kingoo,,Inbound,Service enquiry,INTERNET,Area Outage - Confirmed With a Ticket,"Agent name: Benard
+Call reason:Internet
+findings: Area outage
+Action/Resolution; Advised client on general outage,,,, Ticket No: #108180 : Issue > MHO102/103/104D
+VOC: I don't have internet....
+Calling number:0706172418",,,254706172418,,ACT,,J5 BASIC,22,MHO101A,mho103,Closed on FCR,Benard Wabomba,no,2025-03-24 00:12:09,2025-03-24 00:12:09
+3822724,803612,Ali Arif,,Inbound,Service Complaint,INTERNET,Slow/Intermittent connection - LOW SNR,Modem probed to optimal parameters; under monitoring.,,Kisumu & Mombasa Support ESC,254101004004,,ACT,DUO 60,DUO 60,20,MBS125E,mbs125,Escalated Closed,Roosevelt Otieno,no,2025-03-24 00:16:19,2025-03-24 07:04:14
+3822726,942999,Geoffrey Samuel,,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name: Jackson
+Call Reason: Retention, offer inquiry
+Findings: offer eligible
+Voc: i had made payment to wrong account
+Action Taken: account escalated for reconnection
+254739449121",,,254739449121,,ACT,,DUO 10,26,UMA104B,uma123,Closed on FCR,Jackson Muthii,no,2025-03-24 00:18:59,2025-03-24 00:18:59
+3822728,1006845,Joseph Kamau Muhiu,0711638067,Inbound,Service enquiry,INTERNET,Unable to browse - DNS settings,"Agent Name: Benard
+Call Reason: internet
+findings:SSID/pw reset to default
+Action/Resolution: escalated for DNS server to be changed,, client advised to restart modem connection will pick,,, client advised to wait,,,,
+Voc: When I try to access internet it says DNS server cannot be accessed
+Calling number:0758242496",,,254711638067,,ACT,,DUO 10 CLASSIC,22,MHO106A,mho119,Closed on FCR,Benard Wabomba,no,2025-03-24 00:29:38,2025-03-24 00:29:38
+3822729,880829,Prudence Odero,,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name: Jackson
+Call Reason: Retention, offer inquiry
+Findings: offer eligible, Client contacted on 16th March
+Voc: i wanted to know whether the offer is still on
+Action Taken: advised to make payment
+254707663400",,,254707663400,,ACT,GPON DUO CLASSIC 10,GPON DUO CLASSIC 10,22,FRN100-2-8D,RON,Closed on FCR,Jackson Muthii,no,2025-03-24 00:33:52,2025-03-24 00:33:52
+3822730,854784,James Mwaniki,0724589266,Inbound,Service Complaint,INTERNET,SSID/PW Reset to Default,"Agent: Roosevelt
+Issue: Internet
+Findings; SSID/PW Reset to default
+Resolution: Logged into router changed SSID & password client confirmed uptime
+VOC: I am unable to see my Wi-Fi name
+254724589266",,,254724589266,,ACT,J2,J2,5,BRU108G,dhm101,Closed on FCR,Roosevelt Otieno,no,2025-03-24 00:33:53,2025-03-24 00:33:53
+3822731,1058922,Andrew Muchemi,0797647979,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent name;benedict
+call reason;frontline retention
+Acc status;npd  offer
+Action;eligible for the offer,,to pay sh1450 for 10mbps,,escalated 
+voc,i have paid the offer and not connected
+calling number;0797647979",,,254797647979,,ACT,,,3,KWS103B,Not Available,Closed on FCR,Benedict Wambua,no,2025-03-24 00:35:53,2025-03-24 00:35:53
+3822732,46715,Fred Sonje,0728434908,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Jackson
+Chat Reason: internet, area outage
+Voc: nimenotice haiko
+Action Taken: advised on Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+254728434908",,,254728434908,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,4,RYU105D,ryu103,Closed on FCR,Jackson Muthii,no,2025-03-24 00:37:15,2025-03-24 00:37:15
+3822733,178333,Joel Machira,0722144538,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name: Benard
+Call Reason: frontline retention
+Findings: Npd/churn offer
+Action/Resolution: confirmed a/c eligible for 800/= offer.... advised client to make payment,,, call dropped,,,
+Voc: want to confirm if I have offer so that I can make payment for reconnection,,
+Calling number:0722144538",,,254722144538,,ACT,,i30 - EDGE,10,KSN107B,ksn107,Closed on FCR,Benard Wabomba,no,2025-03-24 00:41:40,2025-03-24 00:41:40
+3822734,805416,Nickson Njogu,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent: Roosevelt
+Issue: Internet
+Findings: Area outage confirmed Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+Resolution: Advised client on area outage 
+VOC: I am having a downtime I want to confirm what the issue is
+254727242983",,,254727242983,,ACT,J5 BASIC DISCOUNTED,J5 BASIC DISCOUNTED,8,RYU102B,ryu103,Closed on FCR,Roosevelt Otieno,no,2025-03-24 00:45:27,2025-03-24 00:45:27
+3822736,941448,Elizabeth Nyambura,,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name: Benard
+Call Reason: frontline retention
+Findings: Npd/churn offer
+Action/Resolution: confirmed a/c eligible for 70% to py  840/= offer.... advised client to make payment,,, call dropped,,,
+Voc: want to confirm if I have offer so that I can make payment for reconnection,,
+Calling number:0722144538",,,254722144538,,ACT,,J30,10,KSN106FL1,ksn107,Closed on FCR,Benard Wabomba,no,2025-03-24 00:53:15,2025-03-24 00:53:15
+3822737,1002396,Ali Arif Abeid,,Inbound,Service enquiry,FRONTLINE RETENTION,Available Offers/Promos,"Agent name;benedict
+call reason;frontline retention
+Acc status;available offer
+Action;eligible for the offer,,,advised to top up sh800,,paid,,escalated for reconnection
+voc,i received an offer is it valid
+calling number;0799558251",,,254799558251,,ACT,,DUO 60,25,MBS108E,Not Available,Closed on FCR,Benedict Wambua,no,2025-03-24 00:54:28,2025-03-24 00:54:28
+3822738,1104459,Dean Philip Kimani,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent: Roosevelt
+Issue: Internet
+Findings: Area outage confirmedTicket No #108179; RYU103 & RYU105A,C,E,FH down
+Resolution: Advised client on area outage 
+VOC: I don't have internet
+254724909541",,,254724909541,,ACT,,,,RYU103H,Not Available,Closed on FCR,Roosevelt Otieno,no,2025-03-24 00:54:42,2025-03-24 00:54:42
+3822740,911286,Catherine Wambui,0724283932,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name: Jackson
+Call Reason: Retention, offer inquiry
+Findings: offer eligible
+Voc:  nimelipa na nikapata message
+Action Taken: account escalated for reconnection
+254724283932",,,254724283932,,ACT,,DUO 10,1,NGO105E,ngo102,Closed on FCR,Jackson Muthii,no,2025-03-24 00:58:16,2025-03-24 00:58:16
+3822741,899373,Evalyne Wairimu Njagi Wairimu Njagi,0728854552,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name: Benard
+Call Reason: frontline retention
+Findings: Npd/churn offers
+Action/Resolution: confirmed a/c on the offer list.,, client advised to wait for reconnection, escalated for reconnection,,,,
+Voc: Got an offer to pay 1200/= for 10mbps, paid need to be reconnected,,,
+Calling number:+254728854552",,,254728854552,,ACT,DUO 10,DUO 10,8,BRU102E,bru102,Closed on FCR,Benard Wabomba,no,2025-03-24 01:02:29,2025-03-24 01:02:29
+3822742,1009234,Derek Sifa,0726332345,Inbound,Service Request,INTERNET,SSID/PW Reset to Default,"Agent Name: Jackson
+Chat Reason: Internet, Password change
+Findings: Account active
+Voc: nataka hiyo ya 5G
+Action Taken: password changed
++254726332345",,,254726332345,,ACT,GPON DUO 10,GPON DUO 10,15,FBM21-8,BAM,Closed on FCR,Roosevelt Otieno,no,2025-03-24 01:11:01,2025-03-24 01:22:03
+3822743,961805,Marion Wambui,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent name;benedict
+call reason;internet
+Acc status;area outage
+Action;Ticket No #108179; RYU103 & RYU105 down,,area outage,,,advised to be patient awaiting restoration
+Voc;internet is not working
+calling number;+254703147280",,,254703147280,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,12,RYU103C,ryu103,Closed on FCR,Benedict Wambua,no,2025-03-24 01:11:37,2025-03-24 01:11:37
+3822744,910143,Denis Orwang,0723544616,Inbound,Service enquiry,BIILING,Balance Inquiry,"Agent Name: Jackson
+Call Reason: Billing, Balance inquiry
+Voc: i wanted to know amount to top up
+Action Taken: advised on 4286
+Resolution: client will pay
+254723544616",,,254723544616,,ACT,GPON PAWA WIFI 5Mbps,GPON PAWA WIFI 5Mbps,21,FKLN106-2,KLM,Closed on FCR,Jackson Muthii,no,2025-03-24 01:11:49,2025-03-24 01:11:49
+3822745,1048254,Mitu Ephraim,,Inbound,Service enquiry,FRONTLINE RETENTION,Speed Upgrade Offer,"Agent Name: Benard
+Call Reason: frontline retention
+Findings: Npd/churn offer
+Action/Resolution: confirmed a/c eligible for speed upgrade offer.... advised client to make payment,,, call dropped,,,
+Voc: want to confirm if I have offer so that I can make payment for reconnection,,
+Calling number:254113448408",,,254113448408,,ACT,STUDENT PAWA WIFI 5Mbps,STUDENT PAWA WIFI 5Mbps,12,KWD103A,kwd102,Closed on FCR,Benard Wabomba,no,2025-03-24 01:23:46,2025-03-24 01:23:46
+3822746,977875,Said Hemed Said,,Inbound,Service Follow up,INTERNET,No Browsing IP,"Agent: Roosevelt
+Issue: Internet
+Findings: No Browsing IP
+Resolution:Confirmed client package already assigned Tried refreshing and rebooting router.. Client not close to router will confirm uptimeescalated to CE
+VOC: Nimelipia account yangu lakini bado haifanyi
++254113836471",,,254113836471,,ACT,DUO 10,DUO 10,22,MBS109B,mbs109,Closed on FCR,Roosevelt Otieno,no,2025-03-24 01:32:09,2025-03-24 01:32:09
+3822747,861282,Abdulhussein Kassamani,0705622386,Inbound,Service Complaint,BIILING,Due date,"Agent Name: Jackson
+Chat Reason: Billing, due date
+Findings: Account due
+Voc: is it suspended?
+Action Taken: advised to make payment
+Resolution: client to make payment
+254705622386",,,254705622386,,ACT,"WIFI EXTENDER RENTAL FEE,i30 - EDGE","WIFI EXTENDER RENTAL FEE,i30 - EDGE",18,MBS101D,mbs101,Closed on FCR,Jackson Muthii,no,2025-03-24 01:38:39,2025-03-24 01:38:39
+3822748,894768,Gitema Francis,,Inbound,Service enquiry,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Benard
+Call reason:Internet
+findings: Area outage
+Action/Resolution: Area outage, call dropped, called back client advised on outage,,, Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+VOC: I don't have internet.. ,, ..
+Calling number:+254722880096",,,254705866934,,ACT,,PAWA WIFI 5Mbps ,26,RYU103H,ryu103,Closed on FCR,Benard Wabomba,no,2025-03-24 01:43:23,2025-03-24 01:43:23
+3822749,1044920,Charles Juma,0722612268,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent:Roosevelt
+Issue:FRONTLINE RETENTION
+Findings: NPD/Churn Offer
+Resolution: Confirmed client on offer list to pay 500 for 10 mbps.. made payment on call escalated for reconnection
+VOC: I want to confirm if my offer is still valid
+254722612268",,,254722612268,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,24,DHM109A,dhm103,Closed on FCR,Roosevelt Otieno,no,2025-03-24 01:55:06,2025-03-24 01:55:06
+3822750,1043544,Gerald Muriki Joseph,0710579140,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Jackson
+Chat Reason: internet, area outage
+Voc: its not working
+Action Taken: advised on Ticket No: #108165 : Issue > UMA110B,C,D,E and H down
+254714095806",,,254714095806,,ACT,,"UPGRADE J2D-J5D,DUO 10 CLASSIC",28,UMA117D,uma110,Closed on FCR,Jackson Muthii,no,2025-03-24 01:56:19,2025-03-24 01:56:19
+3822751,1091931,Melisa Atieno,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent name;benedict
+call reason;internet
+Acc status;area outage
+Action;Ticket No #108179; RYU103 & RYU105 down,,area outage,,,advised to be patient awaiting restoration
+Voc;internet is not working
+calling number;715088321",,,254715088321,,ACT,,,,RYU103H,Not Available,Closed on FCR,Benedict Wambua,no,2025-03-24 02:07:36,2025-03-24 02:07:36
+3822752,1104216,Salome Chepkirui .,,Inbound,Service enquiry,BIILING,Due date,"Agent Name: Benard
+Call Reason: billing
+Findings: Due date
+Action/Resolution: account was due,, client advised to make payment for connection to be restored,,
+Voc: I don't have internet,..
+Calling number:+254717791725",,,254717791725,,ACT,,,,FBM24-17,BAM,Closed on FCR,Benard Wabomba,no,2025-03-24 02:10:49,2025-03-24 02:10:49
+3822754,138449,Mboje Said Mwajaji,0720036082,Inbound,Service Complaint,INTERNET,Area Outage - Unconfirmed,"Agent Name: Jackson
+Chat Reason: internet, area outage
+Voc: mona imekatika na nimelipa
+Action Taken: advised on CM Status: 372 KO/372 total
+254751655668",,,254751655668,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,25,MBS116D,mbs116,Closed on FCR,Jackson Muthii,no,2025-03-24 02:18:16,2025-03-24 02:18:16
+3822755,1001558,Claire Waithera Muthoni,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent: Roosevelt
+Issue: Internet
+Findings: Area outage confirmed Ticket No: #108165 : UMA110B,C,D,E and H down
+Resolution: Advised client on area outage 
+VOC: I don't have internet
+254112127396",,,254112127396,,ACT,,DUO 10,28,UMA108E,Not Available,Closed on FCR,Roosevelt Otieno,no,2025-03-24 02:26:24,2025-03-24 02:26:24
+3822757,138449,Mboje Said Mwajaji,0720036082,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent name;benedict
+call reason;internet
+Acc status;area outage
+Action;Ticket No: #108183 : Issue > MBS116/117DNs D&H/115 DN A are down,,area outage,,,advised to be patient awaiting restoration
+Voc;internet is not working
+calling number;+254751655668",,,254751655668,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,25,MBS116D,mbs116,Closed on FCR,Benedict Wambua,no,2025-03-24 02:56:34,2025-03-24 02:56:34
+3822758,803005,Erick Kimangu,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent: Roosevelt
+Issue: Internet
+Findings: Area outage confirmed Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+Resolution: Advised client on area outage 
+VOC: I don't have internet
+254729462462",,,254729462462,,ACT,,DUO 10 CLASSIC,4,KWW101C,ryu103,Closed on FCR,Roosevelt Otieno,no,2025-03-24 03:01:32,2025-03-24 03:01:32
+3822759,1088137,Dishon Ochieng Achiro,0721267669,Inbound,Service enquiry,INTERNET,SSID/PW Reset to Default,"Agent Name: Benard
+Call Reason: internet
+Findings: SSID/pw reset to default
+Action/Resolution: : client to be assisted in changing the wifi password,, connection to be confirmed..
+Voc: Want to change password...
+Calling number:+254792882767",,,254711012049,,ACT,,,,FSYO11-2,SYQ,Closed on FCR,Benard Wabomba,no,2025-03-24 03:29:33,2025-03-24 03:29:33
+3822760,240743,Tom Waiharo,,Inbound,Service Complaint,INTERNET,Area Outage - Unconfirmed,"Agent: Roosevelt
+Issue: Internet
+Findings: Area outage unconfirmed CM Status: 64 KO/295 total
+Resolution: Advised client on area outage 
+VOC: I dont have internet
+254722411826",,West & SouthWest Support ESC,254722411826,,ACT,"ZUKU PREMIUM,i30 - EDGE","ZUKU PREMIUM,i30 - EDGE",1,KLS101G,pks105_d,Escalated Open,Roosevelt Otieno,no,2025-03-24 03:44:28,2025-03-24 03:44:28
+3822761,79928,Caroline Githinji,0721299961,Inbound,Service enquiry,APPOINTMENTS,Missed/Site Visit Follow Up,"Agent Name: Benard
+Call Reason:appointment
+findings: missed/site visit follow up
+Action/Resolution: confirmed pending w/o,, advised client to be patient and wait for technician,, escalated,,
+Voc: No internet, am following up on technician for reconnection,,
+Calling number:0721299961",,,254721299961,,ACT,UPGRADE R30 - R50 ,PREMIUM - R30,20,KLS101H,kls102,Closed on FCR,Benard Wabomba,yes,2025-03-24 04:42:02,2025-03-24 04:42:02
+3822762,1072352,Hussein Balala Hussein,0796372574,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name: Jackson
+Call Reason: Retention, offer inquiry
+Findings: offer different on list
+Voc: nilikua na offer
+Action Taken: call dropped
+254796372574",,,254796372574,,ACT,,,,UMA124C,Not Available,Closed on FCR,Jackson Muthii,no,2025-03-24 04:49:23,2025-03-24 04:49:23
+3822764,1072352,Hussein Balala Hussein,0796372574,Inbound,Service Follow up,BIILING,Insufficient Account Balance,"Agent: Roosevelt
+Issue: BILLING
+Findings: Insufficient Account Balance
+Resolution: Advised client to top up 300 shillings for reconnection client is on offer list to pay 1200 for 10 mbps but paid 900/=... call dropped
+VOC: I have paid for my internet  reconnect
+254797003957",,,254797003957,,ACT,,,,UMA124C,Not Available,Closed on FCR,Roosevelt Otieno,no,2025-03-24 05:01:52,2025-03-24 05:01:52
+3822765,145729,Majida Abdulkader,0735530710,Inbound,Service enquiry,BIILING,Due date,"Agent Name: Benard
+Call Reason: billing
+Findings: Due date
+Action/Resolution: account was due,, client advised to make payment for connection to be restored,,
+Voc: I don't have internet,..
+Calling number:+254717791725",,,254707166848,,ACT,,DUO 10,25,MBS119E,mbs123,Closed on FCR,Benard Wabomba,no,2025-03-24 05:08:49,2025-03-24 05:08:49
+3822767,916420,Veronica Anyango,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent name;benedict
+call reason;internet
+Acc status;area outage
+Action;Ticket No #108179; RYU103 & RYU105 down,,area outage,,,advised to be patient awaiting restoration
+Voc;internet is not working
+calling number;0739151596",,,254739151596,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,5,RYU103F,ryu103,Closed on FCR,Benedict Wambua,no,2025-03-24 05:31:26,2025-03-24 05:31:26
+3822768,257416,Abubakar Ramathan Mukira,,Inbound,Service Complaint,INTERNET,No Browsing IP,"Agent name: Jackson
+Call reason :client unable to browse... no ip
+voc: kindly reconnect internet
+Action taken: onu  reprovisioned, account on malogs
+254722518586",,,254722518586,,ACT,DUO 10,DUO 10,23,STC107A,NBW,Closed on FCR,Jackson Muthii,no,2025-03-24 05:32:07,2025-03-24 05:32:07
+3822769,257416,Abubakar Ramathan Mukira,,Inbound,Service Complaint,INTERNET,No Browsing IP,"Agent name: Jackson
+Call reason :client unable to browse... no ip
+voc: kindly reconnect internet
+Action taken: onu  reprovisioned, IP picked, called back, uptime confirmed
+254722518586",,West & SouthWest Support ESC,254722518586,,ACT,DUO 10,DUO 10,23,STC107A,NBW,Escalated Closed,Jackson Muthii,,2025-03-24 05:38:24,2025-03-24 06:23:48
+3822770,257416,Abubakar Ramathan Mukira,,Inbound,Service Complaint,INTERNET,No Browsing IP,"Agent name: Jackson
+Call reason :client unable to browse... no ip
+voc: kindly reconnect internet
+Action taken: onu  reprovisioned, persistent no ip, account on malogs escalated to support
+254722518586",,West & SouthWest Support ESC,254722518586,,ACT,DUO 10,DUO 10,23,STC107A,NBW,Escalated Closed,Jackson Muthii,,2025-03-24 05:39:49,2025-03-24 06:22:18
+3822771,1003749,Susan Wanjiku Mumbi,,Inbound,Service enquiry,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Benard
+Call reason:Internet
+findings: Area outage
+Action/Resolution: Area outage, client advised to wait,,, Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+VOC: I don't have internet....
+Calling number:+254713834002",,,254713834002,,ACT,J5 BASIC DISCOUNTED,J5 BASIC DISCOUNTED,7,RYU103G,ryu105,Closed on FCR,Benard Wabomba,no,2025-03-24 05:49:28,2025-03-24 05:49:28
+3822772,1047724,Ismail Hibo Mohammed,0715377955,Inbound,Service Complaint,INTERNET,Unable to Browse via Extender,"Agent: Roosevelt
+Issue: Internet
+Findings: Unable to browse via Extender 
+Resolution: Logged into router under dhcp client list extender not connected... client reconnected the lan cable and confirmed uptime.
+VOC: I am unable to browse on my extender
+254111465777",,,254111465777,,ACT,"WIFI EXTENDER RENTAL FEE,GPON FREE TV PROMO,GPON FREE PREMIUM TV ,GPON DUO 60","WIFI EXTENDER RENTAL FEE,GPON FREE TV PROMO,GPON FREE PREMIUM TV ,GPON DUO 60",7,FKLN103-58,KLM,Closed on FCR,Roosevelt Otieno,no,2025-03-24 05:58:59,2025-03-24 05:58:59
+3822773,964485,Wilson Loma,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent name;benedict
+call reason;internet
+Acc status;area outage
+Action;Ticket No #108179; RYU103 & RYU105 down,,area outage,,,advised to be patient awaiting restoration
+Voc;internet is not working
+calling number;0758452354",,,254758452354,,ACT,DUO 10,DUO 10,26,RYU103H,ryu103,Closed on FCR,Benedict Wambua,no,2025-03-24 05:59:05,2025-03-24 05:59:05
+3822774,1020430,Mary Mutindi Muema,0721991654,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Jackson
+Chat Reason: internet, area outage
+Voc: its not working
+Action Taken: advised on Ticket No: #108165 : Issue > UMA110B,C,D,E and H down
+254754214064",,,254754214064,,ACT,"FREE TV PROMO,DUO 10","FREE TV PROMO,DUO 10",23,UMA107D,uma110,Closed on FCR,Jackson Muthii,no,2025-03-24 05:59:28,2025-03-24 05:59:28
+3822776,849361,Daniel Mwangi Maina,,Inbound,Service Follow up,BIILING,Payment to a wrong Account/Bucket,TRF DONE CORRECTLY,,Inbound Supervisor,254787606965,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,28,MHO114G,mho114,Escalated Closed,Beatrice Katam,no,2025-03-24 06:11:04,2025-03-24 07:40:00
+3822777,1100766,Peris . Thairu,,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,package assigned,,Inbound Supervisor,254734003689,,ACT,,,,FNGONG7-5,NGO,Escalated Closed,Joylis Mutegi,no,2025-03-24 06:12:02,2025-03-24 07:56:13
+3822778,119930,Liz And Sons,,Inbound,Service Complaint,INTERNET,Area Outage - Unconfirmed,"Agent Name: Benard
+Call Reason: no internet
+findings: Area outage...
+Action/Resolution: CM Status: 262 KO/443 total, suspected area outage, client advised on suspected outage to wait as technician work on it,,,
+Voc: no internet,,
+Calling number:+254769532866",,,254769532866,,ACT,,C5 B,4,UMA110D,uma110,Closed on FCR,Benard Wabomba,no,2025-03-24 06:12:52,2025-03-24 06:12:52
+3822782,30369,Ann Kabugi,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Beatrice
+area outage
+voc: no internet 
+Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+advised client on the issue
+calling number ... +254718903534",,,254718903534,,ACT,DUO 10,DUO 10,27,RYU103G,ryu103,Closed on FCR,Beatrice Katam,no,2025-03-24 06:17:52,2025-03-24 06:17:52
+3822783,1040474,Jane Wangari,0720554238,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent name;benedict
+call reason;internet
+Acc status;area outage
+Action;Ticket No #108179; RYU103 & RYU105 down,,area outage,,,advised to be patient awaiting restoration
+Voc;internet is not working
+calling number;0720554238",,,254720554238,,ACT,,DUO 10 CLASSIC,13,RYU103B,ryu103,Closed on FCR,Benedict Wambua,no,2025-03-24 06:20:10,2025-03-24 06:20:10
+3822785,1088137,Dishon Ochieng Achiro,0721267669,Inbound,Service Request,INTERNET,SSID/PW Reset to Default,"Agent: Roosevelt
+Issue: Internet
+Findings; SSID/PW Reset to default
+Resolution: Logged into router changed password client not close to router to confirm uptime
+VOC: I want to change my Wi-Fi password
+254711012049",,,254711012049,,ACT,,,,FSYO11-2,SYQ,Closed on FCR,Roosevelt Otieno,no,2025-03-24 06:24:56,2025-03-24 06:24:56
+3822786,63094,Grace Gichobi,0722313023,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name:joylis
+issue:internet
+finding....confirmed outage
+action :Ticket No: #108181: KLS102B & F, KLS103B and KLS101G
+resolution....advised of the issue...to be patient
+voc i dont have internet
++254722313023",,,254722313023,,ACT,PREMIUM - R30,PREMIUM - R30,5,KLS102B,kls102,Closed on FCR,Joylis Mutegi,no,2025-03-24 06:31:15,2025-03-24 06:31:15
+3822787,1091005,John Ngugi Kimani,,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name: Benard
+Call Reason: frontline retention
+Findings: Npd/churn offers
+Action/Resolution: confirmed a/c not on the offer list for 1000/= but client is supposed to pay 300/= off that is 2500/= for reconnection.,, client advised to top up,,, call dropped,,,,,,
+Voc: Got an offer to pay 1000/= for 10mbps, paid need to be reconnected,,,
+Calling number:+254728854552",,,254704973501,,ACT,,,,KSN107H,Not Available,Closed on FCR,Benard Wabomba,no,2025-03-24 06:34:14,2025-03-24 06:34:14
+3822788,234862,Adams Kimani,0721786638,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent:Rose
+Issue.Internet
+Voc..I dont have internet
+Finding:Outage.....Ticket No: #108164
+Action: Advised on the issue
+Resolution:Advsed to be patient
+254721786638",,,254721786638,,ACT,J2,J2,15,UMA106H,uma106,Closed on FCR,Rose Karugo,no,2025-03-24 06:38:09,2025-03-24 06:38:09
+3822791,1091005,John Ngugi Kimani,,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,done,,Inbound Supervisor,254704973501,,ACT,,,,KSN107H,Not Available,Escalated Closed,Roosevelt Otieno,no,2025-03-24 06:43:55,2025-03-24 07:54:41
+3822792,945064,Pauline Wanjiru Wambaire,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Name: Grace
+Call Reason: internet
+Findings : confirmed outage..Ticket No: #108166: UMA103D down
+Resolution: advised on outage, advised to patient
+VOC:I don't have internet
++254764313075",,,254764313075,,ACT,,DUO 10 CLASSIC,5,UMA125G,uma103,Closed on FCR,Grace Ambale,no,2025-03-24 06:46:41,2025-03-24 06:46:41
+3822793,1078684,Mitchelle Wambui Mwangi,,Inbound,Service enquiry,BIILING,Due date,"Agent name;benedict
+call reason;billing
+Acc status;due date
+Action;account already due for payment,,,billing cycle communicated to the client,,,account has an offer to pay sh1200,,will pay and revert back for reconnection
+voc;when was my account due
+calling number;+254797067475",,,254797067475,,ACT,,,,KMR102A,Not Available,Closed on FCR,Benedict Wambua,no,2025-03-24 06:49:25,2025-03-24 06:49:25
+3822794,41122,Shadrack Mulika,0724601439,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Beatrice 
+offer reconnection follow-up 
+voc: I got an offer and i have paid 
+eligible to pay 800 for 10mbps ... reconnected ... advised to restart router 
+0113366928",,,254113366928,,ACT,,GPON DUO 10,28,FMH10-2,RUA,Closed on FCR,Beatrice Katam,no,2025-03-24 06:52:04,2025-03-24 06:52:04
+3822795,48266,Brian Maina,,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,done,,Inbound Supervisor,254718194735,,CRN,,DUO 10 CLASSIC,25,MHO105D,mho105,Escalated Closed,Joylis Mutegi,no,2025-03-24 06:55:13,2025-03-24 07:54:30
+3822796,275018,Sanjin Nair,,Inbound,Service Complaint,BIILING,Due date,"Name: Grace
+Call Reason: Billing
+Findings: due date
+Resolution: advised acc is due for payment
+VOC :we dont have internet
+254711432748",,,254711432748,,ACT,GPON DUO 10,GPON DUO 10,11,FNT5-26,NYA,Closed on FCR,Grace Ambale,no,2025-03-24 06:58:34,2025-03-24 06:58:34
+3822797,249521,Miraj Saumu,0728991013,Inbound,Service Follow up,FRONTLINE RETENTION,Speed Upgrade Offer,"Agent name:Rosemary
+call reason: Frontline retention
+call findings: speed upgrade offer
+action/res; package is  up.. advised to run a speed test
+voc:  nilikuwa nimeambiwa nitapta  speed upgrade to 20mbps
+0733674135",,,254733674135,,ACT,,DUO 10,16,MBS108C,Not Available,Closed on FCR,Rosemary Nduku,no,2025-03-24 06:58:48,2025-03-24 06:58:48
+3822799,249526,Luigi Pellegrini,,Inbound,Service enquiry,BIILING,Due date,"Agent: Roosevelt
+Issue: BILLING
+Findings: Due date
+Resolution: Confirmed client package already dropped.. due date had reached.. advised to top up normal payment
+VOC: Can you check why my account is it not connected
+0727541951",,,254727541951,,ACT,,J2,3,FNT5-17,NYA,Closed on FCR,Roosevelt Otieno,no,2025-03-24 07:00:22,2025-03-24 07:00:22
+3822800,1004844,Twaha Awadh Abdalla Omar,,Inbound,Service Complaint,INTERNET,Modem not Powering,"agent name: Nixsha
+call reason: internet
+call findings: modem not powering
+action: advised client to try alternative power socket
+Resolution: Still not working, advised client to visit the nearest zuku shop at imaara plaza opposite Pandya hospital for the power adaptor to be tested, if faulty to be replaced at ksh 750 ,if not to replace the router
+voc:haiwaki
+254785378314",,,254785378314,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,21,MBS118D,mbs118,Closed on FCR,Anne Simiyu,no,2025-03-24 07:01:10,2025-03-24 07:01:10
+3822801,25549,Yvonne Ndunge Mwikali,,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"Agent Name: jane
+Call Reason: internet 
+Findings:  unable to browse -Wifi
+Voc:i paid but i domt have internet i was told to reboot from my end
+Action Taken: client advised link is up ,account reconnected
+
+254707058949",,,254707058949,,ACT,GPON DUO 10,GPON DUO 10,24,FDAG105-5A,KLM,Closed on FCR,Mercy Eroba,no,2025-03-24 07:03:00,2025-03-24 07:12:05
+3822802,1060483,Nancy Wanjira Maina,0721920680,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name:joylis
+issue:internet
+finding....confirmed outage
+action :Ticket No: #108166: UMA103D down
+resolution....advised of the issue...to be patient
+voc i dont have internet
+
+0721920680",,,254721920680,,ACT,,,,UMA115G,Not Available,Closed on FCR,Joylis Mutegi,no,2025-03-24 07:03:33,2025-03-24 07:03:33
+3822803,1100766,Peris . Thairu,,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name: Mercy
+Call Reason: frontline retention
+Findings: npd offers
+Action/Resolution:: package already assigned
+Voc: Am following up on offer reconnection, paid 2100/= and am yet to be reconnected, if its not possible refund me my money
+Calling number:+254750194713",,,254734003689,,ACT,,,,FNGONG7-5,NGO,Closed on FCR,Benard Wabomba,no,2025-03-24 07:04:34,2025-03-24 08:03:11
+3822805,291546,Esther Awour Agong,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Beatrice
+area outage
+voc: no internet from yesterday 
+Ticket No #108172: KWS106F 
+advised client on the issue
+calling number ... +254717495546",,,254717495546,,ACT,"WIFI EXTENDER RENTAL FEE,J30","WIFI EXTENDER RENTAL FEE,J30",20,KWS106F,kws106,Closed on FCR,Beatrice Katam,no,2025-03-24 07:06:59,2025-03-24 07:06:59
+3822806,984481,Agneta Akinyi,,Inbound,Service Complaint,INTERNET,Modem not Locking,"Agent:Caren
+Call Reason: Internet
+Connection/Acc Status:Modem not locking
+Action/Resolution:RF Test done,Modem not locking...CM Status: 17 KO/53 total...dropped
+voc: kindly fix my internet
+254723941156",,,254723941156,,ACT,,DUO 20,6,RYU105B,ryu105,Closed on FCR,Caren Mukuria,no,2025-03-24 07:08:35,2025-03-24 07:08:35
+3822807,249526,Luigi Pellegrini,,Inbound,Service enquiry,BIILING,Due date,"Agent:Christerbel
+Call Reason:Due date enquiry
+Connection/Acc Status:No package
+Action/Resolution:Checked on clients account,Details given to the client
+Voc:Id like to know much am i supposed to top up 
++254727541951",,,254727541951,,ACT,,J2,3,FNT5-17,NYA,Closed on FCR,Christerbel Nekesa,no,2025-03-24 07:09:02,2025-03-24 07:09:02
+3822808,270207,Elizabeth Misikho Oketch,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Name: Grace
+Issue: no internet
+Action: advised on outage Ticket No: #108165 : 
+acc status: confirmed outage
+Resolution: advised on outage
+Voc: i don't have internet
+254734644751",,,254734644751,,ACT,J2,J2,12,UMA116H,uma117,Closed on FCR,Grace Ambale,no,2025-03-24 07:10:24,2025-03-24 07:10:24
+3822809,1087473,Joseph Ondara Ocharo,,Inbound,Service Complaint,INTERNET,No Browsing IP,done,,Inbound Supervisor,254704506110,,ACT,,,,FMH16-1,RUA,Escalated Closed,Anne Simiyu,no,2025-03-24 07:11:03,2025-03-24 07:54:07
+3822811,246813,Susan Ndururi,,Inbound,Service Complaint,INTERNET,Wrong Config,"Agent Mercy
+call reason internet 
+findings wrong config
+resolution persistent  wrong config modem refreshed  and rebooted  ..logs cleared uptime confirmed
+voc  the internet is on too low
+254724833985",,,254724833985,,ACT,DUO 10,DUO 10,2,TNA104A,tna103,Closed on FCR,Mercy Eroba,no,2025-03-24 07:12:29,2025-03-24 07:12:29
+3822812,291479,Justine Mwanzia,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Beatrice
+area outage
+voc: no internet 
+Ticket No: #108166: UMA103D down
+advised client on the issue
+calling number ... 254780574448",,,254780574448,,ACT,UPGRADE J2 - J5 ,J2,19,UMA103D,uma103,Closed on FCR,Beatrice Katam,no,2025-03-24 07:12:32,2025-03-24 07:12:32
+3822813,1087473,Joseph Ondara Ocharo,,Inbound,Service Complaint,INTERNET,No Browsing IP,done,,Inbound Supervisor,254704506110,,ACT,,,,FMH16-1,RUA,Escalated Closed,Rose Karugo,no,2025-03-24 07:12:37,2025-03-24 07:53:53
+3822814,972783,Mercy Kithengi,0785770141,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Volemi
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient.... Ticket No: #108172
+ Resolution: to be patient
+VOC: i understand there was an issue since yesterday.....was it solved....
+0702478915",,,254702478915,,ACT,,DUO 10,23,UMA106E,uma106,Closed on FCR,Gloria Volemi,no,2025-03-24 07:12:41,2025-03-24 07:12:41
+3822815,892535,James Maina,0725171299,Inbound,Service Follow up,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Rosemary
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action/res: advised on area issue and to be patient....Ticket No #108179.. to be patient
+voc: yesterday the lights  went off and the internet is not yet back
+254726324055",,,254726324055,,ACT,,DUO 10,28,RYU105E,zim101,Closed on FCR,Rosemary Nduku,no,2025-03-24 07:13:19,2025-03-24 07:13:19
+3822816,1091005,John Ngugi Kimani,,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,done,,Inbound Supervisor,254704973501,,ACT,,,,KSN107H,Not Available,Escalated Closed,Joylis Mutegi,,2025-03-24 07:13:38,2025-03-24 07:53:04
+3822817,165085,Miriam Osman,0728005631,Inbound,Service enquiry,FRONTLINE RETENTION,Paid full price but Package did not pick,PICKED,,Inbound Supervisor,254728994412,,ACT,DUO 10,DUO 10,22,KMR103F,kmr104,Escalated Closed,Wesley Sang,no,2025-03-24 07:14:27,2025-03-24 07:50:40
+3822818,201413,Halima Munir Abbas,0795620432,Inbound,Service Complaint,FRONTLINE RETENTION,NPD/Churn Offers,DONE,,Inbound Supervisor,254795620432,,ACT,,DUO 10,26,MBS121C,mbs121,Escalated Closed,Caren Mukuria,no,2025-03-24 07:14:30,2025-03-24 07:50:13
+3822819,851587,Linda Ouma,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent :Billy
+call reason: internet
+call finding : area outage  with ticket
+action taken.Ticket No: #108181
+resolution : advised to be patient issue is being worked on  
+voc: I have no internet",,,254746882831,,ACT,C5 B,C5 B,28,KLS101G,uma129,Closed on FCR,Stephen Billy,no,2025-03-24 07:14:41,2025-03-24 07:14:41
+3822820,211993,Evelyn Wanjiku,0723436620,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name: Nixsha
+call reason: internet
+call fingings:area outage,confirmed with a ticket,,
+actionTicket No #108179
+Resolution: advised client to be patient as we sort out the issue as soon as possible,,
+Voc: i have no internet
++254783567186",,,254783567186,,ACT,DUO 10,DUO 10,8,RYU102B,ryu103,Closed on FCR,Anne Simiyu,no,2025-03-24 07:14:50,2025-03-24 07:14:50
+3822821,970140,Miriam Mwangangi,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent:Christerbel
+Call Reason:No internet
+Connection/Acc Status:Area outage
+Action/Resolution:Advised to be patient theres an area issue Ticket No: #108165
+Voc:I do not have internet
++254723448660",,,254723448660,,ACT,,DUO 10,2,UMA110H,uma110,Closed on FCR,Christerbel Nekesa,no,2025-03-24 07:14:50,2025-03-24 07:14:50
+3822823,1099962,Halima Abdi Salat,,Inbound,Service Request,INTERNET,Unable to browse via wifi- Wrong package assigned.,DONE,,Inbound Supervisor,254755555478,,ACT,,,,MBS107G,Not Available,Escalated Closed,Gloria Volemi,no,2025-03-24 07:16:27,2025-03-24 07:48:59
+3822824,232183,Dennis Orina,0722420141,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name:joylis
+issue:internet
+finding....confirmed outage
+action :Ticket No: #108181: KLS102B & F, KLS103B and KLS101G
+resolution....advised of the issue...to be patient
+voc i dont have internet
++254722420141",,,254722420141,,ACT,"ZUKU PREMIUM,i30 - EDGE","ZUKU PREMIUM,i30 - EDGE",15,KLS101G,kls101,Closed on FCR,Joylis Mutegi,no,2025-03-24 07:16:45,2025-03-24 07:16:45
+3822826,263650,Samuel Mwangi,,Inbound,Service enquiry,FRONTLINE RETENTION,Available Offers/Promos,"Agent:Christerbel
+Call Reason:Offer enquiries
+Connection/Acc Status:Acc legible to pay ksh 2000
+Action/Resolution:Checked on clients account,Details given to the client
+Voc:Id like to know if my Account is on any offer
+721518451",,,254721518451,,ACT,,"UPGRADE J2D-J5D,J2 DISCOUNTED",6,KSN104A,ksn105,Closed on FCR,Christerbel Nekesa,no,2025-03-24 07:19:48,2025-03-24 07:19:48
+3822827,973169,Flavian Annette,0746111773,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Wesley
+Call Reason: internet
+Findings: outage...Ticket No #108179
+Action/Resolution: advised on the outage
+Voc: I do not have internet
+254785975034",,,254785975034,,ACT,UPGRADE PAWA 5 - PAWA 10,UPGRADE PAWA 5 - PAWA 10,13,RYU105A,ryu103,Closed on FCR,Wesley Sang,no,2025-03-24 07:19:52,2025-03-24 07:19:52
+3822828,120103,Daughters Of The Heart Of Mary,0712399146,Inbound,Service Follow up,BIILING,Tax invoice request,"Beatrice 
+etr invoice request
+voc: i had requested for invoice for payment so that i submit 
+notified it will be send within 3 days 
++254726853940",,,254726853940,,ACT,PREMIUM - R30,PREMIUM - R30,20,STC102D,stc102,Closed on FCR,Beatrice Katam,no,2025-03-24 07:22:26,2025-03-24 07:22:26
+3822829,1034415,Aliet Agutu,0728146076,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name: Nixsha
+call reason: internet
+call fingings:area outage,confirmed with a ticket,,
+actionTicket No #108179
+Resolution: advised client to be patient as we sort out the issue as soon as possible,,
+Voc: i have no internet
++254700287244",,,254700287244,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,6,RYU105B,ryu105,Closed on FCR,Anne Simiyu,no,2025-03-24 07:22:41,2025-03-24 07:22:41
+3822830,995731,Damaris Waithera Wambui,,Inbound,Service Complaint,INTERNET,Modem not Locking,"Agent Name: Mercy
+Call Reason: internet 
+Findings:  Modem not locking
+Voc:  I dont have internet
+Action Taken:   modem rebooted ,Rf test CM Status: 75 KO/327 total,took details,booked a w/o.
+Resolution: Advised on TAT
+254799318680",,West & SouthWest Support ESC,254799318680,,ACT,DUO 10,DUO 10,16,NGO101H,ngo101,Escalated Open,Mercy Eroba,yes,2025-03-24 07:23:14,2025-03-24 07:23:14
+3822831,270207,Elizabeth Misikho Oketch,,Inbound,Service Complaint,INTERNET,Modem not Locking,"Agent name: GRACE
+Call reason: internet
+Findings: modem not locking CM Status: 32 KO/172 total
+Resolution: w.o BOOKED
+VOC: i have a problem with the internet
+254734644751
+
+Client called back advised W.O booked",,Pawa KE East Support ESC,254734644751,,ACT,J2,J2,12,UMA116H,uma117,Escalated Closed,Grace Ambale,yes,2025-03-24 07:23:22,2025-03-24 07:45:44
+3822832,1064536,Dorcus Adhiambo,0708663555,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name:joylis
+issue:internet
+finding....confirmed outage
+action :Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+resolution....advised of the issue...to be patient
+voc i dont have internet
+
+0714578202",,,254714578202,,ACT,,,,RYU105C,Not Available,Closed on FCR,Joylis Mutegi,no,2025-03-24 07:25:14,2025-03-24 07:25:14
+3822833,237962,Jackline Mwaniki,0721425620,Inbound,Service Complaint,FRONTLINE RETENTION,NPD/Churn Offers,DONE,,Inbound Supervisor,254721425620,,ACT,,DUO 10,25,KLN101G,kln101,Escalated Closed,Gloria Volemi,no,2025-03-24 07:25:42,2025-03-24 07:48:36
+3822834,1099962,Halima Abdi Salat,,Inbound,Service Request,INTERNET,Unable to browse via wifi- Wrong package assigned.,PACKAGE CORRECTED,,Inbound Supervisor,254755555478,,ACT,,,,MBS107G,Not Available,Escalated Closed,Lewis Mwatha,,2025-03-24 07:27:29,2025-03-24 07:47:33
+3822835,1072110,Macknon Nana Ngiriama,,Inbound,Service enquiry,FRONTLINE RETENTION,Available Offers/Promos,"Agent...Billy
+call reason... frontline retention
+Finding: available offer
+ActionTaken: eligible to pay 1700 for 10mbps
+Resolution: client advised on offer
+Voc: niangalilie kama kuna offer ,this time ni kama timing yangu iko mbaya",,,254735361038,,ACT,,,,DAG102F,Not Available,Closed on FCR,Stephen Billy,no,2025-03-24 07:27:50,2025-03-24 07:27:50
+3822836,165085,Miriam Osman,0728005631,Inbound,Service enquiry,FRONTLINE RETENTION,Paid full price but Package did not pick,PICKED,,Inbound Supervisor,254728994412,,ACT,DUO 10,DUO 10,22,KMR103F,kmr104,Escalated Closed,Vincent Khayumbi,,2025-03-24 07:28:02,2025-03-24 07:46:47
+3822838,935919,Oreri Calvince Achieng,0705973880,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"+Agent:Rose
+Issue.Internet
+Voc..I dont have internet
+Finding:Outage.....Ticket No: #108165
+Action: Advised on the issue
+Resolution:Advsed to be patient
+254705973880",,,254705973880,,ACT,,DUO 10,28,UMA110C,nsr103,Closed on FCR,Rose Karugo,no,2025-03-24 07:29:13,2025-03-24 07:29:13
+3822839,1086526,Twaha Ibrahim Ibrahim,0706274448,Inbound,Service Complaint,VOIP,Unable to Make Calls,TO BE ADDRESSED ON W/O,,Inbound Supervisor,254722424907,,ACT,,,,FKF1-18,VPG,Escalated Closed,Jane Frances,yes,2025-03-24 07:29:25,2025-03-24 07:46:16
+3822841,25704,Anthony Gitau,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name: Nixsha
+call reason: internet
+call fingings:area outage,confirmed with a ticket,,
+actionTicket No #108179
+Resolution: advised client to be patient as we sort out the issue as soon as possible,,
+Voc: i have no internet
+254725754539",,,254725754539,,ACT,,TRIPLE PLAY 10,7,RYU105B,ryu105,Closed on FCR,Anne Simiyu,no,2025-03-24 07:29:49,2025-03-24 07:29:49
+3822843,1097964,Nelly Chole .,,Inbound,Service Complaint,INTERNET,Modem not Locking,Affected by Ticket No: #108166 : Issue > UMA103D down,,Pawa KE East Support ESC,254787525738,,ACT,,,,UMA128B,Not Available,Escalated Closed,Caren Mukuria,yes,2025-03-24 07:32:12,2025-03-24 08:00:10
+3822844,48266,Brian Maina,,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,DONE,,Inbound Supervisor,254718194735,,CRN,,DUO 10 CLASSIC,25,MHO105D,mho105,Escalated Closed,Lynette Akeyo,,2025-03-24 07:32:18,2025-03-24 07:43:39
+3822845,1087473,Joseph Ondara Ocharo,,Inbound,Service Complaint,INTERNET,Unable to browse via wifi- Wrong package assigned.,DONE,,Inbound Supervisor,254704506110,,ACT,,,,FMH16-1,RUA,Escalated Closed,Rosemary Nduku,no,2025-03-24 07:33:09,2025-03-24 07:41:36
+3822846,1088982,Victor Maingi Mumo,,Inbound,Service Follow up,BIILING,Tax invoice request,"Agent Name:  Rosemary
+Call Reason: Billing
+Findings:  tax invoice 
+Action: advised the offer was 500 for 5mnbps and he was to top up 300 
+voc: milinitumia recipt ya mia tatu jana na nilikuwa na mia mbili kwenye account
++254790646202",,,254790646202,,ACT,,,,MKN101E,Not Available,Closed on FCR,Rosemary Nduku,no,2025-03-24 07:33:39,2025-03-24 07:33:39
+3822847,193261,Aproov C,0736362228,Inbound,Service enquiry,BIILING,Due date,"Agent Name: Wesley
+Call Reason: billing
+Findings: due date
+Action/Resolution: advised to top up 
+Voc: I have paid and I do not have internet
+254736362228",,,254736362228,,ACT,DUO 10,DUO 10,28,MBS108D,mbs108,Closed on FCR,Wesley Sang,no,2025-03-24 07:35:58,2025-03-24 07:35:58
+3822848,1020974,Winstone Odhiambo Owino,0705246944,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,DONE,,Inbound Supervisor,254705246944,,ACT,,GPON DUO CLASSIC 10,23,FLK2-22,KII,Escalated Closed,Joylis Mutegi,no,2025-03-24 07:36:46,2025-03-24 07:41:23
+3822849,201265,Evans Maiko,0722798319,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Volemi
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient.... Ticket No: #108165
+ Resolution: to be patient
+VOC: i have had no internet for a day now
+254722798319",,,254722798319,,ACT,DUO 10,DUO 10,28,UMA110B,uma110,Closed on FCR,Gloria Volemi,no,2025-03-24 07:37:05,2025-03-24 07:37:05
+3822850,1030639,Victor Otieno Odhiambo,0720866519,Inbound,Service Complaint,INTERNET,Unable to browse via WI-FI - WI-FI interface disabled,"Agent Name: jane
+Reason: internet
+Acc status/Connection :unable to browse via wifi--interface disabled
+Action Taken: wifi interface enabled
+Resolution: uptime confirmed
+voc:i cannot see my wifi name since yesterday
+
+
++254720866519",,,254720866519,,ACT,DUO 10,DUO 10,22,KLN116F,aya101,Closed on FCR,Jane Frances,no,2025-03-24 07:38:58,2025-03-24 07:38:58
+3822851,79200,Jennifer Opondo,0705652758,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Lewis
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient....Ticket No: #108181
+ Resolution: to be patient
+VOC: i don't have internet
+0705652758",,,254705652758,,ADD,"Additional TV connection,PREMIUM - R30","Additional TV connection,PREMIUM - R30",15,KLS103B,kls103,Closed on FCR,Lewis Mwatha,no,2025-03-24 07:39:46,2025-03-24 07:39:46
+3822852,171709,Joan Kibugi,0720467056,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"agent: Grace
+issue.: internet
+Finding: primary network  disabled
+action..primary network  enabled
+resolution: rebooted modem....client confirms connection...
+voc...i dont have internet, I keep calling and i am tired!
++254720467056",,,254720467056,,ACT,,C5 B,25,DHM106A,dhm106,Closed on FCR,Grace Ambale,no,2025-03-24 07:39:49,2025-03-24 07:39:49
+3822853,997060,Erick Munyi,,Inbound,Service Complaint,INTERNET,Intermittent Connection,"Beatrice 
+intermittent connection 
+voc: connection is lagging
+utilization is ok ... changed channel and frequency tuned 
+advised client to check after 15 minutes
+254734311552",,,254734311552,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,22,KWD105H,kwd102,Closed on FCR,Beatrice Katam,no,2025-03-24 07:40:14,2025-03-24 07:40:14
+3822854,891061,Kobia Ndegwa,,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name:Rose
+Call Reason. frontline retention
+Voc: i received an offer message to pay 1000 for 10mbps
+Finding; paid
+Action:Esc for Reconns
+Resolution:Advised to be patient
++254729468771",,Central Retention,254729468771,,ACT,GPON DUO 10,GPON DUO 10,23,FGT3-4,TN2,Escalated Closed,Rose Karugo,no,2025-03-24 07:40:38,2025-03-24 08:32:20
+3822855,960362,James Ngigi,0746486243,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent:Christerbel
+Call Reason:No internet
+Connection/Acc Status:Area outage
+Action/Resolution:Advised to be patient theres an area issue Ticket No: #108164
+Voc:I do not have internet
++254746486243",,,254746486243,,ACT,DUO 10,DUO 10,12,UMA126D,uma106,Closed on FCR,Christerbel Nekesa,no,2025-03-24 07:40:40,2025-03-24 07:40:40
+3822856,1025437,Sheila Abdallah,,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"Agent name:Salome
+call reason: Internet
+call findings: unable to browse via wifi
+action; all parameters okay, link is up, refreshed
+Resolution: confirms uptime
+voc: why is my internet not working
+Calling Number; 254724011933",,,254724011933,,ACT,,GPON DUO 10,6,FRU8-26,RUA,Closed on FCR,Salome Olwande,no,2025-03-24 07:41:31,2025-03-24 07:41:31
+3822859,1095146,Edigar Elungat Juma,,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"Agent...Billy
+call reason... internet
+Finding: unable to browse via wifi
+ActionTaken: parameters okay.. device reset
+Resolution:uptime to be  confirmed..call dropped
+Voc:internet yangu imeexpire?",,,254706367896,,ACT,,,,FKWW12-30,ROY,Closed on FCR,Stephen Billy,no,2025-03-24 07:42:19,2025-03-24 07:42:19
+3822860,1097202,Richard Meakavi Musau,,Inbound,Service Follow up,INTERNET,Area Outage - Unconfirmed,"Agent Name: Vincent
+Call Reason: Unable to browse
+VOC: I am not able to use my internet
+Action Taken: confirmed link offline:CM Status: 255 KO/443 total
+Resolution:esc to support for assistance",,,254753080943,,ACT,,,,UMA127F,Not Available,Closed on FCR,Vincent Khayumbi,no,2025-03-24 07:42:32,2025-03-24 07:42:32
+3822861,863837,Peninnah Kagendo,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Caren
+Call Reason: internet
+Findings: Area Outage-confirmed with ticket
+Action/Resolution: Ticket No: #108165 : Issue > UMA110B,C,D,E and H down ,,,Client advised on the area issue
+voc: since yesterday,it is not doing 
++254725894547",,,254725894547,,ACT,J2 DISCOUNTED,J2 DISCOUNTED,16,UMA110B,uma110,Closed on FCR,Caren Mukuria,no,2025-03-24 07:42:49,2025-03-24 07:42:49
+3822865,119930,Liz And Sons,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name: jane
+call reason: internet
+call fingings: area outage, confirmed with a ticket,,
+action client advised on the outag Ticket No: #108165:
+Resolution: advised client to be patient 
+Voc: nataka kujua internet inarudi saa ngapi
+254722157404",,,254722157404,,ACT,,C5 B,4,UMA110D,uma110,Closed on FCR,Anne Simiyu,no,2025-03-24 07:44:53,2025-03-24 09:10:50
+3822867,1091024,Steve Ongoma M,,Inbound,Service enquiry,FRONTLINE RETENTION,Available Offers/Promos,"Agent Name: Wesley
+Call Reason: frontline retention
+Findings: available offer
+Action/Resolution: advised to top up
+Voc: i received an offer of 1700
+254721733582",,,254721733582,,ACT,,,,DHM104B,Not Available,Closed on FCR,Wesley Sang,no,2025-03-24 07:46:28,2025-03-24 07:46:28
+3822868,1072110,Macknon Nana Ngiriama,,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Beatrice 
+offer reconnection follow-up 
+voc: I got an offer to pay 1700
+eligible to pay 1700 for 10mbps ... reconnected ... advised to restart router 
+254735361038",,,254735361038,,ACT,,,,DAG102F,Not Available,Closed on FCR,Beatrice Katam,no,2025-03-24 07:47:26,2025-03-24 07:47:26
+3822869,1095146,Edigar Elungat Juma,,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"Agent name:Volemi
+call reason: Internet
+call findings: unable to browse via wifi
+action; advised not disconnected
+Resolution: to call when home..call droppped
+voc:why am i disconnected and i paid?
+0706367896",,,254706367896,,ACT,,,,FKWW12-30,ROY,Closed on FCR,Gloria Volemi,no,2025-03-24 07:47:47,2025-03-24 07:47:47
+3822870,1093569,Tracy Wanjiku,0718556492,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent:Christerbel
+Call Reason:No internet
+Connection/Acc Status:Area outage
+Action/Resolution:Advised to be patient theres an area issue Ticket No #108179
+Voc:I do not have internet
+0718556492",,,254718556492,,ACT,,,,RYU103H,Not Available,Closed on FCR,Christerbel Nekesa,no,2025-03-24 07:48:27,2025-03-24 07:48:27
+3822872,132538,Isaac Mwangi,0721419494,Inbound,Service Complaint,TV,Faulty Decoder,"agent ,,,joylis
+issue,,,tv
+voc my decoder is not powering ,i have done all the troubleshooting 
+finding. decoder not powering on 
+action...changed from one socket to another ..persistent,,,has enough cash on the account ...request the 750 to be billed from that credit 
+Resolution: w.o booked 
+0721419494",,West & SouthWest Support ESC,254721419494,,ACT,PREMIUM - R30,PREMIUM - R30,11,NGO101G,ngo101,Escalated Open,Joylis Mutegi,yes,2025-03-24 07:51:01,2025-03-24 07:51:01
+3822873,832791,Mwihaki Igoro,,Inbound,Service Complaint,INTERNET,Area Outage - Unconfirmed,"Agent Name:Winnie
+Call Reason: Internet
+Findings: Area outage - confirmed outage
+Action: advised on area issue and to be patient.
+ Resolution: to be patient
+VOC: we don't have internet for two days
+phone 0723039911",,,254723039911,,ACT,J2 DISCOUNTED,J2 DISCOUNTED,5,UMA111H,uma110,Closed on FCR,Winnie Wambui,no,2025-03-24 07:51:05,2025-03-24 07:51:05
+3822874,1064031,Baraka Mabongo,0791641827,Inbound,Service Request,SHIFTING,Shifting Request to RFS-Within zuku coverage,"Agent Name: Mercy
+Call Reason: shifting
+Findings: shifting request to rfs
+Action: has an active internet package, w/o booked
+Resolution: to be patient
+Voc: i have moved houses and i want to be reconnected
+NUMBER CALLING 791641827",KISUMU,,254791641827,,ACT,,,,FLK19-11,KII,Closed on FCR,Mercy Oyoya,yes,2025-03-24 07:51:10,2025-03-24 07:51:10
+3822875,1004983,Jotham Kirimi,0720967808,Inbound,Service Complaint,INTERNET,Modem not Locking,"W/o closed. Modem has locked.
+Time: 09:01AM 24.03.25 PerisWGK
+
+Uptime	0 day(s) 1 h 19 m 4 s
+US PRI info	Logical Upstream Channel 3/11.1/0 5.0dBmV 16QAM
+Info	mho112-cl015-fedha
+41.2MHz 45.0dBmV	5.2dBmV (SNR 33.7 dB)
+47.6MHz 45.0dBmV	5.5dBmV (SNR 33.4 dB)
+54.0MHz 45.5dBmV	5.2dBmV (SNR 35.1 dB)
+60.4MHz 46.0dBmV	5.2dBmV (SNR 35.1 dB)
+DS PRI info	Downstream 4/2/1
+Info	
+115.000MHz	-1.7dBmV (SNR 37.8dB)
+123.000MHz	-1.9dBmV (SNR 37.6dB)
+131.000MHz	-1.7dBmV (SNR 37.8dB)
+139.000MHz	-1.5dBmV (SNR 37.8dB)
+570.000MHz	-1.7dBmV (SNR 38.6dB)
+578.000MHz	-2.1dBmV (SNR 38.2dB)
+586.000MHz	-2.3dBmV (SNR 38.2dB)
+594.000MHz	-1.8dBmV (SNR 38.3dB)",,South & Nakuru Support ESC,254720967808,,ACT,,C5 B,22,FMH14-11,mho112,Escalated Closed,Grace Ambale,no,2025-03-24 07:51:15,2025-03-24 09:02:05
+3822876,905777,Eric Mwendwa,,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"Agent name: Lewis
+call reason: Internet
+call findings: unable to browse via wifi
+action; all parameters okay, link is up, refreshed
+Resolution: confirms uptime
+voc:  nililipa jana na bado internet haijarudi
++254713445707",,,254713445707,,ACT,,DUO 10,4,UMA121A,uma110,Closed on FCR,Lewis Mwatha,no,2025-03-24 07:51:33,2025-03-24 07:51:33
+3822878,148465,Robert Mwangi Kariuki,0712503416,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Rosemary
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action/res: advised on area issue and to be patient....Ticket No #108181.. to be patient
+VOC: we don't have internet
+0722415656",,,254722415656,,ACT,DUO CLASSIC 20,DUO CLASSIC 20,12,KLS103B,kls103,Closed on FCR,Rosemary Nduku,no,2025-03-24 07:52:56,2025-03-24 07:52:56
+3822879,254805,Dorcas Kemunto .n,,Inbound,Service Complaint,INTERNET,Modem not Powering,"Agent name:Rose
+Issue:internet
+finding: acc active
+action.:.W/o raised on modem not powering
+resolution.:..advised to be patient
+voc my modem is not powering on...i have tried to plug it in a different socket but still no lights coming up
+0728457229",,,254728457229,,ACT,J5,J5,21,MDK105H,mdk105,Closed on FCR,Rose Karugo,yes,2025-03-24 07:52:59,2025-03-24 07:52:59
+3822880,834789,Harriet Mbithe Mulei,0724126832,Inbound,Service Complaint,INTERNET,Unable to browse via WI-FI - WI-FI interface disabled,"Agent..Billy
+call reason... internet 
+Finding: unable to browse via wifi interface disabled
+ActionTaken: interface enabled
+Resolution: client to confirm uptime
+Voc: i have no internet",,,254755846561,,ACT,,DUO 20,4,UMA121E,uma103,Closed on FCR,Stephen Billy,no,2025-03-24 07:54:35,2025-03-24 07:54:35
+3822881,165085,Miriam Osman,0728005631,Inbound,Service Complaint,INTERNET,Modem not Locking,WO Passed,,Pawa KE East Support ESC,254728994412,,ACT,DUO 10,DUO 10,22,KMR103F,kmr104,Escalated Closed,Salome Olwande,yes,2025-03-24 07:55:04,2025-03-24 08:11:30
+3822882,227809,James Wambugu Kimani,0722786776,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name: Nixsha
+call reason: internet
+call fingings:area outage,confirmed with a ticket,,
+actionTicket No #108179
+Resolution: advised client to be patient as we sort out the issue as soon as possible,,
+Voc: i have no internet
+254722786776",,,254722786776,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,25,RYU103B,ryu103,Closed on FCR,Anne Simiyu,no,2025-03-24 07:55:13,2025-03-24 07:55:13
+3822883,843093,Simon Rono,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Wesley
+Call Reason: internet
+Findings: outage...Ticket No #108179
+Action/Resolution: advised on the outage
+Voc: I do not have internet
+254721348298",,,254721348298,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,28,RYU103C,ryu103,Closed on FCR,Wesley Sang,no,2025-03-24 07:56:30,2025-03-24 07:56:30
+3822884,48721,Dalphine Amoyia Nyaingo,0794007767,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Caren
+Call Reason: internet
+Findings: Area Outage-confirmed with ticket
+Action/Resolution: Ticket No: #108165 : Issue > UMA110B,C,D,E and H down,,,Client advised on the area issue
+voc: i have an issue with my router
++254745620980",,,254745620980,,ACT,,DUO 10,12,TNA103A,tna104,Closed on FCR,Caren Mukuria,no,2025-03-24 07:56:40,2025-03-24 07:56:40
+3822885,847415,Alice Odhiambo,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Beatrice
+area outage
+voc: no internet from yesterday 
+Ticket No: #108165 : Issue > UMA110B,C,D,E and H down
+advised client on the issue
+calling number ... 0726704144",,,254726704144,,ACT,,"UPGRADE J2D-J5D,J2 DISCOUNTED",28,UMA111G,uma113,Closed on FCR,Beatrice Katam,no,2025-03-24 07:57:31,2025-03-24 07:57:31
+3822886,261420,Samuel Kigochi Maina,,Inbound,Service Follow up,FRONTLINE RETENTION,Speed Upgrade Offer,"Agent Name: joylis
+Call Reason. frontline retention
+finding; speed upgrade offers
+Action Taken: esc for reconnection
+Resolution:client to be patient
+Voc: i was told to pay to be upgraded to 10mbps
+
+254780578065",,East Retention,254780578065,,ACT,Upgrade C5B to Duo 10 classic,C5 B,24,UMA110A,uma110,Escalated Open,Joylis Mutegi,no,2025-03-24 07:57:35,2025-03-24 07:57:35
+3822887,968868,Newton Odhiambo,0732703240,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"Agent name:Volemi
+call reason: Internet
+call findings: unable to browse via wifi
+action; all parameters okay, link is up, refreshed,reset from default
+Resolution: confirms uptime
+voc:i have seen that my user name has changed......
+254732703240",,,254732703240,,ACT,DUO 10,DUO 10,5,UMA126H,uma102,Closed on FCR,Gloria Volemi,no,2025-03-24 07:58:15,2025-03-24 07:58:15
+3822888,246341,Cyberpro Global,,Inbound,Service Complaint,INTERNET,Wrong Config,"Agent Mercy
+call reason internet 
+findings wrong config
+resolution persistent  wrong config ,modem refreshed  and rebooted ..upime confirmed
+voc:there is no internet here,it has hang
+0726588888",,,254726588888,,ACT,J50,J50,7,KLN113D,kln113,Closed on FCR,Mercy Eroba,no,2025-03-24 07:59:24,2025-03-24 07:59:24
+3822889,896459,Maureen Kimathi,0711385233,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Name: Grace
+Call Reason: internet
+Findings : confirmed outage...Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+Resolution: advised on outage, advised to patient
+VOC:I don't have internet
+0711385233",,,254711385233,,ACT,UPGRADE DUO10 C - DUO 20 CLASSIC,DUO 10 CLASSIC,7,RYU105E,ryu105,Closed on FCR,Grace Ambale,no,2025-03-24 07:59:29,2025-03-24 07:59:29
+3822890,1061573,Harry Chege,0720618481,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Salome
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action / resolution : advised on area issue and to be patient....Ticket No # 108164 : Issue > UMA106B,D,E,F and H down
+VOC: we don't have internet
+Calling Number; 254716437872",,,254716437872,,ACT,,,14,UMA126A,Not Available,Closed on FCR,Salome Olwande,no,2025-03-24 07:59:57,2025-03-24 07:59:57
+3822892,992592,Veronicah Wambui Wanja,0722165905,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent:Rose
+Issue.Internet
+Voc..I dont have internet
+Finding:Outage.....Ticket No #108179
+Action: Advised on the issue
+Resolution:Advsed to be patient
++254722165905",,,254722165905,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,6,RYU102A,ryu103,Closed on FCR,Rose Karugo,no,2025-03-24 08:01:18,2025-03-24 08:01:18
+3822893,25549,Yvonne Ndunge Mwikali,,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"Agent name:  Rosemary   
+call reason: Internet
+call findings: unable to browse via wifi
+action/res: LAN binding done.. confirms uptime
+voc:  i have paid for my internet and still not working
+707058949",,,254707058949,,ACT,GPON DUO 10,GPON DUO 10,24,FDAG105-5A,KLM,Closed on FCR,Rosemary Nduku,no,2025-03-24 08:03:09,2025-03-24 08:03:09
+3822894,1091934,June Alhandra Obara,,Inbound,Service Request,FRONTLINE RETENTION,NPD/Churn Offers,"agent name: Nixsha
+call reason:frontline retention
+call findings:npd/churn offers
+action;escalated account to retention for connection
+Resolution:advised client to be patient as we reconnect her back shortly
+voc:i paid kindly reconnect
+0745308434",,East Retention,254745308434,,ACT,,,,KMR102E,Not Available,Escalated Open,Anne Simiyu,no,2025-03-24 08:03:37,2025-03-24 08:03:37
+3822894,1091934,June Alhandra Obara,,Inbound,Service Request,FRONTLINE RETENTION,NPD/Churn Offers,"agent name: Mercy
+call reason:frontline retention
+call findings:npd/churn offers
+action;escalated account to retention for connection
+Resolution:advised client to be patient as we reconnect her back shortly
+voc:i paid kindly reconnect
+0745308434",,East Retention,254745308434,,ACT,,,,KMR102E,Not Available,Escalated Open,Mercy Oyoya,,2025-03-24 08:34:55,2025-03-24 08:34:55
+3822895,18090,Cindy Adem,0726596567,Inbound,Service Complaint,INTERNET,Slow/Intermittent connection - HIGH TX,"Agent name: Winnie
+call reason: Internet
+call findings: intermittent connection
+action; all parameters okay, frequency tuned router, refreshed
+Resolution:, confirms uptime
+voc: my internet is disturbing me am getting a speed of 0.5mbps I have a exam 
+phone 0726596567",,,254726596567,,ACT,GPON DUO 60,GPON DUO 60,15,FKLN101-4A3,KLM,Closed on FCR,Winnie Wambui,no,2025-03-24 08:03:58,2025-03-24 08:03:58
+3822896,237645,Edwin Okoth,0724688767,Inbound,Service enquiry,BIILING,Due date,"Agent...Billy
+call reason...billing
+Finding: due date
+ActionTaken: account is due client advised to pay 
+Resolution: client  informed on due date
+Voc: do you know if we have internet",,,254724688767,,ACT,GPON DUO 10,GPON DUO 10,28,FKT11-5,KR2,Closed on FCR,Stephen Billy,no,2025-03-24 08:04:46,2025-03-24 08:04:46
+3822897,932478,Evanson Njaramba,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Name: Grace
+Call Reason: internet
+Findings : confirmed outage...Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+Resolution: advised on outage, advised to patient
+VOC:I don't have internet
+254737977844",,,254737977844,,ACT,,DUO 10,28,RYU105D,ryu103,Closed on FCR,Grace Ambale,no,2025-03-24 08:05:34,2025-03-24 08:05:34
+3822898,918981,Antony Goko Kiarie,,Inbound,Service Complaint,FRONTLINE RETENTION,Refund - Active Customer,"Agent Name: Lewis
+Call Reason: frontline retention
+Voc; i keep being lied to i want my refund now
+Findings; refund
+Action Taken::escalated to retention
+Calling number;0722527790",,Central Retention,254722527790,,ACT,,GPON DUO 60,28,FGT26-4,TN2,Escalated Open,Lewis Mwatha,no,2025-03-24 08:05:34,2025-03-24 08:05:34
+3822899,1011356,Shad Koros,,Inbound,Service Request,FRONTLINE RETENTION,Package Downgrade,"Agent:Christerbel
+Call Reason:Downgrade request
+Connection/Acc Status:No package 
+Action/Resolution:Checked on clients account,ESC to Rentention for reconnection and SPEED UPGRADE to be assigned ,Advised to be patient and restart the router
+Voc:I want to be downgraded to 10mbps because i never saw the diffence in speed with the 60mbs i was actually very frastarated. I would like to request for a speed upgrade to 20mbs
+0112880183",,West Retention,254112880183,,ACT,,GPON DUO 10,27,FKLN101-B,KLM,Escalated Closed,Christerbel Nekesa,no,2025-03-24 08:06:14,2025-03-24 08:52:11
+3822900,35074,Caroline Wambua,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent name:Mercy
+Call Reason:Internet
+account/connection status; Area outage
+voc; .i dont have internet since last night
+Action Taken: Advised on Ticket No: #108181: KLS102B
+254721530518",,,254721530518,,ACT,TRIPLE PLAY 10,TRIPLE PLAY 10,6,KLS104G,kls102,Closed on FCR,Mercy Eroba,no,2025-03-24 08:06:44,2025-03-24 08:06:44
+3822902,1013182,Susan Gathoni,0708793206,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Volemi
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient.... Ticket No: #108179
+ Resolution: to be patient
+VOC: I  don't have internet,had called yesterday but it was not resolved...
++254708793206",,,254708793206,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,23,RYU105D,ryu105,Closed on FCR,Gloria Volemi,no,2025-03-24 08:07:02,2025-03-24 08:22:16
+3822903,891061,Kobia Ndegwa,,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name:  Caren
+Call Reason :frontline retention
+Findings :NPD/Churn offers
+Action/Resolution : not on offer list. esc to retention, client says they got a message
+Voc:i have received a weekend offer and i paid
++254729468771",,Central Retention,254729468771,,ACT,GPON DUO 10,GPON DUO 10,23,FGT3-4,TN2,Escalated Closed,Caren Mukuria,,2025-03-24 08:07:17,2025-03-24 08:31:43
+3822903,891061,Kobia Ndegwa,,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Agent: Falcon
+Issue: Frontline retention
+Finding: NPD/CHURN OFFERS
+VOC: have paid on offer 1000 to 10mbs
+Action: Escalated to retention
+Resolution: Client advised to restart router
+Number Calling:254729468771",,Central Retention,254729468771,,ACT,GPON DUO 10,GPON DUO 10,23,FGT3-4,TN2,Escalated Open,Falcon Natali,,2025-03-24 08:29:00,2025-03-24 08:29:00
+3822904,1108715,Symon Mburu,0728363356,Inbound,Service enquiry,BIILING,Balance Inquiry,"Agent:Rose
+Issue.Billing
+Finding:insuff funds
+Action: Advised to top up 2899
+Resolution:client promised to pay
+254728363356",,,254728363356,,ACT,,,,FPL1-SC24-43,FHM,Closed on FCR,Rose Karugo,no,2025-03-24 08:07:21,2025-03-24 08:07:21
+3822905,1100766,Peris . Thairu,,Inbound,Service Request,FRONTLINE RETENTION,NPD/Churn Offers,"Agent name:Salome
+call reason: Frontline retention
+call findings: npd/churn offers
+action/ resolution; Advised client to restart router... confirmed uptime
+voc: i have paid kindly reconnect
+Calling Number; 254734003689",,,254734003689,,ACT,,,,FNGONG7-5,NGO,Closed on FCR,Salome Olwande,no,2025-03-24 08:08:26,2025-03-24 08:08:26
+3822907,1046111,Kimau Teresia Mbula,0717342868,Inbound,Service Request,FRONTLINE RETENTION,Available Offers/Promos,"Agent name:Faith
+call reason: Frontline retention
+call findings: Available offers/promos to renew cb5
+action; escalated to retention for reconnection
+Resolution: to be patient
+voc:i have paid i am calling for reconnection
++254100686161",,West & SouthWest Support ESC,254100686161,,ACT,,GPON DUO CLASSIC 10,23,FRN36-7,RON,Escalated Open,Faith Omondi,,2025-03-24 08:11:50,2025-03-24 08:11:50
+3822907,1046111,Kimau Teresia Mbula,0717342868,Inbound,Service Request,FRONTLINE RETENTION,Available Offers/Promos,"Agent name:Faith
+call reason: Frontline retention
+call findings: Available offers/promos to renew cb5
+action; escalated to retention for reconnection
+Resolution: to be patient
+voc:i have paid i am calling for reconnection
++254100686161",,West & SouthWest Support ESC,254100686161,,ACT,,GPON DUO CLASSIC 10,23,FRN36-7,RON,Escalated Open,Faith Omondi,no,2025-03-24 08:08:44,2025-03-24 08:08:44
+3822907,1046111,Kimau Teresia Mbula,0717342868,Inbound,Service Request,FRONTLINE RETENTION,Available Offers/Promos,"Agent name:Mercy 
+call reason: Frontline retention
+call findings: Available offers/promos to renew cb5
+action; re escalated to retention for reconnection,reconnected
+Resolution: to restart the router
+voc:i have paid i am calling for reconnection
++254100686161",,West & SouthWest Support ESC,254100686161,,ACT,,GPON DUO CLASSIC 10,23,FRN36-7,RON,Escalated Open,Mercy Eroba,,2025-03-24 08:37:41,2025-03-24 08:37:41
+3822908,277919,Nyamweru Waruhiu,,Inbound,Service Complaint,BIILING,Due date,"Agent Name: Lynette
+Call Reason: Billing
+VOC: I paid on 24th of February and its been disconnected already 
+Findings; Due date
+Resolution; client advised acc was disconnected due to payments client also insists they've been paying 1997 and not 1999 client advised on the package price adamant on the same...requests for a supervisor call escalated 
+calling number; +254702769786",,,254702769786,,ACT,C5 B,C5 B,5,KLS104C,kls104,Closed on FCR,Lynette Akeyo,no,2025-03-24 08:08:44,2025-03-24 08:09:31
+3822910,1092307,Job Ondieki Jefferson,,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name: joylis
+Call Reason. frontline retention
+Voc: i have paid activate my account 
+finding; npd/churn offers
+Action Taken:to pay 1200sh for 10mbps as per the excel sheet  esc for reconnection
+Resolution:client to be patient
++254741737517",,East Retention,254741737517,,ACT,,,,UMA115A,Not Available,Escalated Open,Joylis Mutegi,no,2025-03-24 08:09:02,2025-03-24 08:09:02
+3822911,1111525,Sophie Akinyi,,Inbound,Service Follow up,APPOINTMENTS,Missed/Site Visit Follow Up,"Beatrice 
+site visit follow up
+voc: since it was installed the router has issues and i want this issue handled
+escalated to dispatch via mail and skype  
+0740833016",,,254740833016,,ACT,,,,FRI3-13,SPY,Closed on FCR,Beatrice Katam,yes,2025-03-24 08:09:20,2025-03-24 08:09:20
+3822912,1084074,Fidel Omondi Ouma,0795863154,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Rosemary
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action/res: advised on area issue ....Ticket No #108179.. to be patient
+VOC: i wanted to  withdraw because i get to use so much money o but bundles yet i have paid for the internet
++254795863154",,,254795863154,,ACT,,,,KSN107A,Not Available,Closed on FCR,Rosemary Nduku,no,2025-03-24 08:11:25,2025-03-24 08:11:25
+3822913,1084407,Valentine Wambere Wachira,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent :Billy
+call reason: internet
+call finding : area outage  with ticket
+action taken..Ticket No: #102129
+resolution : advised to be patient issue is being worked on  
+voc: I have no internet",,,254700602259,,ACT,,,,RYU103G,Not Available,Closed on FCR,Stephen Billy,no,2025-03-24 08:11:47,2025-03-24 08:11:47
+3822915,994901,Alex Muthangya,,Inbound,Service Complaint,INTERNET,Area Outage - Unconfirmed,"Agent name:winnie
+Call Reason: Internet
+Findings: Area outage - unconfirmed
+Action: advised on area issue and to be patient.....CM Status: : 338 KO/338 total
+Resolution: to be patient
+VOC:no internet
+phone 0715358400",,,254715358400,,ACT,,DUO 10,28,RYU104CL1,ryu103,Closed on FCR,Winnie Wambui,no,2025-03-24 08:11:59,2025-03-24 08:11:59
+3822917,860146,John Chege,,Inbound,Service Request,SHIFTING,Shifting Request to RFS-Within zuku coverage,"Agent Name: Mercy
+Call Reason: shifting
+Findings: shifting request to rfs
+Action: has an active internet package, w/o booked
+Resolution: to be patient
+Voc: i have moved houses and i want to be reconnected
+NUMBER CALLING 0722596972",EASTERN BYPASS,,254722596972,,ACT,,DUO 10,6,FMH17-8,RUA,Closed on FCR,Mercy Oyoya,yes,2025-03-24 08:12:14,2025-03-24 08:12:14
+3822918,806628,Najma Bare,,Inbound,Service Complaint,INTERNET,Unable to Browse via Extender,"Agent:Christerbel
+Call Reason:Extender enquiry
+Connection/Acc Status:Non Zuku extender
+Action/Resolution:Advised client to contact the extender service provider for further assistance 
+Voc:I cannot connect to the extention
++254726434343",,,254726434343,,ACT,,i30 - EDGE,6,KLS104H,kls104,Closed on FCR,Christerbel Nekesa,no,2025-03-24 08:12:58,2025-03-24 08:12:58
+3822919,936090,Tipatet Damaris,,Inbound,Service Follow up,APPOINTMENTS,Missed/Site Visit Follow Up,"Agent Name: Lewis
+Call Reason: Appointments
+Findings: site visit follow up
+Action: escalated to dispatch, ticket updated
+Resolution: to be patient
+Voc: i was told someone was coming yesterday
+254717101557",,,254717101557,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,10,FKN47-12,KTG,Closed on FCR,Lewis Mwatha,yes,2025-03-24 08:13:02,2025-03-24 08:13:02
+3822920,1110288,Tajlegends Limited,,Inbound,Service Complaint,INTERNET,Intermittent Connection,"Hello team,
+Client issue has w/o raised
+Regards,
+S.E Brian.",,,254782168888,,ACT,,,,FWTS102-3,SPY,Closed on FCR,Jane Frances,yes,2025-03-24 08:13:25,2025-03-24 08:26:16
+3822921,197779,Monica Wairimu Muriuki,0721460300,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Name: Grace
+Call Reason: internet
+Findings : confirmed outage...Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+Resolution: advised on outage, advised to patient
+VOC:I don't have internet
++254721460300",,,254721460300,,ACT,DUO 10,DUO 10,5,RYU103A,ryu103,Closed on FCR,Grace Ambale,no,2025-03-24 08:13:39,2025-03-24 08:13:39
+3822924,912846,Calvin Kamau Williamson,0719228576,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent: Falcon
+Issue: Internet
+Finding: Area Outage
+VOC: I dont have internet
+Action: Client advised on area outage.Ticket No: #108164: UMA106B,D,E,F and H down.
+Resolution: Client advised to be patient
+Number Calling:254719228576",,,254719228576,,ACT,,DUO 10,27,UMA106H,uma106,Closed on FCR,Falcon Natali,no,2025-03-24 08:17:15,2025-03-24 08:17:15
+3822925,862136,Purity Wamugu Gatua,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent:Rose
+Issue.Internet
+Voc..I dont have internet
+Finding:Outage.....Ticket No: #108164
+Action: Advised on the issue
+Resolution:Advsed to be patient
++254722260176",,,254722260176,,ACT,J2,J2,28,UMA106H,uma106,Closed on FCR,Rose Karugo,no,2025-03-24 08:17:28,2025-03-24 08:17:28
+3822926,978823,Caroline Muthoki,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Salome
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action / resolution : advised on area issue and to be patient....Ticket No # 108179 : Issue > RYU103 & RYU105A,C,E,FH
+VOC: we don't have internet
+Calling Number; 254702790161",,,254702790161,,ACT,,DUO 10,28,RYU103H,ryu103,Closed on FCR,Salome Olwande,no,2025-03-24 08:18:06,2025-03-24 08:18:06
+3822927,235173,John Nganga,,Inbound,Service Complaint,INTERNET,Modem not Locking,"agent name: Nixsha
+call reason: internet
+call findings: modem not locking,,US BLINKING
+action: advised client to restart the router ,refreshed link
+Resolution: Client to confirmed uptime
+voc:i have no internet
+254727324810",,,254727324810,,ACT,,J2 DISCOUNTED,2,UMA119C,uma116,Closed on FCR,Anne Simiyu,no,2025-03-24 08:18:28,2025-03-24 08:18:28
+3822931,1096612,Sarah . Okango,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent;Faith
+Findings: Area outage - confirmed with a ticket
+Action: client not responding  checked an outage with ...Ticket No: #108165
+Resolution: client went mute on call 
+VOC: since yesterday 3pm we have not been having internet and am working from home
+0706508420",,,254706508420,,ACT,,,,UMA126G,Not Available,Closed on FCR,Faith Omondi,no,2025-03-24 08:20:21,2025-03-24 08:20:21
+3822932,1069508,Obadiah Makulo Sawa,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: jane
+Call Reason: internet
+Acc status/Connection :area outage,
+Action: advised on the outage
+Resolution: advised client on the outage..Ticket No #108179; RYU103
+voc;i dont have internet 
+
++254726091864",,,254726091864,,ACT,,,,RYU103G,Not Available,Closed on FCR,Jane Frances,no,2025-03-24 08:20:25,2025-03-24 08:20:25
+3822936,972945,Violet Bundi,,Inbound,Service Complaint,INTERNET,Unable to browse via WI-FI - WI-FI interface disabled,"Agent name: Lewis
+call reason: Internet
+call findings: unable to browse via wifi - interface disabled
+action; link is up, interface enabled
+Resolution: confirms uptime
+voc:service issue inaeza enda three days kweli
+723440332",,,254723440332,,ACT,,PAWA WIFI 5Mbps ,6,RAK101C,rak107,Closed on FCR,Lewis Mwatha,no,2025-03-24 08:21:29,2025-03-24 08:21:29
+3822937,274476,Wambui Gikonyo,,Inbound,Service Complaint,INTERNET,Modem not Locking,"Hello team,
+Client is affected by Ticket No: #108172 : Issue > KWD106F some clients not connecting 
+Regards,
+S.E Brian.",,,254721570812,,ACT,DUO 10,DUO 10,2,KWS106B,kws106,Closed on FCR,Caren Mukuria,yes,2025-03-24 08:21:40,2025-03-24 08:43:42
+3822940,1091878,Nasra Adan Mohamed,,Inbound,Service Complaint,INTERNET,LOS Flashing Red,"Agent name:Volemi
+call reason: Internet
+call findings: LOS flashing red...........
+action; router offline due to fiber issues, no outage
+Resolution:W/O BOOKED
+voc;I think my internet has a problem
+254708037900",,South & Nakuru Support ESC,254708037900,,ACT,,,,FCK12-18,RUA,Escalated Closed,Gloria Volemi,yes,2025-03-24 08:21:49,2025-03-24 09:13:04
+3822941,830483,Verak Kerubo Onchieku,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Salome
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action/ resolution : advised on area issue and to be patient....Ticket No # 108165 : Issue > UMA110B,C,D,E and H down
+VOC: we don't have internet
+Calling Number; 254741198110",,,254741198110,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,11,UMA127D,uma103,Closed on FCR,Salome Olwande,no,2025-03-24 08:21:51,2025-03-24 08:24:07
+3822944,1110551,Mary Wangari Ndirai,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Name: Grace
+Call Reason: internet
+Findings : confirmed outage...Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+Resolution: advised on outage, advised to patient
+VOC:I don't have internet
++254706238447",,,254706238447,,ACT,,,,RYU105B,Not Available,Closed on FCR,Grace Ambale,no,2025-03-24 08:22:16,2025-03-24 08:22:16
+3822945,809446,Gideon Mumo Peter,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Rosemary
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action/res: advised on area issue ....Ticket No #108164.. to be patient
+VOC:  router yangu haifanyi
++254707030448",,,254707030448,,ACT,J2 DISCOUNTED,J2 DISCOUNTED,3,UMA125B,uma123,Closed on FCR,Rosemary Nduku,no,2025-03-24 08:22:33,2025-03-24 08:22:33
+3822947,127555,Antony Kamau,0734751473,Inbound,Service enquiry,FRONTLINE RETENTION,Available Offers/Promos,"Agent...Billy
+call reason... frontline retention
+Finding: available offer
+ActionTaken: eligibile to pay 800 for 10mbps..to top up 501
+Resolution: client advised on offer
+Voc: is the  offer still available",,,254734751473,,ACT,J2,J2,5,DHM109C,dhm101,Closed on FCR,Stephen Billy,no,2025-03-24 08:22:50,2025-03-24 08:22:50
+3822950,82656,Terry Wangari Mbugua,0745021374,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent: Falcon
+Issue: Internet
+Finding: Area Outage
+VOC: I dont have internet
+Action: Client advised on area outage.Ticket No: #108181: KLS102B & F, KLS103B and KLS101G.
+Resolution: Client advised to be patient
+Number Calling:254720880328",,,254720880328,,ACT,PREMIUM - R30,PREMIUM - R30,11,KLS101G,kls101,Closed on FCR,Falcon Natali,no,2025-03-24 08:23:22,2025-03-24 08:23:22
+3822955,974551,Richard Gakuya Macharia,,Inbound,Service Request,FRONTLINE RETENTION,Speed Upgrade Offer,"Agent name: Lewis
+Call Reason: Frontline Retention
+account/connection status; speed upgrade offer
+voc; i have paid but i don't have internet
+Action: paid for C5B offer,,esc to rtn for recon
+Resolution: To be patient
+Calling Number 254722748892",,SouthWest Retention,254722748892,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,24,SYO104A,syo103,Escalated Open,Lewis Mwatha,,2025-03-24 09:12:00,2025-03-24 09:12:00
+3822955,974551,Richard Gakuya Macharia,,Inbound,Service Request,FRONTLINE RETENTION,NPD/Churn Offers,"Agent name:Mercy
+Call Reason:Frontline Retention
+account/connection status;npd churn offers
+voc; i have paid but i dont have internet
+Action:paid for C5B offer,,esc to rtn for recon
+Resolution:To be patient
+Calling Number 254722748892",,SouthWest Retention,254722748892,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,24,SYO104A,syo103,Escalated Open,Mercy Eroba,no,2025-03-24 08:23:59,2025-03-24 08:23:59
+3822958,1019824,Emma Gatwiri,0704984093,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: jane
+Call Reason: internet
+Acc status/Connection :area outage,
+Action: advised on the outage
+Resolution: advised client on the outage
+voc;i dont have internet since yesterday
+0704683823",,,254704683823,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,19,RYU105E,ryu105,Closed on FCR,Jane Frances,no,2025-03-24 08:24:00,2025-03-24 08:24:00
+3822960,802404,Awadh S. Abdulla,,Inbound,Service Complaint,BIILING,Due date,"Agent Name: Mercy
+Call Reason: Billing
+Findings: Due date
+Action: advised account due and to make payment
+Resolution: to make payment
+Voc: why is my internet not working, sitaki tv, nafanya malipo lakini unitole io ya tv
+Number calling: 0722298530",,,254722298530,,ACT,J2,J2,9,MBS138G,mbs123,Closed on FCR,Mercy Oyoya,no,2025-03-24 08:24:39,2025-03-24 08:24:39
+3822961,993259,Caroline Muthoni,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Rosemary
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action/res: advised on area issue ....Ticket No #108179.. to be patient
+VOC: we've not had internet kutoka jana
++254718774560",,,254718774560,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,21,RYU103H,ryu103,Closed on FCR,Rosemary Nduku,no,2025-03-24 08:24:50,2025-03-24 08:24:50
+3822964,1011356,Shad Koros,,Inbound,Service Request,FRONTLINE RETENTION,NPD/Churn Offers,"agent name: Nixsha
+call reason:frontline retention
+call findings:npd/churn offers
+action;escalated account to retention for connection,,repeat
+Resolution:advised client to be patient as we reconnect her back shortly
+voc:ihave paid kindly reconnect
+254112880183",,West Retention,254112880183,,ACT,,GPON DUO 10,27,FKLN101-B,KLM,Escalated Closed,Anne Simiyu,no,2025-03-24 08:25:51,2025-03-24 08:51:53
+3822969,1067213,Elijah Kiprono Limo,,Inbound,Service Complaint,FRONTLINE RETENTION,NPD/Churn Offers,"Agent: Falcon
+Issue: Frontline retention
+Finding: AVAILABLE OFFERS
+VOC: i received an sms on offer to pay 500 to get 10mbs, and i called to confirm and i was advised to pay, why im not being connected
+Action: Client not on list,Escalated to retention
+Resolution: Client advised to patient
+Number Calling:0727777835",,North Region ,254727777835,,CRN,,,,KSN106D,Not Available,Escalated Open,Falcon Natali,,2025-03-24 09:15:02,2025-03-24 09:15:02
+3822969,1067213,Elijah Kiprono Limo,,Inbound,Service Complaint,FRONTLINE RETENTION,NPD/Churn Offers,"Agent name:Faith
+call reason: Frontline retention
+call findings: Available offers/promos
+action; escalated to retention for reconnection
+Resolution: to be patient
+voc: i have paid yesterday but not yet reconnected
+0727777835",,North Region ,254727777835,,CRN,,,,KSN106D,Not Available,Escalated Open,Faith Omondi,no,2025-03-24 08:26:42,2025-03-24 08:26:42
+3822971,234900,Emily Waweru,0723375689,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent name:winnie
+Call Reason: Internet
+Findings: Area outage - unconfirmed
+Action: advised on area issue and to be patient.....CM Status: 338 KO/338 total
+Resolution: to be patient
+VOC: no internet
+phone 0723375689",,,254723375689,,ACT,DUO 10,DUO 10,14,RYU103F,ryu103,Closed on FCR,Winnie Wambui,no,2025-03-24 08:26:51,2025-03-24 08:26:51
+3822972,31037,Fatma Mohamed,0705103269,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Salome
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action/ resolution : advised on area issue and to be patient....Ticket No # #108181 : Issue > KLS102B & F, KLS103B & C and KLS101G Clients are not connecting
+VOC: we don't have internet
+Calling Number; 254733733163",,,254733733163,,ACT,"Asia TV,TRIPLE PLAY 10","Asia TV,TRIPLE PLAY 10",26,KLS103B,kls103,Closed on FCR,Salome Olwande,no,2025-03-24 08:27:00,2025-03-24 08:27:00
+3822973,223270,Benwell Nduma,0721347422,Inbound,Service enquiry,FRONTLINE RETENTION,Available Offers/Promos,"Agent...Billy
+call reason... frontline retention
+Finding: available offer
+ActionTaken: eligible to pay 700 for 10mbps
+Resolution: client advised on offer
+Voc: hii account ikona offer",,,254791562244,,ACT,,DUO 10,11,BRU105F,bru105,Closed on FCR,Stephen Billy,no,2025-03-24 08:27:33,2025-03-24 08:27:33
+3822977,839249,Blasio Njigua,,Inbound,Service Follow up,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Vincent
+Call Reason: Unable to browse
+VOC: I am not able to use my internet
+Action Taken: confirmed link offline:UMA106B,D,E,F and H down....Ticket No: 108164
+Resolution:esc to support for assistance",,,254710529351,,ACT,J2 DISCOUNTED,J2 DISCOUNTED,28,UMA106F,uma106,Closed on FCR,Vincent Khayumbi,no,2025-03-24 08:28:09,2025-03-24 08:28:09
+3822979,1004312,Victor Leleito Kibet,0723231164,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: jane
+Call Reason: internet
+Acc status/Connection :area outage,
+Action: advised on the outage
+Resolution: advised client on the outage..Ticket No #108179
+voc; i dont have internet from yesterday
+
+0723231164",,,254723231164,,ACT,"FREE TV PROMO,DUO 10","FREE TV PROMO,DUO 10",10,RYU103B,ryu105,Closed on FCR,Jane Frances,no,2025-03-24 08:28:24,2025-03-24 08:28:24
+3822988,120612,Gerald Makau Mavuti,0721395430,Inbound,Service Follow up,FRONTLINE RETENTION,Speed Upgrade Offer,"Agent Name: Vincent
+Call Reason: reconnection follow up on speed upgrade
+Action Taken: ADVISED offer reconnection and escalation
+Resolution: advised to be patient and to restart the router",,Central Retention,254721395430,,ACT,DUO 10,DUO 10,25,RAK104F,rak101,Escalated Open,Vincent Khayumbi,no,2025-03-24 08:31:32,2025-03-24 08:31:32
+3822990,1086162,Flojera Ngava,,Inbound,Service Complaint,APPOINTMENTS,Escalated to Maintenance/ Other departments,"Agent..billy
+Call reason...appointment
+Finding..escalated to maintenance
+Action Taken...esc to noc, unable to update ticket
+Resolution...client to be patient
+Voc...jamaa alikuja but he could not fix it",,,254715576002,,ACT,,,,FMN9-19,MRT,Closed on FCR,Stephen Billy,yes,2025-03-24 08:31:39,2025-03-24 08:31:39
+3822991,889702,Samwel Owino Ohanga,0722866070,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name: Nixsha
+call reason: internet
+call fingings:area outage,confirmed with a ticket,,
+actionTicket No: #108165
+Resolution: advised client to be patient as we sort out the issue as soon as possible,,
+Voc: i have no internet
+254746196014",,,254746196014,,ACT,DUO 10,DUO 10,5,UMA109C,uma106,Closed on FCR,Anne Simiyu,no,2025-03-24 08:31:49,2025-03-24 08:31:49
+3822995,908121,Catherine Masanga,,Inbound,Service Complaint,INTERNET,Credit Request,credit not applicable. service was in use,,Pawa KE East Support ESC,254795220628,,ACT,,C5 B,22,UMA105A,uma104,Escalated Closed,Jane Frances,no,2025-03-24 08:32:25,2025-03-24 09:06:43
+3822998,1076150,Prince Isaiah Wafula,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name magdalene
+call reason internet
+findings area outage with ticketTicket No: #108179
+resolution advised client
+voc no internet
+calling numberTicket No: #108179",,,254783368137,,ACT,,,,RYU104E,Not Available,Closed on FCR,Magdalene Juma,no,2025-03-24 08:32:38,2025-03-24 08:32:38
+3823000,1108567,Shairose Sherali Jivraji,,Inbound,Service Complaint,BIILING,Payment to a wrong Account/Bucket,Share correct details,,Inbound Supervisor,254721558141,,ACT,,,,MBS111D,Not Available,Escalated Closed,Christerbel Nekesa,no,2025-03-24 08:32:45,2025-03-24 09:30:20
+3823005,244649,Mercy Wanjuki,,Inbound,Service Complaint,INTERNET,Area Outage - Unconfirmed,"Agent name:winnie
+Call Reason: Internet
+Findings: Area outage - unconfirmed
+Action: advised on area issue and to be patient.....CM Status: 338 KO/338 total
+Resolution: to be patient
+VOC:No internet
+phone 0721560885",,,254721560885,,ACT,DUO 10,DUO 10,28,RYU103E,ryu103,Closed on FCR,Winnie Wambui,no,2025-03-24 08:33:18,2025-03-24 08:33:18
+3823008,19223,Dickson Kamenju,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name: Nixsha
+call reason: internet
+call fingings:area outage,confirmed with a ticket,,
+actionTicket No: #108165
+Resolution: advised client to be patient as we sort out the issue as soon as possible,,
+Voc: i have no internet
+254716372300",,,254716372300,,ACT,TRIPLE PLAY 10,TRIPLE PLAY 10,8,UMA113C,uma110,Closed on FCR,Anne Simiyu,no,2025-03-24 08:33:48,2025-03-24 08:33:48
+3823009,105101,Ziddah Mramba,0722705057,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent: Falcon
+Issue: Internet
+Finding: Area Outage
+VOC: I dont have internet
+Action: Client advised on area outage.Ticket No: #108165: UMA110B,C,D,E and H down.
+Resolution: Client advised to be patient
+Number Calling:254722705057",,,254722705057,,ACT,DUO 10,DUO 10,5,UMA110E,uma110,Closed on FCR,Falcon Natali,no,2025-03-24 08:34:04,2025-03-24 08:34:04
+3823010,829322,Swim Africa Ltd,,Inbound,Service Complaint,BIILING,Due date,"Agent:Christerbel
+Call Reason:No internet 
+Connection/Acc Status:No package
+Action/Resolution:Checked on clients account,Details given to the client
+Voc:Idont have internet
+0722367065",,,254722367065,,ACT,"ZUKU PREMIUM,ZUKU OFFICE STATIC IP - 50Mbps ,WIFI EXTENDER RENTAL FEE","ZUKU PREMIUM,ZUKU OFFICE STATIC IP - 50Mbps ,WIFI EXTENDER RENTAL FEE",18,WTS101A,wts101,Closed on FCR,Christerbel Nekesa,no,2025-03-24 08:34:05,2025-03-24 08:34:05
+3823012,1098476,Ishmael Otieno Agan,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Rosemary
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action/res: advised on area issue ....Ticket No #108179.. to be patient
+VOC:  I don't have internet from yesterday
+740040477",,,254740040477,,ACT,,,,RYU103C,Not Available,Closed on FCR,Rosemary Nduku,no,2025-03-24 08:34:30,2025-03-24 08:34:30
+3823016,1050,Ramesh Varsani,0722735303,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Vincent
+Call Reason""; unable to browse
+VOC: We don't have the internet
+Action Taken:Ticket No: #108181 : Issue > KLS102B & F, KLS103B & C and KLS101G Clients are not connecting
+Resolution: advised the client to be patient as we are resolving their internet issue",,,254722735303,,ACT,PREMIUM - R30,PREMIUM - R30,21,KLS101G,kls101,Closed on FCR,Vincent Khayumbi,yes,2025-03-24 08:34:48,2025-03-24 08:34:48
+3823020,1081998,Snider Asami Odera,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent:Christerbel
+Call Reason:No internet
+Connection/Acc Status:Area outage
+Action/Resolution:Advised to be patient theres an area issue Ticket No: #108164
+Voc:I do not have internet
++254748328845",,,254748328845,,ACT,,,,UMA106H,Not Available,Closed on FCR,Christerbel Nekesa,no,2025-03-24 08:35:36,2025-03-24 08:35:36
+3823022,994177,Kate Wanjiru Warui,,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent name: Mercy
+call reason: Frontline retention
+call findings: npd/churn offers
+action; escalated for reconnection
+Resolution: to be patient for reconnection 
+voc: i have paid kindly reconnect
+Number calling:  254700131933",,East Retention,254700131933,,ACT,,DUO 10,28,NSR104D,nsr104,Escalated Open,Mercy Oyoya,no,2025-03-24 08:35:50,2025-03-24 08:35:50
+3823024,924368,Robai Nabai Khaemba,0728976254,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"Agent name: Lewis
+call reason: Internet
+call findings: unable to browse via wifi
+action; all parameters okay, link is up, refreshed
+Resolution: still issue persistent...escalated to support
+voc: my internet is not working on my laptop
++254728976254",,Central & North Support ESC,254728976254,,ACT,C5 B,C5 B,1,NGB101F,ngb101,Escalated Open,Lewis Mwatha,no,2025-03-24 08:36:18,2025-03-24 08:36:18
+3823025,41789,Frazier Mutua,0748709320,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent;Faith
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient...Ticket No: #108179
+Resolution: to be patient
+VOC:since jana hatuna internet
++254782874026",,,254782874026,,ACT,,DUO 20,20,UMA126E,uma108,Closed on FCR,Faith Omondi,no,2025-03-24 08:36:18,2025-03-24 08:36:18
+3823027,185432,Adventis Inhouse Africa,0722715336,Inbound,Service Complaint,INTERNET,Wrong Config,"Agent name: Rosemary
+call reason: Internet
+call findings: wrong config
+action/res; stuck on wrong config, rebooted router... call dropped
+voc:  we don't have internet from yesterday
+0722206646",,,254722206646,,ACT,i100 - EDGE,i100 - EDGE,7,KLN103D,kls101,Closed on FCR,Rosemary Nduku,no,2025-03-24 08:36:34,2025-03-24 08:36:34
+3823031,1073441,Ibrahim Kabro Maki,,Inbound,Service Request,SHIFTING,Shifting Process,"Agent Name:Volemi
+Call Reason: shifting
+Findings: shifting process
+Action: has no active internet package
+Resolution: advise to confirm coverage,after that to make payment then w/o to be booked
+Voc:i shifted and i wanted to be reconnected back aftr 2 months......does star plus still available?
+254794445077",ayany,,254794445077,,ACT,,,,DHM112E,Not Available,Closed on FCR,Gloria Volemi,yes,2025-03-24 08:36:40,2025-03-24 08:36:40
+3823033,802404,Awadh S. Abdulla,,Inbound,Service Complaint,BIILING,Insufficient Account Balance,"Agent Name:Salome
+Call Reason: Billing
+Findings: insufficient account balance
+Action / resolution : advised amount insufficient and to top up...client adamant to top up...esc to ret.
+Voc:  Basi mnirudishie pesa yangu
+Calling Number; 254722298530",,Mombasa Retention ,254722298530,,ACT,J2,J2,9,MBS138G,mbs123,Escalated Open,Salome Olwande,no,2025-03-24 08:37:02,2025-03-24 08:37:02
+3823041,1066291,Victoria Angel Simiyu,,Inbound,Service Follow up,FRONTLINE RETENTION,Student package - One month reconnection Enquiry,"Agent Name:jane
+Call Reason: Frontline retention
+Findings: student package -one month
+Action: escalated  for reconnection
+Resolution: advised to be paient
+Voc: i have paid and i was advised to wait for 15minutes its not working
+0718851100",,"Pawa, Kisumu & Nakuru Retention",254718851100,,ACT,,,,FNGA101-23,Not Available,Escalated Open,Jane Frances,,2025-03-24 08:54:16,2025-03-24 08:54:16
+3823041,1066291,Victoria Angel Simiyu,,Inbound,Service Complaint,FRONTLINE RETENTION,Paid full price but Package did not pick,"Agent Name:Faith
+Call Reason: Frontline retention
+Findings: paid but not picked
+Action: escalated to inbound for reconnection
+Resolution: to make payment
+Voc: why is my internet not workingf
+0718851100",,Inbound Supervisor,254718851100,,ACT,,,,FNGA101-23,Not Available,Escalated Closed,Faith Omondi,no,2025-03-24 08:38:16,2025-03-24 09:27:14
+3823044,1041142,Naimo Ibrahim,0707151621,Inbound,Service Complaint,FRONTLINE RETENTION,Welcome Call/ pre-payer call back,"Agent name: jane
+Call reason: frontline
+Acc status/Connection : welcome call
+Action/Resolution: client advised on the call reason,,client advised to pay and revert for speed upgrade
+voc: i missed calls on this number yesterday i have never received any offer
++254707151621",,,254707151621,,ACT,DUO 10,DUO 10,1,FMDK101-B,KR2,Closed on FCR,Jane Frances,no,2025-03-24 08:38:36,2025-03-24 08:38:36
+3823049,963715,Ultra Powers,,Inbound,Service Complaint,INTERNET,Unable to browse - DNS settings,"agent name magdalene
+call reason internet 
+findings  unable to browse dns setting 
+resolution enabled primary and secondary dns uptime 
+voc no internet
+calling number 0721680955",,,254721680955,,ACT,"WIFI EXTENDER RENTAL FEE,GPON DUO CLASSIC 20","WIFI EXTENDER RENTAL FEE,GPON DUO CLASSIC 20",15,FKLN108-B,KLM,Closed on FCR,Magdalene Juma,no,2025-03-24 08:39:05,2025-03-24 08:39:05
+3823052,853849,Boniface Charles Mwangi,,Inbound,Service Complaint,BIILING,Account Number Inquiry,"Agent:Christerbel
+Call Reason:Account number enquiries
+Connection/Acc Status:No funds
+Action/Resolution:Checked on clients account,Details given to the client
+Voc:Id like to confirm my acc number i want to pay 
++254700493597",,,254700493597,,ACT,GPON DUO 10,GPON DUO 10,24,FGT2-25,ROY,Closed on FCR,Christerbel Nekesa,no,2025-03-24 08:40:23,2025-03-24 08:40:23
+3823057,298817,Mercy Anunda,,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"Agent Name:Falcon
+Call reason:internet
+Findings:unable to browse via wi-fi
+Actions taken: modem rebooted,link refreshed 
+Voc: i dont have internet
+Resolution: connection okay, uptime confirmed
+Calling:254721930655",,,254721930655,,ACT,J2 DISCOUNTED,J2 DISCOUNTED,14,UMA110D,uma110,Closed on FCR,Falcon Natali,no,2025-03-24 08:41:30,2025-03-24 08:41:30
+3823058,1031695,Asiah Nabirie Iddi,0721246145,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent...Billy
+call reason... frontline retention
+Finding: available offer
+ActionTaken: ELIGIBLE TO PAY 1700FOR 20MBPS..PAID..esc to retention
+Resolution: client advised on escalation,to restart after 20 minutes
+Voc: ile offer bado iko",,East Retention,254721246145,,ACT,DUO 10,DUO 10,2,BRU101E,bru101,Escalated Open,Stephen Billy,no,2025-03-24 08:41:52,2025-03-24 08:41:52
+3823059,938589,Ibrahim Onyando Onderi,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent;Faith
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient...Ticket No: #108165
+Resolution: to be patient
+VOC: since yesterday around 9pm we have no internet
+254707921702",,,254707921702,,ACT,,TRIPLE PLAY 10,4,UMA110A,uma110,Closed on FCR,Faith Omondi,no,2025-03-24 08:42:00,2025-03-24 08:42:00
+3823061,129856,Ultra Power Systems,,Inbound,Service Complaint,INTERNET,Modem not Locking,"agent name magdalene
+call reason internet
+findings modem not locvking
+resolution CM Status: 26 KO/429 total
+rebooted modem 
+voc no internet
+calling number0721680955",,,254721680955,,ACT,PREMIUM - R30,PREMIUM - R30,15,KLN101H,kln101,Closed on FCR,Magdalene Juma,no,2025-03-24 08:42:26,2025-03-24 08:42:26
+3823063,1099962,Halima Abdi Salat,,Inbound,Service Complaint,INTERNET,Modem not Locking,"agent name: Nixsha
+call reason: internet
+call findings: modem not locking,
+action: rf doneCM Status: 5 KO/44 total
+Resolution: client to call back once back home
+voc:sina internet
+254755555478",,,254755555478,,ACT,,,,MBS107G,Not Available,Closed on FCR,Anne Simiyu,no,2025-03-24 08:42:36,2025-03-24 08:42:36
+3823065,1103632,Paul N Wachira,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Mercy
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient....Ticket No #108181
+ Resolution: to be patient our technicians are not the ground working on it 
+VOC: I don't have internet
+Number calling:  254785078523",,,254785078523,,ACT,,,,FKLS101-35C,Not Available,Closed on FCR,Mercy Oyoya,no,2025-03-24 08:42:49,2025-03-24 08:42:49
+3823066,1060088,Simon Munyao Mueni,0715597980,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: jane
+Call Reason: internet
+Acc status/Connection :area outage,
+Action: advised on the outage
+Resolution: advised client on the outage..Ticket No #108179
+voc; sina internet since Saturday 
++254735104305",,,254735104305,,ACT,,,,RYU103H,Not Available,Closed on FCR,Jane Frances,no,2025-03-24 08:42:50,2025-03-24 08:42:50
+3823068,256682,Lynn Wahu Irungu,,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"Agent name:Volemi
+call reason: Internet
+call findings: unable to browse via wifi
+action; all parameters okay, link is up, refreshed
+Resolution: confirms uptime
+voc: is the service back...
+254706304525",,,254706304525,,ACT,,DUO 10,4,PKS101E,pks101,Closed on FCR,Gloria Volemi,no,2025-03-24 08:43:07,2025-03-24 08:43:07
+3823069,1000308,Emmanuel Ayella,0729831125,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Mercy
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient....Ticket No # 108179
+Resolution: to be patient our technicians are not the ground working on it 
+VOC: I don't have internet
+Number calling:  254706361483",,,254706361483,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,28,RYU105C,Not Available,Closed on FCR,Mercy Oyoya,no,2025-03-24 08:43:21,2025-03-24 08:43:21
+3823076,71145,Phillip Wasonga,0721677972,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Salome
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action/ resolution : advised on area issue and to be patient....Ticket No # #108181 : Issue > KLS102B & F, KLS103B & C and KLS101G Clients are not connecting
+VOC: we don't have internet
+Calling Number; 254721677972",,,254721677972,,ACT,,DUO 10,24,FKLS101-40,Not Available,Closed on FCR,Salome Olwande,no,2025-03-24 08:43:43,2025-03-24 08:43:43
+3823080,945824,Michael Njuguna,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Rosemary
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action/res: advised on area issue ....Ticket No #108166.. to be patient
+voc: i came in this morning and i found there is no internet
+712697025",,,254712697025,,ACT,,i30 - EDGE,28,UMA116C,uma103,Closed on FCR,Rosemary Nduku,no,2025-03-24 08:44:09,2025-03-24 08:44:09
+3823086,1016782,Sebastian Mwalili Peter,,Inbound,Service enquiry,FRONTLINE RETENTION,Available Offers/Promos,"Agent name: Mercy
+call reason: Frontline retention
+call findings: Available offers/promos
+action; advised on available offer and to make payment but he refused he wants an offer of 1000 shillings
+Resolution: to be patient as i check if he can get an offer to pay 1000
+voc: I cant get an offer of 1000
+Number calling: 254725707944",,SouthWest Retention,254725707944,,ACT,,DUO 10,28,STD101H,std101,Escalated Open,Mercy Oyoya,no,2025-03-24 08:44:21,2025-03-24 08:44:21
+3823092,107410,Ian Muiruri Kinuthia,0707180519,Inbound,Service Complaint,TV,Freezing/Glitching Channels,"Agent name: Winnie
+Call issue; TV
+Findings: signal issue
+Resolutions: Reset
+VOC: freezing /glitching
+Calling:254722633164",,,254722633164,,ACT,GPON DUO CLASSIC 10,GPON DUO CLASSIC 10,11,FGT22-22E,TN2,Closed on FCR,Winnie Wambui,no,2025-03-24 08:45:17,2025-03-24 08:45:17
+3823094,1068742,Grace Abuli,,Inbound,Service Complaint,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name:  Caren
+Call Reason :frontline retention
+Findings :NPD/Churn offers
+Action/Resolution : offer eligible, will pay..1500 for 10 mbps 
+VOC: I have a request, i can not find the account number
++254718188460",,,254718188460,,ACT,,,,STB103C,Not Available,Closed on FCR,Caren Mukuria,no,2025-03-24 08:45:34,2025-03-24 08:45:34
+3823101,214620,Alex Tunoi,0722571929,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Vincent
+Call Reason""; unable to browse
+VOC: We don't have the internet
+Action Taken:Ticket No: #108181 : Issue > KLS102B & F, KLS103B & C and KLS101G Clients are not connecting
+Resolution: advised the client to be patient as we are resolving their internet issue",,,254722571929,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,21,KLS102C,kls102,Closed on FCR,Vincent Khayumbi,no,2025-03-24 08:46:14,2025-03-24 08:46:14
+3823107,150430,Nairobi Sports House Ltd,,Inbound,Service Follow up,APPOINTMENTS,Missed/Site Visit Follow Up,"Agent Name:Rosemary
+Call Reason: Appointments
+Findings: site visit follow up
+Action/res: escalated to dispatch, ticket updated...to be patient
+voc: we don't have internet from Thursday ad someone was sent on Saturday but we normally close at 1.30pm  and  he was to come at 8.15am 
+0721201142",,,254721201142,,ACT,PREMIUM - R100,PREMIUM - R100,8,WTS103C,wts103,Closed on FCR,Rosemary Nduku,yes,2025-03-24 08:46:28,2025-03-24 08:46:28
+3823110,234900,Emily Waweru,0723375689,Inbound,Service Complaint,INTERNET,Area Outage - Unconfirmed,"Agent name:winnie
+Call Reason: Internet
+Findings: Area outage - unconfirmed
+Action: advised on area issue and to be patient.....CM Status: 338 KO/338 total
+Resolution: to be patient
+VOC: no internet
+phone 0723375689",,,254723375689,,ACT,DUO 10,DUO 10,14,RYU103F,ryu103,Closed on FCR,Winnie Wambui,no,2025-03-24 08:46:38,2025-03-24 08:46:38
+3823115,923167,John Mungai Miringu,,Inbound,Service Request,FRONTLINE RETENTION,Speed Upgrade Offer,"Agent Name: Lewis
+Call Reason: frontline retention
+Voc; we paid yesterday but our account is still disconnected
+Findings; speed upgrade
+Action Taken:: escalated for upgrade
+Calling number;+254722656963",,SouthWest Retention,254722656963,,ACT,DUO 10,DUO 10,28,PHN103C,std102,Escalated Open,Lewis Mwatha,no,2025-03-24 08:46:52,2025-03-24 08:46:52
+3823117,1088563,David Opati,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Mercy
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient....Ticket No #108179
+ Resolution: to be patient our technicians are not the ground working on it 
+VOC: I don't have internet
+Number calling:  254799146814",,,254799146814,,ACT,,,,RYU103G,Not Available,Closed on FCR,Mercy Oyoya,no,2025-03-24 08:46:55,2025-03-24 08:46:55
+3823122,919853,Joan Kinyangi,0722475909,Inbound,Service enquiry,BIILING,Due date,"Agent Name:Salome
+Call Reason: Billing
+Findings: Due date
+Action: advised account due and to make payment
+Resolution: to make payment
+Voc: How much is due?
+Calling Number; 254722475909",,,254722475909,,ACT,DUO 10,DUO 10,22,IRD102C,ird102,Closed on FCR,Salome Olwande,no,2025-03-24 08:47:31,2025-03-24 08:47:31
+3823132,926026,James Wambu,0722688076,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent;Faith
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient...Ticket No: #108179
+Resolution: to be patient
+VOC: since the last 2 days we have no internet
++254720700093",,,254720700093,,ACT,J5,J5,23,RYU103A,ryu105,Closed on FCR,Faith Omondi,no,2025-03-24 08:48:02,2025-03-24 08:48:02
+3823139,188177,Elijah Ndanyi,0727060371,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name magdalene
+call reason internet
+findings area outage with ticket  Ticket No: #108165
+resolution advised client
+voc no internet
+calling number 254727060371",,,254727060371,,ACT,DUO 10,DUO 10,28,DHM110A,uma103,Closed on FCR,Magdalene Juma,no,2025-03-24 08:48:33,2025-03-24 08:48:33
+3823146,149116,Magdalene Kalekye,0722938546,Inbound,Service Complaint,FRONTLINE RETENTION,Available Offers/Promos,"Agent Name: Vincent
+Call Reason: follow up
+Action Taken: The client ADVISED the offer is not available
+Resolution: advised to pay in full and get a speed upgrade...call dropped",,,254722938546,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,28,STB104A,stb104,Closed on FCR,Vincent Khayumbi,no,2025-03-24 08:49:15,2025-03-24 08:49:15
+3823151,882184,Piera Mukami,0725502352,Inbound,Service Complaint,INTERNET,Unable to browse via WI-FI - WI-FI interface disabled,"Agent name: Mercy
+Call reason: internet
+Findings: interface disabled
+Action; interface enabled.,,uptime to be confirmed
+VOC: my internet is not working
+254725502352",,,254725502352,,ACT,UPGRADE DUO10 C - DUO 20 CLASSIC,DUO 10 CLASSIC,14,TSA101B,nya108,Closed on FCR,Mercy Eroba,no,2025-03-24 08:49:41,2025-03-24 08:49:41
+3823152,1042602,Peter Nderitu,0726343369,Inbound,Service Follow up,FRONTLINE RETENTION,Available Offers/Promos,"Agent: Falcon
+Issue: Frontline retention
+Finding: AVAILABLE OFFERS
+VOC: on saturday i got an offer to pay 1317 to get 10mbs
+Action:Advised client on the 30% off, Escalated to retention
+Resolution: Client advised to be patient
+Number Calling: 254726343369",,North Region ,254726343369,,ACT,DUO 10,DUO 10,27,RYU106EL1,nga104,Escalated Open,Falcon Natali,no,2025-03-24 08:50:11,2025-03-24 08:50:11
+3823153,42015,Natalie Wandiga,0720085102,Inbound,Service Complaint,INTERNET,SSID/PW Reset to Default,"Agent:Christerbel
+Call Reason:Password change
+Connection/Acc Status:Factory deafult 
+Action/Resolution:Checked on clients connection,Password changed,Uptime confirmed
+Voc:Id like to change my wifi password
+0720085102",,,254720085102,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,6,KWD105C,kwd105,Closed on FCR,Christerbel Nekesa,no,2025-03-24 08:50:14,2025-03-24 08:50:14
+3823156,1024848,Francis Musili Ngui,0729678773,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Mercy
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient....Ticket No # 108181
+Resolution: to be patient our technicians are not the ground working on it 
+VOC: I don't have internet
+Number calling:  254729678773",,,254729678773,,ACT,DUO 20,DUO 20,14,KLS106G,kls102,Closed on FCR,Mercy Oyoya,no,2025-03-24 08:50:28,2025-03-24 08:50:28
+3823164,290566,Wendy Twycross,,Inbound,Service Complaint,INTERNET,Modem not Locking,"Agent name:Volemi
+call reason: Internet
+call findings: modem not locking
+action; client rebooted router, CM Status: 50 KO/404 total
+Resolution: booked w/o
+voc: my internet is not working.
++254795325782",,West & SouthWest Support ESC,254795325782,,ACT,i30 - EDGE,i30 - EDGE,22,DAG101A,dag103,Escalated Open,Gloria Volemi,yes,2025-03-24 08:51:25,2025-03-24 08:51:25
+3823167,1091024,Steve Ongoma M,,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Beatrice 
+offer reconnection follow-up 
+voc: I got an offer to pay 1700
+eligible to pay 1700 for 10mbps ... reconnected ... advised to restart router 
+0721733582",,,254721733582,,ACT,,,,DHM104B,Not Available,Closed on FCR,Beatrice Katam,no,2025-03-24 08:51:55,2025-03-24 08:51:55
+3823178,848629,Boaz Nalika Mswaili,,Inbound,Service Complaint,INTERNET,Modem not Powering,"agent...joylis
+issue...internet
+voc...my modem is not powering on
+finding: modem not powering
+action..advised to power it on and change from one socket to another..also try using a different power adaptor ....client advised to take the adaptor to the nearest zuku shop.
+resolution. advised on shop location
++254712846512",,,254712846512,,ACT,J5 BASIC,J5 BASIC,11,RAK107G,rak107,Closed on FCR,Joylis Mutegi,no,2025-03-24 08:52:44,2025-03-24 08:52:44
+3823185,884100,Peter Waweru Thuku,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent:Christerbel
+Call Reason:No internet
+Connection/Acc Status:Area outage
+Action/Resolution:Advised to be patient theres an area issue Ticket No: #108165
+Voc:I do not have internet
+254737514423",,,254737514423,,ACT,J2,J2,28,UMA110D,uma110,Closed on FCR,Christerbel Nekesa,no,2025-03-24 08:53:41,2025-03-24 08:53:41
+3823191,105121,Josephine Omenda,0721551867,Inbound,Service enquiry,BIILING,Balance Inquiry,"Agent:Rose
+Issue.Billing
+Action:Advised to top up 5799
+Resolution:client promised to pay
+0711884586",,,254711884586,,ACT,PREMIUM - R30,PREMIUM - R30,25,DHM107F,dhm107,Closed on FCR,Rose Karugo,no,2025-03-24 08:54:04,2025-03-24 08:54:04
+3823192,931187,Hillary Maina,,Inbound,Customer Feedback,SHIFTING,Shifting W/O Follow Up,"Agent..billy
+Call reason...shifting
+Finding..shifting wo  follow up 
+Action Taken..work order resheduled to sales
+Resolution...client to be patient
+Voc...the house is now ready, I now want the connection",,,254717906491,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,24,NGA103E,nga106,Closed on FCR,Stephen Billy,yes,2025-03-24 08:54:09,2025-03-24 08:54:09
+3823199,169493,Anisa Abeid Salim,0732707082,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent name: Salome
+call reason: Frontline retention
+call findings: npd/churn offers
+action; escalated for reconnection
+Resolution: to be patient for reconnection 
+voc: i paid yesterday na bado sina internet
+Number calling: 254732707082",,Mombasa Retention ,254732707082,,ACT,,J2 DISCOUNTED,28,MBS119C,mbs118,Escalated Open,Salome Olwande,,2025-03-24 09:32:35,2025-03-24 09:32:35
+3823199,169493,Anisa Abeid Salim,0732707082,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent name: Mercy
+call reason: Frontline retention
+call findings: npd/churn offers
+action; escalated for reconnection
+Resolution: to be patient for reconnection 
+voc: i paid yesterday na bado sina internet
+Number calling: 254732707082",,Mombasa Retention ,254732707082,,ACT,,J2 DISCOUNTED,28,MBS119C,mbs118,Escalated Open,Mercy Oyoya,no,2025-03-24 08:54:39,2025-03-24 08:54:39
+3823201,112386,Marrolyne Awuor Akoko,0722684531,Inbound,Service enquiry,FRONTLINE RETENTION,Available Offers/Promos,"Agent name: Lewis
+call reason: Frontline retention
+call findings: available offers/promos
+action; 700 for 10mbps..
+Resolution: to make payments
+voc: niko na offer
+0704972695",,,254704972695,,ACT,,DUO 10,28,UMA119F,uma118,Closed on FCR,Lewis Mwatha,no,2025-03-24 08:54:46,2025-03-24 08:54:46
+3823207,227017,Lucy Lujino Lokodo,0717063901,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name:joylis
+issue:internet
+finding....confirmed outage
+action :Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+resolution....advised of the issue...to be patient
+voc i dont have internet
+
+254733902455",,,254733902455,,ACT,,DUO 10,26,RYU103H,ryu103,Closed on FCR,Joylis Mutegi,no,2025-03-24 08:55:09,2025-03-24 08:55:09
+3823214,46430,Geoffrey Kibet Kiptai,0727655228,Inbound,Service Complaint,INTERNET,Intermittent Connection,"Agent name: Winnie
+call reason: Internet
+call findings: slow/intermittent connection - low snr
+action; rebooted the router
+Resolution: Advised to give it time to load
+voc:My internet is on and off
+phone 0727655228",,,254727655228,,ACT,,DUO 10,25,UMA106A,free,Closed on FCR,Winnie Wambui,no,2025-03-24 08:56:03,2025-03-24 08:56:03
+3823225,990907,Matata Alvin,0711896468,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Name: Grace
+Call Reason: internet
+Findings : confirmed outage...Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+Resolution: advised on outage, advised to patient
+VOC:I don't have internet
++254711896468",,,254711896468,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,21,RYU103B,ryu103,Closed on FCR,Grace Ambale,no,2025-03-24 08:57:04,2025-03-24 08:57:04
+3823228,1085919,Catherine Wamuyu Mimano,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Salome
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action/ resolution : advised on area issue and to be patient....Ticket No # 108179 : Issue > RYU103 & RYU105A,C,E,FH
+VOC: we don't have internet
+Calling Number; 254707706920",,,254707706920,,ACT,,,,RYU103D,Not Available,Closed on FCR,Salome Olwande,no,2025-03-24 08:57:17,2025-03-24 08:57:17
+3823229,848602,Lydia Njau,0722777673,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"+Agent:Rose
+Issue.Internet
+Voc..I dont have internet
+Finding:Outage.....Ticket No: #108164
+Action: Advised on the issue
+Resolution:Advsed to be patient
+254722777673",,,254722777673,,ACT,,J2 DISCOUNTED,8,UMA106H,uma106,Closed on FCR,Rose Karugo,no,2025-03-24 08:57:23,2025-03-24 08:57:23
+3823230,1072352,Hussein Balala Hussein,0796372574,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Agent: Falcon
+Issue: Frontline retention
+Finding: NPD/CHURN OFFERS
+VOC: have paid on offer 1200 to 10mbs
+Action: Escalated to retention
+Resolution: Client advised to restart router
+Number Calling:254797003957",,East Retention,254797003957,,ACT,,,,UMA124C,Not Available,Escalated Open,Falcon Natali,no,2025-03-24 08:57:23,2025-03-24 08:57:23
+3823231,181233,Elizabeth Akinyi Rodah,0731255237,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent :Billy
+call reason: internet
+call finding : area outage  with ticket
+action taken..Ticket No: #108181
+resolution : advised to be patient issue is being worked on  
+voc: I have no internet",,,254720271162,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,9,KLS106G,kls102,Closed on FCR,Stephen Billy,no,2025-03-24 08:57:26,2025-03-24 08:57:26
+3823235,1023791,Solomon Kimunyu,0704009049,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: jane
+Call Reason: internet
+Acc status/Connection :area outage,
+Action: advised on the outage
+Resolution: advised client on the outage..Ticket No: #108164
+voc; i dont have internet since yesterday
+
++254704009049",,,254704009049,,ACT,"FREE TV PROMO,UPGRADE DUO10 C - DUO 20 CLASSIC","FREE TV PROMO,DUO 10 CLASSIC",17,UMA104E,uma106,Closed on FCR,Jane Frances,no,2025-03-24 08:58:02,2025-03-24 08:58:02
+3823236,1057685,Jason Syengo,0714176526,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name:joylis
+issue:internet
+finding....confirmed outage
+action :Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+resolution....advised of the issue...to be patient
+voc i dont have internet
+
+0700933644",,,254700933644,,ACT,,,23,RYU103A,Not Available,Closed on FCR,Joylis Mutegi,no,2025-03-24 08:58:07,2025-03-24 08:58:07
+3823247,884100,Peter Waweru Thuku,,Inbound,Service Complaint,INTERNET,Credit Request,3 days credit passed for FEC,,Pawa KE East Support ESC,254737514423,,ACT,J2,J2,28,UMA110D,uma110,Escalated Closed,Christerbel Nekesa,no,2025-03-24 08:58:35,2025-03-24 09:08:40
+3823251,1058058,Cosmos Kiogora Matheta,0724435577,Inbound,Service Complaint,INTERNET,Modem not Locking,"Hello team,
+Client issue has w/o raised
+Regards,
+S.E Brian.",,,254724435577,,ACT,,,25,WTS106H,Not Available,Closed on FCR,Mercy Oyoya,yes,2025-03-24 08:58:44,2025-03-24 09:00:03
+3823259,150501,Salome Wanja,0721767291,Inbound,Service Request,BIILING,Mpesa Reversal,"agent name magdalene
+call reason BILLING
+findings  mpesa reversal
+resolution escalated to billing non zuku client paid to zuku account 
+voc i paid to your account 
+calling number0769348621
+
+NON ZUKU CLIENT PAID RO ZUKU ACCOUNT 
+mpesa 320320
+account 150501
+code TC09V7C077
+AMOUNT 2999
+PHONE 0769348621
+CALIONG 0769348621
+PAODAY 8;0",,Billing,254769348621,,ACT,,DUO 10,28,OTD102C,std101,Escalated Open,Magdalene Juma,no,2025-03-24 08:59:44,2025-03-24 08:59:44
+3823262,256944,Boniface Mwenda Mathiu,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Name: Grace
+Call Reason: internet
+Findings : confirmed outage...Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+Resolution: advised on outage, advised to patient
+VOC:I don't have internet
++254728018018",,,254728018018,,ACT,J5 BASIC DISCOUNTED,J5 BASIC DISCOUNTED,11,RYU103C,ryu103,Closed on FCR,Grace Ambale,no,2025-03-24 08:59:52,2025-03-24 08:59:52
+3823264,1067780,Millicent Shinavuli Isiaho,0759253005,Inbound,Service Complaint,FRONTLINE RETENTION,NPD/Churn Offers,"Agent name:Volemi
+call reason: Frontline retention
+call findings: npd/churn offers
+action; escalated for reconnection-1200 for 10mbps
+Resolution: to be patient
+voc: i have paid and internet is still not working....
+254706621316",,SouthWest Retention,254706621316,,ACT,,,27,SYO105H,Not Available,Escalated Open,Gloria Volemi,no,2025-03-24 08:59:59,2025-03-24 08:59:59
+3823265,978570,Sylvia Kasaon,0726253009,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"Agent...Rose
+Issue.. internet
+Action..Link ok.link refreshed
+voc..I dont have internet
+Finding: link ok
+Resolution...client  confirms connection
+726253009",,,254726253009,,ACT,DUO 10,DUO 10,28,WTS103H,nga105,Closed on FCR,Rose Karugo,no,2025-03-24 09:00:07,2025-03-24 09:00:07
+3823270,112386,Marrolyne Awuor Akoko,0722684531,Inbound,Service Request,FRONTLINE RETENTION,NPD/Churn Offers,"Agent name:Salome
+call reason: Frontline retention
+call findings: npd/churn offers
+action; escalated for reconnection
+Resolution: to be patient
+voc: i have paid kindly reconnect
+Calling Number; 254704972695",,East Retention,254704972695,,ACT,,DUO 10,28,UMA119F,uma118,Escalated Open,Salome Olwande,no,2025-03-24 09:00:25,2025-03-24 09:00:25
+3823274,210872,Rahab Mbugua,0791208672,Inbound,Service Complaint,APPOINTMENTS,Escalated to Maintenance/ Other departments,"Agent Name:jane
+Call Reason: appointment
+Acc status/Connection : re-escalated to maintenance
+Action : escalated to maintenance
+voc: i have reported this account from last week i dont have internet
+254791208672",,,254791208672,,ACT,GPON J10B,GPON J10B,8,FGT34-22,ROY,Closed on FCR,Jane Frances,yes,2025-03-24 09:01:04,2025-03-24 09:01:04
+3823278,111149,Ryan Kariuki,0700086602,Inbound,Service Complaint,BIILING,Tax invoice request,"Agent;Faith
+Findings: Billing
+Action: escalated to billing to seng
+Resolution: to be patient
+VOC: i spoke to one of you on Saturday i need my invoice for the whole 2024 to date and my service contract
+0700086602",,Billing,254700086602,,ACT,"WIFI EXTENDER RENTAL FEE,PREMIUM - R30","WIFI EXTENDER RENTAL FEE,PREMIUM - R30",5,WTS106C,wts106,Escalated Open,Faith Omondi,no,2025-03-24 09:01:16,2025-03-24 09:01:16
+3823279,283160,Bonita Willmina,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name:joylis
+issue:internet
+finding....confirmed outage
+action :Ticket No: #108166: UMA103D down
+resolution....advised of the issue...to be patient
+voc i dont have internet
+
++254725814328",,,254725814328,,ACT,DUO 10,DUO 10,28,UMA108H,uma103,Closed on FCR,Joylis Mutegi,no,2025-03-24 09:01:17,2025-03-24 09:01:17
+3823288,1092246,David Kimutai,,Inbound,Service Request,SHIFTING,Shifting Process,"Agent Name: Lewis
+Call Reason: shifting
+Findings: shifting process
+Action: has an no internet package, 
+Resolution: advised to pay and revert
+Voc: i am moving houses and i want to be reconnected
+0722974795",Ngara,,254722974795,,ACT,,,,NGA103C,Not Available,Closed on FCR,Lewis Mwatha,no,2025-03-24 09:01:55,2025-03-24 09:01:55
+3823293,901374,Cynthia Bianca,0722951433,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:winnie
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient....Ticket No #108164
+ Resolution: to be patient
+VOC: No internet
+phone 0722951433",,,254722951433,,ACT,,DUO 10,27,UMA109F,uma106,Closed on FCR,Winnie Wambui,no,2025-03-24 09:02:26,2025-03-24 09:02:26
+3823297,40646,Violet Atieno Agwanda,0714259669,Inbound,Service Complaint,INTERNET,Wrong Config,"Agent name: Mercy
+call reason: Internet
+call findings: wrong config
+action; stuck on wrong config, rebooted router
+Resolution: confirms uptime
+Voc: I dont have internet since yesterday
+Number calling:  254714259669",,,254714259669,,ACT,,DUO 10,16,KMR105A,kmr102,Closed on FCR,Mercy Oyoya,no,2025-03-24 09:02:45,2025-03-24 09:02:45
+3823302,135214,Oliver Cheruiyot,0729050980,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Beatrice 
+offer reconnection follow-up 
+voc: I got an offer to pay 2000
+eligible to pay 2000 for 20mbps ... reconnected ... advised to restart router 
+254729050980",,,254729050980,,ACT,,DUO 10 CLASSIC,22,DAG103B,dag103,Closed on FCR,Beatrice Katam,no,2025-03-24 09:03:46,2025-03-24 09:03:46
+3823307,95961,Sharon Panesar,,Inbound,Service Request,FRONTLINE RETENTION,Suspension Request,"Agent name: Falcon
+Call issue; Frontline retention
+Findings: suspension request
+Resolutions: esc to retention
+VOC:  i would like to suspend my account from today to 10th of june
+Calling:254746700724",,Central Retention,254746700724,,ACT,"GPON J30,WIFI EXTENDER RENTAL FEE","GPON J30,WIFI EXTENDER RENTAL FEE",13,FRT 9-11,RNA,Escalated Open,Falcon Natali,no,2025-03-24 09:04:07,2025-03-24 09:04:07
+3823313,840045,Joel Leshan Silal,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Volemi
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient.... Ticket No: #108165
+ Resolution: to be patient
+VOC: we don't have internet since yesterday
+254710628919",,,254710628919,,ACT,J2 DISCOUNTED,J2 DISCOUNTED,20,UMA108F,uma110,Closed on FCR,Gloria Volemi,no,2025-03-24 09:04:36,2025-03-24 09:04:36
+3823321,984481,Agneta Akinyi,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Beatrice
+area outage
+voc: no internet 
+Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+calling number ... 254723941156
+CALLED BACK AND NOTIFIED ON AREA OUTAGE",,,254723941156,,ACT,,DUO 20,6,RYU105B,ryu105,Closed on FCR,Beatrice Katam,no,2025-03-24 09:05:24,2025-03-24 09:05:24
+3823324,1022528,Charity Muchoki,0703701532,Inbound,Service Complaint,FRONTLINE RETENTION,Student package - One month reconnection Enquiry,"Agent: Winnie
+call reason: frontline retention
+findings: student package-one month reconnection enquiry
+resolution: advised to be patient
+voc: no internet
++254703701532",,South Retention,254703701532,,ACT,GPON PAWA WIFI 5Mbps,GPON PAWA WIFI 5Mbps,13,FRN31-14,RON,Escalated Open,Winnie Wambui,no,2025-03-24 09:05:29,2025-03-24 09:05:29
+3823332,1109223,Bramwel Ahona Kisivuli,,Inbound,Service Follow up,SALES,Sales Refund,"vincnet
+sales dispatch
+voc:i have waited for a mnth now and no installation done,I want to be connected back to the internet but youve failed me kindly refund me,when your ready let me know.
+rea: mail sent to sales dispatch",,,254725209358,,INA,,,,DEFAULT NODE,Not Available,Closed on FCR,Vincent Khayumbi,no,2025-03-24 09:06:15,2025-03-24 09:06:15
+3823333,1003537,Esther Wangare,0718972748,Inbound,Service Complaint,INTERNET,Unable to browse via wifi- Wrong package assigned.,"Agent Name: jane
+Call Reason: internet
+Acc status/Connection : wrong package
+Voc: Jana nililipa na sina internet
+Action Taken: escalated to change package to hfc
+Resolution: client advised to check connection after 10minutes
+
+
++254747779219",,Inbound Supervisor,254747779219,,ACT,,"FREE TV PROMO,DUO 10 CLASSIC",6,TSA105D,fda103,Escalated Closed,Jane Frances,no,2025-03-24 09:06:19,2025-03-24 09:22:16
+3823335,1022528,Charity Muchoki,0703701532,Inbound,Service Request,FRONTLINE RETENTION,Student package - One month reconnection Enquiry,"Agent name: Salome
+call reason: Frontline retention
+call findings: Student package- One month Enquiry
+action; escalated for reconnection
+Resolution: to be patient
+voc: i have waited for 30  minutes
+Calling Number; 254703701532",,"Pawa, Kisumu & Nakuru Retention",254703701532,,ACT,GPON PAWA WIFI 5Mbps,GPON PAWA WIFI 5Mbps,13,FRN31-14,RON,Escalated Open,Salome Olwande,no,2025-03-24 09:06:31,2025-03-24 09:06:32
+3823338,1069272,Robert Allan Sukulu,,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"+Agent...Rose
+Issue..internet
+Finding: link ok
+Action..Advised on restrting the router
+Resolution..Uptime Confirmed
+Voc...I dont have internet
+254762044220",,,254762044220,,ACT,,,,FMT34-18,ATH,Closed on FCR,Rose Karugo,no,2025-03-24 09:06:37,2025-03-24 09:06:37
+3823341,837101,Edna Atieno,,Inbound,Service Complaint,INTERNET,SSID/PW Reset to Default,"agent name magdalene
+call reason internet 
+findings pw reset to default 
+resolution renabled uptime
+voc no name 
+calling number254725744719",,,254725744719,,ACT,DUO 10,DUO 10,5,SYO105B,syo105,Closed on FCR,Magdalene Juma,no,2025-03-24 09:06:57,2025-03-24 09:06:57
+3823352,105926,Lillian K Odanga,0722567527,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent;Faith
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient...Ticket No: #108181
+Resolution: to be patient
+VOC: we cant connect to our internet
++254722836844",,,254722836844,,ACT,"WIFI EXTENDER RENTAL FEE,PREMIUM - R30","WIFI EXTENDER RENTAL FEE,PREMIUM - R30",25,KLS103C,kls103,Closed on FCR,Faith Omondi,no,2025-03-24 09:08:29,2025-03-24 09:08:29
+3823353,44457,Deborah Were,0748838188,Inbound,Service Complaint,INTERNET,Intermittent Connection,"agent...joylis
+issue:internet
+voc...i have on/off connection
+finding.:intermittency
+action: modem frequency tuned,,,
+resolution : uptime to be confirmed as client disconnected the call
+0748838188",,,254748838188,,ACT,DUO 10,DUO 10,28,DAG103E,dag103,Closed on FCR,Joylis Mutegi,no,2025-03-24 09:08:39,2025-03-24 09:08:39
+3823361,50271,Chaya Patel,0722628420,Inbound,Service Complaint,BIILING,Due date,"Agent:Caren
+Call Reason:Billing
+Findings:Due date 
+Action/Resolution:Checked on clients account,Details given to the client..to top up 1680
+VOC: right now i have paid, i want to extend the due date to 5th
++254722628420",,,254722628420,,ACT,"Asia TV,DUO CLASSIC 20","Asia TV,DUO CLASSIC 20",5,MBS102A,mbs102,Closed on FCR,Caren Mukuria,no,2025-03-24 09:09:03,2025-03-24 09:09:03
+3823367,820177,Simon Macharia Gitonga,,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name: joylis
+Call Reason. frontline retention
+Voc: i have paid but internet is not working
+finding; npd/churn offers
+Action Taken:to pay 1000sh for 10mbps  esc for reconnection
+Resolution:client to be patient
++254720423687",,East Retention,254720423687,,ACT,J2 DISCOUNTED,J2 DISCOUNTED,6,UMA124F,uma129,Escalated Open,Joylis Mutegi,no,2025-03-24 09:09:57,2025-03-24 09:09:57
+3823368,868121,George Tak,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Beatrice
+area outage
+voc: no internet from yesterday
+Ticket No: #108181 : Issue > KLS102B & F, KLS103B & C and KLS101G Clients are not connecting
+advised client on the issue
+calling number ... 254711332868",,,254711332868,,ACT,GPON DUO CLASSIC 10,GPON DUO CLASSIC 10,21,KLS101G,SPY,Closed on FCR,Beatrice Katam,no,2025-03-24 09:09:59,2025-03-24 09:09:59
+3823372,1093666,John Mburu Kuria,,Inbound,Service Complaint,APPOINTMENTS,Missed/Site Visit Follow Up,"agent name magdalene
+call reason appointments
+findings  site visit follow up
+resolution advised cleint tat
+voc no internet
+calling number 254793792218",,,254793792218,,ACT,,,,FRU2-28,RUA,Closed on FCR,Magdalene Juma,yes,2025-03-24 09:10:16,2025-03-24 09:10:16
+3823388,1086418,Mariam Faiz Marie,,Inbound,Service Complaint,INTERNET,Slow/Intermittent connection -  Low/High RX,"Agent Name: Grace
+Call Reason: Internet
+Acc/ Connection Status; Slow Speeds,/intermittent connections
+ACTION: All parameters within range. rebooted modem...speed test ran 20mbps, call dropped
+VOC :internet is slow
+254754302638",,,254754302638,,ACT,,,,FBM19-9,BAM,Closed on FCR,Grace Ambale,no,2025-03-24 09:11:59,2025-03-24 09:11:59
+3823393,1092543,Robert Karanja Macharia,,Inbound,Service Complaint,TV,Freezing/Glitching Channels,"Agent...billy
+call reason... tv
+Finding:freezing/glitching channels
+ActionTaken: guided on reset..channels back except E enternainment..stb refreshed
+Voc:  the tv is just hanging saying scrambled",,,254728524476,,ACT,,,,FMN6-28,MRT,Closed on FCR,Stephen Billy,no,2025-03-24 09:12:19,2025-03-24 09:12:19
+3823394,1088128,David Mburu Maina,,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent name: Mercy
+call reason: Frontline retention
+call findings: npd/churn offers
+action; escalated for reconnection
+Resolution: to be patient for reconnection 
+voc: i have paid kindly reconnect
+Number calling: +254720456973",,South Retention,254720456973,,ACT,,,,MHO112G,Not Available,Escalated Open,Mercy Oyoya,,2025-03-24 09:13:17,2025-03-24 09:13:17
+3823394,1088128,David Mburu Maina,,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent name: Mercy
+call reason: Frontline retention
+call findings: npd/churn offers
+action; escalated for reconnection
+Resolution: to be patient for reconnection 
+voc: i have paid kindly reconnect
+Number calling: +254720456973",,,254720456973,,ACT,,,,MHO112G,Not Available,Closed on FCR,Mercy Oyoya,no,2025-03-24 09:12:20,2025-03-24 09:14:02
+3823399,1088593,Lynet Chemaswa Ndiema,0721849527,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name:joylis
+issue:internet
+finding....confirmed outage
+action :Ticket No: #108166: UMA103D down
+resolution....advised of the issue...to be patient
+voc i dont have internet
+
+0721849527",,,254721849527,,ACT,,,,UMA117H,Not Available,Closed on FCR,Joylis Mutegi,no,2025-03-24 09:12:46,2025-03-24 09:12:46
+3823405,96832,Emilia Mgeni,0705452457,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Caren
+Call Reason: internet
+Findings: Area Outage-confirmed with ticket
+Action/Resolution: Ticket No: #108181: KLS102B & F, KLS103B and KLS101G,,,Client advised on the area issue
+voc: i have not had internet since yesterday
++254705452457",,,254705452457,,ACT,PREMIUM - R30,PREMIUM - R30,28,KLS102B,kls102,Closed on FCR,Caren Mukuria,no,2025-03-24 09:13:22,2025-03-24 09:13:22
+3823407,210872,Rahab Mbugua,0791208672,Inbound,Service Complaint,APPOINTMENTS,Escalated to Maintenance/ Other departments,"Agent Name:winnie
+Call Reason: appointment
+Acc status/Connection : re-escalated to maintenance
+Action : escalated to maintenance
+voc: The whole month l have not been using internet , l have been using zuku for 10 years
+254791208672",,,254791208672,,ACT,GPON J10B,GPON J10B,8,FGT34-22,ROY,Closed on FCR,Winnie Wambui,yes,2025-03-24 09:13:31,2025-03-24 09:13:31
+3823410,954837,Bior John Aguer,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: jane
+Call Reason: internet
+Acc status/Connection :area outage,
+Action: advised on the outage
+Resolution: advised client on the outage..Ticket No #108179
+voc; internet yangu haifanyi
+
+254794588982",,,254794588982,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,2,RYU105E,ryu103,Closed on FCR,Jane Frances,no,2025-03-24 09:13:41,2025-03-24 09:13:41
+3823411,998510,Otieno Otieno,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent;Faith
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient...Ticket No: #108179
+Resolution: to be patient
+VOC: my son is telling me that there is not internet since the power came back
++254739999044",,,254739999044,,ACT,DUO 10,DUO 10,27,RYU102A,ryu103,Closed on FCR,Faith Omondi,no,2025-03-24 09:13:42,2025-03-24 09:13:42
+3823412,121130,Paolo Marro,0700347849,Inbound,Service Complaint,INTERNET,Modem not Locking,"Agent name:Volemi
+call reason: Internet
+call findings: modem not locking
+action; client rebooted router, CM Status: 60 KO/295 total
+Resolution: booked w/o
+voc: there is no internet
++254700489644",,West & SouthWest Support ESC,254700489644,,ADD,"WIFI EXTENDER RENTAL FEE,DUO 20","WIFI EXTENDER RENTAL FEE,DUO 20",14,KLN106D,kls102,Escalated Open,Gloria Volemi,yes,2025-03-24 09:13:45,2025-03-24 09:13:45
+3823416,50271,Chaya Patel,0722628420,Inbound,Service Request,BIILING,Due date,"Agent Name:Salome
+Call Reason: Billing
+Findings: Due date
+Action: advised account due and to make payment
+Resolution: to make payment
+Voc: I have made a payment of 1680 in advance so I will have an extension
+Calling Number; 254722628420",,,254722628420,,ACT,"Asia TV,DUO CLASSIC 20","Asia TV,DUO CLASSIC 20",5,MBS102A,mbs102,Closed on FCR,Salome Olwande,no,2025-03-24 09:14:12,2025-03-24 09:14:12
+3823421,1105413,Daniel Onchweri Omari,,Inbound,Service Complaint,INTERNET,SSID/PW Reset to Default,"Agent Name:  Caren
+Call Reason: internet
+Findings: ssid/ Pw reset to default
+Action/Resolution: password changed Uptime to be confirmed
+VOC: since yesterday the zuku account is not working
+254708158374",,,254708158374,,ACT,,,,KWS101E,Not Available,Closed on FCR,Caren Mukuria,no,2025-03-24 09:14:40,2025-03-24 09:14:40
+3823423,1011103,Kevin Ongale Okutoyi,0728625722,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name:joylis
+issue:internet
+finding....confirmed outage
+action :Ticket No #108179; RYU103 & RYU105A,C,E,FH down
+resolution....advised of the issue...to be patient
+voc i dont have internet
+
++254728625722",,,254728625722,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,5,RYU105B,ryu103,Closed on FCR,Joylis Mutegi,no,2025-03-24 09:14:42,2025-03-24 09:14:42
+3823424,1057523,Edwin Kipkoech Kirui,0720213827,Inbound,Service Complaint,INTERNET,Intermittent Connection,Job card raised for further checks on site.,,Kisumu & Mombasa Support ESC,254720213827,,ACT,,,23,FUT6-14,BAM,Escalated Closed,Beatrice Katam,yes,2025-03-24 09:14:42,2025-03-24 09:32:51
+3823444,1103753,Monica Wangui Mwangi,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent: Falcon
+Issue: Internet
+Finding: Area Outage
+VOC: I dont have internet
+Action: Client advised on area outage.Ticket No: 108179:RYU103 & RYU105A,C,E,FH.
+Resolution: Client advised to be patient
+Number Calling:254759880613",,,254759880613,,ACT,,,,RYU105B,Not Available,Closed on FCR,Falcon Natali,no,2025-03-24 09:16:46,2025-03-24 09:16:46
+3823452,944608,Miriam Mumbi,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Salome
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action/ resolution : advised on area issue and to be patient....Ticket No # 108169 : Issue > UMA121E some clients down
+VOC: we don't have internet
+Calling Number; 254748712328",,,254748712328,,ACT,DUO 10,DUO 10,14,UMA110B,uma110,Closed on FCR,Salome Olwande,no,2025-03-24 09:17:16,2025-03-24 09:17:16
+3823459,1054981,Evalyne Mwelu,0769777026,Inbound,Service Complaint,INTERNET,SSID/PW Reset to Default,"Agent...Rose
+Issue..internet
+Finding: Modem has reset to default settings
+Action..Reset done
+Resolution..Uptime Confirmed
+Voc...I dont have internet
+0769777026",,,254769777026,,ACT,PAWA WIFI 5Mbps ,PAWA WIFI 5Mbps ,22,KWD103D,kwd103,Closed on FCR,Rose Karugo,no,2025-03-24 09:17:58,2025-03-24 09:17:58
+3823461,1092246,David Kimutai,,Inbound,Service Request,SHIFTING,Shifting Request to RFS-Within zuku coverage,"agent name magdalene
+call reason shifting
+findings shiting wo
+resolution wo booked cleint also wants to upgade with phone will pay for delivery
+voc i shifted i want phone 
+calling number254722974795",ngara,,254722974795,,ACT,,,,NGA103C,Not Available,Closed on FCR,Magdalene Juma,yes,2025-03-24 09:18:07,2025-03-24 09:18:07
+3823466,270288,Japhet Bosire,,Inbound,Service Complaint,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name:  Caren
+Call Reason :frontline retention
+Findings :NPD/Churn offers
+Action/Resolution : offer eligible, will pay ..PAY 1000 FOR 10MBPS
+voc: kuna offer nilikuwa nimetumiwa
+254742747069",,,254742747069,,ACT,,GPON DUO 10,1,UMA128A,Not Available,Closed on FCR,Caren Mukuria,no,2025-03-24 09:18:40,2025-03-24 09:18:40
+3823470,908121,Catherine Masanga,,Inbound,Service Complaint,BIILING,Due date,"Agent Name:Volemi
+Call Reason: Billing
+Findings: Due date
+Action: advised account due and to make payment,advise on credit process
+Resolution: to make payment
+Voc: why was i not compensated for the 3 days.....
++254703491571",,,254703491571,,ACT,,C5 B,22,UMA105A,uma104,Closed on FCR,Gloria Volemi,no,2025-03-24 09:19:05,2025-03-24 09:19:05
+3823472,47079,Chitiavi Stellah,0707542265,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name: Mercy
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient....Ticket No #108164
+ Resolution: to be patient our technicians are not the ground working on it 
+VOC: I don't have internet
+Number calling: +254707542265",,,254707542265,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,18,UMA101A,uma106,Closed on FCR,Mercy Oyoya,no,2025-03-24 09:19:12,2025-03-24 09:19:12
+3823476,294525,Windscreen Mania Ltd,,Inbound,Service Complaint,INTERNET,Wrong Config,"Name: Grace
+Call Reason: internet
+Findings: Wrong config
+Resolution: rebooted modem, refreshed link, to confirm uptime
+VOC: the internet cannot connect
+254721293362",,,254721293362,,ACT,J2,J2,20,PKS103C,wts105,Closed on FCR,Grace Ambale,no,2025-03-24 09:20:10,2025-03-24 09:20:11
+3823477,1039037,Brian Githinji,0782034900,Inbound,Service enquiry,FRONTLINE RETENTION,Paid full price but Package did not pick,"Agent Name:winnie
+Call Reason:internet
+Findings: Frontline Retension
+Action: paid but not yet reconnected
+Resolution advised to wait
+Voc: Unable to use internet
+phone 0782034900",,,254782034900,,ACT,DUO 10,DUO 10,15,NGA101G,nga102,Closed on FCR,Winnie Wambui,no,2025-03-24 09:20:12,2025-03-24 09:20:12
+3823487,829141,Quenter Odoro,0796334435,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent:Rose
+Issue.Internet
+Voc..I dont have internet
+Finding:Outage.....Ticket No: #108166
+Action: Advised on the issue
+Resolution:Advsed to be patient
+0796334435",,,254796334435,,ACT,J2 DISCOUNTED,J2 DISCOUNTED,8,UMA103C,uma103,Closed on FCR,Rose Karugo,no,2025-03-24 09:20:53,2025-03-24 09:20:53
+3823494,155461,Wild Vision Adventures,0722810056,Inbound,Customer Feedback,INTERNET,Credit Request,"Agent name; Billy
+call reason; Internet
+findings: Credit Request
+Action/Res: informed on the 5 days  adj totaling to 696  interms of money and not days..to pay less the amount
+VOC: we were supposed to be credited and now our internet is cut",,,254724595614,,ACT,GPON J30,GPON J30,21,FRT15-8,RNA,Closed on FCR,Stephen Billy,no,2025-03-24 09:21:33,2025-03-24 09:21:33
+3823500,250686,Sospeter Nathan Gitao,,Inbound,Service Complaint,INTERNET,Unable to Browse via Extender,"Hello team,
+Client issue has w/o raised
+Regards,
+S.E Brian.",,,254715114311,,ACT,GPON J30,GPON J30,3,FGT5-36,ROY,Closed on FCR,Caren Mukuria,yes,2025-03-24 09:22:28,2025-03-24 09:35:38
+3823502,66215,Richard Mutuku,0721896572,Inbound,Service Complaint,FRONTLINE RETENTION,Available Offers/Promos,"Agent Name: jane
+Call Reason: frontline retention
+Acc status/Connection : available  offers
+Action Taken/Resolution: advised to pay and revert
+voc: i received an offer yesterday to pay 1500
+
+
+254721896572",,,254721896572,,ACT,,TRIPLE PLAY 10,27,SYO108B,syo105,Closed on FCR,Jane Frances,no,2025-03-24 09:22:46,2025-03-24 09:22:46
+3823511,1104930,Abdulrahman Mohamed Nur,,Inbound,Service Complaint,BIILING,Due date,"Agent name:illa
+Call reason:billing
+Connection/Acc status:due date
+Action/Resolution:disconnection period.....client advised to pay
+Voc:haifanyi
+254748851135",,,254748851135,,ACT,,,,MBS113D,Not Available,Closed on FCR,Christine Akoth,no,2025-03-24 09:24:13,2025-03-24 09:24:13
+3823515,1015233,Caroline Wambui,0720918552,Inbound,Service Follow up,APPOINTMENTS,Missed/Site Visit Follow Up,"agent...joylis
+issue.. appointment
+voc...niko na issue na internet 
+finding: site visit follow up
+action.esc to dispatch
+resolution...client to be patient
+0716528620",,,254716528620,,ACT,GPON DUO CLASSIC 10,GPON DUO CLASSIC 10,26,FRU10-20,RUA,Closed on FCR,Joylis Mutegi,yes,2025-03-24 09:24:19,2025-03-24 09:24:19
+3823519,1105126,Mirriam Ndunge Mutunga,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name magdalene
+call reason internet
+findings  area outage with ticket Ticket No: #108165
+resolution advised cleint
+voc no internet
+calling number 254783007810",,,254783007810,,ACT,,,,UMA111E,Not Available,Closed on FCR,Magdalene Juma,no,2025-03-24 09:24:38,2025-03-24 09:24:38
+3823538,1005449,Solomon Otieno,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent Name:Volemi
+Call Reason: Internet
+Findings: Area outage - confirmed with a ticket
+Action: advised on area issue and to be patient.... Ticket No: #108165
+ Resolution: to be patient
+VOC: we don't have internet
+254759063000",,,254759063000,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,17,UMA104E,uma110,Closed on FCR,Gloria Volemi,no,2025-03-24 09:27:40,2025-03-24 09:27:40
+3823547,898105,Sumeyya Sheikh,0742126667,Inbound,Service Complaint,INTERNET,SSID/PW Reset to Default,"Agent Name:Rosemary
+Call Reason: Internet
+Findings: ssid/pw reset to default
+Action/res: link is up, changed wifi password.. confirms uptime
+Voc: we've not had internet since yesterday and if i try to connect still can't connect
+0742126667",,,254742126667,,ACT,DUO 10,DUO 10,3,NGA101E,kls106,Closed on FCR,Rosemary Nduku,no,2025-03-24 09:28:36,2025-03-24 09:28:36
+3823549,175033,Peter Muguku,0722614228,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent: Billy
+Call reason: Internet
+Findings: area outage confirmed with ticket
+Action: Ticket No: #108165
+Resolution; client advised on outage
+Voc: no internet",,,254722686577,,ACT,i50 - EDGE,i50 - EDGE,13,UMA110A,uma110,Closed on FCR,Stephen Billy,no,2025-03-24 09:28:52,2025-03-24 09:28:52
+3823554,1108740,Yahya Yusuf Abdinur,,Inbound,Service Complaint,BIILING,Due date,"Agent Name: Mercy
+Call Reason: Billing
+Findings: Due date
+Action: He made payment to the right account
+Resolution: package is up
+Voc: i have made payment to the wrong account
+Number calling:  254723937766",,,254723937766,,ACT,,,,KWS101B,Not Available,Closed on FCR,Mercy Oyoya,no,2025-03-24 09:29:12,2025-03-24 09:29:12
+3823556,1084700,Samirah . Chepkemoi,,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"agent name: Nixsha
+call reason: internet
+call findings: unable to browse
+action: escalated account to FHTT to be enabled
+Resolution: advised client to be patient as we sort out the issue,,CALL DROPPED
+voc:i have no internet
+0743076852",,,254743076852,,ACT,,,,KLN115C,KLM,Closed on FCR,Anne Simiyu,no,2025-03-24 09:29:25,2025-03-24 09:29:25
+3823557,1085178,Mathew Nyatika Gori,,Inbound,Service enquiry,FRONTLINE RETENTION,NPD/Churn Offers,"Agent name:illa
+Call reason:frontline retention
+Connection/Acc status:npd/churn offers
+Action/Resolution:client paid on pay 1999 offer,,,,esc for reconnection
+Voc:my internet is not working
+254780234295",,South Retention,254780234295,,ACT,,,,MHO114F,RUA,Escalated Open,Christine Akoth,no,2025-03-24 09:29:46,2025-03-24 09:29:46
+3823563,121422,Akil Abdulwahab,0700358428,Inbound,Service Follow up,APPOINTMENTS,Escalated to Maintenance/ Other departments,"Agent Name: Falcon
+Call reason: Appointments
+Findings: esc to other departments
+Actions taken/Resolution: esc via mail
+VOC: the technicians were here but the did not resolve  the issue as they said they couldn't work on it
+Calling Number:254717430254",,,254717430254,,ACT,"Asia TV,DUO CLASSIC 20","Asia TV,DUO CLASSIC 20",28,NGA105A,nga105,Closed on FCR,Falcon Natali,yes,2025-03-24 09:30:27,2025-03-24 09:30:27
+3823566,945278,Sarai Weramundi,0727486646,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"agent name:joylis
+issue:internet
+finding....confirmed outage
+action :Ticket No: #108181: KLS102B & F, KLS103B and KLS101G
+resolution....advised of the issue...to be patient
+voc i dont have internet
++254745314831",,,254745314831,,ACT,i30 - EDGE,i30 - EDGE,24,KLS101G,kls101,Closed on FCR,Joylis Mutegi,no,2025-03-24 09:30:35,2025-03-24 09:30:35
+3823567,291524,Mohamed Haji,,Inbound,Service Complaint,INTERNET,Modem not Locking,"Agent name:Salome
+call reason: Internet
+call findings: modem not locking
+action; client rebooted router, CM Status: 78 KO/294 total
+Resolution: booked w/o
+voc: sijakuwa na internet 
+Calling Number; 254722854535",,Kisumu & Mombasa Support ESC,254722854535,,ACT,,DUO 10,27,MBS110C,mbs106,Escalated Open,Salome Olwande,yes,2025-03-24 09:30:44,2025-03-24 09:30:44
+3823570,285401,Pauline Karugu,,Inbound,Service Complaint,INTERNET,Modem not Locking,"Agent:Caren
+Call Reason: Internet
+Connection/Acc Status:Modem not locking
+Action/Resolution:RF Test done CM Status: 26 KO/164 total ,Modem not locking,details taken,WO booked,Advised to be patient 
+voc: I have no internet 
+254752685681",,Central & North Support ESC,254752685681,,ACT,J5,J5,3,KSN101E,kws106,Escalated Open,Caren Mukuria,yes,2025-03-24 09:31:01,2025-03-24 09:31:01
+3823571,1097503,Amina Mohamed Haji,,Inbound,Service Follow up,APPOINTMENTS,Missed/Site Visit Follow Up,"Beatrice 
+Delayed site visit
+voc: hii ni siku ya sita nikipiga sina internet 
+escalated to dispatch via mail and skype  
++254723036092",,,254723036092,,ACT,,,5,FMN3-2,MRT,Closed on FCR,Beatrice Katam,yes,2025-03-24 09:31:04,2025-03-24 09:31:04
+3823597,293411,Susan Kaluki Sila,,Inbound,Service Complaint,INTERNET,Area Outage - Confirmed With a Ticket,"Agent name:illa
+Call reason:internet
+Connection/Acc status:area outage
+Action/Resolution:client advised on Ticket No: #108164: UMA106B,D,E,F and H down
+Voc:i dont have internet
++254720202812",,,254720202812,,ACT,C5 B,C5 B,12,UMA126A,uma106,Closed on FCR,Christine Akoth,no,2025-03-24 09:33:19,2025-03-24 09:33:19
+3823609,255246,Benjamin Mmboyi,,Inbound,Service Complaint,INTERNET,Intermittent Connection,"Agent name:Faith
+call reason: Internet
+call findings: slow/intermittent connection 
+action; frequency tuned router
+Resolution: mute call did not confirm resolution
+voc: hii internet iko so slow
+721933994",,,254721933994,,ACT,,"UPGRADE DUO10 C - DUO 20 CLASSIC,DUO 10 CLASSIC",28,MBS116A,mbs116,Closed on FCR,Faith Omondi,no,2025-03-24 09:35:01,2025-03-24 09:35:01
+3823611,987183,Joyce Wanjiru Wambugu,,Inbound,Service Complaint,INTERNET,Unable to Browse via WiFi,"Agent...Rose
+Issue..internet
+Finding: Modem Not Locking
+Action..Advised on Hard Restart
+Resolution..call dropped
+Voc...I dont have internet
+0707529229",,,254707529229,,ACT,DUO 10 CLASSIC,DUO 10 CLASSIC,19,MHO106E,mho105,Closed on FCR,Rose Karugo,no,2025-03-24 09:35:15,2025-03-24 09:35:15
+3823613,35810,John Henry Njoroge,0721906144,Inbound,Service Follow up,FRONTLINE RETENTION,NPD/Churn Offers,"Agent Name: joylis
+Call Reason. frontline retention
+Voc: i have paid but internet is not working
+finding; npd/churn offers
+Action Taken: to pay 1000sh for 10mbps esc for reconnection
+Resolution:client to be patient
++254721906144",,Central Retention,254721906144,,ACT,GPON TRIPLE PLAY 10,GPON TRIPLE PLAY 10,3,FST4-22,SPY,Escalated Open,Joylis Mutegi,no,2025-03-24 09:35:30,2025-03-24 09:35:30

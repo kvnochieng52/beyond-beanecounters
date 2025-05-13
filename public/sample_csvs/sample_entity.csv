@@ -1,0 +1,2 @@
+title,account_number,defaulter_type,telephone,alternate_telephone,email,alternate_email,country,town,address,company_name,description,assigned_agent_id,amount,additional_charges,balance,currency,priority,due_date
+Apple Inc,ACC001,Entity,712345678,,test@example.com,,Kenya,Nairobi,Some Address,Apple Inc,Test description,1,1000,50,950,USD,High,01/12/2024

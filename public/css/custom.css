@@ -1,0 +1,14 @@
+.card-primary {
+    background-color: #061965 !important;
+    border-color: #061965 !important;
+}
+
+.card-primary .card-header {
+    background-color: #061965 !important;
+    border-bottom: 1px solid #061965 !important;
+}
+
+
+.card-primary.card-outline {
+    border-top: 3px solid #061965 !important;
+}
