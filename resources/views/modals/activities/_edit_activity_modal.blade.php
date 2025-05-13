@@ -4,7 +4,11 @@
 
         <form action="{{ route('edit-activity',$leadDetails->id) }}" method="POST" class="activity_form" id="editActivityForm">
             @csrf
+<<<<<<< HEAD
             <input type="hidden" name="activity_id_edit" id="activity_id_edit">
+=======
+            <input type="hidden" name="activity_id" id="activity_id">
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
             <input type="hidden" name="_method" value="POST">
             <div class="modal-content">
                 <div class="modal-header">
@@ -54,10 +58,17 @@
                             @foreach ($activityTypes as $activityType)
                                 <div class="form-check form-check-inline">
                                      <span class="btn btn-default btn-sm">
+<<<<<<< HEAD
                                      <input class="form-check-input readonly-radio" type="radio" name="activityType_edit"
                                       id="activityType_edit{{ $activityType->id }}" value="{{ $activityType->id }}"
                                      {{ $activityType->id == 1 ? 'checked' : '' }}>
                                     <label class="form-check-label" for="activityType_edit{{ $activityType->id }}">
+=======
+                                     <input class="form-check-input readonly-radio" type="radio" name="activityType"
+                                      id="activityType{{ $activityType->id }}" value="{{ $activityType->id }}"
+                                     {{ $activityType->id == 1 ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="activityType{{ $activityType->id }}">
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
                                    <i class="fa fa-fw fa-{{ $activityType->icon }}"></i>
                                     {{ $activityType->activity_type_title }}
                                     </label>
@@ -71,8 +82,13 @@
                     <div class="row">
                         <div class="col-md-12 pt-3">
                             <div class="form-group">
+<<<<<<< HEAD
                                 {!! Html::label('Title/Subject*', 'activity_title_edit') !!}
                                 {!! Html::text('activity_title_edit')->class('form-control')
+=======
+                                {!! Html::label('Title/Subject*', 'activity_title') !!}
+                                {!! Html::text('activity_title')->class('form-control')
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
                                 ->placeholder('Enter the Title/Subject')
                                 // ->value($leadDetails->title)
                                 // ->attribute('readonly', 'readonly')
@@ -85,8 +101,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
+<<<<<<< HEAD
                                 {!! Html::label('Text/Description*', 'description_edit') !!}
                                 {!! Html::textarea('description_edit')
+=======
+                                {!! Html::label('Text/Description*', 'description') !!}
+                                {!! Html::textarea('description')
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
                                 ->class('form-control')
                                 ->placeholder('Enter description')
                                 ->rows(4) !!}
@@ -97,8 +118,13 @@
 
                     <div class="row">
                         <div class="col-md-4 priority-group">
+<<<<<<< HEAD
                             {!! Html::label('Priority*', 'priority_edit') !!}
                             {!! Html::select('priority_edit',
+=======
+                            {!! Html::label('Priority*', 'priority') !!}
+                            {!! Html::select('priority',
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
                             $priorities)->class('form-control')->placeholder('--Specify--')->style("width:100%") !!}
                         </div>
 
@@ -113,9 +139,15 @@
                                 <div id="startDateInputsEdit" class="d-none mt-2">
                                     <div class="d-flex gap-2">
                                         <input type="text" class="form-control date" placeholder="Start Date"
+<<<<<<< HEAD
                                             name="start_date_edit" id="start_date" autocomplete="off">
                                         <input type="text" class="form-control timepicker" placeholder="Start Time"
                                             name="start_time_edit" id="start_time" autocomplete="off">
+=======
+                                            name="start_date" id="start_date" autocomplete="off">
+                                        <input type="text" class="form-control timepicker" placeholder="Start Time"
+                                            name="start_time" id="start_time" autocomplete="off">
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
                                     </div>
                                 </div>
                             </div>
@@ -131,9 +163,15 @@
                                 <div id="dueDateInputsEdit" class="d-none mt-2">
                                     <div class="d-flex gap-2">
                                         <input type="text" class="form-control date" placeholder="Due/End Date"
+<<<<<<< HEAD
                                             name="end_date_edit" id="end_date" autocomplete="off">
                                         <input type="text" class="form-control timepicker" placeholder="Due/End Time"
                                             name="end_time_edit" id="end_time" autocomplete="off">
+=======
+                                            name="end_date" id="end_date" autocomplete="off">
+                                        <input type="text" class="form-control timepicker" placeholder="Due/End Time"
+                                            name="end_time" id="end_time" autocomplete="off">
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
                                     </div>
                                 </div>
                             </div>
@@ -146,21 +184,36 @@
                     <div class="row">
 
                         <div class="col-md-4 department-group pt-3">
+<<<<<<< HEAD
                             {!! Html::label('Assign Department', 'department_edit') !!}
                             {!! Html::select('department_edit', $departments)->class('form-control
+=======
+                            {!! Html::label('Assign Department', 'department') !!}
+                            {!! Html::select('department', $departments)->class('form-control
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
                             ')->placeholder('--Specify--')->style("width:100%") !!}
                         </div>
 
                         <div class="col-md-4 agent-group pt-3">
+<<<<<<< HEAD
                             {!! Html::label('Assign Agent', 'agent_edit') !!}
                             {!! Html::select('agent_edit', $agentsList)->class('form-control
+=======
+                            {!! Html::label('Assign Agent', 'agent') !!}
+                            {!! Html::select('agent', $agentsList)->class('form-control
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
                             ')->placeholder('--Specify--')->style("width:100%") !!}
                         </div>
 
 
                         <div class="col-md-4 status-group pt-3">
+<<<<<<< HEAD
                             {!! Html::label('Status*', 'status_edit') !!}
                             {!! Html::select('status_edit',
+=======
+                            {!! Html::label('Status*', 'status') !!}
+                            {!! Html::select('status',
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
                             $activityStatuses)->class('form-control')->placeholder('--Specify--')->style("width:100%")
                             !!}
                         </div>
@@ -169,8 +222,13 @@
                     <div class="row">
                         <div class="col-md-12 pt-3">
                             <div class="icheck-primary">
+<<<<<<< HEAD
                                 <input type="checkbox" id="addToCalendar_edit" name="addToCalendar_edit">
                                 <label for="addToCalendar_edit"
+=======
+                                <input type="checkbox" id="addToCalendar" name="addToCalendar">
+                                <label for="addToCalendar"
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
                                     title="Activity will be added to calendar with the set start and end date above">
                                     Add this activity to my calendar
                                 </label>
@@ -204,7 +262,11 @@
     </div>
 </div>
 
+<<<<<<< HEAD
 {{--
+=======
+
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
 <script>
     document.addEventListener('DOMContentLoaded', function () {
       const editButtons = document.querySelectorAll('[data-bs-target="#edit_debt_modal"]');
@@ -214,6 +276,7 @@
           button.addEventListener('click', function () {
               // Extract data attributes from the clicked button
               const activityId = this.getAttribute('data-id');
+<<<<<<< HEAD
               const activityTitleEdit = this.getAttribute('data-title');
               const descriptionEdit = this.getAttribute('data-description');
               const priorityEdit = this.getAttribute('data-priority');
@@ -221,6 +284,15 @@
               const departmentEdit = this.getAttribute('data-department');
               const agentEdit = this.getAttribute('data-agent');
               const statusEdit = this.getAttribute('data-status');
+=======
+              const activityTitle = this.getAttribute('data-title');
+              const description = this.getAttribute('data-description');
+              const priority = this.getAttribute('data-priority');
+              const activityType = this.getAttribute('data-activityType');
+              const department = this.getAttribute('data-department');
+              const agent = this.getAttribute('data-agent');
+              const status = this.getAttribute('data-status');
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
               const startDate = this.getAttribute('data-startDate');
               const startTime = this.getAttribute('data-startTime');
               const endDate = this.getAttribute('data-endDate');
@@ -229,6 +301,7 @@
 
               // Populate the modal fields
               document.getElementById('editActivityForm').action = `{{ url('/activity/edit-activity/') }}/${activityId}`;
+<<<<<<< HEAD
               document.getElementById('activity_id_edit').value = activityId;
               document.querySelector('[name="activity_title_edit"]').value = activityTitleEdit;
               document.querySelector('[name="description_edit"]').value = descriptionEdit;
@@ -240,6 +313,18 @@
 
               // Set the radio button for activity type
               const activityTypeInput = document.getElementById(`activityType_edit${activityType}`);
+=======
+              document.getElementById('activity_id').value = activityId;
+              document.querySelector('[name="activity_title"]').value = activityTitle;
+              document.querySelector('[name="description"]').value = description;
+              document.querySelector('[name="priority"]').value = priority;
+              document.querySelector('[name="department"]').value = department;
+              document.querySelector('[name="agent"]').value = agent;
+              document.querySelector('[name="status"]').value = status;
+
+              // Set the radio button for activity type
+              const activityTypeInput = document.getElementById(`activityType${activityType}`);
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
               if (activityTypeInput) {
                   activityTypeInput.checked = true;
               }
@@ -267,7 +352,11 @@
               }
 
               // Handle Calendar Add Checkbox
+<<<<<<< HEAD
               document.getElementById('addToCalendar_edit').checked = calendarAdd;
+=======
+              document.getElementById('addToCalendar').checked = calendarAdd;
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
           });
       });
   });
@@ -279,6 +368,7 @@
           });
       });
 
+<<<<<<< HEAD
 </script> --}}
 
 <script>
@@ -378,5 +468,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+=======
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
 </script>
 

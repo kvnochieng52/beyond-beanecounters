@@ -14,6 +14,10 @@ use App\Models\TransactionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+<<<<<<< HEAD
+=======
+use Barryvdh\DomPDF\Facade\Pdf;
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
 
 class TransactionController extends Controller
 {
