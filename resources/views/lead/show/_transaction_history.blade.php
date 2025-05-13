@@ -33,9 +33,11 @@
             <th>By</th>
             <th>Status</th> <!-- New Column -->
             <th>Date</th>
+            <th>Action</th>
         </tr>
     </thead>
 </table>
 
 
 @include('modals.transactions._new_transaction_modal')
+@include('modals.transactions._edit_transaction_modal')

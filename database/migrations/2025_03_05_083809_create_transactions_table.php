@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer("penalty_type_id")->nullable();
             $table->integer("payment_method")->nullable();
             $table->integer("transaction_method")->nullable();
+            $table->string("charge_type")->nullable();
             $table->bigInteger("created_by")->nullable();
             $table->bigInteger("updated_by")->nullable();
             $table->timestamps();

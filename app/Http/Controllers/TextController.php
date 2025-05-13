@@ -135,17 +135,61 @@ class TextController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Text $text)
+    public function edit($id)
     {
-        //
+
+        $text = Text::findOrFail($id);
+
+        // dd($text);
+
+        return view('text.edit', [
+            'text' => $text,
+            'contactLists' => Contact::where('is_active', 1)->pluck('title', 'id')
+        ]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Text $text)
+    public function update(Request $request, $id)
     {
-        //
+        $text = Text::findOrFail($id);
+
+                // Handle contact sources
+                if ($request->contact_source_edit === 'manual') {
+                    $text->recepient_contacts = $request->contacts;
+                } elseif ($request->contact_source_edit === 'csv') {
+                    $text->csv_file_name = $request->csv_file_name;
+                    $text->csv_file_path = $request->csv_file_path;
+                    $text->csv_file_columns = $request->csv_file_columns;
+                } elseif ($request->contact_source_edit === 'saved') {
+                    $text->contact_list = json_encode($request->contact_list);
+                }
+
+
+        $text->text_title = $request->title;
+        $text->contact_type = $request->contact_source_edit;
+        $text->message = $request->message;
+        $text->contacts_count = $request->sms_contacts_count;
+        $text->updated_by = auth()->id();
+
+
+        // Handle scheduling
+        if ($request->has('schedule')) {
+            $text->scheduled = 1;
+            if ($request->schedule_date && $request->schedule_time) {
+                $datetime = \DateTime::createFromFormat('d/m/Y h:i A', $request->schedule_date . ' ' . $request->schedule_time);
+                $text->schedule_date = $datetime ? $datetime->format('Y-m-d H:i:s') : null;
+            }
+        } else {
+            $text->scheduled = 0;
+        }
+
+        $text->status = TextStatus::PENDING; // Keep status unchanged unless required
+        $text->save();
+
+        return redirect()->route('text.index')->with('success', 'SMS Campaign updated successfully.');
     }
 
     /**
@@ -338,4 +382,130 @@ class TextController extends Controller
             'personalizedMessage' => $message,
         ]);
     }
+
+    public function previewSmsEdit(Request $request)
+    {
+        $validContacts = 0;
+        $invalidContacts = 0;
+        $totalContacts = 0;
+
+        $message = $request['message'];
+        $messageTotalChars = mb_strlen($message);
+        $recipientMethod = $request['recipientMethod'];
+
+        $validPhoneColumns = [
+            'contact',
+            'contacts',
+            'telephone',
+            'mobile',
+            'phone number',
+            'phone',
+            'mobile number'
+        ];
+
+        $contactList = [];
+
+        if ($recipientMethod === 'manual') {
+            $contactList = array_filter(array_map('trim', explode(',', $request['contacts'])));
+            foreach ($contactList as $contact) {
+                Text::isValidPhoneNumber($contact) ? $validContacts++ : $invalidContacts++;
+            }
+        }
+
+        if ($recipientMethod === 'csv') {
+            $csvPath = public_path(ltrim($request['csvFilePath'], '/'));
+
+            if (!file_exists($csvPath)) {
+                return response()->json(['message' => 'CSV file not found.'], 404);
+            }
+
+            if (($handle = fopen($csvPath, 'r')) !== false) {
+                $headers = fgetcsv($handle);
+
+                if (!$headers) {
+                    return response()->json(['message' => 'Invalid CSV file. No headers found.'], 400);
+                }
+
+                $headerMap = array_map(fn($header) => strtolower(trim($header)), $headers);
+                $phoneColumnIndex = null;
+
+                foreach ($headerMap as $index => $header) {
+                    if (in_array($header, $validPhoneColumns)) {
+                        $phoneColumnIndex = $index;
+                        break;
+                    }
+                }
+
+                if ($phoneColumnIndex === null) {
+                    return response()->json(['message' => 'No valid contact column found in the CSV.'], 400);
+                }
+
+                $personalizedMessage = $message;
+                $firstRowProcessed = false;
+
+                while (($row = fgetcsv($handle)) !== false) {
+                    $contact = trim($row[$phoneColumnIndex] ?? '');
+
+                    if ($contact) {
+                        Text::isValidPhoneNumber($contact) ? $validContacts++ : $invalidContacts++;
+                        $contactList[] = $contact;
+                    }
+
+                    if (!$firstRowProcessed && preg_match_all('/\{(\w+)\}/', $message, $matches)) {
+                        foreach ($matches[1] as $placeholder) {
+                            $columnIndex = array_search(strtolower($placeholder), $headerMap);
+                            $replacement = $columnIndex !== false ? ($row[$columnIndex] ?? '') : '';
+                            $personalizedMessage = str_replace('{' . $placeholder . '}', $replacement, $personalizedMessage);
+                        }
+                        $firstRowProcessed = true;
+                    }
+                }
+
+                fclose($handle);
+
+                $totalContacts = count($contactList);
+                $message = $personalizedMessage;
+            } else {
+                return response()->json(['message' => 'Unable to open CSV file.'], 500);
+            }
+        }
+
+
+
+        if ($recipientMethod === 'saved') {
+            $contactBatch = $request['contactList'];
+
+            foreach ($contactBatch as $batch) {
+                $contactList = DB::table('contact_lists')->where('contact_id', $batch)->get();
+                foreach ($contactList as $list) {
+                    Text::isValidPhoneNumber($list->telephone) ? $validContacts++ : $invalidContacts++;
+                    $totalContacts++;
+                }
+            }
+        }
+
+        return response()->json([
+            'message' => 'Success',
+            'validContacts' => $validContacts,
+            'invalidContacts' => $invalidContacts,
+            'totalContacts' => $totalContacts,
+            'messageTotalChars' => $messageTotalChars,
+            'personalizedMessage' => $message,
+        ]);
+    }
+
+    public function cancel($id)
+    {
+         $text = Text::find($id);
+
+        if (!$text) {
+             return response()->json(['success' => false, 'message' => 'SMS not found'], 404);
+        }
+
+       // Update status to "Cancelled"
+       $text->update(['status' => TextStatus::CANCELLED]);
+
+       return response()->json(['success' => true, 'message' => 'SMS canceled successfully']);
+    }
+
 }
