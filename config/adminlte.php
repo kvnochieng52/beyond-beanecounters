@@ -490,13 +490,19 @@ return [
             'icon' => 'fas fa-fw fa-file',
             'submenu' => [
                 [
-                    'text' => 'Leads',
-                    'url' => '#',
-
+                    'text' => 'Collection Rates',
+                    'url' => '/reports/collection-rates',
+                    'icon' => 'fas fa-fw fa-chart-pie',
                 ],
                 [
-                    'text' => 'Leads',
-                    'url' => '#',
+                    'text' => 'Outstanding Debts',
+                    'url' => '/reports/outstanding-debts',
+                    'icon' => 'fas fa-fw fa-money-bill-wave',
+                ],
+                [
+                    'text' => 'Agent Performance',
+                    'url' => '/reports/agent-performance',
+                    'icon' => 'fas fa-fw fa-user-check',
                 ],
 
 

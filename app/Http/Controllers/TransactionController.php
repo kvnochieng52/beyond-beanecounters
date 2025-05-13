@@ -14,6 +14,7 @@ use App\Models\TransactionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TransactionController extends Controller
 {
@@ -171,5 +172,35 @@ class TransactionController extends Controller
                 ->rawColumns(['status_label']) // Allow HTML rendering
                 ->make(true);
         }
+    }
+
+
+    public function generateInvoice($leadID)
+    {
+        $transactions = Transaction::leftJoin('transaction_types', 'transactions.transaction_type', '=', 'transaction_types.id')
+            ->leftJoin('users', 'transactions.created_by', '=', 'users.id')
+            ->leftJoin('transaction_statuses', 'transactions.status_id', '=', 'transaction_statuses.id')
+            ->select(
+                'transactions.id',
+                'transactions.lead_id',
+                'transaction_types.transaction_type_title',
+                'transactions.amount',
+                'transactions.description',
+                'users.name as created_by_name',
+                'transactions.created_at',
+                'transaction_statuses.status_name as status'
+            )
+            ->where('transactions.lead_id', $leadID)
+            //  ->orderBy('transactions.id', 'DESC')
+            ->get();
+
+        // Fetch lead details
+        $lead = Lead::getLeadByID($leadID);
+
+        // Load view and generate PDF
+        $pdf = Pdf::loadView('invoices.invoice', compact('transactions', 'lead'));
+
+        // Return PDF download
+        return $pdf->stream('invoice_' . $leadID . '.pdf');
     }
 }

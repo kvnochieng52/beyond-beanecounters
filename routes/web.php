@@ -16,6 +16,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DueNotificationController;
 use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransBulkController;
 
@@ -38,6 +39,8 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
     Route::get('institutions-data', [InstitutionController::class, 'getInstitutions'])->name('institutions.getInstitutions');
     Route::get('/transactions/data', [TransactionController::class, 'getTransactions'])->name('transactions.data');
     Route::post('/transactions/store', [TransactionController::class, 'storeTransaction'])->name('transactions.store');
+
+    Route::get('/transactions/invoice/{leadID}', [TransactionController::class, 'generateInvoice'])->name('transactions.invoice');
 
     Route::prefix('leads')->group(
         function () {
@@ -95,6 +98,29 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
             Route::get('/', [TransBulkController::class, 'index'])->name('trans_bulk.index');
         }
     );
+    
+    // Reports Routes
+    Route::prefix('reports')->group(function () {
+        // Collection Rates Report
+        Route::get('/collection-rates', [ReportController::class, 'collectionRates'])->name('reports.collection-rates');
+        Route::match(['get', 'post'], '/collection-rates/generate', [ReportController::class, 'generateCollectionRates'])->name('reports.collection-rates.generate');
+        
+        // Outstanding Debts Report
+        Route::get('/outstanding-debts', [ReportController::class, 'outstandingDebts'])->name('reports.outstanding-debts');
+        Route::match(['get', 'post'], '/outstanding-debts/generate', [ReportController::class, 'generateOutstandingDebts'])->name('reports.outstanding-debts.generate');
+        
+        // Agent Performance Report
+        Route::get('/agent-performance', [ReportController::class, 'agentPerformance'])->name('reports.agent-performance');
+        Route::match(['get', 'post'], '/agent-performance/generate', [ReportController::class, 'generateAgentPerformance'])->name('reports.agent-performance.generate');
+        
+        // Collection Progress Report
+        Route::get('/collection-progress', [ReportController::class, 'collectionProgress'])->name('reports.collection-progress');
+        Route::match(['get', 'post'], '/collection-progress/generate', [ReportController::class, 'generateCollectionProgress'])->name('reports.collection-progress.generate');
+        
+        // Agent Leads Report
+        Route::get('/agent-leads', [ReportController::class, 'agentLeads'])->name('reports.agent-leads');
+        Route::match(['get', 'post'], '/agent-leads/generate', [ReportController::class, 'generateAgentLeads'])->name('reports.agent-leads.generate');
+    });
 });
 
 Route::prefix('2fa')->group(
