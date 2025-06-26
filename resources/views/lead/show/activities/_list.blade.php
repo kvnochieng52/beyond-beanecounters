@@ -15,11 +15,7 @@
 
 
     <tbody>
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
         @foreach($leadListActivities as $key => $activity)
         <tr>
             <td>{{ $key + 1 }}</td>
@@ -33,16 +29,14 @@
             <td>{{ $activity->assigned_agent_name }}</td>
             <td>
                 @if(!empty($activity->due_date_time))
-                    @php
-                        $dueDate = \Carbon\Carbon::parse($activity->due_date_time);
-                        $dueTimestamp = $dueDate->timestamp; // Convert to Unix timestamp
-                    @endphp
+                @php
+                $dueDate = \Carbon\Carbon::parse($activity->due_date_time);
+                $dueTimestamp = $dueDate->timestamp; // Convert to Unix timestamp
+                @endphp
 
-                    <span id="countdown-{{ $activity->id }}"
-                          data-duetime="{{ $dueTimestamp }}"
-                          class="badge">
-                        Calculating...
-                    </span>
+                <span id="countdown-{{ $activity->id }}" data-duetime="{{ $dueTimestamp }}" class="badge">
+                    Calculating...
+                </span>
                 @endif
             </td>
 
@@ -57,32 +51,27 @@
             <!-- Edit & Delete Buttons -->
             <td>
                 {{-- Edit Button --}}
-                <a href="#" class="btn btn-warning btn-xs"
-                   data-bs-toggle="modal"
-                   data-bs-target="#edit_debt_modal"
-                   data-id="{{ $activity->id }}"
-                   data-title="{{ $activity->activity_title }}"
-                   data-description="{{ $activity->description }}"
-                   data-priority="{{ $activity->priority_id }}"
-                   data-activityType="{{ $activity->activity_type_id }}"
-                   data-department="{{ $activity->assigned_department_id}}"
-                   data-agent="{{ $activity->assigned_user_id }}"
-                   data-status="{{ $activity->status_id }}"
-                   data-startDate="{{\Carbon\Carbon::parse($activity->start_date_time)->format('d-m-Y') }}"
-                   data-startTime="{{\Carbon\Carbon::parse($activity->start_date_time)->format('h:i A') }}"
-                   data-endDate="{{\Carbon\Carbon::parse($activity->due_date_time)->format('d-m-Y') }}"
-                   data-endTime="{{\Carbon\Carbon::parse($activity->due_date_time)->format('h:i A') }}"
-                   data-calendarAdd="{{ $activity->calendar_add }}"
-                >
+                <a href="#" class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#edit_debt_modal"
+                    data-id="{{ $activity->id }}" data-title="{{ $activity->activity_title }}"
+                    data-description="{{ $activity->description }}" data-priority="{{ $activity->priority_id }}"
+                    data-activityType="{{ $activity->activity_type_id }}"
+                    data-department="{{ $activity->assigned_department_id}}"
+                    data-agent="{{ $activity->assigned_user_id }}" data-status="{{ $activity->status_id }}"
+                    data-startDate="{{\Carbon\Carbon::parse($activity->start_date_time)->format('d-m-Y') }}"
+                    data-startTime="{{\Carbon\Carbon::parse($activity->start_date_time)->format('h:i A') }}"
+                    data-endDate="{{\Carbon\Carbon::parse($activity->due_date_time)->format('d-m-Y') }}"
+                    data-endTime="{{\Carbon\Carbon::parse($activity->due_date_time)->format('h:i A') }}"
+                    data-calendarAdd="{{ $activity->calendar_add }}">
                     Edit
                 </a>
 
                 {{-- Delete Form --}}
-                <form action="{{ route('activity.destroy', $activity->id) }}" method="POST" style="display:inline-block;">
+                <form action="{{ route('activity.destroy', $activity->id) }}" method="POST"
+                    style="display:inline-block;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger btn-xs"
-                            onclick="return confirm('Are you sure you want to delete this activity?')">
+                        onclick="return confirm('Are you sure you want to delete this activity?')">
                         Delete
                     </button>
                 </form>
@@ -143,4 +132,3 @@
     setInterval(updateCountdown, 1000);
     updateCountdown(); // Run immediately on page load
 </script>
-
