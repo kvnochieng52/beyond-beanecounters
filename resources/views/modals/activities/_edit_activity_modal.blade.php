@@ -1,4 +1,4 @@
-<div class="modal fade" id="edit_debt_modal" tabindex="-1" aria-labelledby="editDebtModalLabel" aria-hidden="true"
+{{-- <div class="modal fade" id="edit_debt_modal" tabindex="-1" aria-labelledby="editDebtModalLabel" aria-hidden="true"
     data-bs-backdrop="static">
     <div class="modal-dialog modal-lg">
 
@@ -184,8 +184,7 @@
                         <div class="col-md-12">
                             <div class="alert alert-danger alert-dismissible errorDisp" style="display: none ">
 
-                                {{-- <button type="button" class="close" data-dismiss="alert"
-                                    aria-hidden="true">×</button> --}}
+
 
                             </div>
                         </div>
@@ -193,8 +192,6 @@
 
                 </div>
                 <div class="modal-footer">
-                    {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    --}}
 
 
                     <button type="submit" class="btn btn-info">Submit Details</button>
@@ -204,79 +201,79 @@
             <input type="hidden" name="leadID" value="{{$leadDetails->id}}">
         </form>
     </div>
-</div>
+</div> --}}
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const editButtons = document.querySelectorAll('[data-bs-target="#edit_debt_modal"]');
-    //   console.log('Edit Buttons Found:', editButtons);
+    //     document.addEventListener('DOMContentLoaded', function () {
+//       const editButtons = document.querySelectorAll('[data-bs-target="#edit_debt_modal"]');
+    
 
-      editButtons.forEach(button => {
-          button.addEventListener('click', function () {
-              // Extract data attributes from the clicked button
-              const activityId = this.getAttribute('data-id');
-              const activityTitle = this.getAttribute('data-title');
-              const description = this.getAttribute('data-description');
-              const priority = this.getAttribute('data-priority');
-              const activityType = this.getAttribute('data-activityType');
-              const department = this.getAttribute('data-department');
-              const agent = this.getAttribute('data-agent');
-              const status = this.getAttribute('data-status');
-              const startDate = this.getAttribute('data-startDate');
-              const startTime = this.getAttribute('data-startTime');
-              const endDate = this.getAttribute('data-endDate');
-              const endTime = this.getAttribute('data-endTime');
-              const calendarAdd = this.getAttribute('data-calendarAdd') ===1;
+//       editButtons.forEach(button => {
+//           button.addEventListener('click', function () {
+//               // Extract data attributes from the clicked button
+//               const activityId = this.getAttribute('data-id');
+//               const activityTitle = this.getAttribute('data-title');
+//               const description = this.getAttribute('data-description');
+//               const priority = this.getAttribute('data-priority');
+//               const activityType = this.getAttribute('data-activityType');
+//               const department = this.getAttribute('data-department');
+//               const agent = this.getAttribute('data-agent');
+//               const status = this.getAttribute('data-status');
+//               const startDate = this.getAttribute('data-startDate');
+//               const startTime = this.getAttribute('data-startTime');
+//               const endDate = this.getAttribute('data-endDate');
+//               const endTime = this.getAttribute('data-endTime');
+//               const calendarAdd = this.getAttribute('data-calendarAdd') ===1;
 
-              // Populate the modal fields
-              document.getElementById('editActivityForm').action = `{{ url('/activity/edit-activity/') }}/${activityId}`;
-              document.getElementById('activity_id').value = activityId;
-              document.querySelector('[name="activity_title"]').value = activityTitle;
-              document.querySelector('[name="description"]').value = description;
-              document.querySelector('[name="priority"]').value = priority;
-              document.querySelector('[name="department"]').value = department;
-              document.querySelector('[name="agent"]').value = agent;
-              document.querySelector('[name="status"]').value = status;
+//               // Populate the modal fields
+//               document.getElementById('editActivityForm').action = `{{ url('/activity/edit-activity/') }}/${activityId}`;
+//               document.getElementById('activity_id').value = activityId;
+//               document.querySelector('[name="activity_title"]').value = activityTitle;
+//               document.querySelector('[name="description"]').value = description;
+//               document.querySelector('[name="priority"]').value = priority;
+//               document.querySelector('[name="department"]').value = department;
+//               document.querySelector('[name="agent"]').value = agent;
+//               document.querySelector('[name="status"]').value = status;
 
-              // Set the radio button for activity type
-              const activityTypeInput = document.getElementById(`activityType${activityType}`);
-              if (activityTypeInput) {
-                  activityTypeInput.checked = true;
-              }
+//               // Set the radio button for activity type
+//               const activityTypeInput = document.getElementById(`activityType${activityType}`);
+//               if (activityTypeInput) {
+//                   activityTypeInput.checked = true;
+//               }
 
-              // Handle Start Date & Time
-              if (startDate && startDate.trim() !== '') {
-                  document.getElementById('setStartDateEdit').checked = true;
-                  document.getElementById('startDateInputsEdit').classList.remove('d-none');
-                  document.getElementById('start_date').value = startDate;
-                  document.getElementById('start_time').value = startTime;
-              } else {
-                  document.getElementById('setStartDateEdit').checked = false;
-                  document.getElementById('startDateInputsEdit').classList.add('d-none');
-              }
+//               // Handle Start Date & Time
+//               if (startDate && startDate.trim() !== '') {
+//                   document.getElementById('setStartDateEdit').checked = true;
+//                   document.getElementById('startDateInputsEdit').classList.remove('d-none');
+//                   document.getElementById('start_date').value = startDate;
+//                   document.getElementById('start_time').value = startTime;
+//               } else {
+//                   document.getElementById('setStartDateEdit').checked = false;
+//                   document.getElementById('startDateInputsEdit').classList.add('d-none');
+//               }
 
-              // Handle End Date & Time
-              if (endDate) {
-                  document.getElementById('setDueDateEdit').checked = true;
-                  document.getElementById('dueDateInputsEdit').classList.remove('d-none');
-                  document.getElementById('end_date').value = endDate;
-                  document.getElementById('end_time').value = endTime;
-              } else {
-                  document.getElementById('setDueDateEdit').checked = false;
-                  document.getElementById('dueDateInputsEdit').classList.add('d-none');
-              }
+//               // Handle End Date & Time
+//               if (endDate) {
+//                   document.getElementById('setDueDateEdit').checked = true;
+//                   document.getElementById('dueDateInputsEdit').classList.remove('d-none');
+//                   document.getElementById('end_date').value = endDate;
+//                   document.getElementById('end_time').value = endTime;
+//               } else {
+//                   document.getElementById('setDueDateEdit').checked = false;
+//                   document.getElementById('dueDateInputsEdit').classList.add('d-none');
+//               }
 
-              // Handle Calendar Add Checkbox
-              document.getElementById('addToCalendar').checked = calendarAdd;
-          });
-      });
-  });
+//               // Handle Calendar Add Checkbox
+//               document.getElementById('addToCalendar').checked = calendarAdd;
+//           });
+//       });
+//   });
 
-      // Prevent change on all readonly-radio class inputs
-      document.querySelectorAll('.readonly-radio').forEach(function(radio) {
-          radio.addEventListener('click', function(e) {
-              e.preventDefault();
-          });
-      });
+//       // Prevent change on all readonly-radio class inputs
+//       document.querySelectorAll('.readonly-radio').forEach(function(radio) {
+//           radio.addEventListener('click', function(e) {
+//               e.preventDefault();
+//           });
+//       });
 
 </script>
