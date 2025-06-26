@@ -90,7 +90,6 @@ return [
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 250,
-            // 'height' => 50,
         ],
     ],
 
@@ -316,14 +315,11 @@ return [
             'text' => 'search',
         ],
 
-
         [
             'text' => 'Dashboard',
             'url' => '/',
             'icon' => 'nav-icon fas fa-tachometer-alt',
-            //'can' => 'manage-blog',
         ],
-
 
         [
             'text' => 'Leads',
@@ -332,20 +328,17 @@ return [
                 [
                     'text' => 'New Lead',
                     'url' => '/lead/create',
-
                 ],
                 [
                     'text' => 'Manage Leads',
                     'url' => '/lead',
                 ],
-
                 [
                     'text' => 'Leads Bulk Tool',
                     'url' => '/bulk/upload',
                 ],
             ]
         ],
-
 
         [
             'text' => 'Lead Status',
@@ -355,45 +348,32 @@ return [
                     'text' => 'Pending',
                     'url' => '/leads/status/1',
                     'icon' => "far fa-fw fa-circle text-info"
-
                 ],
-
                 [
                     'text' => 'Paid',
                     'url' => '/leads/status/2',
                     'icon' => "far fa-fw fa-circle text-success"
-
                 ],
-
                 [
                     'text' => 'Partially Paid',
                     'url' => '/leads/status/3',
                     'icon' => "far fa-fw fa-circle text-warning"
-
                 ],
-
                 [
                     'text' => 'Overdue',
                     'url' => '/leads/status/4',
                     'icon' => "far fa-fw fa-circle text-danger"
-
                 ],
-
                 [
                     'text' => 'Legal Escalation',
                     'url' => '/leads/status/5',
                     'icon' => "far fa-fw fa-circle text-info"
-
                 ],
-
                 [
                     'text' => 'Disputed',
                     'url' => '/leads/status/6',
                     'icon' => "far fa-fw fa-circle text-primary"
-
                 ],
-
-
             ]
         ],
 
@@ -401,18 +381,13 @@ return [
             'text' => 'Activities',
             'url' => '/activity',
             'icon' => 'far fa-fw fa-clock',
-            //'can' => 'manage-blog',
         ],
-
 
         [
             'text' => 'Calendar',
             'url' => '/calendars',
             'icon' => 'far fa-fw fa-calendar-alt',
-            //'can' => 'manage-blog',
         ],
-
-
 
         [
             'text' => 'SMS',
@@ -421,13 +396,11 @@ return [
                 [
                     'text' => 'New SMS',
                     'url' => '/text/create',
-
                 ],
                 [
                     'text' => 'Manage SMS',
                     'url' => '/text',
                 ],
-
                 [
                     'text' => 'Contacts',
                     'url' => '/contacts',
@@ -435,25 +408,18 @@ return [
             ]
         ],
 
-
-
-
-
         [
             'text' => 'Institutions',
             'icon' => 'fas fa-fw fa-building',
             'submenu' => [
                 [
-                    'text' => 'New Insitution',
+                    'text' => 'New Institution',
                     'url' => '/institutions/create',
-
                 ],
                 [
-                    'text' => 'Manage Insitutions',
+                    'text' => 'Manage Institutions',
                     'url' => '/institutions',
                 ],
-
-
             ]
         ],
 
@@ -464,41 +430,23 @@ return [
                 [
                     'text' => 'Rules/Discounts',
                     'url' => '/additional-cost-rules',
-
                 ],
-
                 [
                     'text' => 'Bulk Transactions Tool',
                     'url' => '/trans-bulk',
-
                 ],
-
                 [
                     'text' => 'Lead Due Notifications',
                     'url' => '/due-notifications',
-
                 ],
-
-
-
             ]
         ],
-
 
         [
             'text' => 'Reports',
             'icon' => 'fas fa-fw fa-file',
             'submenu' => [
                 [
-<<<<<<< HEAD
-                    'text' => 'Leads',
-                    'url' => '#',
-
-                ],
-                [
-                    'text' => 'Leads',
-                    'url' => '#',
-=======
                     'text' => 'Collection Rates',
                     'url' => '/reports/collection-rates',
                     'icon' => 'fas fa-fw fa-chart-pie',
@@ -512,17 +460,9 @@ return [
                     'text' => 'Agent Performance',
                     'url' => '/reports/agent-performance',
                     'icon' => 'fas fa-fw fa-user-check',
->>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
                 ],
-
-
             ]
         ],
-
-
-
-
-
 
         [
             'text' => 'Users',
@@ -531,83 +471,55 @@ return [
                 [
                     'text' => 'New User',
                     'url' => '/admin/users/create',
-
                 ],
                 [
                     'text' => 'Manage Users',
                     'url' => '/admin/users',
                 ],
-
                 [
                     'text' => 'Roles',
                     'url' => '/admin/roles',
                 ],
-
-
             ]
         ],
 
         ['header' => 'LEAD STATUS'],
 
-
-
         [
             'text' => 'Pending',
             'url' => '/leads/status/1',
             'icon' => "far fa-fw fa-circle text-info"
-
         ],
 
         [
             'text' => 'Paid',
             'url' => '/leads/status/2',
             'icon' => "far fa-fw fa-circle text-success"
-
         ],
 
         [
             'text' => 'Partially Paid',
             'url' => '/leads/status/3',
             'icon' => "far fa-fw fa-circle text-warning"
-
         ],
 
         [
             'text' => 'Overdue',
             'url' => '/leads/status/4',
             'icon' => "far fa-fw fa-circle text-danger"
-
         ],
 
         [
             'text' => 'Legal Escalation',
             'url' => '/leads/status/5',
             'icon' => "far fa-fw fa-circle text-info"
-
         ],
 
         [
             'text' => 'Disputed',
             'url' => '/leads/status/6',
             'icon' => "far fa-fw fa-circle text-primary"
-
         ],
-
-
-
-
-
-
-
-        // [
-        //     'text' => 'pages',
-        //     'url' => 'admin/pages',
-        //     'icon' => 'far fa-fw fa-file',
-        //     'label' => 4,
-        //     'label_color' => 'success',
-        //     'can' => 'manage-blog',
-        // ],
-
     ],
 
     /*
@@ -671,13 +583,11 @@ return [
                 [
                     'type' => 'js',
                     'asset' => true,
-                    // 'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
                     'location' => '/js/select2/select2.min.js'
                 ],
                 [
                     'type' => 'css',
                     'asset' => true,
-                    // 'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
                     'location' => '/css/select2/select2.css'
                 ],
             ],
