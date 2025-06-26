@@ -89,7 +89,7 @@
     {{ $leadListActivities->withQueryString()->links() }}
 </div>
 
-@include('modals.activities._edit_activity_modal')
+{{-- @include('modals.activities._edit_activity_modal') --}}
 
 
 <script>

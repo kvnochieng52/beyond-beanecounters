@@ -35,17 +35,15 @@
                     </div>
                     <p>{{$activity->description}}</p>
                     <p>Due:
-                         @php
-                            $dueDate = \Carbon\Carbon::parse($activity->due_date_time);
-                            $dueTimestamp = $dueDate->timestamp; // Convert to Unix timestamp
-                         @endphp
+                        @php
+                        $dueDate = \Carbon\Carbon::parse($activity->due_date_time);
+                        $dueTimestamp = $dueDate->timestamp; // Convert to Unix timestamp
+                        @endphp
 
-                       <span id="countdown-{{ $activity->id }}"
-                             data-duetime="{{ $dueTimestamp }}"
-                             class="badge">
-                             Calculating...
+                        <span id="countdown-{{ $activity->id }}" data-duetime="{{ $dueTimestamp }}" class="badge">
+                            Calculating...
                         </span>
-                   </p>
+                    </p>
                     <div class="d-flex justify-content-between align-items-center">
 
                         <p class="mb-0" style="font-size:14px; color:#888;">
@@ -53,30 +51,27 @@
                         </p>
 
                         <div>
-                              {{-- Edit Button --}}
-                <a href="#" class="btn btn-warning btn-xs"
-                data-bs-toggle="modal"
-                data-bs-target="#edit_debt_modal"
-                data-id="{{ $activity->id }}"
-                data-title="{{ $activity->activity_title }}"
-                data-description="{{ $activity->description }}"
-                data-priority="{{ $activity->priority_id }}"
-                data-activityType="{{ $activity->activity_type_id }}"
-                data-department="{{ $activity->assigned_department_id }}"
-                data-agent="{{ $activity->assigned_user_id }}"
-                data-status="{{ $activity->status_id }}"
-                data-startDate="{{\Carbon\Carbon::parse($activity->start_date_time)->format('d-m-Y') }}"
-                data-startTime="{{\Carbon\Carbon::parse($activity->start_date_time)->format('h:i A') }}"
-                data-endDate="{{\Carbon\Carbon::parse($activity->due_date_time)->format('d-m-Y') }}"
-                data-endTime="{{\Carbon\Carbon::parse($activity->due_date_time)->format('h:i A') }}"
-                data-calendarAdd="{{ $activity->calendar_add }}"
-             >
-                 Edit
-             </a> | <form action="{{ route('activity.destroy', $activity->id) }}" method="POST" style="display:inline-block;">
+                            {{-- Edit Button --}}
+                            <a href="#" class="btn btn-warning btn-xs" data-bs-toggle="modal"
+                                data-bs-target="#edit_debt_modal" data-id="{{ $activity->id }}"
+                                data-title="{{ $activity->activity_title }}"
+                                data-description="{{ $activity->description }}"
+                                data-priority="{{ $activity->priority_id }}"
+                                data-activityType="{{ $activity->activity_type_id }}"
+                                data-department="{{ $activity->assigned_department_id }}"
+                                data-agent="{{ $activity->assigned_user_id }}" data-status="{{ $activity->status_id }}"
+                                data-startDate="{{\Carbon\Carbon::parse($activity->start_date_time)->format('d-m-Y') }}"
+                                data-startTime="{{\Carbon\Carbon::parse($activity->start_date_time)->format('h:i A') }}"
+                                data-endDate="{{\Carbon\Carbon::parse($activity->due_date_time)->format('d-m-Y') }}"
+                                data-endTime="{{\Carbon\Carbon::parse($activity->due_date_time)->format('h:i A') }}"
+                                data-calendarAdd="{{ $activity->calendar_add }}">
+                                Edit
+                            </a> | <form action="{{ route('activity.destroy', $activity->id) }}" method="POST"
+                                style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-xs"
-                                        onclick="return confirm('Are you sure you want to delete this activity?')">
+                                    onclick="return confirm('Are you sure you want to delete this activity?')">
                                     Delete
                                 </button>
                             </form>
@@ -99,7 +94,7 @@
 
 
 </div>
-@include('modals.activities._edit_activity_modal')
+{{-- @include('modals.activities._edit_activity_modal') --}}
 
 
 <script>
