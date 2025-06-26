@@ -14,10 +14,7 @@ use App\Models\TransactionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
-<<<<<<< HEAD
-=======
 use Barryvdh\DomPDF\Facade\Pdf;
->>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
 
 class TransactionController extends Controller
 {
@@ -178,147 +175,146 @@ class TransactionController extends Controller
         }
     }
 
-    public function editTransaction($id){
+    public function editTransaction($id)
+    {
 
         $transaction = Transaction::findOrFail($id);
 
 
 
-       return response()->json([
-        'id' => $transaction->id,
-        'lead_id' => $transaction->lead_id,
-        'transaction_type' => $transaction->transaction_type,
-        'penalty_type_id' => $transaction->penalty_type_id,
-        'charge_type' => $transaction->charge_type ?? null, // assuming you store this
-        'value' => abs($transaction->amount), // in case it's stored as negative
-        'amount' => abs($transaction->amount),
-        'description' => $transaction->description,
-        'transaction_id' => $transaction->transaction_id,
-        'payment_method' => $transaction->payment_method,
-        'status_id' => $transaction->status_id,
-        'rule_id'=>$transaction->rule_id,
-        'transaction_method'=>$transaction->transaction_method,
-        'balance_before'=>$transaction->balance_before,
-        'balance_after'=>$transaction->balance_after,
-        'charge_type'=>$transaction->charge_type,
-    ]);
-
+        return response()->json([
+            'id' => $transaction->id,
+            'lead_id' => $transaction->lead_id,
+            'transaction_type' => $transaction->transaction_type,
+            'penalty_type_id' => $transaction->penalty_type_id,
+            'charge_type' => $transaction->charge_type ?? null, // assuming you store this
+            'value' => abs($transaction->amount), // in case it's stored as negative
+            'amount' => abs($transaction->amount),
+            'description' => $transaction->description,
+            'transaction_id' => $transaction->transaction_id,
+            'payment_method' => $transaction->payment_method,
+            'status_id' => $transaction->status_id,
+            'rule_id' => $transaction->rule_id,
+            'transaction_method' => $transaction->transaction_method,
+            'balance_before' => $transaction->balance_before,
+            'balance_after' => $transaction->balance_after,
+            'charge_type' => $transaction->charge_type,
+        ]);
     }
 
     public function updateTransaction(Request $request)
-{
+    {
 
-    $transactionType = $request['trans_type_select'];
-    $transTypeDetails = TransactionType::where('id', $transactionType)->first();
-    $transaction = Transaction::where('id', $request['transRecordId'])->first(); // Get existing transaction
-   // dd($transaction);
+        $transactionType = $request['trans_type_select'];
+        $transTypeDetails = TransactionType::where('id', $transactionType)->first();
+        $transaction = Transaction::where('id', $request['transRecordId'])->first(); // Get existing transaction
+        // dd($transaction);
 
-   // $originalTransAmount = $transaction->amount;
-//    dd([$originalTransAmount,$transaction] );
+        // $originalTransAmount = $transaction->amount;
+        //    dd([$originalTransAmount,$transaction] );
 
-    if ($transactionType == TransactionType::PAYMENT) {
+        if ($transactionType == TransactionType::PAYMENT) {
 
-        $originalTransAmount = $transaction->amount;
+            $originalTransAmount = $transaction->amount;
 
-        $paymentMethodDetails = PaymentMethod::where('id', $request['payment_status'])->first();
-        $desc = $transTypeDetails->transaction_type_title . "/" . $paymentMethodDetails->method_name . " -Manual- " . $request['description'];
+            $paymentMethodDetails = PaymentMethod::where('id', $request['payment_status'])->first();
+            $desc = $transTypeDetails->transaction_type_title . "/" . $paymentMethodDetails->method_name . " -Manual- " . $request['description'];
 
-        //$transaction->lead_id = $request['leadID'];
-        $transaction->transaction_type = $transactionType;
-        $transaction->amount = $request['amount'] * -1;
-        $transaction->description = $desc;
-        $transaction->transaction_id = $request['transID'];
-        $transaction->status_id = $request['payment_status'];
-        $transaction->payment_method = $request['payment_method'];
-        $transaction->updated_by = Auth::user()->id;
-        $transaction->save();
+            //$transaction->lead_id = $request['leadID'];
+            $transaction->transaction_type = $transactionType;
+            $transaction->amount = $request['amount'] * -1;
+            $transaction->description = $desc;
+            $transaction->transaction_id = $request['transID'];
+            $transaction->status_id = $request['payment_status'];
+            $transaction->payment_method = $request['payment_method'];
+            $transaction->updated_by = Auth::user()->id;
+            $transaction->save();
 
-        $leadDetails = Lead::where('id', $request['leadID'])->first();
+            $leadDetails = Lead::where('id', $request['leadID'])->first();
 
-       //dd([$leadDetails->balance,$originalTransAmount ,$request['amount']]);
+            //dd([$leadDetails->balance,$originalTransAmount ,$request['amount']]);
 
 
-       $transBalance = $leadDetails->balance;
-       //$originalTransAmount = -5;
-       $amount = $request['amount'];
+            $transBalance = $leadDetails->balance;
+            //$originalTransAmount = -5;
+            $amount = $request['amount'];
 
-       $balance = $transBalance + ($originalTransAmount *-1) - $amount;
+            $balance = $transBalance + ($originalTransAmount * -1) - $amount;
 
-       $leadDetails->balance = $balance;
+            $leadDetails->balance = $balance;
 
-        $leadDetails->save();
+            $leadDetails->save();
 
-        if ($request['payment_status'] == TransactionStatus::PAID) {
-            if ($leadDetails->balance <= 0) {
-                $leadDetails->status_id = LeadStatus::PAID;
-            } else {
-                $leadDetails->status_id = LeadStatus::PARTIALLY_PAID;
+            if ($request['payment_status'] == TransactionStatus::PAID) {
+                if ($leadDetails->balance <= 0) {
+                    $leadDetails->status_id = LeadStatus::PAID;
+                } else {
+                    $leadDetails->status_id = LeadStatus::PARTIALLY_PAID;
+                }
+                $leadDetails->save();
             }
+        }
+
+        if ($transactionType == TransactionType::PENALTY) {
+            $leadDetails = Lead::getLeadByID($request['leadID']);
+            $chargeType = $request['charge_type'];
+            $penaltyTypeDetails = AdditionalCostRuleType::where('id', $request['penalty_type'])->first();
+
+            if ($chargeType == "Percentage") {
+                $amount = ($request['value'] / 100) * $leadDetails->amount;
+                $desc = $transTypeDetails->transaction_type_title . "/" . $penaltyTypeDetails->rule_type_name . " of " . $request['value'] . "% -Manual- " . $request['description'];
+            } else {
+                $amount = $request['value'];
+                $desc = $transTypeDetails->transaction_type_title . "/" . $penaltyTypeDetails->rule_type_name . " of " . $leadDetails->currency_name . " " . $request['value'] . " -Manual- " . $request['description'];
+            }
+
+
+            $transaction = Transaction::findOrFail($request['transRecordId']);
+
+            $transaction->lead_id = $request['leadID'];
+            $transaction->transaction_type = $transactionType;
+            $transaction->penalty_type_id = $request['penalty_type'];
+            $transaction->amount = $amount;
+            $transaction->description = $desc;
+            $transaction->charge_type = $chargeType;
+            $transaction->status_id = TransactionStatus::POSTED;
+            $transaction->updated_by = Auth::user()->id;
+
+            // dd($transaction);
+            $transaction->save();
+
+            $leadDetails->balance = $leadDetails->balance + $amount;
+            $leadDetails->additional_charges = $leadDetails->additional_charges + $amount;
             $leadDetails->save();
         }
-    }
 
-    if ($transactionType == TransactionType::PENALTY) {
-        $leadDetails = Lead::getLeadByID($request['leadID']);
-        $chargeType = $request['charge_type'];
-        $penaltyTypeDetails = AdditionalCostRuleType::where('id', $request['penalty_type'])->first();
+        if ($transactionType == TransactionType::DISCOUNT) {
+            $leadDetails = Lead::getLeadByID($request['leadID']);
+            $chargeType = $request['charge_type'];
 
-        if ($chargeType == "Percentage") {
-            $amount = ($request['value'] / 100) * $leadDetails->amount;
-            $desc = $transTypeDetails->transaction_type_title . "/" . $penaltyTypeDetails->rule_type_name . " of " . $request['value'] . "% -Manual- " . $request['description'];
-        } else {
-            $amount = $request['value'];
-            $desc = $transTypeDetails->transaction_type_title . "/" . $penaltyTypeDetails->rule_type_name . " of " . $leadDetails->currency_name . " " . $request['value'] . " -Manual- " . $request['description'];
+            if ($chargeType == "Percentage") {
+                $amount = ($request['value'] / 100) * $leadDetails->amount;
+                $desc = $transTypeDetails->transaction_type_title . " of " . $request['value'] . "% -Manual- " . $request['description'];
+            } else {
+                $amount = $request['value'];
+                $desc = $transTypeDetails->transaction_type_title . " of " . $leadDetails->currency_name . " " . $request['value'] . " -Manual- " . $request['description'];
+            }
+
+            $transaction = Transaction::findOrFail($request['transRecordId']);
+
+            $transaction->lead_id = $request['leadID'];
+            $transaction->transaction_type = $transactionType;
+            $transaction->amount = ($amount) * -1;
+            $transaction->description = $desc;
+            $transaction->charge_type = $chargeType;
+            $transaction->status_id = TransactionStatus::POSTED;
+            $transaction->updated_by = Auth::user()->id;
+            $transaction->save();
+
+            $leadDetails->balance = $leadDetails->balance - $amount;
+            $leadDetails->save();
         }
 
-
-        $transaction = Transaction::findOrFail($request['transRecordId']);
-
-        $transaction->lead_id = $request['leadID'];
-        $transaction->transaction_type = $transactionType;
-        $transaction->penalty_type_id = $request['penalty_type'];
-        $transaction->amount = $amount;
-        $transaction->description = $desc;
-        $transaction->charge_type = $chargeType;
-        $transaction->status_id = TransactionStatus::POSTED;
-        $transaction->updated_by = Auth::user()->id;
-
-       // dd($transaction);
-        $transaction->save();
-
-        $leadDetails->balance = $leadDetails->balance + $amount;
-        $leadDetails->additional_charges = $leadDetails->additional_charges + $amount;
-        $leadDetails->save();
+        return back()->with('success', 'Transaction Updated Successfully');
     }
-
-    if ($transactionType == TransactionType::DISCOUNT) {
-        $leadDetails = Lead::getLeadByID($request['leadID']);
-        $chargeType = $request['charge_type'];
-
-        if ($chargeType == "Percentage") {
-            $amount = ($request['value'] / 100) * $leadDetails->amount;
-            $desc = $transTypeDetails->transaction_type_title . " of " . $request['value'] . "% -Manual- " . $request['description'];
-        } else {
-            $amount = $request['value'];
-            $desc = $transTypeDetails->transaction_type_title . " of " . $leadDetails->currency_name . " " . $request['value'] . " -Manual- " . $request['description'];
-        }
-
-        $transaction = Transaction::findOrFail($request['transRecordId']);
-
-        $transaction->lead_id = $request['leadID'];
-        $transaction->transaction_type = $transactionType;
-        $transaction->amount = ($amount) * -1;
-        $transaction->description = $desc;
-        $transaction->charge_type = $chargeType;
-        $transaction->status_id = TransactionStatus::POSTED;
-        $transaction->updated_by = Auth::user()->id;
-        $transaction->save();
-
-        $leadDetails->balance = $leadDetails->balance - $amount;
-        $leadDetails->save();
-    }
-
-    return back()->with('success', 'Transaction Updated Successfully');
-}
-
 }
