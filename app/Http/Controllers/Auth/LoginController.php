@@ -42,12 +42,12 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
-        if ($user->two_factor_code) {
-            $user->generateTwoFactorCode();
-            $user->sendTwoFactorCode();
+        // if ($user->two_factor_code) {
+        //     $user->generateTwoFactorCode();
+        //     $user->sendTwoFactorCode();
 
-            return redirect()->route('2fa.verify');
-        }
+        //     return redirect()->route('2fa.verify');
+        // }
 
         return redirect()->intended('/');
     }
