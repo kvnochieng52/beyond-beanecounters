@@ -71,7 +71,7 @@
                         <div class="col-md-12 pt-3">
                             <div class="form-group">
                                 {!! Html::label('Title/Subject*', 'activity_title') !!}
-                                {!! Html::text('activity_title')->class('form-control')
+                                {!! Html::text('activity_title')->class('form-control')->id('activity_title')
                                 ->placeholder('Enter the Title/Subject')
                                 // ->value($leadDetails->title)
                                 // ->attribute('readonly', 'readonly')
@@ -86,7 +86,7 @@
                             <div class="form-group">
                                 {!! Html::label('Text/Description*', 'description') !!}
                                 {!! Html::textarea('description')
-                                ->class('form-control')
+                                ->class('form-control')->id('description')
                                 ->placeholder('Enter description')
                                 ->rows(4) !!}
                             </div>
@@ -98,7 +98,7 @@
                         <div class="col-md-4 priority-group">
                             {!! Html::label('Priority*', 'priority') !!}
                             {!! Html::select('priority',
-                            $priorities)->class('form-control')->placeholder('--Specify--')->style("width:100%") !!}
+                            $priorities)->class('form-control')->id('priority')->placeholder('--Specify--')->style("width:100%") !!}
                         </div>
 
                         <div class="col-md-4">
@@ -147,20 +147,20 @@
                         <div class="col-md-4 department-group pt-3">
                             {!! Html::label('Assign Department', 'department') !!}
                             {!! Html::select('department', $departments)->class('form-control
-                            select2')->placeholder('--Specify--')->style("width:100%") !!}
+                            select2')->id('department')->placeholder('--Specify--')->style("width:100%") !!}
                         </div>
 
                         <div class="col-md-4 agent-group pt-3">
                             {!! Html::label('Assign Agent', 'agent') !!}
                             {!! Html::select('agent', $agentsList)->class('form-control
-                            select2')->placeholder('--Specify--')->style("width:100%") !!}
+                            select2')->id('agent')->placeholder('--Specify--')->style("width:100%") !!}
                         </div>
 
 
                         <div class="col-md-4 status-group pt-3">
                             {!! Html::label('Status*', 'status') !!}
                             {!! Html::select('status',
-                            $activityStatuses)->class('form-control')->placeholder('--Specify--')->style("width:100%")
+                            $activityStatuses)->class('form-control')->id('status')->placeholder('--Specify--')->style("width:100%")
                             !!}
                         </div>
 

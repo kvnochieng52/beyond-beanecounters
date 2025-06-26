@@ -328,20 +328,24 @@ return [
         [
             'text' => 'Leads',
             'icon' => 'fas fa-fw fa-user-plus',
+            // 'can' => ['Create Lead'],
             'submenu' => [
                 [
                     'text' => 'New Lead',
                     'url' => '/lead/create',
+                    // 'can' => ['Create Lead'],
 
                 ],
                 [
                     'text' => 'Manage Leads',
                     'url' => '/lead',
+                    'can' => ['View Leads'],
                 ],
 
                 [
                     'text' => 'Leads Bulk Tool',
                     'url' => '/bulk/upload',
+                    'can' => ['Create Lead'],
                 ],
             ]
         ],
@@ -350,6 +354,7 @@ return [
         [
             'text' => 'Lead Status',
             'icon' => 'fas fa-fw fa-list',
+            'can' => ['View Stats'],
             'submenu' => [
                 [
                     'text' => 'Pending',
@@ -442,6 +447,7 @@ return [
         [
             'text' => 'Institutions',
             'icon' => 'fas fa-fw fa-building',
+            'can' => ['is_supervisor', 'is_admin', 'is_manager'],
             'submenu' => [
                 [
                     'text' => 'New Insitution',
@@ -460,6 +466,7 @@ return [
         [
             'text' => 'Tools & Settings',
             'icon' => 'fas fa-fw fa-cog',
+            'can' => ['is_supervisor', 'is_admin', 'is_manager'],
             'submenu' => [
                 [
                     'text' => 'Rules/Discounts',
@@ -517,6 +524,7 @@ return [
         [
             'text' => 'Users',
             'icon' => 'fas fa-fw fa-users',
+            'can' => ['is_admin'],
             'submenu' => [
                 [
                     'text' => 'New User',

@@ -95,6 +95,14 @@ class ActivityController extends Controller
 
     public function storeActivity(Request $request)
     {
+        // Validate the request
+        $request->validate([
+            'activity_title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'activityType' => 'required|exists:activity_types,id',
+            'leadID' => 'required|exists:leads,id',
+        ]);
+
         $activity = new Activity();
 
         $activity->activity_title = $request['activity_title'];
@@ -102,10 +110,10 @@ class ActivityController extends Controller
         $activity->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
         $activity->activity_type_id = $request['activityType'];
         $activity->lead_id = $request['leadID'];
-        $activity->assigned_department_id = $request['department'];
+        $activity->assigned_department_id = $request['department'] ?? null;
         $activity->assigned_user_id = !empty($request['agent']) ? $request['agent'] : Auth::user()->id;
-        $activity->status_id = $request['status'];
-        $activity->calendar_add = $request['addToCalendar'];
+        $activity->status_id = $request['status'] ?? 1; // Default to first status if not provided
+        $activity->calendar_add = $request['addToCalendar'] ?? 0;
 
         // Handle start_date_time
         if (!empty($request['start_date'])) {
@@ -127,8 +135,8 @@ class ActivityController extends Controller
         $activity->updated_by = Auth::user()->id;
         $activity->save();
 
-
-        if ($request['addToCalendar'] == 1) {
+        // Only add to calendar if checkbox is checked AND we have both start and end dates
+        if ($request['addToCalendar'] == 1 && !empty($request['start_date']) && !empty($request['end_date'])) {
             $calendar = new Calendar();
             $calendar->calendar_title = $request['activity_title'];
             $calendar->start_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['start_date'] . ' ' . $startTime);
@@ -136,8 +144,8 @@ class ActivityController extends Controller
             $calendar->description = $request['description'];
             $calendar->lead_id = $request['leadID'];
             $calendar->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
-            $calendar->assigned_team_id = $request['department'];
-            $calendar->assigned_user_id = $request['assigned_user_id'];
+            $calendar->assigned_team_id = $request['department'] ?? null;
+            $calendar->assigned_user_id = !empty($request['agent']) ? $request['agent'] : Auth::user()->id;
             $calendar->created_by = Auth::id();
             $calendar->updated_by = Auth::id();
 

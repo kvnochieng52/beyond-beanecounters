@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Lead extends Model
 {
@@ -45,6 +46,9 @@ class Lead extends Model
 
     public static function query()
     {
+
+
+        $user = User::find(Auth::user()->id);
         return self::select([
             'leads.*',
             'defaulter_types.defaulter_type_name',
@@ -93,6 +97,15 @@ class Lead extends Model
             ->leftJoin('departments', 'leads.assigned_department', 'departments.id')
             ->leftJoin('lead_conversion_statuses', 'leads.conversion_status_id', 'lead_conversion_statuses.id')
             ->leftJoin('lead_engagement_levels', 'leads.engagement_level_id', 'lead_engagement_levels.id');
+
+        // if ($user->can('is_agent')) {
+
+        //     dd("here");
+        //     $query->where(function ($q) use ($user) {
+        //         $q->where('leads.created_by', $user->id)
+        //             ->orWhere('leads.assigned_a', $user->id);
+        //     });
+        // }
     }
 
 

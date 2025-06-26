@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -103,7 +104,7 @@ class UserController extends Controller
             foreach ($request->input('role') as $role) {
                 DB::table('model_has_roles')->insert([
                     'role_id' => $role,
-                    'model_type' => 'App\User',
+                    'model_type' => 'App\Models\User',
                     'model_id' => $user->id
                 ]);
             }
@@ -127,7 +128,7 @@ class UserController extends Controller
         //     foreach ($request->input('permissions') as $permission) {
         //         DB::table('model_has_permissions')->insert([
         //             'permission_id' => $permission,
-        //             'model_type' => 'App\User',
+        //             'model_type' => 'App\Models\User',
         //             'model_id' => $user->id
         //         ]);
         //     }
@@ -249,23 +250,23 @@ class UserController extends Controller
             foreach ($request->input('role') as $role) {
                 DB::table('model_has_roles')->insert([
                     'role_id' => $role,
-                    'model_type' => 'App\User',
+                    'model_type' => 'App\Models\User',
                     'model_id' => $user->id
                 ]);
             }
         }
-        DB::table('model_has_permissions')->where('model_id', $user->id)->delete();
+        // DB::table('model_has_permissions')->where('model_id', $user->id)->delete();
 
-        if ((!empty($request->input('permissions')) && count($request->input('permissions')) > 0) && empty($request->input('role'))) {
+        // if (!empty($request->input('permissions')) && count($request->input('permissions')) > 0) {
 
-            foreach ($request->input('permissions') as $permission) {
-                DB::table('model_has_permissions')->insert([
-                    'permission_id' => $permission,
-                    'model_type' => 'App\User',
-                    'model_id' => $user->id
-                ]);
-            }
-        }
+        //     foreach ($request->input('permissions') as $permission) {
+        //         DB::table('model_has_permissions')->insert([
+        //             'permission_id' => $permission,
+        //             'model_type' => 'App\Models\User',
+        //             'model_id' => $user->id
+        //         ]);
+        //     }
+        // }
 
 
         UserRegion::where('user_id', $user->id)->delete();
@@ -284,7 +285,12 @@ class UserController extends Controller
 
 
 
-        Artisan::call('permission:cache-reset');
+        try {
+            Artisan::call('permission:cache-reset');
+        } catch (\Exception $e) {
+            // Log the error but continue
+            \Log::error('Failed to reset permission cache: ' . $e->getMessage());
+        }
         //Alert::toast('User Successfully Updated', 'success');
         return redirect('admin/users/' . $user->id . '/edit')->with('success', 'User Edited');
     }
@@ -328,7 +334,12 @@ class UserController extends Controller
             }
         }
 
-        Artisan::call('permission:cache-reset');
+        try {
+            Artisan::call('permission:cache-reset');
+        } catch (\Exception $e) {
+            // Log the error but continue
+            \Log::error('Failed to reset permission cache: ' . $e->getMessage());
+        }
 
         // Alert::toast('Role Successfully Created', 'success');
         return redirect("admin/roles");
@@ -379,7 +390,12 @@ class UserController extends Controller
                 ]);
             }
         }
-        Artisan::call('permission:cache-reset');
+        try {
+            Artisan::call('permission:cache-reset');
+        } catch (\Exception $e) {
+            // Log the error but continue
+            \Log::error('Failed to reset permission cache: ' . $e->getMessage());
+        }
         // Alert::toast('Role Updated Successfully', 'success');
         return redirect("admin/roles/" . $request->input('role_id') . "/edit");
     }

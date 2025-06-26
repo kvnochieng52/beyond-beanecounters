@@ -302,6 +302,12 @@
 
 <script>
     $(document).ready(function() {
+    // Initialize Select2 elements
+    if ($.fn.select2) {
+        $('.select2').select2({
+            dropdownParent: $('#new_debt_modal')
+        });
+    }
        $('#transactionsTable').DataTable({
             processing: true,
             serverSide: true,
@@ -470,57 +476,65 @@
         $('#dueDateInputsEdit').toggleClass('d-none', !this.checked);
     });
 
+    // Initialize Bootstrap 5 modals
+    var newActivityModal = document.getElementById('new_debt_modal');
+    if (newActivityModal) {
+        var bsNewActivityModal = new bootstrap.Modal(newActivityModal);
+    }
+    
     // Form validation
     $('.activity_form').on('submit', function(e) {
-    e.preventDefault();
+        e.preventDefault();
 
-    // Disable the submit button and show progress
-    let submitBtn = $(this).find('button[type="submit"]');
-    submitBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Submitting...');
+       
 
-    let errorHtml = "";
-    let activityType = $('input[name="activityType"]:checked').val();
-    let activityTitle = $('#activity_title').val();
-    let description = $('#description').val();
-    let priority = $('#priority').val();
-    let startDate = $('#start_date').val();
-    let startTime = $('#start_time').val();
-    let endDate = $('#end_date').val();
-    let endTime = $('#end_time').val();
-    let department = $('#department').val();
-    let agent = $('#agent').val();
-    let status = $('#status').val();
-    let addToCalendar = $('#addToCalendar').prop('checked');
+        // Disable the submit button and show progress
+        let submitBtn = $(this).find('button[type="submit"]');
+        submitBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Submitting...');
 
-    $('.errorDisp').hide().html('');
+        let errorHtml = "";
+        let activityType = $('input[name="activityType"]:checked').val();
+        let activityTitle = $('#activity_title').val();
+        let description = $('#description').val();
+        let priority = $('#priority').val();
+        let startDate = $('#start_date').val();
+        let startTime = $('#start_time').val();
+        let endDate = $('#end_date').val();
+        let endTime = $('#end_time').val();
+        let department = $('#department').val();
+        let agent = $('#agent').val();
+        let status = $('#status').val();
+        let addToCalendar = $('#addToCalendar').prop('checked');
 
-    if (activityTitle === '') {
-        errorHtml += "<p>Please Enter Activity Title</p>";
-    }
+     
 
-    if (description === '') {
-        errorHtml += "<p>Please Enter Activity Text or Description</p>";
-    }
+        $('.errorDisp').hide().html('');
 
-    if ([1, 2, 6].includes(parseInt(activityType))) {
-        if (priority === '') {
-            errorHtml += "<p>Please Select Activity Priority</p>";
+        if (activityTitle === '') {
+            errorHtml += "<p>Please Enter Activity Title</p>";
         }
-        if (status === '') {
-            errorHtml += "<p>Please Select Activity Status</p>";
-        }
-    }
 
-    if (errorHtml) {
-        $('.errorDisp').html(errorHtml).show(); // Display errors
-        submitBtn.prop('disabled', false).html('Submit'); // Re-enable button on error
-    } else {
-        // Simulate an AJAX call or form processing (replace with actual submission logic)
-        setTimeout(() => {
-            this.submit(); // Submit form after processing
-        }, 1000); // Simulated delay
-    }
-});
+        if (description === '') {
+            errorHtml += "<p>Please Enter Activity Text or Description</p>";
+        }
+
+        if ([1, 2, 6].includes(parseInt(activityType))) {
+            if (priority === null || priority === '') {
+                errorHtml += "<p>Please Select Activity Priority</p>";
+            }
+            if (status === null || status === '') {
+                errorHtml += "<p>Please Select Activity Status</p>";
+            }
+        }
+
+        if (errorHtml) {
+            $('.errorDisp').html(errorHtml).show(); // Display errors
+            submitBtn.prop('disabled', false).html('Submit Details'); // Re-enable button on error
+        } else {
+            // Submit the form
+            this.submit();
+        }
+    });
 
 
  $('#transactionTypes').on('change', function() {
