@@ -15,7 +15,11 @@
 
 
     <tbody>
+<<<<<<< HEAD
+
+=======
     
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
         @foreach($leadListActivities as $key => $activity)
         <tr>
             <td>{{ $key + 1 }}</td>

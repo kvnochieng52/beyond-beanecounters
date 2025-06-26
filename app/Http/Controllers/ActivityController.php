@@ -158,6 +158,22 @@ class ActivityController extends Controller
     public function editActivity(Request $request, $id)
     {
 
+<<<<<<< HEAD
+       dd($id, $request->all());
+
+        $activity = Activity::findOrFail($id);
+        // Update fields
+        $activity->activity_title = $request['activity_title_edit'];
+        $activity->description = $request['description_edit'];
+        $activity->priority_id = !empty($request['priority_edit']) ? $request['priority_edit'] : 1;
+        $activity->activity_type_id = $request['activityType_edit'];
+        $activity->lead_id = $request['leadID'];
+        $activity->assigned_department_id = $request['department_edit'];
+        $activity->assigned_user_id = !empty($request['agent_edit']) ? $request['agent_edit'] : Auth::user()->id;
+        $activity->status_id = $request['status_edit'];
+        // $activity->calendar_add = $request['addToCalendar'];
+        if ($request->has('addToCalendar_edit')) {
+=======
         $activity = Activity::findOrFail($id);
         // Update fields
         $activity->activity_title = $request['activity_title'];
@@ -170,29 +186,56 @@ class ActivityController extends Controller
         $activity->status_id = $request['status'];
         // $activity->calendar_add = $request['addToCalendar'];
         if ($request->has('addToCalendar')) {
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
             $activity->calendar_add = 1; // Convert 'on' to 1
         } else {
             $activity->calendar_add = 0; // Checkbox not checked
         }
 
         // Handle start_date_time
+<<<<<<< HEAD
+        if (!empty($request['start_date_edit'])) {
+            $startTime = !empty($request['start_time_edit']) ? $request['start_time_edit'] : '12:00 AM';
+            $activity->start_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['start_date_edit'] . ' ' . $startTime);
+=======
         if (!empty($request['start_date'])) {
             $startTime = !empty($request['start_time']) ? $request['start_time'] : '12:00 AM';
             $activity->start_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['start_date'] . ' ' . $startTime);
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
         } else {
             $activity->start_date_time = null;
         }
 
         // Handle due_date_time
+<<<<<<< HEAD
+        if (!empty($request['end_date_edit'])) {
+            $endTime = !empty($request['end_time_edit']) ? $request['end_time_edit'] : '12:00 AM';
+            $activity->due_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['end_date_edit'] . ' ' . $endTime);
+=======
         if (!empty($request['end_date'])) {
             $endTime = !empty($request['end_time']) ? $request['end_time'] : '12:00 AM';
             $activity->due_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['end_date'] . ' ' . $endTime);
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
         } else {
             $activity->due_date_time = null;
         }
         $activity->updated_by = Auth::user()->id;
         $activity->save();
 
+<<<<<<< HEAD
+        dd( $activity);
+
+        // Optional: Update Calendar entry if needed (if already exists or if required to be added on update)
+        if ($request['addToCalendar_edit'] == 1) {
+            $calendar = new Calendar();
+            $calendar->calendar_title = $request['activity_title_edit'];
+            $calendar->start_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['start_date_edit'] . ' ' . $startTime);
+            $calendar->due_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['end_date_edit'] . ' ' . $endTime);
+            $calendar->description = $request['description_edit'];
+            $calendar->lead_id = $request['leadID'];
+            $calendar->priority_id = !empty($request['priority_edit']) ? $request['priority_edit'] : 1;
+            $calendar->assigned_team_id = $request['department_edit'];
+=======
         // Optional: Update Calendar entry if needed (if already exists or if required to be added on update)
         if ($request['addToCalendar'] == 1) {
             $calendar = new Calendar();
@@ -203,6 +246,7 @@ class ActivityController extends Controller
             $calendar->lead_id = $request['leadID'];
             $calendar->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
             $calendar->assigned_team_id = $request['department'];
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
             $calendar->assigned_user_id = $request['assigned_user_id'];
             $calendar->created_by = Auth::id();
             $calendar->updated_by = Auth::id();

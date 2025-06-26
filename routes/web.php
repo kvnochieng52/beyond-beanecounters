@@ -16,7 +16,10 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DueNotificationController;
 use App\Http\Controllers\InstitutionController;
+<<<<<<< HEAD
+=======
 use App\Http\Controllers\ReportController;
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransBulkController;
 
@@ -42,8 +45,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/transactions/{id}/edit', [TransactionController::class, 'editTransaction'])->name('transactions.edit');
     Route::post('/transactions/update', [TransactionController::class, 'updateTransaction'])->name('transactions.update');
 
+<<<<<<< HEAD
+=======
     Route::get('/transactions/invoice/{leadID}', [TransactionController::class, 'generateInvoice'])->name('transactions.invoice');
 
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
     Route::prefix('leads')->group(
         function () {
             Route::post('/leads-update-status', [LeadController::class, 'updateStatus'])->name('leads-update-status');
@@ -109,6 +115,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', [TransBulkController::class, 'index'])->name('trans_bulk.index');
         }
     );
+<<<<<<< HEAD
+=======
     
     // Reports Routes
     Route::prefix('reports')->group(function () {
@@ -132,6 +140,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/agent-leads', [ReportController::class, 'agentLeads'])->name('reports.agent-leads');
         Route::match(['get', 'post'], '/agent-leads/generate', [ReportController::class, 'generateAgentLeads'])->name('reports.agent-leads.generate');
     });
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
 });
 
 Route::prefix('2fa')->group(

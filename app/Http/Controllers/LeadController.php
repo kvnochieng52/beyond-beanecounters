@@ -199,6 +199,8 @@ class LeadController extends Controller
      */
     public function edit(Lead $lead, Request $request)
     {
+<<<<<<< HEAD
+=======
 
         $loggedInUserId = auth()->id();
         $agentsList = User::where('is_active', 1)
@@ -210,6 +212,7 @@ class LeadController extends Controller
         $agentsList = [$loggedInUserId =>"Myself" ] + $agentsList;
         
        // dd($agentsList);
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
         return view('lead.edit')->with([
             'step' => $request['step'],
             'lead' => $lead,
@@ -224,7 +227,13 @@ class LeadController extends Controller
                 ->select(DB::raw("CONCAT(lead_priority_name, ' - ', description) as name"), 'id')
                 ->pluck('name', 'id'),
             'industries' => LeadIndustry::where('is_active', 1)->pluck('lead_industry_name', 'id'),
+<<<<<<< HEAD
+            'agentsList' => User::where('is_active', 1)
+                ->select(DB::raw("CONCAT(name, ' - ', agent_code) as name"), 'id')
+                ->pluck('name', 'id'),
+=======
             'agentsList' => $agentsList,
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
             'departments' => Department::where('is_active', 1)->pluck('department_name', 'id')
 
         ]);

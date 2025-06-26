@@ -1,5 +1,13 @@
 <div class="row">
     <div class="col-md-12">
+<<<<<<< HEAD
+        <div class="d-flex justify-content-between align-items-center pb-3">
+            <h2 class="card-title pb-2">Transactions</h2>
+
+            <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#new_transaction_modal">
+                <i class="fa fa-fw fa-plus"></i> New Transaction
+            </a>
+=======
         <div class="d-flex justify-content-between pb-3">
 
             <div>
@@ -17,6 +25,7 @@
                 </a>
             </div>
 
+>>>>>>> 25aba04858ba4dafe48e1bc78d0efc8c5ecab38b
 
 
         </div>
