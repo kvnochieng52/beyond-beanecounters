@@ -435,7 +435,7 @@ return [
             'submenu' => [
 
                 [
-                    'text' => 'Bulk Upload Tool',
+                    'text' => 'Leads Bulk Upload Tool',
                     'url' => '/bulk/upload',
                 ],
                 [
