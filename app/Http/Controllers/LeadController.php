@@ -39,10 +39,42 @@ class LeadController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index(Request $request)
+    // {
+
+
+
+
+    //     if ($request->ajax()) {
+    //         $leads = Lead::query()->orderBy('id', 'DESC');
+
+    //         // echo "here";
+    //         // exit;
+
+    //         return DataTables::of($leads)
+    //             ->addIndexColumn()
+    //             ->addColumn('actions', function ($lead) {
+    //                 return '
+    //                 <a href="/lead/' . $lead->id . '/edit" class="btn btn-warning btn-xs">
+    //                     <i class="fa fa-edit"></i>
+    //                 </a>
+    //                 <a href="#" class="btn btn-danger btn-xs" onclick="confirmDelete(' . $lead->id . ')">
+    //                     <i class="fa fa-trash"></i>
+    //                 </a>
+    //             ';
+    //             })
+    //             ->rawColumns(['actions'])
+    //             ->make(true);
+    //     }
+
+
+
+    //     return view('lead.index');
+    // }
+
+
     public function index(Request $request)
     {
-
-
         if ($request->ajax()) {
             $leads = Lead::query()->orderBy('id', 'DESC');
 
@@ -50,19 +82,29 @@ class LeadController extends Controller
                 ->addIndexColumn()
                 ->addColumn('actions', function ($lead) {
                     return '
-                    <a href="/lead/' . $lead->id . '/edit" class="btn btn-warning btn-xs">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a href="#" class="btn btn-danger btn-xs" onclick="confirmDelete(' . $lead->id . ')">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                ';
+                <a href="/lead/' . $lead->id . '/edit" class="btn btn-warning btn-xs">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <a href="#" class="btn btn-danger btn-xs" onclick="confirmDelete(' . $lead->id . ')">
+                    <i class="fa fa-trash"></i>
+                </a>
+            ';
+                })
+                ->filterColumn('defaulter_types.defaulter_type_name', function ($query, $keyword) {
+                    $query->where('defaulter_types.defaulter_type_name', 'like', "%{$keyword}%");
+                })
+                ->filterColumn('lead_priorities.lead_priority_name', function ($query, $keyword) {
+                    $query->where('lead_priorities.lead_priority_name', 'like', "%{$keyword}%");
+                })
+                ->filterColumn('lead_statuses.lead_status_name', function ($query, $keyword) {
+                    $query->where('lead_statuses.lead_status_name', 'like', "%{$keyword}%");
+                })
+                ->filterColumn('lead_stages.lead_stage_name', function ($query, $keyword) {
+                    $query->where('lead_stages.lead_stage_name', 'like', "%{$keyword}%");
                 })
                 ->rawColumns(['actions'])
                 ->make(true);
         }
-
-
 
         return view('lead.index');
     }
