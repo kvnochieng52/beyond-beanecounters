@@ -433,6 +433,11 @@ return [
             'icon' => 'fas fa-fw fa-cog',
             'can' => ['is_supervisor', 'is_admin', 'is_manager'],
             'submenu' => [
+
+                [
+                    'text' => 'Bulk Upload Tool',
+                    'url' => '/bulk/upload',
+                ],
                 [
                     'text' => 'Rules/Discounts',
                     'url' => '/additional-cost-rules',
