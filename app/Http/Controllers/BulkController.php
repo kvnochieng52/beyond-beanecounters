@@ -57,7 +57,8 @@ class BulkController extends Controller
                 $countryId = Country::whereRaw('LOWER(country_name) = ?', strtolower($data['country']))->value('id');
                 $assignedAgentId = User::where(function ($query) use ($data) {
                     $query->where('id_number', $data['assigned_agent_id'])
-                        ->orWhere('agent_code', $data['assigned_agent_id']);
+                        ->orWhere('agent_code', $data['assigned_agent_id'])
+                        ->orWhere('id', $data['assigned_agent_id']);
                 })->value('id');
 
                 $currencyId = Currency::whereRaw('LOWER(currency_name) = ?', strtolower($data['currency']))->value('id');
