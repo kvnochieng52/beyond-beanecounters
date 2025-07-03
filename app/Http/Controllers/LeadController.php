@@ -104,7 +104,7 @@ class LeadController extends Controller
                 })
 
                 ->filterColumn('institution_name', function ($query, $keyword) {
-                    $query->where('isntitutions.institution_name', 'like', "%{$keyword}%");
+                    $query->where('institution_name', 'like', "%{$keyword}%");
                 })
                 ->rawColumns(['actions'])
                 ->make(true);
