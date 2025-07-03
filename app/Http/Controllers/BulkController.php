@@ -64,12 +64,13 @@ class BulkController extends Controller
                 $currencyId = Currency::whereRaw('LOWER(currency_name) = ?', strtolower($data['currency']))->value('id');
                 $priorityId = LeadPriority::whereRaw('LOWER(lead_priority_name) = ?', strtolower($data['priority']))->value('id');
 
+                $institutionId = $request['institution'];
                 if ($leadType == 1) {
 
                     $genderId = Gender::whereRaw('LOWER(gender_name) = ?', strtolower($data['gender']))->value('id');
                     // $institutionId = Institution::whereRaw('LOWER(institution_name) = ?', strtolower($data['institution']))->value('id');
 
-                    $institutionId = $request['institution'];
+
 
                     $leadID = Lead::create([
                         'title' => $data['title'] ?? null,
@@ -123,6 +124,7 @@ class BulkController extends Controller
                         'additional_charges' => $data['additional_charges'] ?? 0,
                         'balance' => $data['balance'] ?? null,
                         'currency_id' => $currencyId,
+                        'institution_id' => $institutionId,
                         'status_id' => 1,
                         'stage_id' => 1,
                         'priority_id' => $priorityId,
