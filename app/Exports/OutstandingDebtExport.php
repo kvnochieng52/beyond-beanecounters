@@ -124,7 +124,7 @@ class OutstandingDebtExport implements FromCollection, WithHeadings, WithTitle, 
             'Outstanding Balance',
             'Due Date',
             'Days Overdue',
-            'assigned_agent'
+            'Assigned Agent'
         ];
 
         // Add detailed lead data
