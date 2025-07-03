@@ -505,7 +505,7 @@ class ReportController extends Controller
 
         // Get all leads with outstanding balances
         $leadsQuery = Lead::query()->where('balance', '>', 0)
-            ->where('created_at', '<=', $asOfDate);
+            ->where('leads.created_at', '<=', $asOfDate);
 
         if ($institutionId) {
             $leadsQuery->where('institution_id', $institutionId);
