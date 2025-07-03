@@ -20,7 +20,9 @@
                     <th>#</th>
                     <th>T/No.</th>
                     <th>Names/Title</th>
-                    <th>Defaulter Type</th>
+                    <th>Institution
+                        {{--
+                    <th>Defaulter Type</th> --}}
                     <th>ID Number</th>
                     <th>Telephone</th>
                     <th>Amount</th>
@@ -215,9 +217,14 @@ $(document).ready(function() {
                             <small>Agent: ${row.assigned_agent_name}</small>`;
                 }
             },
+
+            // {
+            // data: 'defaulter_type_name',
+            // name: 'defaulter_types.defaulter_type_name' // Use the table.column format
+            // },
             { 
-                data: 'defaulter_type_name', 
-                name: 'defaulter_types.defaulter_type_name' // Use the table.column format
+                data: 'institution_name', 
+                name: 'institution_name' // Use the table.column format
             },
             { data: 'id_passport_number', name: 'id_passport_number' },
             { data: 'telephone', name: 'telephone' },
