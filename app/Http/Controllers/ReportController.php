@@ -27,13 +27,13 @@ class ReportController extends Controller
         $institutions = Institution::where('is_active', 1)->get();
         return view('reports.collection_rates', compact('institutions'));
     }
-    
+
     public function collectionProgress()
     {
         $institutions = Institution::where('is_active', 1)->get();
         return view('reports.collection_progress', compact('institutions'));
     }
-    
+
     public function generateCollectionProgress(Request $request)
     {
         $request->validate([
@@ -48,20 +48,20 @@ class ReportController extends Controller
 
         // Get all leads within the date range
         $leadsQuery = Lead::whereBetween('created_at', [$startDate, $endDate]);
-        
+
         if ($institutionId) {
             $leadsQuery->where('institution_id', $institutionId);
         }
-        
+
         $leads = $leadsQuery->get();
-        
+
         // Calculate collection progress metrics
         $totalLeads = $leads->count();
         $totalDebt = $leads->sum('amount');
         $totalCollected = 0;
         $collectionByMonth = [];
         $collectionByWeek = [];
-        
+
         // Initialize collection by month data
         $currentDate = clone $startDate;
         while ($currentDate <= $endDate) {
@@ -75,7 +75,7 @@ class ReportController extends Controller
             ];
             $currentDate->addMonth();
         }
-        
+
         // Initialize collection by week data
         $currentDate = clone $startDate;
         while ($currentDate <= $endDate) {
@@ -89,35 +89,35 @@ class ReportController extends Controller
             ];
             $currentDate->addWeek();
         }
-        
+
         foreach ($leads as $lead) {
             // Calculate target amounts by month and week
             $leadMonth = Carbon::parse($lead->created_at)->format('Y-m');
             $leadWeek = Carbon::parse($lead->created_at)->format('Y-W');
-            
+
             if (isset($collectionByMonth[$leadMonth])) {
                 $collectionByMonth[$leadMonth]['target'] += $lead->amount;
             }
-            
+
             if (isset($collectionByWeek[$leadWeek])) {
                 $collectionByWeek[$leadWeek]['target'] += $lead->amount;
             }
-            
+
             // Get payments for this lead
             $payments = Transaction::where('lead_id', $lead->id)
                 ->where('transaction_type', 1) // Assuming 1 is for payments
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->get();
-            
+
             foreach ($payments as $payment) {
                 $totalCollected += $payment->amount;
-                
+
                 // Add to monthly collection
                 $paymentMonth = Carbon::parse($payment->created_at)->format('Y-m');
                 if (isset($collectionByMonth[$paymentMonth])) {
                     $collectionByMonth[$paymentMonth]['collected'] += $payment->amount;
                 }
-                
+
                 // Add to weekly collection
                 $paymentWeek = Carbon::parse($payment->created_at)->format('Y-W');
                 if (isset($collectionByWeek[$paymentWeek])) {
@@ -125,24 +125,24 @@ class ReportController extends Controller
                 }
             }
         }
-        
+
         // Calculate percentages
         foreach ($collectionByMonth as $month => $data) {
             if ($data['target'] > 0) {
                 $collectionByMonth[$month]['percentage'] = ($data['collected'] / $data['target']) * 100;
             }
         }
-        
+
         foreach ($collectionByWeek as $week => $data) {
             if ($data['target'] > 0) {
                 $collectionByWeek[$week]['percentage'] = ($data['collected'] / $data['target']) * 100;
             }
         }
-        
+
         // Convert to arrays for the view
         $monthlyData = array_values($collectionByMonth);
         $weeklyData = array_values($collectionByWeek);
-        
+
         $data = [
             'start_date' => $startDate->format('Y-m-d'),
             'end_date' => $endDate->format('Y-m-d'),
@@ -153,21 +153,21 @@ class ReportController extends Controller
             'monthly_data' => $monthlyData,
             'weekly_data' => $weeklyData
         ];
-        
+
         if ($request->has('export') && $request->export == 'excel') {
             return Excel::download(new CollectionProgressExport($data), 'collection_progress_report.xlsx');
         }
-        
+
         return view('reports.collection_progress_result', compact('data'));
     }
-    
+
     public function agentLeads()
     {
         $agents = \App\Models\User::all();
         $institutions = Institution::where('is_active', 1)->get();
         return view('reports.agent_leads', compact('agents', 'institutions'));
     }
-    
+
     public function generateAgentLeads(Request $request)
     {
         $request->validate([
@@ -184,54 +184,54 @@ class ReportController extends Controller
 
         // Get agent details
         $agent = \App\Models\User::findOrFail($agentId);
-        
+
         // Get leads assigned to this agent
         $leadsQuery = Lead::where('assigned_agent', $agentId)
             ->whereBetween('created_at', [$startDate, $endDate]);
-            
+
         if ($institutionId) {
             $leadsQuery->where('institution_id', $institutionId);
         }
-        
+
         $leads = $leadsQuery->get();
-        
+
         // Calculate summary metrics
         $totalLeads = $leads->count();
         $totalAssigned = $leads->sum('amount');
         $totalCollected = 0;
         $closedLeads = 0;
         $overdueLeads = 0;
-        
+
         // Prepare leads data for display
         $leadsData = [];
-        
+
         foreach ($leads as $lead) {
             // Get payments for this lead
             $payments = Transaction::where('lead_id', $lead->id)
                 ->where('transaction_type', 1) // Assuming 1 is for payments
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->sum('amount');
-                
+
             $totalCollected += $payments;
-            
+
             // Check if lead is closed (fully paid)
             $isClosed = $lead->balance <= 0;
             if ($isClosed) {
                 $closedLeads++;
             }
-            
+
             // Check if lead is overdue
             $isOverdue = $lead->due_date && Carbon::parse($lead->due_date)->lt(Carbon::now()) && $lead->balance > 0;
             if ($isOverdue) {
                 $overdueLeads++;
             }
-            
+
             // Get institution name
             $institutionName = $lead->institution ? $lead->institution->institution_name : 'N/A';
-            
+
             // Get lead status
             $statusName = $lead->status ? $lead->status->status_title : 'N/A';
-            
+
             $leadsData[] = [
                 'id' => $lead->id,
                 'title' => $lead->title,
@@ -246,7 +246,7 @@ class ReportController extends Controller
                 'created_at' => Carbon::parse($lead->created_at)->format('Y-m-d')
             ];
         }
-        
+
         $data = [
             'agent' => $agent,
             'start_date' => $startDate->format('Y-m-d'),
@@ -259,20 +259,20 @@ class ReportController extends Controller
             'overdue_leads' => $overdueLeads,
             'leads' => $leadsData
         ];
-        
+
         if ($request->has('export') && $request->export == 'excel') {
             return Excel::download(new AgentLeadsExport($data), 'agent_leads_report.xlsx');
         }
-        
+
         return view('reports.agent_leads_result', compact('data'));
     }
-    
+
     public function agentPerformance()
     {
         $institutions = Institution::where('is_active', 1)->get();
         return view('reports.agent_performance', compact('institutions'));
     }
-    
+
     public function generateAgentPerformance(Request $request)
     {
         $request->validate([
@@ -286,73 +286,73 @@ class ReportController extends Controller
         $institutionId = $request->institution_id;
 
 
-      
+
 
         // Get all users (agents)
         $agents = \App\Models\User::all();
-        
+
         // For debugging
         // dd($agents);
-        
+
         $agentData = [];
         $totalCollected = 0;
         $totalAssigned = 0;
-        
+
         foreach ($agents as $agent) {
             // Get leads assigned to this agent
             $leadsQuery = Lead::where('assigned_agent', $agent->id)
                 ->whereBetween('created_at', [$startDate, $endDate]);
-                
+
             if ($institutionId) {
                 $leadsQuery->where('institution_id', $institutionId);
             }
-            
+
             $leads = $leadsQuery->get();
-            
+
             // Calculate metrics
             $assignedAmount = $leads->sum('amount');
             $totalAssigned += $assignedAmount;
-            
+
             $collectedAmount = 0;
             $closedLeads = 0;
             $overdueCases = 0;
-            
+
             foreach ($leads as $lead) {
                 // Get payments for this lead
                 $payments = Transaction::where('lead_id', $lead->id)
                     ->where('transaction_type', 1) // Assuming 1 is for payments
                     ->whereBetween('created_at', [$startDate, $endDate])
                     ->sum('amount');
-                    
+
                 $collectedAmount += $payments;
-                
+
                 // Check if lead is closed (fully paid)
                 if ($lead->balance <= 0) {
                     $closedLeads++;
                 }
-                
+
                 // Check if lead is overdue
                 if ($lead->due_date && Carbon::parse($lead->due_date)->lt(Carbon::now()) && $lead->balance > 0) {
                     $overdueCases++;
                 }
             }
-            
+
             $totalCollected += $collectedAmount;
-            
+
             // Calculate collection rate
             $collectionRate = $assignedAmount > 0 ? ($collectedAmount / $assignedAmount) * 100 : 0;
-            
+
             // Calculate average days to close
             $avgDaysToClose = 0;
             $closedLeadsCount = 0;
-            
+
             foreach ($leads as $lead) {
                 if ($lead->balance <= 0) {
                     $lastPayment = Transaction::where('lead_id', $lead->id)
                         ->where('transaction_type', 1)
                         ->orderBy('created_at', 'desc')
                         ->first();
-                        
+
                     if ($lastPayment) {
                         $daysToClose = Carbon::parse($lead->created_at)->diffInDays(Carbon::parse($lastPayment->created_at));
                         $avgDaysToClose += $daysToClose;
@@ -360,11 +360,11 @@ class ReportController extends Controller
                     }
                 }
             }
-            
+
             if ($closedLeadsCount > 0) {
                 $avgDaysToClose = $avgDaysToClose / $closedLeadsCount;
             }
-            
+
             $agentData[] = [
                 'id' => $agent->id,
                 'name' => $agent->name,
@@ -377,12 +377,12 @@ class ReportController extends Controller
                 'avg_days_to_close' => $avgDaysToClose
             ];
         }
-        
+
         // Sort agents by collection rate (descending)
-        usort($agentData, function($a, $b) {
+        usort($agentData, function ($a, $b) {
             return $b['collection_rate'] <=> $a['collection_rate'];
         });
-        
+
         $data = [
             'start_date' => $startDate->format('Y-m-d'),
             'end_date' => $endDate->format('Y-m-d'),
@@ -391,11 +391,11 @@ class ReportController extends Controller
             'overall_collection_rate' => $totalAssigned > 0 ? ($totalCollected / $totalAssigned) * 100 : 0,
             'agents' => $agentData
         ];
-        
+
         if ($request->has('export') && $request->export == 'excel') {
             return Excel::download(new AgentPerformanceExport($data), 'agent_performance_report.xlsx');
         }
-        
+
         return view('reports.agent_performance_result', compact('data'));
     }
 
@@ -413,30 +413,30 @@ class ReportController extends Controller
 
         // Get all leads within the date range
         $leadsQuery = Lead::whereBetween('created_at', [$startDate, $endDate]);
-        
+
         if ($institutionId) {
             $leadsQuery->where('institution_id', $institutionId);
         }
-        
+
         $leads = $leadsQuery->get();
-        
+
         // Calculate collection rates
         $totalLeads = $leads->count();
         $totalDebt = $leads->sum('amount');
         $totalCollected = 0;
-        
+
         foreach ($leads as $lead) {
             // Get payments for this lead
             $payments = Transaction::where('lead_id', $lead->id)
                 ->where('transaction_type', 1) // Assuming 1 is for payments
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->sum('amount');
-                
+
             $totalCollected += $payments;
         }
-        
+
         $collectionRate = $totalDebt > 0 ? ($totalCollected / $totalDebt) * 100 : 0;
-        
+
         // Get collection rate by institution
         $institutionData = [];
         if (!$institutionId) {
@@ -445,18 +445,18 @@ class ReportController extends Controller
                 $institutionLeads = $leads->where('institution_id', $institution->id);
                 $institutionDebt = $institutionLeads->sum('amount');
                 $institutionCollected = 0;
-                
+
                 foreach ($institutionLeads as $lead) {
                     $payments = Transaction::where('lead_id', $lead->id)
                         ->where('transaction_type', 1)
                         ->whereBetween('created_at', [$startDate, $endDate])
                         ->sum('amount');
-                        
+
                     $institutionCollected += $payments;
                 }
-                
+
                 $institutionRate = $institutionDebt > 0 ? ($institutionCollected / $institutionDebt) * 100 : 0;
-                
+
                 $institutionData[] = [
                     'name' => $institution->institution_name,
                     'total_debt' => $institutionDebt,
@@ -465,7 +465,7 @@ class ReportController extends Controller
                 ];
             }
         }
-        
+
         $data = [
             'start_date' => $startDate->format('Y-m-d'),
             'end_date' => $endDate->format('Y-m-d'),
@@ -475,11 +475,11 @@ class ReportController extends Controller
             'collection_rate' => $collectionRate,
             'institutions' => $institutionData
         ];
-        
+
         if ($request->has('export') && $request->export == 'excel') {
             return Excel::download(new CollectionRateExport($data), 'collection_rates_report.xlsx');
         }
-        
+
         return view('reports.collection_rates_result', compact('data'));
     }
 
@@ -504,28 +504,28 @@ class ReportController extends Controller
         $maxDaysOverdue = $request->max_days_overdue;
 
         // Get all leads with outstanding balances
-        $leadsQuery = Lead::where('balance', '>', 0)
+        $leadsQuery = Lead::query()->where('balance', '>', 0)
             ->where('created_at', '<=', $asOfDate);
-        
+
         if ($institutionId) {
             $leadsQuery->where('institution_id', $institutionId);
         }
-        
+
         // Filter by days overdue if specified
         if ($minDaysOverdue) {
             $leadsQuery->whereRaw('DATEDIFF(?, due_date) >= ?', [$asOfDate, $minDaysOverdue]);
         }
-        
+
         if ($maxDaysOverdue) {
             $leadsQuery->whereRaw('DATEDIFF(?, due_date) <= ?', [$asOfDate, $maxDaysOverdue]);
         }
-        
+
         $leads = $leadsQuery->get();
-        
+
         // Calculate outstanding debt statistics
         $totalOutstanding = $leads->sum('balance');
         $totalLeads = $leads->count();
-        
+
         // Group by days overdue
         $overdueGroups = [
             '0-30' => ['count' => 0, 'amount' => 0],
@@ -533,12 +533,12 @@ class ReportController extends Controller
             '61-90' => ['count' => 0, 'amount' => 0],
             '91+' => ['count' => 0, 'amount' => 0],
         ];
-        
+
         foreach ($leads as $lead) {
             if (!$lead->due_date) continue;
-            
+
             $daysOverdue = $asOfDate->diffInDays(Carbon::parse($lead->due_date), false);
-            
+
             if ($daysOverdue <= 30) {
                 $overdueGroups['0-30']['count']++;
                 $overdueGroups['0-30']['amount'] += $lead->balance;
@@ -553,22 +553,23 @@ class ReportController extends Controller
                 $overdueGroups['91+']['amount'] += $lead->balance;
             }
         }
-        
+
         // Get detailed lead data
         $leadData = $leads->map(function ($lead) use ($asOfDate) {
             $daysOverdue = $lead->due_date ? $asOfDate->diffInDays(Carbon::parse($lead->due_date), false) : 0;
-            
+
             return [
                 'id' => $lead->id,
                 'title' => $lead->title,
-                'institution' => $lead->institution->institution_name ?? 'N/A',
+                'institution' => $lead->institution_name ?? 'N/A',
                 'amount' => $lead->amount,
                 'balance' => $lead->balance,
                 'due_date' => $lead->due_date ? Carbon::parse($lead->due_date)->format('Y-m-d') : 'N/A',
-                'days_overdue' => $daysOverdue > 0 ? $daysOverdue : 0
+                'days_overdue' => $daysOverdue > 0 ? $daysOverdue : 0,
+                'assigned_agent' => $lead->assigned_agent_name ?? 'N/A',
             ];
         });
-        
+
         $data = [
             'as_of_date' => $asOfDate->format('Y-m-d'),
             'total_outstanding' => $totalOutstanding,
@@ -576,11 +577,11 @@ class ReportController extends Controller
             'overdue_groups' => $overdueGroups,
             'leads' => $leadData
         ];
-        
+
         if ($request->has('export') && $request->export == 'excel') {
             return Excel::download(new OutstandingDebtExport($data), 'outstanding_debts_report.xlsx');
         }
-        
+
         return view('reports.outstanding_debts_result', compact('data'));
     }
 }

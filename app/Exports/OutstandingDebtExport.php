@@ -61,7 +61,13 @@ class OutstandingDebtExport implements FromCollection, WithHeadings, WithTitle, 
                 '',
             ],
             [
-                '', '', '', '', '', '', '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
             ],
             [
                 'Aging Analysis',
@@ -85,10 +91,10 @@ class OutstandingDebtExport implements FromCollection, WithHeadings, WithTitle, 
 
         // Add aging analysis data
         foreach ($this->data['overdue_groups'] as $range => $group) {
-            $percentage = $this->data['total_outstanding'] > 0 
-                ? ($group['amount'] / $this->data['total_outstanding']) * 100 
+            $percentage = $this->data['total_outstanding'] > 0
+                ? ($group['amount'] / $this->data['total_outstanding']) * 100
                 : 0;
-                
+
             $rows[] = [
                 $range . ' days',
                 $group['count'],
@@ -118,6 +124,7 @@ class OutstandingDebtExport implements FromCollection, WithHeadings, WithTitle, 
             'Outstanding Balance',
             'Due Date',
             'Days Overdue',
+            'assigned_agent'
         ];
 
         // Add detailed lead data
@@ -130,6 +137,7 @@ class OutstandingDebtExport implements FromCollection, WithHeadings, WithTitle, 
                 number_format($lead['balance'], 2),
                 $lead['due_date'],
                 $lead['days_overdue'],
+                $lead['assigned_agent'],
             ];
         }
 
