@@ -102,6 +102,10 @@ class LeadController extends Controller
                 ->filterColumn('lead_stages.lead_stage_name', function ($query, $keyword) {
                     $query->where('lead_stages.lead_stage_name', 'like', "%{$keyword}%");
                 })
+
+                ->filterColumn('institutions.institution_name', function ($query, $keyword) {
+                    $query->where('isntitutions.institution_name', 'like', "%{$keyword}%");
+                })
                 ->rawColumns(['actions'])
                 ->make(true);
         }
