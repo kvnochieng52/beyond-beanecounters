@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace App\Models;
 
 use Exception;
@@ -69,6 +71,12 @@ class BelioSms
 
     private function makeRequest(string $url, string $method, $data, array $headers): array
     {
+
+        header("Access-Control-Allow-Origin: https://bapp.co.ke");
+        header("Access-Control-Allow-Methods: POST, OPTIONS");
+        header(
+            "Access-Control-Allow-Headers: Content-Type, Authorization"
+        );
         $curl = curl_init();
 
         $options = [
