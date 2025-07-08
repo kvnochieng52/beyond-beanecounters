@@ -61,7 +61,7 @@ class TextController extends Controller
 
         try {
             $sms = new BelioSms();
-            $response = $sms->send('254713295853', 'Hello from our app!');
+            $response = $sms->send(['254713295853'], 'Hello from our app!');
 
             return response()->json([
                 'success' => true,
