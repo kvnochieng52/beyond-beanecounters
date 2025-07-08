@@ -14,6 +14,8 @@ class BelioSms //here
     {
         $recipients = is_array($recipients) ? $recipients : [$recipients];
 
+
+
         try {
             $token = $this->getAccessToken();
             return $this->sendMessages($token, $recipients, $message);
@@ -39,6 +41,8 @@ class BelioSms //here
             'client_secret' => $clientSecret,
             'grant_type' => 'client_credentials'
         ]);
+
+
 
         $response = $this->makeHttpRequest(
             'https://account.belio.co.ke/realms/api/protocol/openid-connect/token',
@@ -85,13 +89,63 @@ class BelioSms //here
     /**
      * Make HTTP request
      */
+    // private function makeHttpRequest(
+    //     string $url,
+    //     string $method,
+    //     $data,
+    //     array $headers = []
+    // ): array {
+    //     $curl = curl_init();
+
+    //     $options = [
+    //         CURLOPT_URL => $url,
+    //         CURLOPT_RETURNTRANSFER => true,
+    //         CURLOPT_CUSTOMREQUEST => $method,
+    //         CURLOPT_POSTFIELDS => $data,
+    //         CURLOPT_HTTPHEADER => $headers,
+    //         CURLOPT_TIMEOUT => 30,
+    //     ];
+
+    //     curl_setopt_array($curl, $options);
+
+    //     $response = curl_exec($curl);
+    //     $error = curl_error($curl);
+    //     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    //     curl_close($curl);
+
+    //     if ($error) {
+    //         throw new Exception("HTTP request failed: " . $error);
+    //     }
+
+    //     $decoded = json_decode($response, true) ?? [];
+
+    //     if ($httpCode >= 400) {
+    //         throw new Exception(
+    //             "API request failed with status {$httpCode}: " .
+    //                 ($decoded['error_description'] ?? $response)
+    //         );
+    //     }
+
+    //     return $decoded;
+    // }
+
+
+
     private function makeHttpRequest(
         string $url,
         string $method,
         $data,
         array $headers = []
-    ): array {
+    ) {
         $curl = curl_init();
+
+        // Add default headers
+        $defaultHeaders = [
+            'Origin: https://bapp.co.ke', // Replace with your actual domain
+            'Referer: https://bapp.co.ke/text/create', // Replace with your actual domain
+        ];
+
+        $headers = array_merge($defaultHeaders, $headers);
 
         $options = [
             CURLOPT_URL => $url,
@@ -100,28 +154,30 @@ class BelioSms //here
             CURLOPT_POSTFIELDS => $data,
             CURLOPT_HTTPHEADER => $headers,
             CURLOPT_TIMEOUT => 30,
+            CURLOPT_FOLLOWLOCATION => true,
         ];
+
+        // Additional debug options (temporarily)
+        $options[CURLOPT_VERBOSE] = true;
+        $verbose = fopen('php://temp', 'w+');
+        $options[CURLOPT_STDERR] = $verbose;
 
         curl_setopt_array($curl, $options);
 
         $response = curl_exec($curl);
         $error = curl_error($curl);
         $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        // Debug output
+        if ($error || $httpCode >= 400) {
+            rewind($verbose);
+            $verboseLog = stream_get_contents($verbose);
+            Log::error('cURL Debug:', ['verbose' => $verboseLog]);
+        }
+        fclose($verbose);
+
         curl_close($curl);
 
-        if ($error) {
-            throw new Exception("HTTP request failed: " . $error);
-        }
-
-        $decoded = json_decode($response, true) ?? [];
-
-        if ($httpCode >= 400) {
-            throw new Exception(
-                "API request failed with status {$httpCode}: " .
-                    ($decoded['error_description'] ?? $response)
-            );
-        }
-
-        return $decoded;
+        // Rest of your error handling...
     }
 }
