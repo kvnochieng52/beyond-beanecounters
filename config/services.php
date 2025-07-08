@@ -31,4 +31,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'belio' => [
+        'client_id' => env('BELIO_CLIENT_ID'),
+        'client_secret' => env('BELIO_CLIENT_SECRET'),
+        'service_id' => env('BELIO_SERVICE_ID'),
+    ],
+
 ];

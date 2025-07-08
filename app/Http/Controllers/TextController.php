@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\SendSmsJob;
+use App\Models\BelioSms;
 use App\Models\Contact;
 use App\Models\ContactList;
 use App\Models\Queue;
@@ -56,6 +57,25 @@ class TextController extends Controller
      */
     public function create()
     {
+
+
+        try {
+            $sms = new BelioSms();
+            $response = $sms->send('254713295853', 'Hello from our app!');
+
+            return response()->json([
+                'success' => true,
+                'response' => $response
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+
+
+        exit;
         return view('text.create')->with([
             'contactLists' => Contact::where('is_active', 1)->pluck('title', 'id')
         ]);
@@ -146,7 +166,6 @@ class TextController extends Controller
             'text' => $text,
             'contactLists' => Contact::where('is_active', 1)->pluck('title', 'id')
         ]);
-
     }
 
     /**
@@ -156,16 +175,16 @@ class TextController extends Controller
     {
         $text = Text::findOrFail($id);
 
-                // Handle contact sources
-                if ($request->contact_source_edit === 'manual') {
-                    $text->recepient_contacts = $request->contacts;
-                } elseif ($request->contact_source_edit === 'csv') {
-                    $text->csv_file_name = $request->csv_file_name;
-                    $text->csv_file_path = $request->csv_file_path;
-                    $text->csv_file_columns = $request->csv_file_columns;
-                } elseif ($request->contact_source_edit === 'saved') {
-                    $text->contact_list = json_encode($request->contact_list);
-                }
+        // Handle contact sources
+        if ($request->contact_source_edit === 'manual') {
+            $text->recepient_contacts = $request->contacts;
+        } elseif ($request->contact_source_edit === 'csv') {
+            $text->csv_file_name = $request->csv_file_name;
+            $text->csv_file_path = $request->csv_file_path;
+            $text->csv_file_columns = $request->csv_file_columns;
+        } elseif ($request->contact_source_edit === 'saved') {
+            $text->contact_list = json_encode($request->contact_list);
+        }
 
 
         $text->text_title = $request->title;
@@ -496,16 +515,15 @@ class TextController extends Controller
 
     public function cancel($id)
     {
-         $text = Text::find($id);
+        $text = Text::find($id);
 
         if (!$text) {
-             return response()->json(['success' => false, 'message' => 'SMS not found'], 404);
+            return response()->json(['success' => false, 'message' => 'SMS not found'], 404);
         }
 
-       // Update status to "Cancelled"
-       $text->update(['status' => TextStatus::CANCELLED]);
+        // Update status to "Cancelled"
+        $text->update(['status' => TextStatus::CANCELLED]);
 
-       return response()->json(['success' => true, 'message' => 'SMS canceled successfully']);
+        return response()->json(['success' => true, 'message' => 'SMS canceled successfully']);
     }
-
 }
