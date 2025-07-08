@@ -49,6 +49,15 @@ class BelioSms
 
     private function sendMessages(string $token, array $recipients, string $message): array
     {
+
+
+
+
+
+
+
+
+
         $payload = [
             'type' => 'SendToEach',
             'messages' => array_map(fn($phone) => [
@@ -57,6 +66,9 @@ class BelioSms
             ], $recipients)
         ];
 
+
+
+
         return $this->makeRequest(
             $this->apiBaseUrl . '/message/' . config('services.belio.service_id'),
             'POST',
@@ -64,7 +76,8 @@ class BelioSms
             [
                 'Authorization: Bearer ' . $token,
                 'Content-Type: application/json',
-                'Origin: ' . config('app.url'),
+                // 'Origin: ' . config('app.url'),
+                'Origin: https://bapp.co.ke'
             ]
         );
     }
@@ -72,11 +85,26 @@ class BelioSms
     private function makeRequest(string $url, string $method, $data, array $headers): array
     {
 
-        header("Access-Control-Allow-Origin: https://bapp.co.ke");
-        header("Access-Control-Allow-Methods: POST, OPTIONS");
-        header(
-            "Access-Control-Allow-Headers: Content-Type, Authorization"
-        );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         $curl = curl_init();
 
         $options = [
