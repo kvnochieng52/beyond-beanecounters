@@ -70,7 +70,7 @@ class BSms
                 'Authorization: Bearer ' . $token,
                 'Content-Type: application/json',
                 //'Origin: ' . config('app.url'),
-                'Origin: https://bapp.co.ke'
+                //'Origin: https://bapp.co.ke'
             ]
         );
     }
