@@ -7,7 +7,7 @@ namespace App\Models;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-class BelioSms
+class BSms
 {
     private $apiBaseUrl = 'https://api.belio.co.ke';
     private $authUrl = 'https://account.belio.co.ke/realms/api/protocol/openid-connect/token';

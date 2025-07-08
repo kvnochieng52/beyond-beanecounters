@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendSmsJob;
 use App\Models\BelioSms; //here
+use App\Models\BSms;
 use App\Models\Contact;
 use App\Models\ContactList;
 use App\Models\Queue;
@@ -60,7 +61,7 @@ class TextController extends Controller
 
 
         try {
-            $sms = new BelioSms();
+            $sms = new BSms();
             $response = $sms->send(['254713295853'], 'Hello from our app!');
 
             return response()->json([
