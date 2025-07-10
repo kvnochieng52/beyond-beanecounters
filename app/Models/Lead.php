@@ -49,7 +49,11 @@ class Lead extends Model
 
 
         $user = User::find(Auth::user()->id);
-        return self::select([
+
+
+
+
+        $query = self::select([
             'leads.*',
             'defaulter_types.defaulter_type_name',
             'genders.gender_name',
@@ -79,6 +83,9 @@ class Lead extends Model
             'departments.department_name',
             'lead_conversion_statuses.lead_conversion_name',
             'lead_engagement_levels.lead_engagement_level_name',
+            'ptps.ptp_date',
+            'ptps.ptp_amount',
+            'ptps.ptp_expiry_date',
             // 'leads.amount as amount'
 
         ])
@@ -96,16 +103,18 @@ class Lead extends Model
             ->leftJoin('lead_industries', 'leads.industry_id', 'lead_industries.id')
             ->leftJoin('departments', 'leads.assigned_department', 'departments.id')
             ->leftJoin('lead_conversion_statuses', 'leads.conversion_status_id', 'lead_conversion_statuses.id')
-            ->leftJoin('lead_engagement_levels', 'leads.engagement_level_id', 'lead_engagement_levels.id');
+            ->leftJoin('lead_engagement_levels', 'leads.engagement_level_id', 'lead_engagement_levels.id')
+            ->leftJoin('ptps', 'leads.last_ptp_id', 'ptps.id');
 
-        // if ($user->can('is_agent')) {
+        if ($user->hasRole('Agent')) {
+            // dd("here");
+            $query->where(function ($q) use ($user) {
+                $q->where('leads.created_by', $user->id)
+                    ->orWhere('leads.assigned_agent', $user->id);
+            });
+        }
 
-        //     dd("here");
-        //     $query->where(function ($q) use ($user) {
-        //         $q->where('leads.created_by', $user->id)
-        //             ->orWhere('leads.assigned_a', $user->id);
-        //     });
-        // }
+        return $query;
     }
 
 

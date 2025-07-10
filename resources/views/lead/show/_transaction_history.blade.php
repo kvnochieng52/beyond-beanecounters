@@ -26,7 +26,7 @@
 <table id="transactionsTable" class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Description</th>
             <th>Amount</th>
             <th>Transaction Type</th>

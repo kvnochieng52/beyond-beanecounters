@@ -62,6 +62,14 @@
 
 
                             <li class="nav-item">
+                                <a class="nav-link {{ request()->get('section') == 'promised-to-pay' ? 'active' : '' }}"
+                                    id="custom-tabs-four-transaction-promised-to-pay-tab"
+                                    href="/lead/{{$leadDetails->id}}?section=promised-to-pay" role="tab"
+                                    aria-controls="custom-tabs-four-transaction-history" aria-selected="false">
+                                    PROMISED TO PAY</a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a class="nav-link {{ request()->get('section') == 'transactions' ? 'active' : '' }}"
                                     id="custom-tabs-four-transaction-transactions-tab"
                                     href="/lead/{{$leadDetails->id}}?section=transactions" role="tab"
@@ -125,6 +133,14 @@
                                 aria-labelledby="custom-tabs-four-payment-history-tab">
                                 @include('lead.show._payment_history')
                             </div> --}}
+
+
+                            <div class="tab-pane fade {{ request()->get('section') == 'promised-to-pay' ? 'show active' : '' }}"
+                                id="custom-tabs-four-transaction-history" role="tabpanel"
+                                aria-labelledby="custom-tabs-four-transaction-history-tab">
+                                @include('lead.show._promised_to_pay')
+                            </div>
+
 
 
                             <div class="tab-pane fade {{ request()->get('section') == 'transactions' ? 'show active' : '' }}"
@@ -308,6 +324,116 @@
             dropdownParent: $('#new_debt_modal')
         });
     }
+
+
+    
+function confirmDelete(event) {
+    if (!confirm('Are you sure you want to delete?')) {
+        event.preventDefault();
+        return false;
+    }
+    return true;
+}
+
+    $('#ptpsTable').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: {
+        url: '{{ route("ptps.data") }}',
+        data: function (d) {
+            d.lead_id = '{{ $leadDetails->id }}'; // Pass lead_id
+        }
+    },
+    columns: [
+        { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+       
+        { 
+            data: 'ptp_date', 
+            name: 'ptp_date',
+            render: function(data) {
+                return formatDate(data, 'date');
+            }
+        },
+       
+       
+        { data: 'ptp_amount', name: 'ptp_amount' },
+       
+        { 
+            data: 'ptp_expiry_date', 
+            name: 'ptp_expiry_date',
+            render: function(data) {
+                return formatDate(data, 'date');
+            }
+        },
+       
+        { data: 'created_by_name', name: 'users.name' },
+        // { data: 'updated_by_name', name: 'updated_users.name' },
+        { 
+            data: 'created_at', 
+            name: 'created_at',
+            render: function(data) {
+                return formatDate(data, 'datetime');
+            }
+        },
+      
+        {
+        data: null,
+        name: 'action',
+        orderable: false,
+        searchable: false,
+        render: function (data, type, row) {
+            const canDelete = @json(auth()->user()->hasAnyRole(['Admin', 'Supervisor', 'Manager']));
+            
+            let buttons = '';
+            
+            if (canDelete) {
+                buttons += `
+                    <form action="/leads/delete-ptp/${row.id}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-xs delete-ptp-btn" onclick="return confirm('Are you sure you want to delete?')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </form>`;
+            }
+            
+            return buttons;
+        }
+    }
+
+        ]
+    });
+
+
+
+
+
+
+
+
+    function formatDate(dateString, type = 'date') {
+        if (!dateString) return 'N/A';
+        
+        const date = new Date(dateString);
+        if (isNaN(date)) return 'Invalid Date';
+        
+        const options = {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        };
+        
+        if (type === 'datetime') {
+            options.hour = '2-digit';
+            options.minute = '2-digit';
+        }
+        
+        return date.toLocaleDateString('en-US', options);
+    }
+
+
+
+
        $('#transactionsTable').DataTable({
             processing: true,
             serverSide: true,
@@ -325,7 +451,6 @@
                 { data: 'created_by_name', name: 'users.name' },
                 { data: 'status_label', name: 'transaction_statuses.status_name', orderable: false, searchable: false },
                 { data: 'created_at', name: 'created_at' },
-                 // ✅ Edit button column
                 {data: null,name: 'action',orderable: false,searchable: false,render: function (data, type, row) {
                 return `
                     <button class="btn btn-warning btn-xs edit-transaction-btn" data-id="${row.id}" data-transaction="${row.transaction_type_title}" data-penaltyTypeId="${row.penalty_type_id}">

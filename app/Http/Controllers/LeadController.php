@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LeadsByStatusExport;
 use App\Models\Activity;
 use App\Models\ActivityStatus;
 use App\Models\ActivityType;
@@ -24,6 +25,7 @@ use App\Models\LeadStatusHistory;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
 use App\Models\PaymentStatus;
+use App\Models\Ptp;
 use App\Models\Transaction;
 use App\Models\TransactionStatus;
 use App\Models\TransactionType;
@@ -33,6 +35,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use App\Exports\LeadsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LeadController extends Controller
 {
@@ -106,6 +110,15 @@ class LeadController extends Controller
                 ->filterColumn('institution_name', function ($query, $keyword) {
                     $query->where('institution_name', 'like', "%{$keyword}%");
                 })
+
+                ->filterColumn('ptp_amount', function ($query, $keyword) {
+                    $query->where('ptp_amount', 'like', "%{$keyword}%");
+                })
+
+                ->filterColumn('ptp_expiry_date', function ($query, $keyword) {
+                    $query->where('ptp_expiry_date', 'like', "%{$keyword}%");
+                })
+
                 ->rawColumns(['actions'])
                 ->make(true);
         }
@@ -460,5 +473,99 @@ class LeadController extends Controller
             })
             ->rawColumns(['actions'])
             ->make(true);
+    }
+
+
+
+
+    public function storePtp(Request $request)
+    {
+        $this->validate($request, [
+            'leadID' => 'required',
+            'date' => 'required',
+            'ptp_amount' => 'required',
+        ]);
+
+
+
+        $ptp = new Ptp();
+        $ptp->lead_id = $request['leadID'];
+        $ptp->ptp_date = Carbon::parse($request['date'])->format('Y-m-d');
+        $ptp->ptp_amount = $request['ptp_amount'];
+        $ptp->ptp_expiry_date = Carbon::parse($request['date'])->addDay()->format('Y-m-d');
+        $ptp->description = $request['ptp_description'];
+        $ptp->created_by = Auth::user()->id;
+        $ptp->updated_by = Auth::user()->id;
+        $ptp->save();
+
+
+        $lead = Lead::find($request['leadID']);
+        $lead->last_ptp_id = $ptp->id;
+        $lead->updated_by = Auth::user()->id;
+        $lead->save();
+
+        return  back()->with('success', 'Details Saved Successfully');
+
+        // return redirect('/lead/' . $lead->id . '/edit')->with('success', 'PTP Saved Successfully');
+    }
+
+
+    public function getPtps(Request $request)
+    {
+        if ($request->ajax()) {
+            $ptps = Ptp::leftJoin('users', 'ptps.created_by', '=', 'users.id')
+                ->leftJoin('users as updated_users', 'ptps.updated_by', '=', 'updated_users.id')
+                ->select(
+                    'ptps.id',
+                    'ptps.lead_id',
+                    'ptps.ptp_date',
+                    'ptps.ptp_amount',
+                    'ptps.ptp_expiry_date',
+                    'ptps.created_by',
+                    'ptps.updated_by',
+                    'users.name as created_by_name',
+                    'updated_users.name as updated_by_name',
+                    'ptps.created_at',
+                    'ptps.updated_at'
+                )
+                ->where('ptps.lead_id', $request['lead_id'])
+                ->orderBy('ptps.id', 'DESC');
+
+            return DataTables::of($ptps)
+                ->addIndexColumn()
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->format('Y-m-d H:i:s'); // Format date
+                })
+                ->editColumn('ptp_date', function ($row) {
+                    return $row->ptp_date ? date('Y-m-d', strtotime($row->ptp_date)) : '';
+                })
+                ->editColumn('ptp_expiry_date', function ($row) {
+                    return $row->ptp_expiry_date ? date('Y-m-d', strtotime($row->ptp_expiry_date)) : '';
+                })
+                ->editColumn('ptp_amount', function ($row) {
+                    return number_format($row->ptp_amount, 2);
+                })
+                ->make(true);
+        }
+    }
+
+
+    public function deletePtp($id)
+    {
+
+        Ptp::find($id)->delete();
+        return redirect()->back()->with('success', 'PTP deleted successfully');
+    }
+
+
+    public function export()
+    {
+        return Excel::download(new LeadsExport, 'leads-' . date('Y-m-d') . '.xlsx');
+    }
+
+
+    public function exportByStatus($status)
+    {
+        return Excel::download(new LeadsByStatusExport($status), 'leads-status-' . $status . '-' . date('Y-m-d') . '.xlsx');
     }
 }

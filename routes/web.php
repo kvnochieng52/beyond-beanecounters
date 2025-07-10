@@ -30,6 +30,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('contacts', ContactController::class);
     Route::post('/get-contacts', [ContactController::class, 'getContacts']);
 
+
+
+
     Route::resource('additional-cost-rules', AdditionalCostRuleController::class)->names('additional-cost-rules');
     Route::get('scheduled-rules', [AdditionalCostRuleController::class, 'scheduledRules'])->name('scheduled-rules');
 
@@ -49,6 +52,11 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/leads-update-status', [LeadController::class, 'updateStatus'])->name('leads-update-status');
             Route::get('/status/{status_id}', [LeadController::class, 'leadByStatus'])->name('lead.leadByStatus');
             Route::get('/leadByStatusData', [LeadController::class, 'leadByStatusData'])->name('lead.leadByStatusData');
+            Route::post('/store-ptp', [LeadController::class, 'storePtp'])->name('leads-store-ptp');
+            Route::get('/ptps/data', [LeadController::class, 'getPtps'])->name('ptps.data');
+            Route::delete('/delete-ptp/{id}', [LeadController::class, 'deletePtp'])->name('leads.delete-ptp');
+            Route::get('/export', [LeadController::class, 'export'])->name('lead.export');
+            Route::get('/export-by-status/{status}', [LeadController::class, 'exportByStatus'])->name('lead.export-by-status');
         }
     );
 
