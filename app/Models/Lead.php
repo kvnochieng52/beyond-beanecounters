@@ -106,13 +106,13 @@ class Lead extends Model
             ->leftJoin('lead_engagement_levels', 'leads.engagement_level_id', 'lead_engagement_levels.id')
             ->leftJoin('ptps', 'leads.last_ptp_id', 'ptps.id');
 
-        if ($user->hasRole('Agent')) {
-            // dd("here");
-            $query->where(function ($q) use ($user) {
-                $q->where('leads.created_by', $user->id)
-                    ->orWhere('leads.assigned_agent', $user->id);
-            });
-        }
+        // if ($user->hasRole('Agent')) {
+        //     // dd("here");
+        //     $query->where(function ($q) use ($user) {
+        //         $q->where('leads.created_by', $user->id)
+        //             ->orWhere('leads.assigned_agent', $user->id);
+        //     });
+        // }
 
         return $query;
     }
