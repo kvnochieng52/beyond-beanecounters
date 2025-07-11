@@ -36,6 +36,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use App\Exports\LeadsExport;
+use App\Models\CallDisposition;
+use App\Models\CallDispositionHistory;
 use Maatwebsite\Excel\Facades\Excel;
 
 class LeadController extends Controller
@@ -249,6 +251,7 @@ class LeadController extends Controller
             'paymentStatuses' => TransactionStatus::where('is_active', 1)->whereIn('id', [TransactionStatus::PENDING, TransactionStatus::PAID, TransactionStatus::FAILED, TransactionStatus::CANCELLED])->pluck('status_name', 'id'),
             'paymentMethods' => PaymentMethod::where('is_active', 1)->pluck('method_name', 'id'),
             'costTypes' => AdditionalCostRuleType::where('is_active', 1)->where('id', '!=', 5)->pluck('rule_type_name', 'id'),
+            'callDispositions' => CallDisposition::where('is_active', 1)->pluck('call_disposition_name', 'id'),
 
         ]);
     }
@@ -567,5 +570,72 @@ class LeadController extends Controller
     public function exportByStatus($status)
     {
         return Excel::download(new LeadsByStatusExport($status), 'leads-status-' . $status . '-' . date('Y-m-d') . '.xlsx');
+    }
+
+
+
+    public function storeCallDisposition(Request $request)
+    {
+        $this->validate($request, [
+            'leadID' => 'required',
+            'call_disposition' => 'required',
+        ]);
+
+        $lead = Lead::find($request['leadID']);
+        $lead->call_disposition_id = $request['call_disposition'];
+        $lead->updated_by = Auth::user()->id;
+        $lead->save();
+
+
+        $callDispositionHistory = new CallDispositionHistory();
+        $callDispositionHistory->lead_id = $request['leadID'];
+        $callDispositionHistory->call_disposition_id = $request['call_disposition'];
+        $callDispositionHistory->description = $request['call_deposition_description'];
+        $callDispositionHistory->created_by = Auth::user()->id;
+        $callDispositionHistory->updated_by = Auth::user()->id;
+        $callDispositionHistory->save();
+
+
+        return redirect()->back()->with('success', 'Call Disposition updated successfully');
+    }
+
+
+    public function getCallDispositionsData(Request $request)
+    {
+        $leadId = $request->input('lead_id');
+
+        $query = DB::table('call_disposition_histories')
+            ->join('call_dispositions', 'call_disposition_histories.call_disposition_id', '=', 'call_dispositions.id')
+            ->join('users', 'call_disposition_histories.created_by', '=', 'users.id')
+            ->select([
+                'call_disposition_histories.id',
+                'call_dispositions.call_disposition_name',
+                'call_disposition_histories.description',
+                'call_disposition_histories.created_at',
+                'users.name as created_by_name',
+                'call_disposition_histories.lead_id'
+            ])
+            ->where('call_disposition_histories.lead_id', $leadId)
+            ->orderBy('call_disposition_histories.created_at', 'desc');
+
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->editColumn('created_at', function ($row) {
+                return $row->created_at;
+            })
+            ->editColumn('call_disposition_name', function ($row) {
+                return $row->call_disposition_name ?? 'N/A';
+            })
+            ->editColumn('created_by_name', function ($row) {
+                return $row->created_by_name ?? 'N/A';
+            })
+            ->filterColumn('call_disposition_name', function ($query, $keyword) {
+                $query->where('call_dispositions.call_disposition_name', 'like', "%{$keyword}%");
+            })
+            ->filterColumn('created_by_name', function ($query, $keyword) {
+                $query->where('users.name', 'like', "%{$keyword}%");
+            })
+            ->rawColumns([])
+            ->make(true);
     }
 }

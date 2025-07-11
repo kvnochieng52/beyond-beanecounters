@@ -57,6 +57,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::delete('/delete-ptp/{id}', [LeadController::class, 'deletePtp'])->name('leads.delete-ptp');
             Route::get('/export', [LeadController::class, 'export'])->name('lead.export');
             Route::get('/export-by-status/{status}', [LeadController::class, 'exportByStatus'])->name('lead.export-by-status');
+            Route::post('/store-call-disposition', [LeadController::class, 'storeCallDisposition'])->name('leads-store-call-disposition');
+            Route::get('/call-dispositions/data', [LeadController::class, 'getCallDispositionsData'])->name('call-dispositions.data');
         }
     );
 

@@ -69,6 +69,15 @@
                                     PROMISED TO PAY</a>
                             </li>
 
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->get('section') == 'call-disposition' ? 'active' : '' }}"
+                                    id="custom-tabs-four-transaction-call-disposition-tab"
+                                    href="/lead/{{$leadDetails->id}}?section=call-disposition" role="tab"
+                                    aria-controls="custom-tabs-four-transaction-history" aria-selected="false">
+                                    CALL DISPOSITION</a>
+                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->get('section') == 'transactions' ? 'active' : '' }}"
                                     id="custom-tabs-four-transaction-transactions-tab"
@@ -140,6 +149,14 @@
                                 aria-labelledby="custom-tabs-four-transaction-history-tab">
                                 @include('lead.show._promised_to_pay')
                             </div>
+
+
+                            <div class="tab-pane fade {{ request()->get('section') == 'call-disposition' ? 'show active' : '' }}"
+                                id="custom-tabs-four-transaction-history" role="tabpanel"
+                                aria-labelledby="custom-tabs-four-transaction-history-tab">
+                                @include('lead.show._call_disposition')
+                            </div>
+
 
 
 
@@ -406,6 +423,36 @@ function confirmDelete(event) {
 
 
 
+
+$('#callDispositionTable').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: {
+        url: '{{ route("call-dispositions.data") }}',
+        data: function (d) {
+            d.lead_id = '{{ $leadDetails->id }}'; // Pass lead_id
+        }
+    },
+    columns: [
+        { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+        { data: 'call_disposition_name', name: 'call_dispositions.call_disposition_name' },
+        { 
+            data: 'created_at', 
+            name: 'call_disposition_histories.created_at',
+            render: function(data) {
+                return formatDate(data, 'date');
+            }
+        },
+        { data: 'created_by_name', name: 'users.name' },
+        { 
+            data: 'created_at', 
+            name: 'call_disposition_histories.created_at',
+            render: function(data) {
+                return formatDate(data, 'datetime');
+            }
+        }
+    ]
+});
 
 
 

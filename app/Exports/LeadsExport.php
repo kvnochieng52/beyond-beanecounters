@@ -30,7 +30,8 @@ class LeadsExport implements FromQuery, WithHeadings, WithMapping
             'Assigned To',
             'Priority',
             'Status',
-            'Stage'
+            'Stage',
+            'Call Disposition'
         ];
     }
 
@@ -50,7 +51,8 @@ class LeadsExport implements FromQuery, WithHeadings, WithMapping
             $lead->assigned_agent_name,
             $lead->lead_priority_name,
             $lead->lead_status_name,
-            $lead->lead_stage_name
+            $lead->lead_stage_name,
+            $lead->call_disposition_name,
         ];
     }
 }

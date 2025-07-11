@@ -33,14 +33,29 @@ class Activity extends Model
             'CREATED_BY_JOIN.telephone AS created_by_telephone',
             'CREATED_BY_JOIN.email AS created_by_email',
             DB::raw('DATE(activities.created_at) as created_date'),
-            DB::raw('DATE_FORMAT(activities.created_at, "%l:%i %p") as created_time')
+            DB::raw('DATE_FORMAT(activities.created_at, "%l:%i %p") as created_time'),
+
+            'leads.title as lead_title',
+            'institutions.institution_name',
+            'leads.amount as lead_amount',
+            'leads.balance as lead_balance',
+            'ptps.ptp_date',
+            'ptps.ptp_amount',
+            'ptps.ptp_expiry_date',
+            'call_dispositions.call_disposition_name',
+
+
         ])
             ->leftJoin('lead_priorities', 'activities.priority_id', 'lead_priorities.id')
             ->leftJoin('activity_statuses', 'activities.status_id', 'activity_statuses.id')
             ->leftJoin('activity_types', 'activities.activity_type_id', 'activity_types.id')
             ->leftJoin('departments', 'activities.assigned_department_id', 'departments.id')
             ->leftJoin('users AS AGENT_JOIN', 'activities.assigned_user_id', '=', 'AGENT_JOIN.id')
-            ->leftJoin('users AS CREATED_BY_JOIN', 'activities.created_by', '=', 'CREATED_BY_JOIN.id');
+            ->leftJoin('users AS CREATED_BY_JOIN', 'activities.created_by', '=', 'CREATED_BY_JOIN.id')
+            ->leftJoin('leads', 'activities.lead_id', 'leads.id')
+            ->leftJoin('institutions', 'leads.institution_id', 'institutions.id')
+            ->leftJoin('ptps', 'leads.last_ptp_id', 'ptps.id')
+            ->leftJoin('call_dispositions', 'leads.call_disposition_id', 'call_dispositions.id');
     }
 
 

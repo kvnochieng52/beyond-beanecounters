@@ -86,6 +86,7 @@ class Lead extends Model
             'ptps.ptp_date',
             'ptps.ptp_amount',
             'ptps.ptp_expiry_date',
+            'call_dispositions.call_disposition_name',
             // 'leads.amount as amount'
 
         ])
@@ -104,7 +105,8 @@ class Lead extends Model
             ->leftJoin('departments', 'leads.assigned_department', 'departments.id')
             ->leftJoin('lead_conversion_statuses', 'leads.conversion_status_id', 'lead_conversion_statuses.id')
             ->leftJoin('lead_engagement_levels', 'leads.engagement_level_id', 'lead_engagement_levels.id')
-            ->leftJoin('ptps', 'leads.last_ptp_id', 'ptps.id');
+            ->leftJoin('ptps', 'leads.last_ptp_id', 'ptps.id')
+            ->leftJoin('call_dispositions', 'leads.call_disposition_id', 'call_dispositions.id');
 
         // if ($user->hasRole('Agent')) {
         //     // dd("here");

@@ -60,23 +60,23 @@ class TextController extends Controller
     {
 
 
-        try {
-            $sms = new BSms();
-            $response = $sms->send(['254713295853'], 'Hello from our app!');
+        // try {
+        //     $sms = new BSms();
+        //     $response = $sms->send(['254713295853'], 'Hello from our app!');
 
-            return response()->json([
-                'success' => true,
-                'response' => $response
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        //     return response()->json([
+        //         'success' => true,
+        //         'response' => $response
+        //     ]);
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => $e->getMessage()
+        //     ], 500);
+        // }
 
 
-        exit;
+        // exit;
         return view('text.create')->with([
             'contactLists' => Contact::where('is_active', 1)->pluck('title', 'id')
         ]);
