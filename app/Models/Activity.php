@@ -61,7 +61,7 @@ class Activity extends Model
 
     public static function getLeadActivities($leadID)
     {
-        $query = self::query()->where('lead_id', $leadID)->paginate(10);
+        $query = self::query()->where('activities.lead_id', $leadID)->paginate(10);
 
         return $query;
     }
@@ -70,7 +70,7 @@ class Activity extends Model
 
     public static function getLeadInTimeLine($leadID)
     {
-        $query = self::query()->where('lead_id', $leadID)
+        $query = self::query()->where('activities.lead_id', $leadID)
             ->orderBy('activities.created_at', 'desc')
             ->get()
             ->groupBy('created_date');
