@@ -495,12 +495,9 @@
                         width: '80px'
                     },
                     {
-                        data: 'activity_type_title',
-                        name: 'activity_types.activity_type_title',
-                        render: function(data, type, row) {
-                            let icon = row.activity_type_icon ? `<i class="${row.activity_type_icon}"></i> ` : '';
-                            return `${icon}${data || 'N/A'}`;
-                        },
+                        data: 'activity_title',
+                        name: 'activity_title',
+                      
                         width: '150px'
                     },
                     {
