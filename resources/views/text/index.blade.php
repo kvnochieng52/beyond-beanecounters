@@ -175,15 +175,28 @@
                     return `<a href="/text/${row.id}" class="text-primary">${data}</a>`;
                 }
             },
-            {
+            // {
+            //     data: 'id',
+            //     name: 'id',
+            //     orderable: false,
+            //     searchable: false,
+            //     render: function(data, type, row) {
+            //           return `
+            //          <a href="/text/${row.id}/edit" class="btn btn-warning btn-xs edit-btn">Edit</a>
+            //          <button type="button" class="btn btn-danger btn-xs cancel-btn" data-id="${row.id}">Cancel</button>
+            //        `;
+            //     }
+            // }
+
+
+             {
                 data: 'id',
                 name: 'id',
                 orderable: false,
                 searchable: false,
                 render: function(data, type, row) {
                       return `
-                     <a href="/text/${row.id}/edit" class="btn btn-warning btn-xs edit-btn">Edit</a>
-                     <button type="button" class="btn btn-danger btn-xs cancel-btn" data-id="${row.id}">Cancel</button>
+                    
                    `;
                 }
             }
