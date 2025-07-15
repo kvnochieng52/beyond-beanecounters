@@ -36,6 +36,9 @@ class QueuesExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSi
                 'queues.id',
                 'queues.message',
                 'queues.status',
+                'queues.phone',
+                'queues.text_id',
+                'queues.api_response',
                 'text_statuses.text_status_name as status_name',
                 'users.name as created_by',
                 'queues.created_at'
@@ -53,7 +56,7 @@ class QueuesExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSi
 
     public function headings(): array
     {
-        return ["ID", "Message", "Status ID", "Status", "Agent", "Date"];
+        return ["ID", "Message", "Status ID", "Status", "Agent", "Date", "Text ID", "Phone", "API Response",];
     }
 
     public function map($queue): array
@@ -65,6 +68,8 @@ class QueuesExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSi
             $queue->status_name,
             $queue->created_by,
             $queue->created_at->format('Y-m-d H:i:s'),
+            $queue->phone,
+            $queue->api_response,
         ];
     }
 }
