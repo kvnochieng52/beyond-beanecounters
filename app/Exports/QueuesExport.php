@@ -68,6 +68,7 @@ class QueuesExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSi
             $queue->status_name,
             $queue->created_by,
             $queue->created_at->format('Y-m-d H:i:s'),
+            $queue->text_id,
             $queue->phone,
             $queue->api_response,
         ];
