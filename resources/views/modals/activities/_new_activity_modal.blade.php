@@ -98,13 +98,15 @@
                         <div class="col-md-4 priority-group">
                             {!! Html::label('Priority*', 'priority') !!}
                             {!! Html::select('priority',
-                            $priorities)->class('form-control')->id('priority')->placeholder('--Specify--')->style("width:100%") !!}
+                            $priorities)->class('form-control')->id('priority')->placeholder('--Specify--')->style("width:100%")
+                            !!}
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="setStartDate">
+                                    <input class="form-check-input" type="checkbox" id="setStartDate" value="1"
+                                        name="setStartDate">
                                     <label class="form-check-label" id="setStartDateLabel"
                                         for="setStartDate"><strong>Set Start
                                             Date</strong></label>

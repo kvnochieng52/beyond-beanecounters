@@ -62,7 +62,7 @@ class TextController extends Controller
 
         // try {
         //     $sms = new BSms();
-        //     $response = $sms->send(['254713295853'], 'Hello from our app!');
+        //     $response = $sms->send(['254713295853666'], 'Hello from our app!');
 
         //     return response()->json([
         //         'success' => true,
@@ -140,15 +140,32 @@ class TextController extends Controller
         $queuedMessagesCount = $text->contacts_count - ($sentMessagesCount + $undeliveredMessagesCount);
 
         $totalContacts = $text->contacts_count;
-        $percentage = ceil(($sentMessagesCount + $undeliveredMessagesCount + $blackListedMessagesCount) / $totalContacts * 100);
+        // $percentage = ceil(($sentMessagesCount + $undeliveredMessagesCount + $blackListedMessagesCount) / $totalContacts * 100);
 
+        $percentage = 0; // Default value
 
+        if ($totalContacts > 0) {
+            $percentage = ceil(
+                ($sentMessagesCount + $undeliveredMessagesCount + $blackListedMessagesCount)
+                    / $totalContacts
+                    * 100
+            );
+
+            // Ensure percentage doesn't exceed 100%
+            $percentage = min($percentage, 100);
+        }
+
+        // Or using ternary operator:
+        $percentage = $totalContacts > 0
+            ? min(ceil(($sentMessagesCount + $undeliveredMessagesCount + $blackListedMessagesCount) / $totalContacts * 100), 100)
+            : 0;
         return view('text.show')->with([
             'text' => Text::getTextByID($text->id),
             'sentMessagesCount' => $sentMessagesCount,
             'undeliveredMessagesCount' => $undeliveredMessagesCount,
             'blackListedMessagesCount' => $blackListedMessagesCount,
             'queuedMessagesCount' => $queuedMessagesCount,
+            // 'queuedMessagesCount' => 0,
             'percentage' => $percentage
         ]);
     }
@@ -316,6 +333,8 @@ class TextController extends Controller
 
         if ($recipientMethod === 'manual') {
             $contactList = array_filter(array_map('trim', explode(',', $request['contacts'])));
+
+            $totalContacts = count($contactList);
             foreach ($contactList as $contact) {
                 Text::isValidPhoneNumber($contact) ? $validContacts++ : $invalidContacts++;
             }

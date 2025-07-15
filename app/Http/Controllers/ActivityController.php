@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendSmsJob;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Activity;
@@ -11,6 +12,9 @@ use App\Models\ActivityType;
 use App\Models\LeadPriority;
 use Illuminate\Http\Request;
 use App\Models\ActivityStatus;
+use App\Models\Lead;
+use App\Models\Text;
+use App\Models\TextStatus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -159,6 +163,43 @@ class ActivityController extends Controller
             $calendar->updated_by = Auth::id();
 
             $calendar->save();
+        }
+
+
+        if ($request['activityType'] == 3) {
+            $text = new Text();
+            $text->text_title = "ACTIVITY: " . $request['activity_title'];
+            $text->contact_type = 'manual';
+            $text->message = $request['description'];
+            $text->contacts_count = 1;
+            $text->recepient_contacts = Lead::find($request['leadID'])->telephone;
+            $text->created_by = auth()->id(); // Assuming authentication is used
+            $text->updated_by = auth()->id();
+
+            if ($request->has('setStartDate')) {
+                $text->scheduled = 1;
+                if ($request->start_date && $request->start_time) {
+                    $passTime = Carbon::parse($request->start_date . " " . $request->start_time);
+                    $text->schedule_date = $passTime->format('Y-m-d H:i:s');
+                }
+            } else {
+                $text->scheduled = 0;
+            }
+
+            $text->status = TextStatus::PENDING; // Default status, can be updated later
+            $text->save();
+
+
+            if ($request->has('setStartDate')) {
+
+                //dd($text->schedule_date);
+
+                $delay = \Carbon\Carbon::parse($text->schedule_date);
+                SendSmsJob::dispatch($text)->delay($delay);
+            } else {
+
+                SendSmsJob::dispatch($text);
+            }
         }
 
         return redirect('/lead/' . $request['leadID'] . '?section=activities')->with('success', 'Activity Saved Successfully');

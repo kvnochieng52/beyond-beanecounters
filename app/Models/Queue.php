@@ -17,5 +17,8 @@ class Queue extends Model
         'updated_by',
         'created_at',
         'updated_at',
+        'phone',
+        'api_response',
+
     ];
 }
