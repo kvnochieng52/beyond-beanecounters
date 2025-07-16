@@ -11,7 +11,7 @@ class CalendarController extends Controller
 {
     public function index()
     {
-        $calendars = Calendar::where('created_by', Auth::id())->all();
+        $calendars = Calendar::where('created_by', Auth::id())->get();
         return view('calendars.index', compact('calendars'));
     }
 
