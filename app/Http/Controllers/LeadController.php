@@ -82,7 +82,18 @@ class LeadController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+
+
+            $user = User::find(Auth::user()->id);
             $leads = Lead::query()->orderBy('id', 'DESC');
+
+            if ($user->hasRole('Agent')) {
+                $leads->where(function ($q) use ($user) {
+                    $q->where('leads.created_by', $user->id)
+                        ->orWhere('leads.assigned_agent', $user->id)
+                        ->orWhereNull('leads.assigned_agent');
+                });
+            }
 
             return DataTables::of($leads)
                 ->addIndexColumn()
@@ -463,6 +474,17 @@ class LeadController extends Controller
             ->where('status_id', $status) // Apply filter
             ->orderBy('id', 'DESC');
 
+
+        $user = User::find(Auth::user()->id);
+
+        if ($user->hasRole('Agent')) {
+            $leads->where(function ($q) use ($user) {
+                $q->where('leads.created_by', $user->id)
+                    ->orWhere('leads.assigned_agent', $user->id)
+                    ->orWhereNull('leads.assigned_agent');
+            });
+        }
+
         return DataTables::of($leads)
             ->addIndexColumn()
             ->addColumn('actions', function ($lead) {
@@ -637,5 +659,66 @@ class LeadController extends Controller
             })
             ->rawColumns([])
             ->make(true);
+    }
+
+
+
+    public function myLeads(Request $request)
+
+    {
+
+
+
+        $user = User::find(Auth::user()->id);
+
+        if ($request->ajax()) {
+            $leads = Lead::query()->orderBy('id', 'DESC');
+
+            if ($user->hasRole('Agent')) {
+                $leads->where('leads.assigned_agent', $user->id);
+            }
+
+            return DataTables::of($leads)
+                ->addIndexColumn()
+                ->addColumn('actions', function ($lead) {
+                    return '
+                <a href="/lead/' . $lead->id . '/edit" class="btn btn-warning btn-xs">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <a href="#" class="btn btn-danger btn-xs" onclick="confirmDelete(' . $lead->id . ')">
+                    <i class="fa fa-trash"></i>
+                </a>
+            ';
+                })
+                ->filterColumn('defaulter_types.defaulter_type_name', function ($query, $keyword) {
+                    $query->where('defaulter_types.defaulter_type_name', 'like', "%{$keyword}%");
+                })
+                ->filterColumn('lead_priorities.lead_priority_name', function ($query, $keyword) {
+                    $query->where('lead_priorities.lead_priority_name', 'like', "%{$keyword}%");
+                })
+                ->filterColumn('lead_statuses.lead_status_name', function ($query, $keyword) {
+                    $query->where('lead_statuses.lead_status_name', 'like', "%{$keyword}%");
+                })
+                ->filterColumn('lead_stages.lead_stage_name', function ($query, $keyword) {
+                    $query->where('lead_stages.lead_stage_name', 'like', "%{$keyword}%");
+                })
+
+                ->filterColumn('institution_name', function ($query, $keyword) {
+                    $query->where('institution_name', 'like', "%{$keyword}%");
+                })
+
+                ->filterColumn('ptp_amount', function ($query, $keyword) {
+                    $query->where('ptp_amount', 'like', "%{$keyword}%");
+                })
+
+                ->filterColumn('ptp_expiry_date', function ($query, $keyword) {
+                    $query->where('ptp_expiry_date', 'like', "%{$keyword}%");
+                })
+
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
+
+        return view('lead.my_leads');
     }
 }

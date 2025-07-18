@@ -27,6 +27,14 @@ class ActivityController extends Controller
             $query = Activity::query()->orderBy('created_at', 'desc');
 
 
+            $user = User::find(Auth::user()->id);
+
+
+            if ($user->hasRole('Agent')) {
+                $query()->where('activities.created_by', $user->id);
+            }
+
+
             return DataTables::of($query)
                 ->addIndexColumn()
                 ->editColumn('due', function ($row) {

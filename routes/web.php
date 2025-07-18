@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/export-by-status/{status}', [LeadController::class, 'exportByStatus'])->name('lead.export-by-status');
             Route::post('/store-call-disposition', [LeadController::class, 'storeCallDisposition'])->name('leads-store-call-disposition');
             Route::get('/call-dispositions/data', [LeadController::class, 'getCallDispositionsData'])->name('call-dispositions.data');
+            Route::get('/my-leads/', [LeadController::class, 'myLeads'])->name('my-leads');
         }
     );
 

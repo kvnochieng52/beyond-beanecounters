@@ -48,7 +48,6 @@ class Lead extends Model
     {
 
 
-        $user = User::find(Auth::user()->id);
 
 
 
@@ -108,13 +107,7 @@ class Lead extends Model
             ->leftJoin('ptps', 'leads.last_ptp_id', 'ptps.id')
             ->leftJoin('call_dispositions', 'leads.call_disposition_id', 'call_dispositions.id');
 
-        if ($user->hasRole('Agent')) {
-            $query->where(function ($q) use ($user) {
-                $q->where('leads.created_by', $user->id)
-                    ->orWhere('leads.assigned_agent', $user->id)
-                    ->orWhereNull('leads.assigned_agent');
-            });
-        }
+
 
         return $query;
     }
