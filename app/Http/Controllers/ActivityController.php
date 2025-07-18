@@ -31,7 +31,7 @@ class ActivityController extends Controller
 
 
             if ($user->hasRole('Agent')) {
-                $query()->where('activities.created_by', $user->id);
+                $query->where('activities.created_by', $user->id);
             }
 
 
