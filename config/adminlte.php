@@ -333,7 +333,7 @@ return [
 
                 [
                     'text' => 'My Leads',
-                    'url' => '/leads//my-leads/',
+                    'url' => '/leads/my-leads/',
                     'can' => ['View Leads'],
                 ],
                 [
