@@ -330,6 +330,12 @@ return [
                     'text' => 'New Lead',
                     'url' => '/lead/create',
                 ],
+
+                [
+                    'text' => 'My Leads',
+                    'url' => '/leads//my-leads/',
+                    'can' => ['View Leads'],
+                ],
                 [
                     'text' => 'Manage Leads',
                     'url' => '/lead',
@@ -438,6 +444,7 @@ return [
                     'text' => 'Leads Bulk Upload Tool',
                     'url' => '/bulk/upload',
                 ],
+
                 [
                     'text' => 'Rules/Discounts',
                     'url' => '/additional-cost-rules',
