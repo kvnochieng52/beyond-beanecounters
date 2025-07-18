@@ -12,6 +12,7 @@ use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdditionalCostRuleController;
+use App\Http\Controllers\BulkAssignController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DueNotificationController;
@@ -86,6 +87,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('bulk')->group(function () {
         Route::get('/upload', [BulkController::class, 'showUploadForm'])->name('bulk-upload-form');
         Route::post('/upload', [BulkController::class, 'upload'])->name('bulk-upload');
+    });
+
+
+    Route::prefix('bulk-assign')->group(function () {
+        Route::get('/', [BulkAssignController::class, 'index'])->name('bulk-assign-form');
+        Route::post('/upload', [BulkAssignController::class, 'upload'])->name('bulk-assign-upload');
     });
 
     Route::prefix('texts')->group(function () {

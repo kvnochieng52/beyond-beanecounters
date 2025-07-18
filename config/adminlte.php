@@ -446,6 +446,11 @@ return [
                 ],
 
                 [
+                    'text' => 'Bulk Assign Agent Tool',
+                    'url' => '/bulk-assign',
+                ],
+
+                [
                     'text' => 'Rules/Discounts',
                     'url' => '/additional-cost-rules',
                 ],
