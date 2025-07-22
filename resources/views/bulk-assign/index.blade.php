@@ -54,6 +54,12 @@
                     <input class="form-check-input" type="radio" name="action" id="re-assign" value="re-assign">
                     <label class="form-check-label" for="re-assign">Re-Assign Leads</label>
                 </div>
+
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="action" id="un-assign" value="un-assign">
+                    <label class="form-check-label" for="un-assign">Un-Assign Leads</label>
+                </div>
             </div>
 
             <div class="row">

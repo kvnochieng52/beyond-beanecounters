@@ -12,12 +12,11 @@ class BulkAssignController extends Controller
         return view('bulk-assign.index');
     }
 
-
     public function upload(Request $request)
     {
         $request->validate([
             'csv_file' => 'required|mimes:csv,txt',
-            'action' => 'required|in:assign,re-assign',
+            'action' => 'required|in:assign,re-assign,un-assign',
         ]);
 
         $action = $request['action'];
@@ -29,16 +28,27 @@ class BulkAssignController extends Controller
         $failCount = 0;
         $errors = [];
 
-        // Check if required columns exist
+        // Check if required columns exist based on action
         $ticketNoIndex = array_search('Ticket No', $header);
-        $assignAgentIndex = array_search('Assign Agent', $header);
 
-        if ($ticketNoIndex === false || $assignAgentIndex === false) {
+        if ($ticketNoIndex === false) {
             fclose($handle);
             return redirect()->back()->with([
-                'error' => 'CSV must contain "Ticket No" and "Assign Agent" columns.',
-                'errors' => ['CSV must contain "Ticket No" and "Assign Agent" columns.']
+                'error' => 'CSV must contain "Ticket No" column.',
+                'errors' => ['CSV must contain "Ticket No" column.']
             ]);
+        }
+
+        // Only check for Assign Agent column if not un-assign action
+        if ($action !== 'un-assign') {
+            $assignAgentIndex = array_search('Assign Agent', $header);
+            if ($assignAgentIndex === false) {
+                fclose($handle);
+                return redirect()->back()->with([
+                    'error' => 'CSV must contain "Assign Agent" column for assign/re-assign actions.',
+                    'errors' => ['CSV must contain "Assign Agent" column for assign/re-assign actions.']
+                ]);
+            }
         }
 
         while (($row = fgetcsv($handle)) !== false) {
@@ -46,11 +56,10 @@ class BulkAssignController extends Controller
                 $data = array_combine($header, $row);
 
                 $ticketNo = $data['Ticket No'];
-                $assignAgentId = $data['Assign Agent'];
 
                 // Validate required fields
-                if (empty($ticketNo) || empty($assignAgentId)) {
-                    throw new \Exception("Ticket No and Assign Agent are required");
+                if (empty($ticketNo)) {
+                    throw new \Exception("Ticket No is required");
                 }
 
                 // Find the lead by ticket number
@@ -61,19 +70,36 @@ class BulkAssignController extends Controller
                 }
 
                 // Process based on action
-                if ($action == 'assign') {
-                    // Check if lead is already assigned
-                    if (!empty($lead->assigned_agent)) {
-                        throw new \Exception("Lead with Ticket No '$ticketNo' is already assigned to agent ID: " . $lead->assigned_agent);
-                    }
+                switch ($action) {
+                    case 'assign':
+                        // Check if lead is already assigned
+                        if (!empty($lead->assigned_agent)) {
+                            throw new \Exception("Lead with Ticket No '$ticketNo' is already assigned to agent ID: " . $lead->assigned_agent);
+                        }
 
-                    // Assign the agent
-                    $lead->assigned_agent = $assignAgentId;
-                    $lead->save();
-                } elseif ($action == 're-assign') {
-                    // Re-assign without checking current assignment
-                    $lead->assigned_agent = $assignAgentId;
-                    $lead->save();
+                        $assignAgentId = $data['Assign Agent'];
+                        if (empty($assignAgentId)) {
+                            throw new \Exception("Assign Agent is required for assign action");
+                        }
+
+                        $lead->assigned_agent = $assignAgentId;
+                        $lead->save();
+                        break;
+
+                    case 're-assign':
+                        $assignAgentId = $data['Assign Agent'];
+                        if (empty($assignAgentId)) {
+                            throw new \Exception("Assign Agent is required for re-assign action");
+                        }
+
+                        $lead->assigned_agent = $assignAgentId;
+                        $lead->save();
+                        break;
+
+                    case 'un-assign':
+                        $lead->assigned_agent = null;
+                        $lead->save();
+                        break;
                 }
 
                 $successCount++;
