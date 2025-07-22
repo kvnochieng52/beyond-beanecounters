@@ -23,7 +23,7 @@ use App\Http\Controllers\TransBulkController;
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'user_is_active']], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::resource('/lead', LeadController::class);
