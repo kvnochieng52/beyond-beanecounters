@@ -24,7 +24,7 @@ class UserIsActive
 
         if (Auth::user()->is_active != 1) {
             $logoutUrl = route('logout');
-            $message = "User is not activated. Please Contact Admin. <a href='{$logoutUrl}' onclick='event.preventDefault(); document.getElementById(\"logout-form\").submit();'>Logout</a>";
+            $message = "User is not activated. Please Contact Admin.";
 
             throw new UserInActiveException(403, $message);
         }
