@@ -17,8 +17,16 @@ class UserIsActive
      */
     public function handle($request, Closure $next)
     {
+        // if (Auth::user()->is_active != 1) {
+        //     throw new UserInActiveException(403, "User is not activated. Please Contact Admin");
+        // }
+        // return $next($request);
+
         if (Auth::user()->is_active != 1) {
-            throw new UserInActiveException(403, "User is not activated. Please Contact Admin");
+            $logoutUrl = route('logout');
+            $message = "User is not activated. Please Contact Admin. <a href='{$logoutUrl}' onclick='event.preventDefault(); document.getElementById(\"logout-form\").submit();'>Logout</a>";
+
+            throw new UserInActiveException(403, $message);
         }
         return $next($request);
     }
