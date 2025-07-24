@@ -421,7 +421,7 @@ return [
         [
             'text' => 'Institutions',
             'icon' => 'fas fa-fw fa-building',
-            'can' => ['is_supervisor', 'is_admin', 'is_manager'],
+            'can' => ['is_admin'],
             'submenu' => [
                 [
                     'text' => 'New Institution',
@@ -437,7 +437,7 @@ return [
         [
             'text' => 'Tools & Settings',
             'icon' => 'fas fa-fw fa-cog',
-            'can' => ['is_supervisor', 'is_admin', 'is_manager'],
+            'can' => ['is_admin'],
             'submenu' => [
 
                 [
