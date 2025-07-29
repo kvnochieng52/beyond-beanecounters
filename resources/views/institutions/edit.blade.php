@@ -35,6 +35,13 @@
                 <input type="text" name="contact_person" class="form-control"
                     value="{{ $institution->contact_person }}">
             </div>
+
+            <div class="form-group">
+                <label for="contact_person">How to Pay Instructions</label>
+                <textarea name="how_to_pay_instructions" class="form-control">{{$institution->how_to_pay_instructions}}</textarea>
+            </div>
+
+
             <div class="form-group">
                 <label for="is_active">Status</label>
                 <select name="is_active" class="form-control">

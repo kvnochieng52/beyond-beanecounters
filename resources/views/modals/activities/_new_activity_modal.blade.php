@@ -12,6 +12,9 @@
                 <div class="modal-body">
 
 
+                
+
+
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -64,6 +67,16 @@
                             </div>
                             @endforeach
                         </div>
+                    </div>
+
+                    <div class="row sms_template_row" id="sms_template_row" style="display: none" >
+                        
+                            <div class="col-md-12 sms_template-group pt-3">
+                                {!! Html::label('Select SMS Template', 'sms_template') !!}
+                                {!! Html::select('sms_template', $sms_templates)->class('form-control
+                                select2')->id('sms_template')->placeholder('--Specify--')->style("width:100%") !!}
+                            </div>
+                        
                     </div>
 
 

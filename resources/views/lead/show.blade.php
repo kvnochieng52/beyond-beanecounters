@@ -620,12 +620,71 @@ $('#callDispositionTable').DataTable({
         const showFields = [1, 2, 6].includes(parseInt(activityType));
 
         $('.priority-group, .due-date-group, .department-group, .agent-group, .status-group').toggle(showFields);
+
+
         $('#setStartDateLabel').text(showFields ? 'Set Start Date' : 'Schedule');
+
+       if(activityType==3){
+           $('.sms_template_row').show();
+
+       }
     }
 
     // On activityType change
     $(document).on('change', 'input[name="activityType"]', function() {
         toggleFields($(this).val());
+
+    
+    });
+
+
+
+
+    $(document).on('change', 'select[name="sms_template"]', function() {
+        var selectedValue = $(this).val();
+        var selectedText = $(this).find('option:selected').text();
+
+        $('#activity_title').val(selectedText);
+
+        var sms_message='';
+
+        if(selectedValue=='introduction'){
+            sms_message="Dear {{$leadDetails->title}}, Your loan for {{$leadDetails->institution_name}}, of {{$leadDetails->currency_name}} {{$leadDetails->amount}} has been forwarded to Beyond BeanCounters for recovery. Urgently pay via {{$leadDetails->how_to_pay_instructions}}, account: {{$leadDetails->account_number}}, or reach out to us to discuss a repayment plan, 0116648476.";   
+        }
+
+
+        if(selectedValue=='no_anwser'){
+            sms_message="{{$leadDetails->title}}, we have tried calling you without success. Kindly but urgently get in touch with us to discuss your debt with {{$leadDetails->institution_name}} of {{$leadDetails->currency_name}} {{$leadDetails->amount}}. The debt ought to be settled to avoid additional penalties and other charges. Pay through {{$leadDetails->how_to_pay_instructions}}, account number {{$leadDetails->account_number}}. Notify us on 0116648476."; 
+        }
+
+        if(selectedValue=='ptp_reminder'){
+            sms_message="Dear {{$leadDetails->title}}, remember to make payment for Your loan of {{$leadDetails->institution_name}}, of {{$leadDetails->currency_name}} {{$leadDetails->amount}} today. {{$leadDetails->how_to_pay_instructions}}, account: {{$leadDetails->account_number}}. Notify us on 0116648476"; 
+        }
+
+
+        if(selectedValue=='refusal_to_pay'){
+            sms_message="{{$leadDetails->title}}, Despite previous reminders, your {{$leadDetails->institution_name}} debt of {{$leadDetails->currency_name}} {{$leadDetails->amount}}, remains uncleared. Be strongly advised that failure to do so will force us to recover the debt at your cost, using our Field Collectors. Pay through {{$leadDetails->how_to_pay_instructions}}, account {{$leadDetails->account_number}}. Notify us on 0116648476."; 
+        }
+
+
+          if(selectedValue=='broken_ptp_follow_up'){
+            sms_message="Greetings, we have not yet received your  {{$leadDetails->institution_name}} payment. Urgently pay. {{$leadDetails->how_to_pay_instructions}}, Acc: {{$leadDetails->account_number}}. Notify us on 0116648476"; 
+        }
+
+
+        $('#description').val(sms_message);
+
+     
+       if(selectedValue != 'other') {
+            $('#description').prop('readonly', true).css('background-color', '#f5f5f5');
+            $('#activity_title').prop('readonly', true).css('background-color', '#f5f5f5');
+       }else{
+        $('#activity_title').val('');
+            $('#description').prop('readonly', false).css('background-color', '#ffffff');
+            $('#activity_title').prop('readonly', false).css('background-color', '#ffffff');
+       }
+
+
     });
 
     // Toggle Start Date Inputs

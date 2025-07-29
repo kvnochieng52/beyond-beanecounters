@@ -70,6 +70,7 @@ class Lead extends Model
             'CREATED_BY_JOIN.email AS created_by_email',
 
             'institutions.institution_name',
+            'institutions.how_to_pay_instructions',
             'currencies.currency_name',
             'lead_statuses.lead_status_name',
             'lead_statuses.color_code AS lead_status_color_code',

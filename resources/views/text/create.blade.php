@@ -67,6 +67,19 @@
                 </select>
             </div>
 
+
+            <div class="row sms_template_row pb-3 d-none" id="sms_template_row">
+               
+                <div class="col-md-12 sms_template-group">
+                    <p class="text-warning" style="font-size: 12px">Ensure the CSV File has a Ticket No column. If you shall be using any of the templates</p>
+                    {!! Html::label('Select SMS Template', 'sms_template') !!}
+                    {!! Html::select('sms_template', $sms_templates)->class('form-control
+                    select2')->id('sms_template')->placeholder('--Specify--')->style("width:100%") !!}
+                </div>
+            
+            </div>
+
+
             <div class="form-group">
                 <div class="d-flex justify-content-between align-items-center">
                     <label for="message">Message*</label>
@@ -80,6 +93,17 @@
                 <textarea name="message" id="message" class="form-control" rows="4"
                     placeholder="Enter your text message"></textarea>
             </div>
+
+
+               <div class="row sms_template_row" id="sms_template_row" style="display: none" >
+                        
+                            <div class="col-md-12 sms_template-group pt-3">
+                                {!! Html::label('Select SMS Template', 'sms_template') !!}
+                                {!! Html::select('sms_template', $sms_templates)->class('form-control
+                                select2')->id('sms_template')->placeholder('--Specify--')->style("width:100%") !!}
+                            </div>
+                        
+                    </div>
 
             <div class="form-group">
                 <div class="form-check">
@@ -100,7 +124,7 @@
             <div id="smsErrors" class="alert alert-danger d-none"></div>
             <input type="hidden" name="sms_contacts_count" id="sms_contacts_count">
             <button type="submit" class="btn btn-primary mt-3">PREVIEW SMS</button>
-
+<input type="hidden" name="selectedTemplate" id="selectedTemplate">
 
         </form>
     </div>
@@ -211,10 +235,17 @@
 
     // Toggle contact source input sections
     $('input[name="contact_source"]').on('change', function() {
+
+        $('#sms_template_row').addClass('d-none')
         $('#manual-input, #csv-upload, #saved-list').addClass('d-none');
         if ($(this).val() === 'manual') $('#manual-input').removeClass('d-none');
-        if ($(this).val() === 'csv') $('#csv-upload').removeClass('d-none');
         if ($(this).val() === 'saved') $('#saved-list').removeClass('d-none');
+        if ($(this).val() === 'csv'){ 
+            $('#sms_template_row').removeClass('d-none');
+            $('#csv-upload').removeClass('d-none');
+          
+        }
+       
     });
 
     // Toggle schedule fields
@@ -462,6 +493,52 @@ $('#smsForm').on('submit', function(e) {
         });
     }
 });
+
+
+ $(document).on('change', 'select[name="sms_template"]', function() {
+       var selectedValue = $(this).val();
+        var selectedText = $(this).find('option:selected').text();
+$('#selectedTemplate').val(selectedValue);
+    
+
+        var sms_message='';
+
+        if(selectedValue=='introduction'){
+            sms_message="Dear {}, Your loan for {}, of {} has been forwarded to Beyond BeanCounters for recovery. Urgently pay via {}, account: {}, or reach out to us to discuss a repayment plan, 0116648476.";   
+        }
+
+
+        
+        if(selectedValue=='no_anwser'){
+            sms_message="Dear {}, we have tried calling you without success. Kindly but urgently get in touch with us to discuss your debt with {} of {}. The debt ought to be settled to avoid additional penalties and other charges. Pay through {}, account number {}. Notify us on 0116648476."; 
+        }
+
+        if(selectedValue=='ptp_reminder'){
+            sms_message="Dear {}, remember to make payment for Your loan of {}, of {} today. {}, account: {}. Notify us on 0116648476"; 
+        }
+
+
+        if(selectedValue=='refusal_to_pay'){
+            sms_message="Dear {}, Despite previous reminders, your {} debt of {}, remains uncleared. Be strongly advised that failure to do so will force us to recover the debt at your cost, using our Field Collectors. Pay through {}, account {}. Notify us on 0116648476."; 
+        }
+
+
+          if(selectedValue=='broken_ptp_follow_up'){
+            sms_message="Greetings, we have not yet received your  {} payment. Urgently pay. {}, Acc: {}. Notify us on 0116648476"; 
+        }
+
+
+        $('#message').val(sms_message);
+
+     
+       if(selectedValue != 'other') {
+            $('#message').prop('readonly', true).css('background-color', '#f5f5f5');
+       }else{
+            $('#message').prop('readonly', false).css('background-color', '#ffffff');
+       }
+        
+    });
+
  
 });
 </script>

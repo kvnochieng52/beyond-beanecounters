@@ -111,7 +111,7 @@
             <tr>
                 <th>Priority</th>
                 <td>
-                    <span class="badge bg-{{ $leadDetails->lead_priority_color_code }}">
+                    <span class="badge bg-{{ $leadDetails->lead_priority_color_code }} text-sm">
                         {{strtoupper($leadDetails->lead_priority_name)}}
                     </span> /
 
@@ -147,6 +147,12 @@
             <tr>
                 <th>Assigned Department</th>
                 <td>{{$leadDetails->department_name}}</td>
+            </tr>
+
+
+            <tr>
+                <th>Description</th>
+                <td>{{$leadDetails->description}}</td>
             </tr>
         </table>
     </div>

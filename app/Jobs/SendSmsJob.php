@@ -14,6 +14,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use AfricasTalking\SDK\AfricasTalking;
 use App\Models\BSms;
+use App\Models\Lead;
+use Exception;
 
 class SendSmsJob implements ShouldQueue
 {
@@ -54,8 +56,172 @@ class SendSmsJob implements ShouldQueue
         return array_map(fn($phone) => ['phone' => $phone, 'message' => $this->text->message], $phones);
     }
 
+
+    private function processTemplateCsvContacts()
+    {
+        // Initialize contacts array at the start
+        $contacts = [];
+
+        try {
+            $csvPath = public_path(ltrim($this->text->csv_file_path, '/'));
+            if (!file_exists($csvPath)) {
+                Log::error("CSV file not found: {$csvPath}");
+                return $contacts; // Return empty array instead of []
+            }
+
+            $handle = fopen($csvPath, 'r');
+            if ($handle === false) {
+                Log::error("Could not open CSV file: {$csvPath}");
+                return $contacts;
+            }
+
+            $headers = fgetcsv($handle);
+            if (!$headers) {
+                Log::error("Invalid CSV file. No headers found.");
+                fclose($handle);
+                return $contacts;
+            }
+
+            $headerMap = array_map(fn($header) => strtolower(trim($header)), $headers);
+
+            // Find the "Ticket No" column (case insensitive)
+            $ticketNoColumnIndex = null;
+            foreach ($headerMap as $index => $header) {
+                if ($header === 'ticket no') {
+                    $ticketNoColumnIndex = $index;
+                    break;
+                }
+            }
+
+            if ($ticketNoColumnIndex === null) {
+                Log::error("CSV file does not contain 'Ticket No' column.");
+                fclose($handle);
+                return $contacts;
+            }
+
+            $processedCount = 0;
+            $errorCount = 0;
+
+            while (($row = fgetcsv($handle)) !== false) {
+                try {
+                    $ticketNo = trim($row[$ticketNoColumnIndex] ?? '');
+
+                    if (empty($ticketNo)) {
+                        continue; // Skip empty ticket numbers
+                    }
+
+                    // Get lead details using ticket number
+                    $leadDetails = Lead::getLeadByID($ticketNo);
+
+                    if (!$leadDetails) {
+                        Log::warning("Lead not found for ticket number: {$ticketNo}");
+                        $errorCount++;
+                        continue;
+                    }
+
+                    // Get template from texts table
+                    $template = $this->text->template ?? '';
+
+                    if (empty($template)) {
+                        Log::warning("No template specified for ticket number: {$ticketNo}");
+                        $errorCount++;
+                        continue;
+                    }
+
+                    // Generate message based on template
+                    $sms_message = $this->generateTemplateMessage($template, $leadDetails);
+
+                    if (empty($sms_message)) {
+                        Log::warning("Could not generate message for ticket number: {$ticketNo} with template: {$template}");
+                        $errorCount++;
+                        continue;
+                    }
+
+                    // Use telephone from lead details for SMS contact
+                    $phone = trim($leadDetails->telephone ?? '');
+
+                    if (empty($phone)) {
+                        Log::warning("No phone number found for ticket number: {$ticketNo}");
+                        $errorCount++;
+                        continue;
+                    }
+
+                    $contacts[] = [
+                        'phone' => $phone,
+                        'message' => $sms_message,
+                        'ticket_no' => $ticketNo // Add ticket number for reference
+                    ];
+                    $processedCount++;
+                } catch (Exception $e) {
+                    Log::error("Error processing row for ticket {$ticketNo}: " . $e->getMessage());
+                    $errorCount++;
+                    continue;
+                }
+            }
+
+            fclose($handle);
+
+            Log::info("CSV processing completed. Processed: {$processedCount}, Errors: {$errorCount}, Total contacts: " . count($contacts));
+        } catch (Exception $e) {
+            Log::error("Fatal error in processTemplateCsvContacts: " . $e->getMessage());
+            return $contacts; // Return empty array even on fatal error
+        }
+
+        return $contacts;
+    }
+
+
+
+    private function generateTemplateMessage($template, $leadDetails)
+    {
+        $sms_message = '';
+
+        switch ($template) {
+            case 'introduction':
+                $sms_message = "Dear {$leadDetails->title}, Your loan for {$leadDetails->institution_name}, of {$leadDetails->currency_name} {$leadDetails->amount} has been forwarded to Beyond BeanCounters for recovery. Urgently pay via {$leadDetails->how_to_pay_instructions}, account: {$leadDetails->account_number}, or reach out to us to discuss a repayment plan, 0116648476.";
+                break;
+
+            case 'no_anwser':
+                $sms_message = "{$leadDetails->title}, we have tried calling you without success. Kindly but urgently get in touch with us to discuss your debt with {$leadDetails->institution_name} of {$leadDetails->currency_name} {$leadDetails->amount}. The debt ought to be settled to avoid additional penalties and other charges. Pay through {$leadDetails->how_to_pay_instructions}, account number {$leadDetails->account_number}. Notify us on 0116648476.";
+                break;
+
+            case 'ptp_reminder':
+                $sms_message = "Dear {$leadDetails->title}, remember to make payment for Your loan of {$leadDetails->institution_name}, of {$leadDetails->currency_name} {$leadDetails->amount} today. {$leadDetails->how_to_pay_instructions}, account: {$leadDetails->account_number}. Notify us on 0116648476";
+                break;
+
+            case 'refusal_to_pay':
+                $sms_message = "{$leadDetails->title}, Despite previous reminders, your {$leadDetails->institution_name} debt of {$leadDetails->currency_name} {$leadDetails->amount}, remains uncleared. Be strongly advised that failure to do so will force us to recover the debt at your cost, using our Field Collectors. Pay through {$leadDetails->how_to_pay_instructions}, account {$leadDetails->account_number}. Notify us on 0116648476.";
+                break;
+
+            case 'broken_ptp_follow_up':
+                $sms_message = "Greetings, we have not yet received your {$leadDetails->institution_name} payment. Urgently pay. {$leadDetails->how_to_pay_instructions}, Acc: {$leadDetails->account_number}. Notify us on 0116648476";
+                break;
+
+            default:
+                Log::warning("Unknown template: {$template}");
+                break;
+        }
+
+        return $sms_message;
+    }
+
+
     private function processCsvContacts()
     {
+
+        $checkTemplate = $this->text->template;
+        if (!$checkTemplate) {
+            return $this->processBulkCsvContacts();
+        } else {
+            return $this->processTemplateCsvContacts();
+        }
+    }
+
+    private function processBulkCsvContacts()
+    {
+
+
+
         $csvPath = public_path(ltrim($this->text->csv_file_path, '/'));
         if (!file_exists($csvPath)) {
             Log::error("CSV file not found: {$csvPath}");
@@ -207,54 +373,5 @@ class SendSmsJob implements ShouldQueue
                 'message' => $e->getMessage()
             ], 500);
         }
-
-
-        //     try {
-        //         $sms = new BSms();
-        //         $response = $sms->send(['254713295853'], 'Hello from our app!');
-
-        //         return response()->json([
-        //             'success' => true,
-        //             'response' => $response
-        //         ]);
-        //     } catch (\Exception $e) {
-        //         return response()->json([
-        //             'success' => false,
-        //             'message' => $e->getMessage()
-        //         ], 500);
-        //     }
-
-
-
-        //     $username = 'sandbox';
-        //     $apiKey = 'atsk_4a781f01f2993900998a885155ef6f6eae81b012b43da9e715473f59f1025a7473ad18d0'; // Replace with actual sandbox API key
-        //     $AT = new AfricasTalking($username, $apiKey);
-        //     $sms = $AT->sms();
-
-        //     foreach ($contacts as $contact) {
-        //         try {
-        //             $response = $sms->send([
-        //                 'to' => $contact['phone'],
-        //                 'message' => $contact['message'],
-        //                 'from' => 'BEYOND_SMS', // Replace with sender ID if applicable
-        //             ]);
-
-        //             Log::info("SMS Response: " . json_encode($response));
-
-        //             Queue::create([
-        //                 'text_id' => $this->text->id,
-        //                 'message' => $contact['message'],
-        //                 'status' => TextStatus::SENT,
-        //                 'created_by' => $this->text->created_by,
-        //                 'updated_by' => $this->text->updated_by,
-        //             ]);
-        //         } catch (\Exception $e) {
-        //             Log::error("Failed to send SMS to {$contact['phone']}: " . $e->getMessage());
-        //         }
-        //     }
-
-        //     $this->text->status = TextStatus::SENT;
-        //     $this->text->save();
-
     }
 }

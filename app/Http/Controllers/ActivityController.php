@@ -154,7 +154,6 @@ class ActivityController extends Controller
 
         $activity->created_by = Auth::user()->id;
         $activity->updated_by = Auth::user()->id;
-        $activity->save();
 
         // Only add to calendar if checkbox is checked AND we have both start and end dates
         if ($request['addToCalendar'] == 1 && !empty($request['start_date']) && !empty($request['end_date'])) {
@@ -194,21 +193,15 @@ class ActivityController extends Controller
                 $text->scheduled = 0;
             }
 
-            $text->status = TextStatus::PENDING; // Default status, can be updated later
+            $text->status = TextStatus::PENDING_APPROVAL; // Default status, can be updated later
             $text->save();
 
 
-            if ($request->has('setStartDate')) {
-
-                //dd($text->schedule_date);
-
-                $delay = \Carbon\Carbon::parse($text->schedule_date);
-                SendSmsJob::dispatch($text)->delay($delay);
-            } else {
-
-                SendSmsJob::dispatch($text);
-            }
+            $activity->ref_text_id = $text->id;
         }
+
+        $activity->save();
+
 
         return redirect('/lead/' . $request['leadID'] . '?section=activities')->with('success', 'Activity Saved Successfully');
     }

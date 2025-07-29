@@ -63,27 +63,7 @@
         </div>
 
         <div class="mt-4">
-            {{-- <h5><strong>EXPORT REPORT:</strong></h5>
-            <p>Leave the options blank and click Export Report for a full SMS import. Check any options to filter.</p>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label">Delivered SMS</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label">Undelivered SMS</label>
-            </div>
-
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label">Cancelled SMS</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label">Blacklisted SMS</label>
-            </div>
-            <button class="btn btn-secondary ml-3">EXPORT REPORT</button> --}}
-
+        
             <form action="{{ route('queue.export') }}" method="GET">
                 <h5><strong>EXPORT REPORT:</strong></h5>
                 <p>Leave the options blank and click Export Report for a full SMS import. Check any options to filter.

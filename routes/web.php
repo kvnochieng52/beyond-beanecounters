@@ -159,3 +159,6 @@ Route::prefix('2fa')->group(
         Route::post('/resend', [TwoFactorController::class, 'resend'])->name('2fa.resend');
     }
 );
+
+
+Route::post('/text/approve-decline', [TextController::class, 'approveDecline'])->name('text.approveDecline');

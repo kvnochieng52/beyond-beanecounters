@@ -239,6 +239,10 @@ class LeadController extends Controller
     public function show(Lead $lead)
     {
 
+
+
+
+
         return view('lead.show')->with([
             'leadDetails' => Lead::getLeadByID($lead->id),
             'INDIVIDUAL_DEFAULTER_TYPE_CODE' => DefaulterType::INDIVIDUAL,
@@ -263,6 +267,17 @@ class LeadController extends Controller
             'paymentMethods' => PaymentMethod::where('is_active', 1)->pluck('method_name', 'id'),
             'costTypes' => AdditionalCostRuleType::where('is_active', 1)->where('id', '!=', 5)->pluck('rule_type_name', 'id'),
             'callDispositions' => CallDisposition::where('is_active', 1)->pluck('call_disposition_name', 'id'),
+
+            'sms_templates' => [
+                'introduction' => 'Introductory Message',
+                'no_anwser' => 'No Answer, Phone off, Unsuccessful call',
+                'ptp_reminder' => 'PTP Reminder',
+                'refusal_to_pay' => 'Refusal to pay',
+                'broken_ptp_follow_up' => 'Broken PTP follow up',
+                'other' => 'Other'
+            ],
+
+
 
         ]);
     }

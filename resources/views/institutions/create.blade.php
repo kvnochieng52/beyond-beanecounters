@@ -37,6 +37,14 @@
                 <label for="contact_person">Contact Person</label>
                 <input type="text" name="contact_person" class="form-control">
             </div>
+
+
+            <div class="form-group">
+                <label for="contact_person">How to Pay Instructions</label>
+                <textarea name="how_to_pay_instructions" class="form-control"></textarea>
+            </div>
+
+
             <div class="form-group">
                 <label for="is_active">Status</label>
                 <select name="is_active" class="form-control">

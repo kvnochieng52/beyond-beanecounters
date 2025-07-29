@@ -172,6 +172,11 @@
                 <th>Assigned Department</th>
                 <td>{{$leadDetails->department_name}}</td>
             </tr>
+
+            <tr>
+                    <th>Description</th>
+                    <td>{{$leadDetails->description}}</td>
+                </tr>
         </table>
     </div>
 </div>

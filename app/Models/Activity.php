@@ -43,6 +43,8 @@ class Activity extends Model
             'ptps.ptp_amount',
             'ptps.ptp_expiry_date',
             'call_dispositions.call_disposition_name',
+            'text_statuses.text_status_name',
+            'text_statuses.color_code as text_status_color_code',
 
 
         ])
@@ -55,13 +57,15 @@ class Activity extends Model
             ->leftJoin('leads', 'activities.lead_id', 'leads.id')
             ->leftJoin('institutions', 'leads.institution_id', 'institutions.id')
             ->leftJoin('ptps', 'leads.last_ptp_id', 'ptps.id')
-            ->leftJoin('call_dispositions', 'leads.call_disposition_id', 'call_dispositions.id');
+            ->leftJoin('call_dispositions', 'leads.call_disposition_id', 'call_dispositions.id')
+            ->leftJoin('texts', 'activities.ref_text_id', 'texts.id')
+            ->leftJoin('text_statuses', 'texts.status', '=', 'text_statuses.id');
     }
 
 
     public static function getLeadActivities($leadID)
     {
-        $query = self::query()->where('activities.lead_id', $leadID)->paginate(10);
+        $query = self::query()->where('activities.lead_id', $leadID)->orderBy('activities.created_at', 'desc')->paginate(10);
 
         return $query;
     }

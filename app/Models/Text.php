@@ -9,10 +9,7 @@ class Text extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'status',
-        
-    ];
+    protected $fillable = [];
 
     public static function query()
     {

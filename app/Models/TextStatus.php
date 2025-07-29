@@ -14,4 +14,6 @@ class TextStatus extends Model
     const SENT = 3;
     const FAILED = 4;
     const CANCELLED = 5;
+    const PENDING_APPROVAL = 6;
+    const DECLINED = 7;
 }

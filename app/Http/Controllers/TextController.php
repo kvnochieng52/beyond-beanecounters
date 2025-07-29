@@ -11,6 +11,7 @@ use App\Models\Queue;
 use App\Models\Text;
 use App\Models\TextStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -31,7 +32,8 @@ class TextController extends Controller
                 'texts.*',
                 'text_statuses.text_status_name',
                 'text_statuses.color_code',
-                'users.name as created_by_name'
+                'users.name as created_by_name',
+                'status as text_status_id'
             )
                 ->leftJoin('text_statuses', 'texts.status', '=', 'text_statuses.id')
                 ->leftJoin('users', 'texts.created_by', '=', 'users.id')
@@ -78,7 +80,15 @@ class TextController extends Controller
 
         // exit;
         return view('text.create')->with([
-            'contactLists' => Contact::where('is_active', 1)->pluck('title', 'id')
+            'contactLists' => Contact::where('is_active', 1)->pluck('title', 'id'),
+            'sms_templates' => [
+                'introduction' => 'Introductory Message',
+                'no_anwser' => 'No Answer, Phone off, Unsuccessful call',
+                'ptp_reminder' => 'PTP Reminder',
+                'refusal_to_pay' => 'Refusal to pay',
+                'broken_ptp_follow_up' => 'Broken PTP follow up',
+                //'other' => 'Other'
+            ],
         ]);
     }
 
@@ -89,10 +99,13 @@ class TextController extends Controller
     {
 
 
+
+
         $text = new Text();
-        $text->text_title = $request->title;
+        $text->text_title =  $request->selectedTemplate . ' - ' . $request->title;
         $text->contact_type = $request->contact_source;
         $text->message = $request->message;
+        $text->template = $request->selectedTemplate;
         $text->contacts_count = $request->sms_contacts_count;
         $text->created_by = auth()->id(); // Assuming authentication is used
         $text->updated_by = auth()->id();
@@ -119,11 +132,11 @@ class TextController extends Controller
             $text->scheduled = 0;
         }
 
-        $text->status = TextStatus::PENDING; // Default status, can be updated later
+        $text->status = TextStatus::PENDING_APPROVAL; // Default status, can be updated later
         $text->save();
 
 
-        SendSmsJob::dispatch($text);
+        // SendSmsJob::dispatch($text);
 
         return redirect()->route('text.index')->with('success', 'SMS Campaign saved successfully.');
     }
@@ -545,5 +558,98 @@ class TextController extends Controller
         $text->update(['status' => TextStatus::CANCELLED]);
 
         return response()->json(['success' => true, 'message' => 'SMS canceled successfully']);
+    }
+
+
+
+    // public function approveDecline(Request $request)
+    // {
+
+    //     $action = $request['action'];
+
+    //     if ($action == 'decline') {
+    //         Text::where('id', $request['text_id'])->update(['status' => TextStatus::DECLINED]);
+    //         return back()->with('success', 'SMS Declined');
+    //     }
+
+
+    //     if ($action == 'approve') {
+
+    //         $text = Text::find($request['text_id']);
+
+    //         $text->status = TextStatus::PENDING;
+
+    //         if ($text->scheduled == 1) {
+    //             $delay = \Carbon\Carbon::parse($text->schedule_date);
+    //             SendSmsJob::dispatch($text)->delay($delay);
+    //         } else {
+
+    //             SendSmsJob::dispatch($text);
+    //         }
+
+    //         $text->save();
+
+    //         return back()->with('success', 'SMS Approved');
+    //     }
+    // }
+
+
+    public function approveDecline(Request $request)
+    {
+        $action = $request['action'];
+
+        if ($action == 'decline') {
+            // Validate that decline message is provided
+            $request->validate([
+                'decline_message' => 'required|string',
+                'text_id' => 'required|exists:texts,id'
+            ]);
+
+            Text::where('id', $request['text_id'])->update([
+                'status' => TextStatus::DECLINED,
+                'decline_reason' => $request['decline_message'],
+                'declined_at' => now(),
+                'declined_by' => auth()->id()
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'SMS Declined successfully'
+            ]);
+        }
+
+        if ($action == 'approve') {
+            $text = Text::find($request['text_id']);
+
+            if (!$text) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'SMS not found'
+                ]);
+            }
+
+            $text->status = TextStatus::PENDING;
+            $text->approved_at = now();
+            $text->approved_by = auth()->id();
+
+            if ($text->scheduled == 1) {
+                $delay = \Carbon\Carbon::parse($text->schedule_date);
+                SendSmsJob::dispatch($text)->delay($delay);
+            } else {
+                SendSmsJob::dispatch($text);
+            }
+
+            $text->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'SMS Approved successfully'
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Invalid action'
+        ]);
     }
 }

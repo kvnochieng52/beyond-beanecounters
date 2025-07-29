@@ -19,6 +19,7 @@ class Institution extends Model
         'is_active',
         'description',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'how_to_pay_instructions'
     ];
 }
