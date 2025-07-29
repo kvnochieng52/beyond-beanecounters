@@ -178,7 +178,7 @@ class SendSmsJob implements ShouldQueue
 
         switch ($template) {
             case 'introduction':
-                $sms_message = "Dear {$leadDetails->title}, Your loan for {$leadDetails->institution_name}, of {$leadDetails->currency_name} {$leadDetails->amount} has been forwarded to Beyond BeanCounters for recovery. Urgently pay via {$leadDetails->how_to_pay_instructions}, account: {$leadDetails->account_number}, or reach out to us to discuss a repayment plan, 0116648476.";
+                $sms_message = "Dear {$leadDetails->title}, Your debt for {$leadDetails->institution_name}, of {$leadDetails->currency_name} {$leadDetails->amount} has been forwarded to Beyond BeanCounters for recovery. Urgently pay via {$leadDetails->how_to_pay_instructions}, account: {$leadDetails->account_number}, or reach out to us to discuss a repayment plan, 0116648476.";
                 break;
 
             case 'no_anwser':
@@ -186,7 +186,7 @@ class SendSmsJob implements ShouldQueue
                 break;
 
             case 'ptp_reminder':
-                $sms_message = "Dear {$leadDetails->title}, remember to make payment for Your loan of {$leadDetails->institution_name}, of {$leadDetails->currency_name} {$leadDetails->amount} today. {$leadDetails->how_to_pay_instructions}, account: {$leadDetails->account_number}. Notify us on 0116648476";
+                $sms_message = "Dear {$leadDetails->title}, remember to make payment for Your debt of {$leadDetails->institution_name}, of {$leadDetails->currency_name} {$leadDetails->amount} today. {$leadDetails->how_to_pay_instructions}, account: {$leadDetails->account_number}. Notify us on 0116648476";
                 break;
 
             case 'refusal_to_pay':

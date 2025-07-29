@@ -504,7 +504,7 @@ $('#selectedTemplate').val(selectedValue);
         var sms_message='';
 
         if(selectedValue=='introduction'){
-            sms_message="Dear {}, Your loan for {}, of {} has been forwarded to Beyond BeanCounters for recovery. Urgently pay via {}, account: {}, or reach out to us to discuss a repayment plan, 0116648476.";   
+            sms_message="Dear {}, Your debt for {}, of {} has been forwarded to Beyond BeanCounters for recovery. Urgently pay via {}, account: {}, or reach out to us to discuss a repayment plan, 0116648476.";   
         }
 
 
@@ -514,7 +514,7 @@ $('#selectedTemplate').val(selectedValue);
         }
 
         if(selectedValue=='ptp_reminder'){
-            sms_message="Dear {}, remember to make payment for Your loan of {}, of {} today. {}, account: {}. Notify us on 0116648476"; 
+            sms_message="Dear {}, remember to make payment for Your debt of {}, of {} today. {}, account: {}. Notify us on 0116648476"; 
         }
 
 
