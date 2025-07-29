@@ -514,12 +514,12 @@ $('#selectedTemplate').val(selectedValue);
         }
 
         if(selectedValue=='ptp_reminder'){
-            sms_message="Dear {}, remember to make payment for Your debt of {}, of {} today. {}, account: {}. Notify us on 0116648476"; 
+            sms_message="Dear {}, remember to make payment for Your debt for {}, of {} today. {}, account: {}. Notify us on 0116648476"; 
         }
 
 
         if(selectedValue=='refusal_to_pay'){
-            sms_message="Dear {}, Despite previous reminders, your {} debt of {}, remains uncleared. Be strongly advised that failure to do so will force us to recover the debt at your cost, using our Field Collectors. Pay through {}, account {}. Notify us on 0116648476."; 
+            sms_message="Dear {}, Despite previous reminders, your {} debt for {}, remains uncleared. Be strongly advised that failure to do so will force us to recover the debt at your cost, using our Field Collectors. Pay through {}, account {}. Notify us on 0116648476."; 
         }
 
 

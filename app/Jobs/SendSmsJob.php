@@ -186,11 +186,11 @@ class SendSmsJob implements ShouldQueue
                 break;
 
             case 'ptp_reminder':
-                $sms_message = "Dear {$leadDetails->title}, remember to make payment for Your debt of {$leadDetails->institution_name}, of {$leadDetails->currency_name} {$leadDetails->amount} today. {$leadDetails->how_to_pay_instructions}, account: {$leadDetails->account_number}. Notify us on 0116648476";
+                $sms_message = "Dear {$leadDetails->title}, remember to make payment for Your debt for {$leadDetails->institution_name}, of {$leadDetails->currency_name} {$leadDetails->amount} today. {$leadDetails->how_to_pay_instructions}, account: {$leadDetails->account_number}. Notify us on 0116648476";
                 break;
 
             case 'refusal_to_pay':
-                $sms_message = "{$leadDetails->title}, Despite previous reminders, your {$leadDetails->institution_name} debt of {$leadDetails->currency_name} {$leadDetails->amount}, remains uncleared. Be strongly advised that failure to do so will force us to recover the debt at your cost, using our Field Collectors. Pay through {$leadDetails->how_to_pay_instructions}, account {$leadDetails->account_number}. Notify us on 0116648476.";
+                $sms_message = "{$leadDetails->title}, Despite previous reminders, your {$leadDetails->institution_name} debt for {$leadDetails->currency_name} {$leadDetails->amount}, remains uncleared. Be strongly advised that failure to do so will force us to recover the debt at your cost, using our Field Collectors. Pay through {$leadDetails->how_to_pay_instructions}, account {$leadDetails->account_number}. Notify us on 0116648476.";
                 break;
 
             case 'broken_ptp_follow_up':
