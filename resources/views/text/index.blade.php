@@ -146,7 +146,7 @@
             // Add scheduled label if scheduled == 1
             const scheduledLabel = row.scheduled == 1
             
-            ? `<span class="badge badge-info ml-2">Scheduled ${row.schedule_date} </span>`
+            ? `<br/><span class="badge badge-info ml-2">Scheduled ${row.schedule_date} </span>`
             : '';
             
             return `
