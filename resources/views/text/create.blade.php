@@ -504,27 +504,27 @@ $('#selectedTemplate').val(selectedValue);
         var sms_message='';
 
         if(selectedValue=='introduction'){
-            sms_message="Dear {}, Your debt for {}, of {} has been forwarded to Beyond BeanCounters for recovery. Urgently pay via {}, account: {}, or reach out to us to discuss a repayment plan, 0116648476.";   
+            sms_message="Dear {}, Your debt for {}, of {} has been forwarded to Beyond BeanCounters for recovery. Urgently pay via {}, account: {}, or reach out to us to discuss a repayment plan, 0701967176.";   
         }
 
 
         
         if(selectedValue=='no_anwser'){
-            sms_message="Dear {}, we have tried calling you without success. Kindly but urgently get in touch with us to discuss your debt with {} of {}. The debt ought to be settled to avoid additional penalties and other charges. Pay through {}, account number {}. Notify us on 0116648476."; 
+            sms_message="Dear {}, we have tried calling you without success. Kindly but urgently get in touch with us to discuss your debt with {} of {}. The debt ought to be settled to avoid additional penalties and other charges. Pay through {}, account number {}. Notify us on 0701967176."; 
         }
 
         if(selectedValue=='ptp_reminder'){
-            sms_message="Dear {}, remember to make payment for Your debt for {}, of {} today. {}, account: {}. Notify us on 0116648476"; 
+            sms_message="Dear {}, remember to make payment for Your debt for {}, of {} today. {}, account: {}. Notify us on 0701967176"; 
         }
 
 
         if(selectedValue=='refusal_to_pay'){
-            sms_message="Dear {}, Despite previous reminders, your {} debt for {}, remains uncleared. Be strongly advised that failure to do so will force us to recover the debt at your cost, using our Field Collectors. Pay through {}, account {}. Notify us on 0116648476."; 
+            sms_message="Dear {}, Despite previous reminders, your {} debt for {}, remains uncleared. Be strongly advised that failure to do so will force us to recover the debt at your cost, using our Field Collectors. Pay through {}, account {}. Notify us on 0701967176."; 
         }
 
 
           if(selectedValue=='broken_ptp_follow_up'){
-            sms_message="Greetings, we have not yet received your  {} payment. Urgently pay. {}, Acc: {}. Notify us on 0116648476"; 
+            sms_message="Greetings, we have not yet received your  {} payment. Urgently pay. {}, Acc: {}. Notify us on 0701967176"; 
         }
 
 
