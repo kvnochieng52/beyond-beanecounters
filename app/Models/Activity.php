@@ -13,7 +13,6 @@ class Activity extends Model
 
     public static function query()
     {
-
         return Activity::select([
             'activities.*',
             'lead_priorities.lead_priority_name',
@@ -45,8 +44,6 @@ class Activity extends Model
             'call_dispositions.call_disposition_name',
             'text_statuses.text_status_name',
             'text_statuses.color_code as text_status_color_code',
-
-
         ])
             ->leftJoin('lead_priorities', 'activities.priority_id', 'lead_priorities.id')
             ->leftJoin('activity_statuses', 'activities.status_id', 'activity_statuses.id')
@@ -56,7 +53,11 @@ class Activity extends Model
             ->leftJoin('users AS CREATED_BY_JOIN', 'activities.created_by', '=', 'CREATED_BY_JOIN.id')
             ->leftJoin('leads', 'activities.lead_id', 'leads.id')
             ->leftJoin('institutions', 'leads.institution_id', 'institutions.id')
-            ->leftJoin('ptps', 'leads.last_ptp_id', 'ptps.id')
+            // Modified join: Only get PTPs created on the same date as the activity
+            ->leftJoin('ptps', function ($join) {
+                $join->on('activities.lead_id', '=', 'ptps.lead_id')
+                    ->whereRaw('DATE(ptps.created_at) = DATE(activities.created_at)');
+            })
             ->leftJoin('call_dispositions', 'leads.call_disposition_id', 'call_dispositions.id')
             ->leftJoin('texts', 'activities.ref_text_id', 'texts.id')
             ->leftJoin('text_statuses', 'texts.status', '=', 'text_statuses.id');
