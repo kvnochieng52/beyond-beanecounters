@@ -162,3 +162,7 @@ Route::prefix('2fa')->group(
 
 
 Route::post('/text/approve-decline', [TextController::class, 'approveDecline'])->name('text.approveDecline');
+
+
+Route::get('/activity/export', [ActivityController::class, 'exportActivities'])->name('activity.export');
+Route::get('/activity/export-direct', [ActivityController::class, 'exportActivitiesDirect'])->name('activity.export.direct');

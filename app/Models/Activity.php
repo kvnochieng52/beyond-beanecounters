@@ -41,6 +41,7 @@ class Activity extends Model
             'ptps.ptp_date',
             'ptps.ptp_amount',
             'ptps.ptp_expiry_date',
+            'ptps.created_at as ptp_created_at',
             'call_dispositions.call_disposition_name',
             'text_statuses.text_status_name',
             'text_statuses.color_code as text_status_color_code',

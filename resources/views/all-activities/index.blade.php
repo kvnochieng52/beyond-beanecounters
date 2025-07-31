@@ -32,7 +32,8 @@
                                 <th>Amount</th>
                                 <th>Balance</th>
                                 <th>PTP(Amount)</th>
-                                <th>PTP(Retire Date)</th>
+                                <th>PTP(Due Date)</th>
+                                <th>PTP(Created at)</th>
                                 <th>Description</th>
                                 <th>Call Desposition</th>
                                 <th>Due</th>
@@ -267,6 +268,7 @@
                     {
                         data: 'created_date',
                         name: 'created_date',
+                        searchable: false,
                         render: function(data, type, row) {
                             return data ? moment(data).format('DD-MM-YYYY') : 'N/A';
                         },
@@ -338,12 +340,22 @@
                         width: '100px'
                     },
                     {
-                        data: 'ptp_expiry_date',
-                        name: 'ptps.ptp_expiry_date',
+                        data: 'ptp_date',
+                        name: 'ptps.ptp_date',
                         render: function(data, type, row) {
                             return data ? moment(data).format('DD-MM-YYYY') : 'N/A';
                         },
                         width: '100px'
+                    },
+
+                    {
+                    data: 'ptp_created_at',
+                    name: 'ptps.ptp_created_at',
+                    searchable: false,
+                    render: function(data, type, row) {
+                    return data ? moment(data).format('DD-MM-YYYY') : 'N/A';
+                    },
+                    width: '100px'
                     },
                    {
                         data: 'description',
@@ -371,6 +383,7 @@
                     {
                         data: 'due_date',
                         name: 'activities.due_date',
+                        searchable: false,
                         render: function(data, type, row) {
                             if (!data) return 'N/A';
                             
