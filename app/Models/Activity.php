@@ -60,10 +60,12 @@ class Activity extends Model
                     ->whereRaw('DATE(ptps.created_at) = DATE(activities.created_at)');
             })
             // Only join Call Dispositions created on the same date as the activity
-            ->leftJoin('call_dispositions', function ($join) {
-                $join->on('leads.call_disposition_id', '=', 'call_dispositions.id')
-                    ->whereRaw('DATE(call_dispositions.created_at) = DATE(activities.created_at)');
+            ->leftJoin('call_disposition_histories', function ($join) {
+                $join->on('activities.lead_id', '=', 'call_disposition_histories.lead_id')
+                    ->whereRaw('DATE(call_disposition_histories.created_at) = DATE(activities.created_at)');
             })
+
+            ->leftJoin('call_dispositions', 'call_disposition_histories.call_disposition_id', 'call_dispositions.id')
             ->leftJoin('texts', 'activities.ref_text_id', 'texts.id')
             ->leftJoin('text_statuses', 'texts.status', '=', 'text_statuses.id');
     }
