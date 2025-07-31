@@ -402,6 +402,7 @@ return [
         [
             'text' => 'SMS',
             'icon' => 'fas fa-fw fa-sms',
+            'can' => ['is_admin'],
             'submenu' => [
                 [
                     'text' => 'New SMS',
