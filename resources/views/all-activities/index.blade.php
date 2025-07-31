@@ -246,212 +246,6 @@
     $(document).ready(function() {
         
 
-    //     let table = $('#activityTable').DataTable({
-    //     processing: true,
-    //     serverSide: true,
-    //     ajax: '{{ route('all-activity') }}',
-    //     autoWidth: false,
-    //     scrollX: true,
-    //     columns: [
-    //         {
-    //             data: 'DT_RowIndex',
-    //             name: 'DT_RowIndex',
-    //             orderable: false,
-    //             searchable: false,
-    //             className: 'text-center'
-    //         },
-    //         {
-    //             data: 'created_date',
-    //             name: 'created_date',
-    //             render: function(data, type, row) {
-    //                 return moment(data).format('DD-MM-YYYY');
-    //             }
-    //         },
-    //         {
-    //             data: 'created_by_name',
-    //             name: 'CREATED_BY_JOIN.name',
-    //             render: function(data, type, row) {
-    //                 return data || 'N/A';
-    //             }
-    //         },
-    //         {
-    //             data: 'lead_id',
-    //             name: 'activities.lead_id',
-    //             render: function(data, type, row) {
-    //                 return data ? `#${data}` : 'N/A';
-    //             }
-    //         },
-    //         {
-    //             data: 'activity_type_title',
-    //             name: 'activity_types.activity_type_title',
-    //             render: function(data, type, row) {
-    //                 let icon = row.activity_type_icon ? `<i class="${row.activity_type_icon}"></i> ` : '';
-    //                 return `${icon}${data || 'N/A'}`;
-    //             }
-    //         },
-    //         {
-    //             data: 'lead_title',
-    //             name: 'leads.title',
-    //             render: function(data, type, row) {
-    //                 return data || 'N/A';
-    //             }
-    //         },
-    //         {
-    //             data: 'institution_name',
-    //             name: 'institutions.institution_name',
-    //             render: function(data, type, row) {
-    //                 return data || 'N/A';
-    //             }
-    //         },
-    //         {
-    //             data: 'lead_amount',
-    //             name: 'leads.amount',
-    //             render: function(data, type, row) {
-    //                 return data ? `KES ${parseFloat(data).toLocaleString()}` : 'N/A';
-    //             },
-    //             className: 'text-right'
-    //         },
-    //         {
-    //             data: 'lead_balance',
-    //             name: 'leads.balance',
-    //             render: function(data, type, row) {
-    //                 return data ? `KES ${parseFloat(data).toLocaleString()}` : 'N/A';
-    //             },
-    //             className: 'text-right'
-    //         },
-    //         {
-    //             data: 'ptp_amount',
-    //             name: 'ptps.ptp_amount',
-    //             render: function(data, type, row) {
-    //                 return data ? `KES ${parseFloat(data).toLocaleString()}` : 'N/A';
-    //             },
-    //             className: 'text-right'
-    //         },
-    //         {
-    //             data: 'ptp_expiry_date',
-    //             name: 'ptps.ptp_expiry_date',
-    //             render: function(data, type, row) {
-    //                 return data ? moment(data).format('DD-MM-YYYY') : 'N/A';
-    //             }
-    //         },
-    //         {
-    //             data: 'description',
-    //             name: 'activities.description',
-    //             render: function(data, type, row) {
-    //                 if (!data) return 'N/A';
-    //                 // Truncate long descriptions
-    //                 if (data.length > 100) {
-    //                     return `<span title="${data}">${data.substring(0, 100)}...</span>`;
-    //                 }
-    //                 return data;
-    //             },
-    //             className: 'wrap-text'
-    //         },
-    //         {
-    //             data: 'call_disposition_name',
-    //             name: 'call_dispositions.call_disposition_name',
-    //             render: function(data, type, row) {
-    //                 return data || 'N/A';
-    //             }
-    //         },
-    //         {
-    //             data: 'due_date',
-    //             name: 'activities.due_date',
-    //             render: function(data, type, row) {
-    //                 if (!data) return 'N/A';
-                    
-    //                 let dueDate = moment(data);
-    //                 let now = moment();
-    //                 let diff = dueDate.diff(now, 'days');
-                    
-    //                 if (diff < 0) {
-    //                     return `<span class="badge bg-danger" title="Overdue by ${Math.abs(diff)} days">${dueDate.format('DD-MM-YYYY')}</span>`;
-    //                 } else if (diff === 0) {
-    //                     return `<span class="badge bg-warning" title="Due today">${dueDate.format('DD-MM-YYYY')}</span>`;
-    //                 } else if (diff <= 3) {
-    //                     return `<span class="badge bg-info" title="Due in ${diff} days">${dueDate.format('DD-MM-YYYY')}</span>`;
-    //                 } else {
-    //                     return `<span class="badge bg-success" title="Due in ${diff} days">${dueDate.format('DD-MM-YYYY')}</span>`;
-    //                 }
-    //             }
-    //         },
-    //         {
-    //             data: 'activity_status_name',
-    //             name: 'activity_statuses.activity_status_name',
-    //             render: function(data, type, row) {
-    //                 let colorCode = row.activity_status_color_code || 'secondary';
-    //                 return `<span class="badge bg-${colorCode}">${data || 'N/A'}</span>`;
-    //             }
-    //         },
-    //         {
-    //             data: 'action',
-    //             name: 'action',
-    //             orderable: false,
-    //             searchable: false,
-    //             render: function(data, type, row) {
-    //                 const canEdit = @json(auth()->user()->hasAnyRole(['Admin', 'Supervisor', 'Manager']));
-    //                 const canDelete = @json(auth()->user()->hasAnyRole(['Admin', 'Supervisor']));
-                    
-    //                 let buttons = '';
-                    
-    //                 // View button
-    //                 buttons += `
-    //                     <a href="/activities/${row.id}" class="btn btn-info btn-xs" title="View">
-    //                         <i class="fas fa-eye"></i>
-    //                     </a> `;
-                    
-    //                 // Edit button
-    //                 if (canEdit) {
-    //                     buttons += `
-    //                         <button type="button" class="btn btn-primary btn-xs edit-btn" 
-    //                                 data-id="${row.id}" 
-    //                                 data-title="${row.activity_type_title || ''}" 
-    //                                 data-description="${row.description || ''}" 
-    //                                 data-toggle="modal" 
-    //                                 data-target="#edit_activity_modal" 
-    //                                 title="Edit">
-    //                             <i class="fas fa-edit"></i>
-    //                         </button> `;
-    //                 }
-                    
-    //                 // Delete button
-    //                 if (canDelete) {
-    //                     buttons += `
-    //                         <form action="/activities/${row.id}" method="POST" class="d-inline">
-    //                             @csrf
-    //                             @method('DELETE')
-    //                             <button type="submit" class="btn btn-danger btn-xs" 
-    //                                     onclick="return confirm('Are you sure you want to delete this activity?')" 
-    //                                     title="Delete">
-    //                                 <i class="fas fa-trash"></i>
-    //                             </button>
-    //                         </form>`;
-    //                 }
-                    
-    //                 return buttons;
-    //             }
-    //         }
-    //     ],
-    //     columnDefs: [
-    //         {
-    //             targets: [7, 8, 9], // Amount columns
-    //             className: 'text-right'
-    //         },
-    //         {
-    //             targets: [11], // Description column
-    //             className: 'wrap-text'
-    //         }
-    //     ],
-    //     order: [[1, 'desc']], // Order by date descending
-    //     pageLength: 25,
-    //     responsive: true,
-    //     dom: 'Bfrtip',
-    //     buttons: [
-    //         'copy', 'csv', 'excel', 'pdf', 'print'
-    //     ]
-    // });
-
-
 
     let table = $('#activityTable').DataTable({
                 processing: true,
@@ -551,19 +345,20 @@
                         },
                         width: '100px'
                     },
-                    {
+                   {
                         data: 'description',
                         name: 'activities.description',
                         render: function(data, type, row) {
-                            if (!data) return 'N/A';
-                            // Truncate long descriptions
-                            if (data.length > 50) {
-                                return `<span title="${data.replace(/"/g, '&quot;')}">${data.substring(0, 50)}...</span>`;
+                            // For export/copy operations, return the full text
+                            if (type === 'export' || type === 'copy') {
+                                return data || 'N/A';
                             }
-                            return data;
+                            
+                            // For display, show full description without truncation
+                            return data || 'N/A';
                         },
                         className: 'wrap-text',
-                        width: '200px'
+                        width: '300px' // Increased width to accommodate longer text
                     },
                     {
                         data: 'call_disposition_name',
@@ -604,28 +399,7 @@
                         },
                         width: '100px'
                     },
-                    // {
-                    //     data: 'action',
-                    //     name: 'action',
-                    //     orderable: false,
-                    //     searchable: false,
-                    //     render: function(data, type, row) {
-                    //         let buttons = '';
-                            
-                    //         // View button
-                    //         buttons += `<a href="/activities/${row.id}" class="btn btn-info btn-xs" title="View"><i class="fas fa-eye"></i></a> `;
-                            
-                    //         // Edit button
-                    //         buttons += `<button type="button" class="btn btn-primary btn-xs edit-btn" data-id="${row.id}" title="Edit"><i class="fas fa-edit"></i></button> `;
-                            
-                    //         // Delete button
-                    //         buttons += `<button type="button" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure?')" title="Delete"><i class="fas fa-trash"></i></button>`;
-                            
-                    //         return buttons;
-                    //     },
-                    //     className: 'text-center',
-                    //     width: '120px'
-                    // }
+                   
                 ],
                 order: [[1, 'desc']], // Order by date descending
                 pageLength: 25,
@@ -698,6 +472,4 @@
 });
 
 </script>
-
-
 @stop
