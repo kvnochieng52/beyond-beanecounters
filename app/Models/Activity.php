@@ -54,12 +54,16 @@ class Activity extends Model
             ->leftJoin('users AS CREATED_BY_JOIN', 'activities.created_by', '=', 'CREATED_BY_JOIN.id')
             ->leftJoin('leads', 'activities.lead_id', 'leads.id')
             ->leftJoin('institutions', 'leads.institution_id', 'institutions.id')
-            // Modified join: Only get PTPs created on the same date as the activity
+            // Only join PTPs created on the same date as the activity
             ->leftJoin('ptps', function ($join) {
                 $join->on('activities.lead_id', '=', 'ptps.lead_id')
                     ->whereRaw('DATE(ptps.created_at) = DATE(activities.created_at)');
             })
-            ->leftJoin('call_dispositions', 'leads.call_disposition_id', 'call_dispositions.id')
+            // Only join Call Dispositions created on the same date as the activity
+            ->leftJoin('call_dispositions', function ($join) {
+                $join->on('leads.call_disposition_id', '=', 'call_dispositions.id')
+                    ->whereRaw('DATE(call_dispositions.created_at) = DATE(activities.created_at)');
+            })
             ->leftJoin('texts', 'activities.ref_text_id', 'texts.id')
             ->leftJoin('text_statuses', 'texts.status', '=', 'text_statuses.id');
     }
