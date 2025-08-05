@@ -11,6 +11,7 @@ use App\Http\Controllers\TextController;
 use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ActivityReportController;
 use App\Http\Controllers\AdditionalCostRuleController;
 use App\Http\Controllers\BulkAssignController;
 use App\Http\Controllers\PaymentController;
@@ -151,6 +152,14 @@ Route::group(['middleware' => ['auth', 'user_is_active']], function () {
         Route::match(['get', 'post'], '/agent-leads/generate', [ReportController::class, 'generateAgentLeads'])->name('reports.agent-leads.generate');
     });
 });
+
+
+Route::prefix('activity-reports')->group(
+    function () {
+        Route::get('/', [ActivityReportController::class, 'index'])->name('activity.reports.index');
+        Route::post('generate', [ActivityReportController::class, 'generateReport'])->name('activity.reports.generate');
+    }
+);
 
 Route::prefix('2fa')->group(
     function () {

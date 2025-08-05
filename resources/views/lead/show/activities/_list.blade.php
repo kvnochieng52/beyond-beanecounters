@@ -114,7 +114,7 @@
 
             <td>
                 {{-- Edit Button --}}
-                <a href="#" class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#edit_debt_modal"
+                {{-- <a href="#" class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#edit_debt_modal"
                     data-id="{{ $activity->id }}" data-title="{{ $activity->activity_title }}"
                     data-description="{{ $activity->description }}" data-priority="{{ $activity->priority_id }}"
                     data-activityType="{{ $activity->activity_type_id }}"
@@ -126,10 +126,10 @@
                     data-endTime="{{\Carbon\Carbon::parse($activity->due_date_time)->format('h:i A') }}"
                     data-calendarAdd="{{ $activity->calendar_add }}">
                     Edit
-                </a>
+                </a> --}}
 
                 {{-- Delete Form --}}
-                <form action="{{ route('activity.destroy', $activity->id) }}" method="POST"
+                {{-- <form action="{{ route('activity.destroy', $activity->id) }}" method="POST"
                     style="display:inline-block;">
                     @csrf
                     @method('DELETE')
@@ -137,7 +137,7 @@
                         onclick="return confirm('Are you sure you want to delete this activity?')">
                         Delete
                     </button>
-                </form>
+                </form> --}}
             </td>
         </tr>
         @endforeach

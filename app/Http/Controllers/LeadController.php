@@ -246,7 +246,7 @@ class LeadController extends Controller
         return view('lead.show')->with([
             'leadDetails' => Lead::getLeadByID($lead->id),
             'INDIVIDUAL_DEFAULTER_TYPE_CODE' => DefaulterType::INDIVIDUAL,
-            'activityTypes' => ActivityType::where('is_active', 1)->orderBy('order', 'ASC')->get(),
+            'activityTypes' => ActivityType::where('is_active', 1)->orderBy('order', 'ASC')->pluck('activity_type_title', 'id'),
             'priorities' => LeadPriority::where('is_active', 1)->pluck('lead_priority_name', 'id'),
             'departments' => Department::where('is_active', 1)->pluck('department_name', 'id'),
             'agentsList' => User::where('is_active', 1)

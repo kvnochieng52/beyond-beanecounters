@@ -13,8 +13,13 @@ use App\Models\LeadPriority;
 use Illuminate\Http\Request;
 use App\Models\ActivityStatus;
 use App\Models\Lead;
+use App\Models\LeadStatus;
+use App\Models\PaymentMethod;
 use App\Models\Text;
 use App\Models\TextStatus;
+use App\Models\Transaction;
+use App\Models\TransactionStatus;
+use App\Models\TransactionType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -118,23 +123,38 @@ class ActivityController extends Controller
     {
         // Validate the request
         $request->validate([
-            'activity_title' => 'required|string|max:255',
             'description' => 'required|string',
             'activityType' => 'required|exists:activity_types,id',
             'leadID' => 'required|exists:leads,id',
         ]);
 
+
+
         $activity = new Activity();
 
-        $activity->activity_title = $request['activity_title'];
+        $activity->activity_type_id = $request['activityType'];
+        $activity->activity_title = ActivityType::find($request['activityType'])->activity_type_title;
         $activity->description = $request['description'];
         $activity->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
-        $activity->activity_type_id = $request['activityType'];
+
         $activity->lead_id = $request['leadID'];
         $activity->assigned_department_id = $request['department'] ?? null;
         $activity->assigned_user_id = !empty($request['agent']) ? $request['agent'] : Auth::user()->id;
         $activity->status_id = $request['status'] ?? 1; // Default to first status if not provided
         $activity->calendar_add = $request['addToCalendar'] ?? 0;
+
+
+        $activity->ptp_check = $request['addPTP'] ?? 0;
+        $activity->act_ptp_amount  = $request['ptp_amount'];
+        $activity->act_ptp_date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date']) ?? $request['ptp_payment_date'];
+        $activity->act_ptp_retire_date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date'])->addDay() ?? $request['ptp_payment_date'];
+
+        $activity->ptp_check = $request['addPayment'] ?? 0;
+        $activity->act_payment_amount  = $request['payment_amount'];
+        $activity->act_payment_transid  = $request['payment_transID'];
+        $activity->act_payment_method  = $request['payment_method'];
+
+        $activity->act_call_disposition_id  = $request['call_disposition'];
 
         // Handle start_date_time
         if (!empty($request['start_date'])) {
@@ -173,7 +193,7 @@ class ActivityController extends Controller
         }
 
 
-        if ($request['activityType'] == 3) {
+        if ($request['activityType'] == 8) {
             $text = new Text();
             $text->text_title = "ACTIVITY: " . $request['activity_title'];
             $text->contact_type = 'manual';
@@ -201,6 +221,52 @@ class ActivityController extends Controller
         }
 
         $activity->save();
+
+
+
+
+
+        if ($request['activityType'] == 19) {
+
+            $transTypeDetails = TransactionType::where('id', TransactionType::PAYMENT)->first();
+            $paymentMethodDetails = PaymentMethod::where('id', $request['payment_method'])->first();
+
+            $desc = $transTypeDetails->transaction_type_title . "/"  . $paymentMethodDetails->method_name . " -Manual- " . $request['description'];
+            $transaction = new Transaction();
+            $transaction->lead_id = $request['leadID'];
+            $transaction->transaction_type =  TransactionType::PAYMENT;
+            $transaction->amount = $request['payment_amount'] * -1;
+            $transaction->description = $desc;
+            $transaction->transaction_id = $request['payment_transID'];
+            $transaction->status_id = TransactionStatus::PAID;
+            $transaction->payment_method = $request['payment_method'];
+            $transaction->created_by = Auth::user()->id;
+            $transaction->updated_by = Auth::user()->id;
+            $transaction->save();
+
+            $leadDetails = Lead::where('id', $request['leadID'])->first();
+            $leadDetails->balance = $leadDetails->balance - $request['amount'];
+
+            $leadDetails->call_disposition_id = $request['call_disposition'];
+
+            if ($request['addPTP'] == 1) {
+                $leadDetails->last_ptp_amount = $request['ptp_amount'];
+                $leadDetails->last_ptp_date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date']) ?? $request['ptp_payment_date'];;
+                $leadDetails->last_retire_date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date'])->addDay() ?? $request['ptp_payment_date'];
+            }
+
+
+
+            if ($leadDetails->balance <= 0) {
+                $leadDetails->status_id = LeadStatus::PAID;
+                //$leadDetails->save();
+            } else {
+                $leadDetails->status_id = LeadStatus::PARTIALLY_PAID;
+                // $leadDetails->save();
+            }
+
+            $leadDetails->save();
+        }
 
 
         return redirect('/lead/' . $request['leadID'] . '?section=activities')->with('success', 'Activity Saved Successfully');

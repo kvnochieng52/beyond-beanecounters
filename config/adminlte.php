@@ -469,6 +469,7 @@ return [
         [
             'text' => 'Reports',
             'icon' => 'fas fa-fw fa-file',
+            'can' => ['is_admin'],
             'submenu' => [
                 [
                     'text' => 'Collection Rates',
@@ -484,6 +485,12 @@ return [
                     'text' => 'Agent Performance',
                     'url' => '/reports/agent-performance',
                     'icon' => 'fas fa-fw fa-user-check',
+                ],
+
+                [
+                    'text' => 'Actvities Report',
+                    'url' => 'activity-reports/',
+                    'icon' => 'fas fa-fw fa-user-file',
                 ],
             ]
         ],
