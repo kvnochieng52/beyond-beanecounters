@@ -160,7 +160,7 @@ class ActivityReportController extends Controller
 
 
             $agents = array_filter($request->agent);
-            dd($agents = array_filter($request->agent));
+
 
             if (!empty($agents)) {
                 $query->whereIn('activities.assigned_user_id', $agents);
@@ -171,7 +171,7 @@ class ActivityReportController extends Controller
         if ($request->filled('institution') && is_array($request->institution)) {
             $institutions = array_filter($request->institution);
 
-            dd($institutions);
+
             if (!empty($institutions)) {
                 $query->whereIn('leads.institution_id', $institutions);
             }
