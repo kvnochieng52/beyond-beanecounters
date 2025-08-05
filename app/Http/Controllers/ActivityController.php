@@ -146,8 +146,17 @@ class ActivityController extends Controller
 
         $activity->ptp_check = $request['addPTP'] ?? 0;
         $activity->act_ptp_amount  = $request['ptp_amount'];
-        $activity->act_ptp_date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date']) ?? $request['ptp_payment_date'];
-        $activity->act_ptp_retire_date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date'])->addDay() ?? $request['ptp_payment_date'];
+        if (!empty($request['ptp_payment_date']) && \DateTime::createFromFormat('d-m-Y', $request['ptp_payment_date'])) {
+            $date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date']);
+            $activity->act_ptp_date = $date;
+            $activity->act_ptp_retire_date = $date->copy()->addDay();
+        } else {
+            $activity->act_ptp_date = null;
+            $activity->act_ptp_retire_date = null;
+        }
+
+        // $activity->act_ptp_date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date']) ?? $request['ptp_payment_date'];
+        // $activity->act_ptp_retire_date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date'])->addDay() ?? $request['ptp_payment_date'];
 
         $activity->ptp_check = $request['addPayment'] ?? 0;
         $activity->act_payment_amount  = $request['payment_amount'];
@@ -250,9 +259,19 @@ class ActivityController extends Controller
             $leadDetails->call_disposition_id = $request['call_disposition'];
 
             if ($request['addPTP'] == 1) {
-                $leadDetails->last_ptp_amount = $request['ptp_amount'];
-                $leadDetails->last_ptp_date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date']) ?? $request['ptp_payment_date'];;
-                $leadDetails->last_retire_date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date'])->addDay() ?? $request['ptp_payment_date'];
+                // $leadDetails->last_ptp_amount = $request['ptp_amount'];
+                // $leadDetails->last_ptp_date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date']) ?? $request['ptp_payment_date'];;
+                // $leadDetails->last_retire_date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date'])->addDay() ?? $request['ptp_payment_date'];
+
+
+                if (!empty($request['ptp_payment_date']) && \DateTime::createFromFormat('d-m-Y', $request['ptp_payment_date'])) {
+                    $date = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date']);
+                    $activity->act_ptp_date = $date;
+                    $activity->act_ptp_retire_date = $date->copy()->addDay();
+                } else {
+                    $activity->act_ptp_date = null;
+                    $activity->act_ptp_retire_date = null;
+                }
             }
 
 
