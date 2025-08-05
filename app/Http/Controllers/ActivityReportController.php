@@ -143,7 +143,7 @@ class ActivityReportController extends Controller
         // Apply Ticket Number Filter
         if ($request->filled('ticket_no')) {
             $ticketNumbers = array_map('trim', explode(',', $request->ticket_no));
-            $query->whereIn('leads.ticket_no', $ticketNumbers);
+            $query->whereIn('activities.lead_id', $ticketNumbers);
         }
 
         // Apply Activity Type Filter

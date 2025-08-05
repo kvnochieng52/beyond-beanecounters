@@ -65,7 +65,7 @@ class ActivityReportExport implements FromCollection, WithHeadings, WithMapping,
     public function map($activity): array
     {
         return [
-            $activity->ticket_number,
+            $activity->lead_id,
             $activity->activity_title,
             $activity->description,
             $activity->activity_type_title,
