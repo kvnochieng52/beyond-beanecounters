@@ -149,6 +149,7 @@ class ActivityReportController extends Controller
         // Apply Activity Type Filter
         if ($request->filled('activity_type') && is_array($request->activity_type)) {
             $activityTypes = array_filter($request->activity_type);
+
             if (!empty($activityTypes)) {
                 $query->whereIn('activities.activity_type_id', $activityTypes);
             }
@@ -156,7 +157,11 @@ class ActivityReportController extends Controller
 
         // Apply Agent Filter
         if ($request->filled('agent') && is_array($request->agent)) {
+
+
             $agents = array_filter($request->agent);
+            dd($agents = array_filter($request->agent));
+
             if (!empty($agents)) {
                 $query->whereIn('activities.assigned_user_id', $agents);
             }
@@ -165,6 +170,8 @@ class ActivityReportController extends Controller
         // Apply Institution Filter
         if ($request->filled('institution') && is_array($request->institution)) {
             $institutions = array_filter($request->institution);
+
+            dd($institutions);
             if (!empty($institutions)) {
                 $query->whereIn('leads.institution_id', $institutions);
             }

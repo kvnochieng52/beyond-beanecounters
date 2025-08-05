@@ -60,9 +60,9 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="activity_type">Select Activity Type (Leave Blank for All)</label>
-                                <select multiple class="form-control select2 @error('activity_type') is-invalid @enderror"
-                                    id="activity_type" name="activity_type">
+                                <label for="activity_type[]">Select Activity Type (Leave Blank for All)</label>
+                                <select multiple class="form-control select2 @error('activity_type[]') is-invalid @enderror"
+                                    id="activity_type[]" name="activity_type[]">
                                     <option value="">-- Select Agent (Leave Blank for All) --</option>
                                     @foreach ($actvityTypes as $key => $activity_type)
                                         <option value="{{ $key }}">
@@ -70,7 +70,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('activity_type')
+                                @error('activity_type[]')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -85,9 +85,9 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="agent">Select Agent(Leave Blank for All)</label>
-                                <select multiple class="form-control select2 @error('agent') is-invalid @enderror"
-                                    id="agent" name="agent">
+                                <label for="agent[]">Select Agent(Leave Blank for All)</label>
+                                <select multiple class="form-control select2 @error('agent[]') is-invalid @enderror"
+                                    id="agent[]" name="agent[]">
                                     <option value="">-- Select Agent (Leave Blank for All) --</option>
                                     @foreach ($agentsList as $key => $agent)
                                         <option value="{{ $key }}">
@@ -95,7 +95,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('agent')
+                                @error('agent[]')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -111,9 +111,9 @@
 
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="institution">Select Institution(Leave Blank for All)</label>
-                                <select multiple class="form-control select2 @error('institution') is-invalid @enderror"
-                                    id="institution" name="institution">
+                                <label for="institution[]">Select Institution(Leave Blank for All)</label>
+                                <select multiple class="form-control select2 @error('institution[]') is-invalid @enderror"
+                                    id="institution[]" name="institution[]">
                                     <option value="">-- Select Agent (Leave Blank for All) --</option>
                                     @foreach ($institutions as $key => $institution)
                                         <option value="{{ $key }}">
@@ -121,7 +121,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('institution')
+                                @error('institution[]')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -138,9 +138,9 @@
 
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="institution">Select Call Dispositions(leave blank for all)</label>
-                                <select multiple class="form-control select2 @error('disposition') is-invalid @enderror"
-                                    id="disposition" name="disposition">
+                                <label for="disposition[]">Select Call Dispositions(leave blank for all)</label>
+                                <select multiple class="form-control select2 @error('disposition[]') is-invalid @enderror"
+                                    id="disposition[]" name="disposition[]">
                                     <option value="">-- Select Agent (Leave Blank for All) --</option>
                                     @foreach ($call_dispositions as $key => $disposition)
                                         <option value="{{ $key }}">
@@ -148,7 +148,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('disposition')
+                                @error('disposition[]')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
