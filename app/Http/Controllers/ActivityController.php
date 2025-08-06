@@ -204,7 +204,7 @@ class ActivityController extends Controller
 
         if ($request['activityType'] == 8) {
             $text = new Text();
-            $text->text_title = "ACTIVITY: " . $request['activity_title'];
+            $text->text_title = "ACTIVITY: " . $request['sms_template'];
             $text->contact_type = 'manual';
             $text->message = $request['description'];
             $text->contacts_count = 1;

@@ -70,13 +70,13 @@
                                 </li>
 
 
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="nav-link {{ request()->get('section') == 'call-disposition' ? 'active' : '' }}"
                                         id="custom-tabs-four-transaction-call-disposition-tab"
                                         href="/lead/{{ $leadDetails->id }}?section=call-disposition" role="tab"
                                         aria-controls="custom-tabs-four-transaction-history" aria-selected="false">
                                         CALL DISPOSITION</a>
-                                </li>
+                                </li> --}}
 
                                 <li class="nav-item">
                                     <a class="nav-link {{ request()->get('section') == 'transactions' ? 'active' : '' }}"
