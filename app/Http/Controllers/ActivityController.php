@@ -276,7 +276,7 @@ class ActivityController extends Controller
             }
 
 
-            $leadDetails = Lead::where('id', $request['leadID'])->first();
+            // $leadDetails = Lead::where('id', $request['leadID'])->first();
 
 
             if ($leadDetails->balance <= 0) {
