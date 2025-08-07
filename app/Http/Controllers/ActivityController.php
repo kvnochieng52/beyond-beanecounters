@@ -255,7 +255,7 @@ class ActivityController extends Controller
             $transaction->save();
 
             $leadDetails = Lead::where('id', $request['leadID'])->first();
-            $leadDetails->balance = $leadDetails->balance - $request['amount'];
+            $leadDetails->balance = $leadDetails->balance - $request['payment_amount'];
 
             $leadDetails->call_disposition_id = $request['call_disposition'];
 
