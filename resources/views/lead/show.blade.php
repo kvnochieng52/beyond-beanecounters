@@ -756,7 +756,7 @@
                 }
 
 
-                if (activityType == 4 || activityType == 19 || activityType == 8 || activityType == 23 ||
+                if (activityType == 4 || activityType == 19 || activityType == 23 ||
                     activityType == 28 || activityType == 29) {
                     $('.add_ptp_checkbox').show();
                     $('.add_payment_checkbox').show();
