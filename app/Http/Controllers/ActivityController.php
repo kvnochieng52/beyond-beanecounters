@@ -15,6 +15,7 @@ use App\Models\ActivityStatus;
 use App\Models\Lead;
 use App\Models\LeadStatus;
 use App\Models\PaymentMethod;
+use App\Models\Ptp;
 use App\Models\Text;
 use App\Models\TextStatus;
 use App\Models\Transaction;
@@ -235,7 +236,7 @@ class ActivityController extends Controller
 
 
 
-        if ($request['activityType'] == 19) {
+        if ($request['activityType'] == 19 || $request['activityType'] == 16 || $request['activityType'] == 5 || $request['activityType'] == 28) {
 
             $transTypeDetails = TransactionType::where('id', TransactionType::PAYMENT)->first();
             $paymentMethodDetails = PaymentMethod::where('id', $request['payment_method'])->first();
@@ -275,6 +276,8 @@ class ActivityController extends Controller
             }
 
 
+            $leadDetails = Lead::where('id', $request['leadID'])->first();
+
 
             if ($leadDetails->balance <= 0) {
                 $leadDetails->status_id = LeadStatus::PAID;
@@ -284,8 +287,47 @@ class ActivityController extends Controller
                 // $leadDetails->save();
             }
 
+
+
+
             $leadDetails->save();
         }
+
+
+
+        if ($request['activityType'] == 4) {
+            $ptp = new Ptp();
+            $ptp->lead_id = $request['leadID'];
+            $ptp->ptp_date = Carbon::parse($request['ptp_payment_date'])->format('Y-m-d');
+            $ptp->ptp_amount = $request['ptp_amount'];
+            $ptp->ptp_expiry_date = Carbon::parse($request['ptp_payment_date'])->addDay()->format('Y-m-d');
+            $ptp->description = $request['description'];
+            $ptp->created_by = Auth::user()->id;
+            $ptp->updated_by = Auth::user()->id;
+            $ptp->save();
+        }
+
+
+
+        if ($request['activityType'] == 23) {
+            $leadDetails = Lead::where('id', $request['leadID'])->first();
+            $leadDetails->status_id = LeadStatus::PAID;
+            $leadDetails->save();
+        }
+
+        if ($request['activityType'] == 24) {
+            $leadDetails = Lead::where('id', $request['leadID'])->first();
+            $leadDetails->status_id = 5;
+            $leadDetails->save();
+        }
+
+        if ($request['activityType'] == 26) {
+            $leadDetails = Lead::where('id', $request['leadID'])->first();
+            $leadDetails->status_id = 6;
+            $leadDetails->save();
+        }
+
+
 
 
         return redirect('/lead/' . $request['leadID'] . '?section=activities')->with('success', 'Activity Saved Successfully');

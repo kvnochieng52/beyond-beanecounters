@@ -58,7 +58,8 @@ class ActivityReportExport implements FromCollection, WithHeadings, WithMapping,
             'Payment Amount',
             'Payment Trans ID',
             'Payment Method',
-            'Text Status'
+            'Payment Date',
+            'Text Status',
         ];
     }
 
@@ -89,6 +90,7 @@ class ActivityReportExport implements FromCollection, WithHeadings, WithMapping,
             $activity->payment_check ? 'Yes' : 'No',
             $activity->act_payment_amount ? number_format($activity->act_payment_amount, 2) : '',
             $activity->act_payment_transid,
+            $activity->created_at,
             $activity->method_name,
             //$this->getPaymentMethod($activity->act_payment_method),
             $activity->text_status_name,

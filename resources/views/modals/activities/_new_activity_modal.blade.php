@@ -14,33 +14,21 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 {!! Html::label('Name', 'name') !!}
-                                {!! Html::text('name')->class('form-control')
-                                ->placeholder('Enter First Name')
-                                ->value($leadDetails->title)
-                                ->attribute('readonly', 'readonly')
-                                !!}
+                                {!! Html::text('name')->class('form-control')->placeholder('Enter First Name')->value($leadDetails->title)->attribute('readonly', 'readonly') !!}
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
                                 {!! Html::label('telephone', 'telephone') !!}
-                                {!! Html::text('telephone')->class('form-control')
-                                ->placeholder('Enter First telephone')
-                                ->value($leadDetails->telephone)
-                                ->attribute('readonly', 'readonly')
-                                !!}
+                                {!! Html::text('telephone')->class('form-control')->placeholder('Enter First telephone')->value($leadDetails->telephone)->attribute('readonly', 'readonly') !!}
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
                                 {!! Html::label('email', 'email') !!}
-                                {!! Html::text('email')->class('form-control')
-                                ->placeholder('Enter First email')
-                                ->value($leadDetails->email)
-                                ->attribute('readonly', 'readonly')
-                                !!}
+                                {!! Html::text('email')->class('form-control')->placeholder('Enter First email')->value($leadDetails->email)->attribute('readonly', 'readonly') !!}
                             </div>
                         </div>
                     </div>
@@ -66,64 +54,61 @@
 
 
                     <div class="row">
-                       
-                            <div class="col-md-12  pt-3">
-                                    {!! Html::label('Select the Activity Type/Category*', 'activityType') !!}
-                                    {!! Html::select('activityType', $activityTypes)->class('form-control
-                                    select2')->id('activityType')->placeholder('--Specify--')->style("width:100%") !!}
-                            
-                            
+
+                        <div class="col-md-12  pt-3">
+                            {!! Html::label('Select the Activity Type/Category*', 'activityType') !!}
+                            {!! Html::select('activityType', $activityTypes)->class(
+                                    'form-control
+                                                                                                                                                                                                                                                                    select2',
+                                )->id('activityType')->placeholder('--Specify--')->style('width:100%') !!}
+
+
                         </div>
                     </div>
 
-                    <div class="row sms_template_row" id="sms_template_row" style="display: none" >
-                        
-                            <div class="col-md-12 sms_template-group pt-3">
-                                {!! Html::label('Select SMS Template', 'sms_template') !!}
-                                {!! Html::select('sms_template', $sms_templates)->class('form-control
-                                select2')->id('sms_template')->placeholder('--Specify--')->style("width:100%") !!}
-                            </div>
-                        
+                    <div class="row sms_template_row" id="sms_template_row" style="display: none">
+
+                        <div class="col-md-12 sms_template-group pt-3">
+                            {!! Html::label('Select SMS Template', 'sms_template') !!}
+                            {!! Html::select('sms_template', $sms_templates)->class(
+                                    'form-control
+                                                                                                                                                                                                                                                                select2',
+                                )->id('sms_template')->placeholder('--Specify--')->style('width:100%') !!}
+                        </div>
+
                     </div>
 
 
-                    <div class="row">
+                    <div class="row add_ptp_checkbox" style="display: none">
                         <div class="col-md-12 mt-3">
-                    <input type="checkbox" id="addPTP" name="addPTP" value="1">
-                    <label for="addPTP" title="">
-                        Add Promised To Pay(PTP)
-                    </label>
-                    </div>
+                            <input type="checkbox" id="addPTP" name="addPTP" value="1">
+                            <label for="addPTP" title="">
+                                Add Promised To Pay(PTP)
+                            </label>
+                        </div>
                     </div>
 
                     <div class="row ptp_row mt-3" id="ptp_row" style="display:none">
                         <div class="col-md-4">
                             <div class="form-group">
-                                {!! Html::label('PTP Amount('.$leadDetails->currency_name.')*', 'ptp_amount') !!}
-                                {!! Html::text('ptp_amount')
-                                ->type('number') // Ensures only numbers are allowed
-                                ->class('form-control')
-                                ->placeholder('Enter The Debt Amount')
-                                ->attribute('step', '0.01') // Allows decimals (e.g., 10.50)
-                                ->attribute('min', '0') // Prevents negative values
-                                //->required()
-                    
-                                !!}
+                                {!! Html::label('PTP Amount(' . $leadDetails->currency_name . ')*', 'ptp_amount') !!}
+                                {!! Html::text('ptp_amount')->type('number'); // Ensures only numbers are allowed->class('form-control')->placeholder('Enter The Debt Amount')->attribute('step', '0.01') // Allows decimals (e.g., 10.50)->attribute('min', '0'); // Prevents negative values
+                                //->required() !!}
                             </div>
                         </div>
-                    
+
                         <div class="col-md-8">
                             <div class="form-group">
                                 {!! Html::label('PTP Payment Date*', 'ptp_payment_date') !!}
-                                <input type="text" class="form-control date" placeholder="Payment Date" name="ptp_payment_date" id="ptp_payment_date"
-                                    autocomplete="off">
-                    
+                                <input type="text" class="form-control date" placeholder="Payment Date"
+                                    name="ptp_payment_date" id="ptp_payment_date" autocomplete="off">
+
                             </div>
                         </div>
                     </div>
 
 
-                    <div class="row">
+                    <div class="row add_payment_checkbox" style="display: none">
                         <div class="col-md-12 mt-3">
                             <input type="checkbox" id="addPayment" name="addPayment" value="1">
                             <label for="addPayment" title="">
@@ -135,39 +120,24 @@
                     <div class="row payment_row mt-3" id="payment_row" style="display:none">
                         <div class="col-md-4">
                             <div class="form-group">
-                                {!! Html::label('Enter Amount('.$leadDetails->currency_name.')*', 'payment_amount') !!}
-                                {!! Html::text('payment_amount')
-                                ->type('number') // Ensures only numbers are allowed
-                                ->class('form-control')
-                                ->placeholder('Enter The Debt Amount')
-                                ->attribute('step', '0.01') // Allows decimals (e.g., 10.50)
-                                ->attribute('min', '0') // Prevents negative values
-                              //  ->required()
-                        
-                                !!}
+                                {!! Html::label('Enter Amount(' . $leadDetails->currency_name . ')*', 'payment_amount') !!}
+                                {!! Html::text('payment_amount')->type('number'); // Ensures only numbers are allowed->class('form-control')->placeholder('Enter The Debt Amount')->attribute('step', '0.01') // Allows decimals (e.g., 10.50)->attribute('min', '0'); // Prevents negative values
+                                //->required() !!}
                             </div>
                         </div>
-                        
+
                         <div class="col-md-4">
                             <div class="form-group">
                                 {!! Html::label('Transaction ID', 'payment_transID') !!}
-                                {!! Html::text('payment_transID')->class('form-control')
-                                ->placeholder('Enter Transaction ID')
-                        
-                                !!}
+                                {!! Html::text('payment_transID')->class('form-control')->placeholder('Enter Transaction ID') !!}
                             </div>
                         </div>
-                        
+
                         <div class="col-md-4">
                             <div class="form-group">
                                 {!! Html::label('Payment Method*', 'payment_method') !!}
-                                {!!
-                                Html::select('payment_method', $paymentMethods)
-                                ->class('form-control custom-select')
-                                ->placeholder('--Specify--')
-                                ->style("width:100%")
-                               // ->required()
-                                !!}
+                                {!! Html::select('payment_method', $paymentMethods)->class('form-control custom-select')->placeholder('--Specify--')->style('width:100%');
+                                //->required() !!}
                             </div>
                         </div>
 
@@ -190,10 +160,7 @@
                         <div class="col-md-12">
                             <div class="form-group pt-3">
                                 {!! Html::label('Text/Description*', 'description') !!}
-                                {!! Html::textarea('description')
-                                ->class('form-control')->id('description')
-                                ->placeholder('Enter description')
-                                ->rows(4) !!}
+                                {!! Html::textarea('description')->class('form-control')->id('description')->placeholder('Enter description')->rows(4) !!}
                             </div>
                         </div>
                     </div>
@@ -202,19 +169,21 @@
                     <div class="row">
                         <div class="col-md-12 call-disposition-group pt-3 pb-3">
                             {!! Html::label('Call Disposition*', 'call_disposition') !!}
-                            {!! Html::select('call_disposition', $callDispositions)->class('form-control
-                            call-disposition-select2')->id('call_disposition')->placeholder('--Select Call
-                            Disposition--')->style("width:100%") !!}
+                            {!! Html::select('call_disposition', $callDispositions)->class(
+                                    'form-control
+                                                                                                                                                                                                                                                            call-disposition-select2',
+                                )->id('call_disposition')->placeholder(
+                                    '--Select Call
+                                                                                                                                                                                                                                                            Disposition--',
+                                )->style('width:100%') !!}
                         </div>
-                    
+
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 priority-group">
                             {!! Html::label('Priority*', 'priority') !!}
-                            {!! Html::select('priority',
-                            $priorities)->class('form-control')->id('priority')->placeholder('--Specify--')->style("width:100%")
-                            !!}
+                            {!! Html::select('priority', $priorities)->class('form-control')->id('priority')->placeholder('--Specify--')->style('width:100%') !!}
                         </div>
 
                         <div class="col-md-4">
@@ -248,8 +217,9 @@
                                     <div class="d-flex gap-2">
                                         <input type="text" class="form-control date" placeholder="Due/End Date"
                                             name="end_date" id="end_date" autocomplete="off">
-                                        <input type="text" class="form-control timepicker" placeholder="Due/End Time"
-                                            name="end_time" id="end_time" autocomplete="off">
+                                        <input type="text" class="form-control timepicker"
+                                            placeholder="Due/End Time" name="end_time" id="end_time"
+                                            autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -259,7 +229,7 @@
                     </div>
 
 
-                    
+
 
 
 
@@ -267,22 +237,24 @@
 
                         <div class="col-md-4 department-group pt-3">
                             {!! Html::label('Assign Department', 'department') !!}
-                            {!! Html::select('department', $departments)->class('form-control
-                            assigned-department-select2')->id('department')->placeholder('--Specify--')->style("width:100%") !!}
+                            {!! Html::select('department', $departments)->class(
+                                    'form-control
+                                                                                                                                                                                                                                                            assigned-department-select2',
+                                )->id('department')->placeholder('--Specify--')->style('width:100%') !!}
                         </div>
 
                         <div class="col-md-4 agent-group pt-3">
                             {!! Html::label('Assign Agent', 'agent') !!}
-                            {!! Html::select('agent', $agentsList)->class('form-control
-                            assigned-agent-select2')->id('agent')->placeholder('--Specify--')->style("width:100%") !!}
+                            {!! Html::select('agent', $agentsList)->class(
+                                    'form-control
+                                                                                                                                                                                                                                                            assigned-agent-select2',
+                                )->id('agent')->placeholder('--Specify--')->style('width:100%') !!}
                         </div>
 
 
                         <div class="col-md-4 status-group pt-3">
                             {!! Html::label('Status*', 'status') !!}
-                            {!! Html::select('status',
-                            $activityStatuses)->class('form-control')->id('status')->placeholder('--Specify--')->style("width:100%")
-                            !!}
+                            {!! Html::select('status', $activityStatuses)->class('form-control')->id('status')->placeholder('--Specify--')->style('width:100%') !!}
                         </div>
 
                     </div>
@@ -319,7 +291,7 @@
                 </div>
             </div>
 
-            <input type="hidden" name="leadID" value="{{$leadDetails->id}}">
+            <input type="hidden" name="leadID" value="{{ $leadDetails->id }}">
         </form>
     </div>
 </div>

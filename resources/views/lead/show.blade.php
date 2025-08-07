@@ -83,16 +83,16 @@
                                         id="custom-tabs-four-transaction-transactions-tab"
                                         href="/lead/{{ $leadDetails->id }}?section=transactions" role="tab"
                                         aria-controls="custom-tabs-four-transaction-history" aria-selected="false">
-                                        TRANSACTIONS</a>
+                                        PAYMENTS</a>
                                 </li>
 
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="nav-link {{ request()->get('section') == 'status' ? 'active' : '' }}"
                                         id="custom-tabs-four-status-tab" role="tab"
                                         aria-controls="custom-tabs-four-status"
                                         href="/lead/{{ $leadDetails->id }}?section=status" aria-selected="false">
                                         STATUS</a>
-                                </li>
+                                </li> --}}
 
 
 
@@ -754,6 +754,18 @@
                     // Remove visual indication
                     $('label[for="addPayment"]').css('opacity', '1');
                 }
+
+
+                if (activityType == 4 || activityType == 19 || activityType == 8 || activityType == 23 ||
+                    activityType == 28 || activityType == 29) {
+                    $('.add_ptp_checkbox').show();
+                    $('.add_payment_checkbox').show();
+
+                } else {
+                    $('.add_ptp_checkbox').hide();
+                    $('.add_payment_checkbox').hide();
+                }
+
             }
 
             // On activityType change
@@ -775,24 +787,24 @@
 
                 if (selectedValue == 'introduction') {
                     sms_message =
-                        "Dear {{ $leadDetails->title }}, Your debt for {{ $leadDetails->institution_name }}, of {{ $leadDetails->currency_name }} {{ $leadDetails->amount }} has been forwarded to Beyond BeanCounters for recovery. Urgently pay via {{ $leadDetails->how_to_pay_instructions }}, account: {{ $leadDetails->account_number }}, or reach out to us to discuss a repayment plan, 0701967176.";
+                        "Dear {{ $leadDetails->title }}, Your debt for {{ $leadDetails->institution_name }}, of {{ $leadDetails->currency_name }} {{ $leadDetails->balance }} has been forwarded to Beyond BeanCounters for recovery. Urgently pay via {{ $leadDetails->how_to_pay_instructions }}, account: {{ $leadDetails->account_number }}, or reach out to us to discuss a repayment plan, 0701967176.";
                 }
 
 
                 if (selectedValue == 'no_anwser') {
                     sms_message =
-                        "{{ $leadDetails->title }}, we have tried calling you without success. Kindly but urgently get in touch with us to discuss your debt with {{ $leadDetails->institution_name }} of {{ $leadDetails->currency_name }} {{ $leadDetails->amount }}. The debt ought to be settled to avoid additional penalties and other charges. Pay through {{ $leadDetails->how_to_pay_instructions }}, account number {{ $leadDetails->account_number }}. Notify us on 0701967176.";
+                        "{{ $leadDetails->title }}, we have tried calling you without success. Kindly but urgently get in touch with us to discuss your debt with {{ $leadDetails->institution_name }} of {{ $leadDetails->currency_name }} {{ $leadDetails->balance }}. The debt ought to be settled to avoid additional penalties and other charges. Pay through {{ $leadDetails->how_to_pay_instructions }}, account number {{ $leadDetails->account_number }}. Notify us on 0701967176.";
                 }
 
                 if (selectedValue == 'ptp_reminder') {
                     sms_message =
-                        "Dear {{ $leadDetails->title }}, remember to make payment for Your debt for {{ $leadDetails->institution_name }}, of {{ $leadDetails->currency_name }} {{ $leadDetails->amount }} today. {{ $leadDetails->how_to_pay_instructions }}, account: {{ $leadDetails->account_number }}. Notify us on 0701967176";
+                        "Dear {{ $leadDetails->title }}, remember to make payment for Your debt for {{ $leadDetails->institution_name }}, of {{ $leadDetails->currency_name }} {{ $leadDetails->balance }} today. {{ $leadDetails->how_to_pay_instructions }}, account: {{ $leadDetails->account_number }}. Notify us on 0701967176";
                 }
 
 
                 if (selectedValue == 'refusal_to_pay') {
                     sms_message =
-                        "{{ $leadDetails->title }}, Despite previous reminders, your {{ $leadDetails->institution_name }} debt for {{ $leadDetails->currency_name }} {{ $leadDetails->amount }}, remains uncleared. Be strongly advised that failure to do so will force us to recover the debt at your cost, using our Field Collectors. Pay through {{ $leadDetails->how_to_pay_instructions }}, account {{ $leadDetails->account_number }}. Notify us on 0701967176.";
+                        "{{ $leadDetails->title }}, Despite previous reminders, your {{ $leadDetails->institution_name }} debt for {{ $leadDetails->currency_name }} {{ $leadDetails->balance }}, remains uncleared. Be strongly advised that failure to do so will force us to recover the debt at your cost, using our Field Collectors. Pay through {{ $leadDetails->how_to_pay_instructions }}, account {{ $leadDetails->account_number }}. Notify us on 0701967176.";
                 }
 
 

@@ -3,9 +3,9 @@
         <div class="d-flex justify-content-between align-items-center pb-3">
             <h2 class="card-title pb-2">Promised to Pay</h2>
 
-            <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#new_ptp_modal">
+            {{-- <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#new_ptp_modal">
                 <i class="fa fa-fw fa-plus"></i> Add New PTP
-            </a>
+            </a> --}}
         </div>
     </div>
 </div>
