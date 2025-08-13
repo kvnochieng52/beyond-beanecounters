@@ -327,7 +327,11 @@ class ActivityController extends Controller
             $leadDetails->save();
         }
 
-
+        $leadDetails = Lead::where('id', $request['leadID'])->first();
+        $leadDetails->call_disposition_id = $request['call_disposition'];
+        $leadDetails->updated_by = Auth::user()->id;
+        $leadDetails->updated_at = Carbon::now();
+        $leadDetails->save();
 
 
         return redirect('/lead/' . $request['leadID'] . '?section=activities')->with('success', 'Activity Saved Successfully');
