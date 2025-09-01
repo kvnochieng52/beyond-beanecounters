@@ -13,9 +13,11 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use AfricasTalking\SDK\AfricasTalking;
+use App\Models\Activity;
 use App\Models\BSms;
 use App\Models\Lead;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class SendSmsJob implements ShouldQueue
 {
@@ -151,6 +153,26 @@ class SendSmsJob implements ShouldQueue
                         'message' => $sms_message,
                         'ticket_no' => $ticketNo // Add ticket number for reference
                     ];
+
+
+
+
+                    $activity = new Activity();
+                    $activity->activity_type_id = 8;
+                    $activity->activity_title =  "NEW SMS";
+                    $activity->description = $sms_message;
+                    $activity->lead_id = $ticketNo;
+                    $activity->assigned_user_id =   $this->text->created_by;
+                    $activity->status_id = 2; // Default to first status if not provided
+                    $activity->ref_text_id = $this->text->id;
+
+                    $activity->created_by =  $this->text->created_by;
+                    $activity->updated_by =  $this->text->created_by;
+                    $activity->save();
+
+
+
+
                     $processedCount++;
                 } catch (Exception $e) {
                     Log::error("Error processing row for ticket {$ticketNo}: " . $e->getMessage());
@@ -219,9 +241,6 @@ class SendSmsJob implements ShouldQueue
 
     private function processBulkCsvContacts()
     {
-
-
-
         $csvPath = public_path(ltrim($this->text->csv_file_path, '/'));
         if (!file_exists($csvPath)) {
             Log::error("CSV file not found: {$csvPath}");
@@ -248,10 +267,20 @@ class SendSmsJob implements ShouldQueue
 
             $headerMap = array_map(fn($header) => strtolower(trim($header)), $headers);
             $phoneColumnIndex = null;
+            $ticketNoColumnIndex = null;
 
+            // Find phone column
             foreach ($headerMap as $index => $header) {
                 if (in_array($header, $validPhoneColumns)) {
                     $phoneColumnIndex = $index;
+                    break;
+                }
+            }
+
+            // Find ticket no column
+            foreach ($headerMap as $index => $header) {
+                if ($header === 'ticket no') {
+                    $ticketNoColumnIndex = $index;
                     break;
                 }
             }
@@ -261,18 +290,127 @@ class SendSmsJob implements ShouldQueue
                 return [];
             }
 
+            $processedCount = 0;
+            $errorCount = 0;
+
             while (($row = fgetcsv($handle)) !== false) {
-                $contactData = array_combine($headers, $row);
-                $phone = trim($row[$phoneColumnIndex] ?? '');
-                if (!empty($phone)) {
-                    $message = $this->replacePlaceholders($this->text->message, $contactData);
-                    $contacts[] = ['phone' => $phone, 'message' => $message];
+                try {
+                    $contactData = array_combine($headers, $row);
+                    $phone = trim($row[$phoneColumnIndex] ?? '');
+
+                    if (!empty($phone)) {
+                        $message = $this->replacePlaceholders($this->text->message, $contactData);
+                        $ticketNo = null;
+
+                        // Get ticket number if column exists
+                        if ($ticketNoColumnIndex !== null) {
+                            $ticketNo = trim($row[$ticketNoColumnIndex] ?? '');
+                        }
+
+                        $contacts[] = [
+                            'phone' => $phone,
+                            'message' => $message,
+                            'ticket_no' => $ticketNo // Add ticket number for reference
+                        ];
+
+                        // Create activity record if ticket number exists
+                        if (!empty($ticketNo)) {
+                            try {
+                                $activity = new Activity();
+                                $activity->activity_type_id = 8;
+                                $activity->activity_title = "NEW SMS";
+                                $activity->description = $message;
+                                $activity->lead_id = $ticketNo;
+                                $activity->assigned_user_id =  $this->text->created_by;
+                                $activity->status_id = 2; // Default to first status if not provided
+                                $activity->ref_text_id = $this->text->id;
+                                $activity->created_by =  $this->text->created_by;
+                                $activity->updated_by =  $this->text->created_by;
+                                $activity->save();
+
+                                Log::info("Activity created for ticket number: {$ticketNo}");
+                            } catch (Exception $e) {
+                                Log::error("Error creating activity for ticket {$ticketNo}: " . $e->getMessage());
+                                $errorCount++;
+                            }
+                        }
+
+                        $processedCount++;
+                    }
+                } catch (Exception $e) {
+                    Log::error("Error processing bulk CSV row: " . $e->getMessage());
+                    $errorCount++;
+                    continue;
                 }
             }
             fclose($handle);
+
+            Log::info("Bulk CSV processing completed. Processed: {$processedCount}, Errors: {$errorCount}, Total contacts: " . count($contacts));
         }
         return $contacts;
     }
+
+
+
+
+
+
+    // private function processBulkCsvContacts()
+    // {
+
+
+
+    //     $csvPath = public_path(ltrim($this->text->csv_file_path, '/'));
+    //     if (!file_exists($csvPath)) {
+    //         Log::error("CSV file not found: {$csvPath}");
+    //         return [];
+    //     }
+
+    //     $validPhoneColumns = [
+    //         'contact',
+    //         'contacts',
+    //         'telephone',
+    //         'mobile',
+    //         'phone number',
+    //         'phone',
+    //         'mobile number'
+    //     ];
+
+    //     $contacts = [];
+    //     if (($handle = fopen($csvPath, 'r')) !== false) {
+    //         $headers = fgetcsv($handle);
+    //         if (!$headers) {
+    //             Log::error("Invalid CSV file. No headers found.");
+    //             return [];
+    //         }
+
+    //         $headerMap = array_map(fn($header) => strtolower(trim($header)), $headers);
+    //         $phoneColumnIndex = null;
+
+    //         foreach ($headerMap as $index => $header) {
+    //             if (in_array($header, $validPhoneColumns)) {
+    //                 $phoneColumnIndex = $index;
+    //                 break;
+    //             }
+    //         }
+
+    //         if ($phoneColumnIndex === null) {
+    //             Log::error("No valid contact column found in the CSV.");
+    //             return [];
+    //         }
+
+    //         while (($row = fgetcsv($handle)) !== false) {
+    //             $contactData = array_combine($headers, $row);
+    //             $phone = trim($row[$phoneColumnIndex] ?? '');
+    //             if (!empty($phone)) {
+    //                 $message = $this->replacePlaceholders($this->text->message, $contactData);
+    //                 $contacts[] = ['phone' => $phone, 'message' => $message];
+    //             }
+    //         }
+    //         fclose($handle);
+    //     }
+    //     return $contacts;
+    // }
 
     private function replacePlaceholders($message, $contactData)
     {

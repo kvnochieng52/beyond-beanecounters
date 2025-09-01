@@ -14,6 +14,8 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ActivityReportController;
 use App\Http\Controllers\AdditionalCostRuleController;
 use App\Http\Controllers\BulkAssignController;
+use App\Http\Controllers\BulkPaymentController;
+use App\Http\Controllers\BulkStatusController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DueNotificationController;
@@ -168,6 +170,22 @@ Route::prefix('2fa')->group(
         Route::post('/resend', [TwoFactorController::class, 'resend'])->name('2fa.resend');
     }
 );
+
+
+
+
+Route::prefix('bulk-payment')->group(
+    function () {
+        Route::get('/', [BulkPaymentController::class, 'index'])->name('bulk_payment.index');
+        Route::post('bulk-payment-process', [BulkPaymentController::class, 'bulkPaymentProcess'])->name('bulk-payment-process');
+    }
+);
+
+
+Route::prefix('bulk-status')->group(function () {
+    Route::get('/', [BulkStatusController::class, 'index'])->name('bulk_status.index');
+    Route::post('bulk-status-process', [BulkStatusController::class, 'bulkStatusProcess'])->name('bulk-status-process');
+});
 
 
 Route::post('/text/approve-decline', [TextController::class, 'approveDecline'])->name('text.approveDecline');

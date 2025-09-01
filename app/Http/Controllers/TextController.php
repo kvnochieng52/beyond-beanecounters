@@ -251,6 +251,7 @@ class TextController extends Controller
     }
 
 
+
     public function uploadCsv(Request $request)
     {
         $request->validate([
@@ -303,11 +304,31 @@ class TextController extends Controller
         // Convert columns to lowercase for case-insensitive check
         $columnsLower = array_map('strtolower', $columns);
 
+        // Check for phone column
         $hasPhoneColumn = collect($columnsLower)->contains(fn($column) => in_array($column, $validPhoneColumns));
 
         if (!$hasPhoneColumn) {
+            // Delete the uploaded file if validation fails
+            if (file_exists($csvPath)) {
+                unlink($csvPath);
+            }
+
             return response()->json([
                 'error' => 'CSV has no phone number column. Please ensure your contacts column is named one of: ' . implode(', ', $validPhoneColumns)
+            ], 422);
+        }
+
+        // Check for Ticket No column
+        $hasTicketNoColumn = collect($columnsLower)->contains('ticket no');
+
+        if (!$hasTicketNoColumn) {
+            // Delete the uploaded file if validation fails
+            if (file_exists($csvPath)) {
+                unlink($csvPath);
+            }
+
+            return response()->json([
+                'error' => 'CSV must contain a "Ticket No" column. Please ensure your CSV has a column named "Ticket No".'
             ], 422);
         }
 
@@ -318,6 +339,75 @@ class TextController extends Controller
             'columns' => $columns
         ]);
     }
+
+
+    // public function uploadCsv(Request $request)
+    // {
+    //     $request->validate([
+    //         'csv_file' => 'required|mimes:csv,txt|max:2048', // Max 2MB
+    //     ]);
+
+    //     $file = $request->file('csv_file');
+    //     $originalName = $file->getClientOriginalName();
+    //     $fileName = time() . '_' . Str::slug(pathinfo($originalName, PATHINFO_FILENAME)) . '.csv';
+
+    //     // Store CSV in public/csv_file_uploads
+    //     $destinationPath = public_path('csv_file_uploads');
+    //     if (!file_exists($destinationPath)) {
+    //         mkdir($destinationPath, 0755, true); // Create the directory if it doesn't exist
+    //     }
+
+    //     $file->move($destinationPath, $fileName);
+
+    //     $relativePath = 'csv_file_uploads/' . $fileName; // Relative path without base URL
+    //     $csvPath = public_path($relativePath);
+
+    //     if (!file_exists($csvPath)) {
+    //         return response()->json(['error' => 'CSV file not found.'], 404);
+    //     }
+
+    //     $handle = fopen($csvPath, 'r');
+    //     if (!$handle) {
+    //         return response()->json(['error' => 'Unable to open CSV file.'], 500);
+    //     }
+
+    //     $columns = fgetcsv($handle); // Get header row
+    //     fclose($handle);
+
+    //     if (!$columns) {
+    //         return response()->json(['error' => 'CSV file is empty or invalid.'], 400);
+    //     }
+
+    //     $columns = array_map('trim', $columns); // Clean column names
+
+    //     $validPhoneColumns = [
+    //         'contact',
+    //         'contacts',
+    //         'telephone',
+    //         'mobile',
+    //         'phone number',
+    //         'phone',
+    //         'mobile number'
+    //     ];
+
+    //     // Convert columns to lowercase for case-insensitive check
+    //     $columnsLower = array_map('strtolower', $columns);
+
+    //     $hasPhoneColumn = collect($columnsLower)->contains(fn($column) => in_array($column, $validPhoneColumns));
+
+    //     if (!$hasPhoneColumn) {
+    //         return response()->json([
+    //             'error' => 'CSV has no phone number column. Please ensure your contacts column is named one of: ' . implode(', ', $validPhoneColumns)
+    //         ], 422);
+    //     }
+
+    //     return response()->json([
+    //         'message' => 'CSV uploaded successfully.',
+    //         'original_name' => $originalName,
+    //         'path' => $relativePath, // Return relative path only
+    //         'columns' => $columns
+    //     ]);
+    // }
 
 
 

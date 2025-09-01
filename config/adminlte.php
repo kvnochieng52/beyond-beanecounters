@@ -452,6 +452,18 @@ return [
                 ],
 
                 [
+                    'text' => 'Bulk Payment Update Tool',
+                    'url' => '/bulk-payment',
+                ],
+
+
+                [
+                    'text' => 'Bulk Status Update Tool',
+                    'url' => '/bulk-status',
+                ],
+
+
+                [
                     'text' => 'Rules/Discounts',
                     'url' => '/additional-cost-rules',
                 ],
