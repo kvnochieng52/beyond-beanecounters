@@ -28,29 +28,55 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+        $isAdmin = $user->hasRole('Admin'); // Adjust role name as needed
+        $userId = $user->id;
 
+        // Build base queries with conditions
+        $leadsQuery = $isAdmin ? Lead::query() : Lead::where('assigned_agent', $userId);
+        $smsQuery = $isAdmin ? Text::query() : Text::where('created_by', $userId);
 
+        // Get lead stats in one efficient query using conditional aggregation
+        $leadStats = $leadsQuery->selectRaw('
+        COUNT(CASE WHEN status_id = 1 THEN 1 END) as pending,
+        COUNT(CASE WHEN status_id = 2 THEN 1 END) as paid,
+        COUNT(CASE WHEN status_id = 3 THEN 1 END) as partially_paid,
+        COUNT(CASE WHEN status_id = 4 THEN 1 END) as overdue,
+        COUNT(CASE WHEN status_id = 5 THEN 1 END) as legal_escalation,
+        COUNT(CASE WHEN status_id = 6 THEN 1 END) as disputed,
+        COUNT(*) as total
+    ')->first();
+
+        // Get SMS stats in one efficient query using conditional aggregation
+        $smsStats = $smsQuery->selectRaw('
+        COUNT(CASE WHEN status = 1 THEN 1 END) as pending,
+        COUNT(CASE WHEN status = 2 THEN 1 END) as inQueue,
+        COUNT(CASE WHEN status = 3 THEN 1 END) as delivered,
+        COUNT(CASE WHEN status = 4 THEN 1 END) as undelivered
+    ')->first();
 
         return view('home')->with([
-            'totalLeads' => Lead::count(),
-            'totalAgents' => DB::table('model_has_roles')->where('role_id', 1)->count(),
-            'institutions' => Institution::count(),
+            'totalLeads' => $leadStats->total,
+            'totalAgents' => $isAdmin ? DB::table('model_has_roles')->where('role_id', 1)->count() : 0,
+            'institutions' => $isAdmin ? Institution::count() : 0,
             'leadStats' => [
-                'pending' => Lead::where('status_id', 1)->count(),
-                'paid' => Lead::where('status_id', 2)->count(),
-                'partially_paid' => Lead::where('status_id', 3)->count(),
-                'overdue' => Lead::where('status_id', 4)->count(),
-                'legal_escalation' => Lead::where('status_id', 5)->count(),
-                'disputed' => Lead::where('status_id', 6)->count(),
+                'pending' => $leadStats->pending,
+                'paid' => $leadStats->paid,
+                'partially_paid' => $leadStats->partially_paid,
+                'overdue' => $leadStats->overdue,
+                'legal_escalation' => $leadStats->legal_escalation,
+                'disputed' => $leadStats->disputed,
             ],
-            'recentLeads' => Lead::query()->orderBy('id', 'DESC')->take(5)->get(),
+            'recentLeads' => $isAdmin
+                ? Lead::orderBy('id', 'DESC')->take(5)->get()
+                : Lead::where('assigned_agent', $userId)->orderBy('id', 'DESC')->take(5)->get(),
             'smsStats' => [
-                'pending' => Text::where('status', 1)->count(),
-                'delivered' => Text::where('status', 3)->count(),
-                'undelivered' => Text::where('status', 4)->count(),
-                'inQueue' => Text::where('status', 2)->count(),
-            ]
-
+                'pending' => $smsStats->pending,
+                'delivered' => $smsStats->delivered,
+                'undelivered' => $smsStats->undelivered,
+                'inQueue' => $smsStats->inQueue,
+            ],
+            'isAdmin' => $isAdmin
         ]);
     }
 }
