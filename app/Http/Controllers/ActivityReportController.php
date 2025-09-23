@@ -113,6 +113,7 @@ class ActivityReportController extends Controller
             'institutions.institution_name',
             'leads.amount as lead_amount',
             'leads.balance as lead_balance',
+            'leads.waiver_discount as lead_waiver_discount',
             'call_dispositions.call_disposition_name',
             'text_statuses.text_status_name',
             'text_statuses.color_code as text_status_color_code',

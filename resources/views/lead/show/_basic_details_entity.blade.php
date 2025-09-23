@@ -94,6 +94,11 @@
             </tr>
 
             <tr>
+                <th>Waiver/Discount</th>
+                <td>{{ $leadDetails->currency_name }} {{ number_format($leadDetails->waiver_discount, 0) }}</td>
+            </tr>
+
+            <tr>
                 <th>Due Date</th>
                 <td>{{ \Carbon\Carbon::parse($leadDetails->due_date)->format('d-m-Y') }}</td>
             </tr>

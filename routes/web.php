@@ -23,6 +23,7 @@ use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransBulkController;
+use App\Http\Controllers\BulkWaiverDiscountController;
 
 Auth::routes();
 
@@ -186,6 +187,11 @@ Route::prefix('bulk-payment')->group(
 Route::prefix('bulk-status')->group(function () {
     Route::get('/', [BulkStatusController::class, 'index'])->name('bulk_status.index');
     Route::post('bulk-status-process', [BulkStatusController::class, 'bulkStatusProcess'])->name('bulk-status-process');
+});
+
+Route::prefix('bulk-waiver-discount')->group(function () {
+    Route::get('/', [BulkWaiverDiscountController::class, 'showUploadForm'])->name('bulk-waiver-discount.index');
+    Route::post('/upload', [BulkWaiverDiscountController::class, 'upload'])->name('bulk-waiver-discount.upload');
 });
 
 

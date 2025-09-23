@@ -31,6 +31,7 @@
                         <th>Telephone</th>
                         <th>Amount</th>
                         <th>Balance</th>
+                        <th>Waiver/Discount</th>
                         <th>PTP</th>
                         <th>PTP Retire Date</th>
                         <th>Priority</th>
@@ -98,8 +99,8 @@
                     return `${row.currency_name} ${Number(data).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
                 }
             },
-            { 
-                data: 'balance', 
+            {
+                data: 'balance',
                 name: 'balance',
                 render: function(data, type, row) {
                     return `${row.currency_name} ${Number(data).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
@@ -107,8 +108,16 @@
                 }
             },
 
-            { 
-                data: 'ptp_amount', 
+            {
+                data: 'waiver_discount',
+                name: 'waiver_discount',
+                render: function(data, type, row) {
+                    return `${row.currency_name} ${Number(data || 0).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+                }
+            },
+
+            {
+                data: 'ptp_amount',
                 name: 'ptp_amount',
                 searchable: false,
             

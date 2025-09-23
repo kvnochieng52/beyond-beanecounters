@@ -65,7 +65,23 @@
             </div>
         </div>
 
+        <div class="col-md-4">
+            <div class="form-group">
+                {!! Html::label('Waiver/Discount', 'waiver_discount') !!}
+                {!! Html::text('waiver_discount')
+                ->type('number') // Ensures only numbers are allowed
+                ->class('form-control')
+                ->placeholder('Enter Waiver/Discount Amount')
+                ->attribute('step', '0.01') // Allows decimals (e.g., 10.50)
+                ->attribute('min', '0') // Prevents negative values
+                ->value($lead->waiver_discount)
+                !!}
+            </div>
+        </div>
 
+    </div>
+
+    <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 {!! Html::label('Currency*', 'currency') !!}

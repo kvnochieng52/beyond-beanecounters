@@ -462,6 +462,10 @@ return [
                     'url' => '/bulk-status',
                 ],
 
+                [
+                    'text' => 'Bulk Waiver/Discount Tool',
+                    'url' => '/bulk-waiver-discount',
+                ],
 
                 [
                     'text' => 'Rules/Discounts',

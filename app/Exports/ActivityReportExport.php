@@ -43,6 +43,7 @@ class ActivityReportExport implements FromCollection, WithHeadings, WithMapping,
             'Institution',
             'Lead Amount',
             'Lead Balance',
+            'Lead Waiver/Discount',
             'Assigned Agent',
             'Agent Code',
             'Department',
@@ -76,6 +77,7 @@ class ActivityReportExport implements FromCollection, WithHeadings, WithMapping,
             $activity->institution_name,
             $activity->lead_amount ? number_format($activity->lead_amount, 2) : '',
             $activity->lead_balance ? number_format($activity->lead_balance, 2) : '',
+            $activity->lead_waiver_discount ? number_format($activity->lead_waiver_discount, 2) : '',
             $activity->assigned_agent_name,
             $activity->assigned_agent_code,
             $activity->department_name,
@@ -115,7 +117,7 @@ class ActivityReportExport implements FromCollection, WithHeadings, WithMapping,
     public function styles(Worksheet $sheet)
     {
         // Style the header row
-        $sheet->getStyle('A1:Z1')->applyFromArray([
+        $sheet->getStyle('A1:AA1')->applyFromArray([
             'font' => [
                 'bold' => true,
                 'color' => ['rgb' => 'FFFFFF']
@@ -138,7 +140,7 @@ class ActivityReportExport implements FromCollection, WithHeadings, WithMapping,
 
         // Style data rows
         $lastRow = $this->activities->count() + 1;
-        $sheet->getStyle('A2:Z' . $lastRow)->applyFromArray([
+        $sheet->getStyle('A2:AA' . $lastRow)->applyFromArray([
             'borders' => [
                 'allBorders' => [
                     'borderStyle' => Border::BORDER_THIN,
@@ -175,22 +177,23 @@ class ActivityReportExport implements FromCollection, WithHeadings, WithMapping,
             'H' => 20,  // Institution
             'I' => 15,  // Lead Amount
             'J' => 15,  // Lead Balance
-            'K' => 20,  // Assigned Agent
-            'L' => 15,  // Agent Code
-            'M' => 20,  // Department
-            'N' => 20,  // Created By
-            'O' => 12,  // Created Date
-            'P' => 12,  // Created Time
-            'Q' => 20,  // Call Disposition
-            'R' => 12,  // PTP Check
-            'S' => 15,  // PTP Amount
-            'T' => 12,  // PTP Date
-            'U' => 15,  // PTP Retire Date
-            'V' => 15,  // Payment Check
-            'W' => 15,  // Payment Amount
-            'X' => 20,  // Payment Trans ID
-            'Y' => 15,  // Payment Method
-            'Z' => 15,  // Text Status
+            'K' => 18,  // Lead Waiver/Discount
+            'L' => 20,  // Assigned Agent
+            'M' => 15,  // Agent Code
+            'N' => 20,  // Department
+            'O' => 20,  // Created By
+            'P' => 12,  // Created Date
+            'Q' => 12,  // Created Time
+            'R' => 20,  // Call Disposition
+            'S' => 12,  // PTP Check
+            'T' => 15,  // PTP Amount
+            'U' => 12,  // PTP Date
+            'V' => 15,  // PTP Retire Date
+            'W' => 15,  // Payment Check
+            'X' => 15,  // Payment Amount
+            'Y' => 20,  // Payment Trans ID
+            'Z' => 15,  // Payment Method
+            'AA' => 15,  // Text Status
         ];
     }
 

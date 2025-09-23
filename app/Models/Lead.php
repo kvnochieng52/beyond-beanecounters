@@ -34,6 +34,7 @@ class Lead extends Model
         'amount',
         'additional_charges',
         'balance',
+        'waiver_discount',
         'currency_id',
         'status_id',
         'stage_id',

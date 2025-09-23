@@ -347,6 +347,7 @@ class LeadController extends Controller
 
                 $lead->amount = $request['amount'];
                 $lead->balance = $request['balance'];
+                $lead->waiver_discount = $request['waiver_discount'] ?? 0;
                 $lead->account_number = $request['account_number'];
                 $lead->currency_id = $request['currency'];
                 if ($defaulterType == DefaulterType::INDIVIDUAL) {

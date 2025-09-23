@@ -36,6 +36,7 @@ class AgentLeadsExport implements FromCollection, WithHeadings, WithTitle, WithS
                 '',
                 '',
                 '',
+                '',
             ],
             [
                 'Agent Name',
@@ -163,6 +164,7 @@ class AgentLeadsExport implements FromCollection, WithHeadings, WithTitle, WithS
                 'Institution',
                 'Amount',
                 'Balance',
+                'Waiver/Discount',
                 'Collected',
                 'Due Date',
                 'Status',
@@ -180,6 +182,7 @@ class AgentLeadsExport implements FromCollection, WithHeadings, WithTitle, WithS
                 $lead['institution'],
                 number_format($lead['amount'], 2),
                 number_format($lead['balance'], 2),
+                number_format($lead['waiver_discount'] ?? 0, 2),
                 number_format($lead['collected'], 2),
                 $lead['due_date'],
                 $lead['status'],

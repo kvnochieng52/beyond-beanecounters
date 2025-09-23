@@ -68,6 +68,7 @@ class OutstandingDebtExport implements FromCollection, WithHeadings, WithTitle, 
                 '',
                 '',
                 '',
+                ''
             ],
             [
                 'Aging Analysis',
@@ -106,7 +107,7 @@ class OutstandingDebtExport implements FromCollection, WithHeadings, WithTitle, 
             ];
         }
 
-        $rows[] = ['', '', '', '', '', '', ''];
+        $rows[] = ['', '', '', '', '', '', '', ''];
         $rows[] = [
             'Detailed Lead Information',
             '',
@@ -122,6 +123,7 @@ class OutstandingDebtExport implements FromCollection, WithHeadings, WithTitle, 
             'Institution',
             'Original Amount',
             'Outstanding Balance',
+            'Waiver/Discount',
             'Due Date',
             'Days Overdue',
             'Assigned Agent'
@@ -135,6 +137,7 @@ class OutstandingDebtExport implements FromCollection, WithHeadings, WithTitle, 
                 $lead['institution'],
                 number_format($lead['amount'], 2),
                 number_format($lead['balance'], 2),
+                number_format($lead['waiver_discount'] ?? 0, 2),
                 $lead['due_date'],
                 $lead['days_overdue'],
                 $lead['assigned_agent'],
@@ -149,6 +152,7 @@ class OutstandingDebtExport implements FromCollection, WithHeadings, WithTitle, 
         return [
             'Report Generated on',
             date('Y-m-d H:i:s'),
+            '',
             '',
             '',
             '',
