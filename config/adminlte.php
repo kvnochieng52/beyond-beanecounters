@@ -508,6 +508,12 @@ return [
                     'url' => 'activity-reports/',
                     'icon' => 'fas fa-fw fa-user-file',
                 ],
+
+                [
+                    'text' => 'Background Reports',
+                    'url' => '/background-reports',
+                    'icon' => 'fas fa-fw fa-clock',
+                ],
             ]
         ],
 

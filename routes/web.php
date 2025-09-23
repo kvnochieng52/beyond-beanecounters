@@ -24,6 +24,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransBulkController;
 use App\Http\Controllers\BulkWaiverDiscountController;
+use App\Http\Controllers\BackgroundReportsController;
 
 Auth::routes();
 
@@ -192,6 +193,13 @@ Route::prefix('bulk-status')->group(function () {
 Route::prefix('bulk-waiver-discount')->group(function () {
     Route::get('/', [BulkWaiverDiscountController::class, 'showUploadForm'])->name('bulk-waiver-discount.index');
     Route::post('/upload', [BulkWaiverDiscountController::class, 'upload'])->name('bulk-waiver-discount.upload');
+});
+
+Route::prefix('background-reports')->group(function () {
+    Route::get('/', [BackgroundReportsController::class, 'index'])->name('background-reports.index');
+    Route::get('/data', [BackgroundReportsController::class, 'getData'])->name('background-reports.data');
+    Route::get('/{id}/download', [BackgroundReportsController::class, 'download'])->name('background-reports.download');
+    Route::delete('/{id}', [BackgroundReportsController::class, 'destroy'])->name('background-reports.destroy');
 });
 
 
