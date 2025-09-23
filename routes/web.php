@@ -155,6 +155,10 @@ Route::group(['middleware' => ['auth', 'user_is_active']], function () {
         // Agent Leads Report
         Route::get('/agent-leads', [ReportController::class, 'agentLeads'])->name('reports.agent-leads');
         Route::match(['get', 'post'], '/agent-leads/generate', [ReportController::class, 'generateAgentLeads'])->name('reports.agent-leads.generate');
+
+        // Leads Report
+        Route::get('/leads', [ReportController::class, 'leadsReport'])->name('reports.leads');
+        Route::post('/leads/generate', [ReportController::class, 'generateLeadsReport'])->name('reports.leads.generate');
     });
 });
 

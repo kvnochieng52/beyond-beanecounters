@@ -160,7 +160,7 @@
             const leadLinkContainer = document.getElementById('leadLinkContainer');
             const leadViewLink = document.getElementById('leadViewLink');
             if (info.event.extendedProps.lead_id) {
-                leadViewLink.href = `/lead/show/${info.event.extendedProps.lead_id}`;
+                leadViewLink.href = `/lead/${info.event.extendedProps.lead_id}`;
                 leadLinkContainer.style.display = 'block';
             } else {
                 leadLinkContainer.style.display = 'none';

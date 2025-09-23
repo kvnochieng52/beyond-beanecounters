@@ -510,11 +510,23 @@ return [
                 ],
 
                 [
+                    'text' => 'Leads Report',
+                    'url' => '/reports/leads',
+                    'icon' => 'fas fa-fw fa-users',
+                ],
+
+                [
                     'text' => 'Background Reports',
                     'url' => '/background-reports',
                     'icon' => 'fas fa-fw fa-clock',
                 ],
             ]
+        ],
+
+        [
+            'text' => 'Leads Report',
+            'url' => '/reports/leads',
+            'icon' => 'fas fa-fw fa-users',
         ],
 
         [

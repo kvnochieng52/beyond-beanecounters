@@ -7,11 +7,18 @@ use App\Exports\AgentPerformanceExport;
 use App\Exports\CollectionProgressExport;
 use App\Exports\CollectionRateExport;
 use App\Exports\OutstandingDebtExport;
+use App\Exports\LeadsReportExport;
+use App\Jobs\ProcessLeadsReport;
 use App\Models\Institution;
 use App\Models\Lead;
 use App\Models\Transaction;
+use App\Models\BackgroundReport;
+use App\Models\LeadStatus;
+use App\Models\LeadPriority;
+use App\Models\LeadCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
@@ -585,5 +592,57 @@ class ReportController extends Controller
         }
 
         return view('reports.outstanding_debts_result', compact('data'));
+    }
+
+    public function leadsReport()
+    {
+        $institutions = Institution::where('is_active', 1)->get();
+        $statuses = LeadStatus::where('is_active', 1)->get();
+        $priorities = LeadPriority::where('is_active', 1)->get();
+        $categories = LeadCategory::where('is_active', 1)->get();
+
+        return view('reports.leads', compact('institutions', 'statuses', 'priorities', 'categories'));
+    }
+
+    public function generateLeadsReport(Request $request)
+    {
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date|after_or_equal:from_date',
+            'min_amount' => 'nullable|numeric|min:0',
+            'max_amount' => 'nullable|numeric|min:0|gte:min_amount',
+        ]);
+
+        // Prepare filters
+        $filters = [
+            'from_date' => $request->from_date,
+            'to_date' => $request->to_date,
+            'institution_ids' => $request->institution_ids ? array_filter($request->institution_ids) : [],
+            'status_ids' => $request->status_ids ? array_filter($request->status_ids) : [],
+            'priority_ids' => $request->priority_ids ? array_filter($request->priority_ids) : [],
+            'category_ids' => $request->category_ids ? array_filter($request->category_ids) : [],
+            'min_amount' => $request->min_amount,
+            'max_amount' => $request->max_amount,
+        ];
+
+        // Generate report name
+        $reportName = 'Leads Report (' .
+                     Carbon::parse($request->from_date)->format('d/m/Y') . ' - ' .
+                     Carbon::parse($request->to_date)->format('d/m/Y') . ')';
+
+        // Create background report entry
+        $backgroundReport = BackgroundReport::create([
+            'report_type' => 'leads_report',
+            'report_name' => $reportName,
+            'filters' => $filters,
+            'status' => 'pending',
+            'requested_by' => Auth::id(),
+        ]);
+
+        // Dispatch the job
+        ProcessLeadsReport::dispatch($backgroundReport);
+
+        return redirect()->route('background-reports.index')
+            ->with('success', 'Leads report has been queued for background processing. You will be able to download it once completed.');
     }
 }
