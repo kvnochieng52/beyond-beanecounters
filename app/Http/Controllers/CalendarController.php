@@ -11,7 +11,9 @@ class CalendarController extends Controller
 {
     public function index()
     {
-        $calendars = Calendar::where('created_by', Auth::id())->get();
+        $calendars = Calendar::with(['lead' => function($query) {
+            $query->with('institution');
+        }])->where('created_by', Auth::id())->get();
         return view('calendars.index', compact('calendars'));
     }
 
@@ -43,12 +45,28 @@ class CalendarController extends Controller
         }
 
 
+        $calendar->load(['lead' => function($query) {
+            $query->with('institution');
+        }]);
+
+        $title = $calendar->calendar_title;
+        $description = $calendar->description;
+
+        if ($calendar->lead) {
+            $title .= ' - ' . $calendar->lead->title . ' (Ticket #' . $calendar->lead->id . ')';
+            $description .= "\n\nLead Details:\nTitle: " . $calendar->lead->title .
+                          "\nTicket No: " . $calendar->lead->id .
+                          "\nInstitution: " . ($calendar->lead->institution->institution_name ?? 'N/A') .
+                          "\nTelephone: " . ($calendar->lead->telephone ?? 'N/A');
+        }
+
         return response()->json([
             'id' => $calendar->id,
-            'title' => $calendar->calendar_title,
+            'title' => $title,
             'start' => $calendar->start_date_time,
             'end' => $calendar->due_date_time,
-            'description' => $calendar->description
+            'description' => $description,
+            'lead_id' => $calendar->lead_id
         ]);
     }
 

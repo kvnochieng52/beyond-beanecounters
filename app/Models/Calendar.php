@@ -23,4 +23,9 @@ class Calendar extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function lead()
+    {
+        return $this->belongsTo(Lead::class);
+    }
 }

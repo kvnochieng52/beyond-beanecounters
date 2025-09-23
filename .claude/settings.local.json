@@ -3,7 +3,8 @@
     "allow": [
       "Bash(php artisan tinker:*)",
       "Bash(php:*)",
-      "Bash(del \"C:\\laragon\\www\\beyond_debt2\\temp_new_generate_report.php\")"
+      "Bash(del \"C:\\laragon\\www\\beyond_debt2\\temp_new_generate_report.php\")",
+      "Bash(del \"C:\\laragon\\www\\beyond_debt2\\temp_test_calendar.php\")"
     ],
     "deny": [],
     "ask": []

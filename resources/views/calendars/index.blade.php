@@ -55,6 +55,11 @@
                         <label for="eventEnd" class="form-label">End Date & Time *</label>
                         <input type="datetime-local" class="form-control" id="eventEnd" required>
                     </div>
+                    <div class="mb-3" id="leadLinkContainer" style="display: none;">
+                        <a href="#" id="leadViewLink" class="btn btn-outline-primary btn-sm" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> View Lead Details
+                        </a>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger d-none" id="deleteEventBtn">Delete</button>
@@ -109,18 +114,33 @@
         },
         selectable: true,
         editable: true,
-        events: {!! json_encode($calendars->map(fn($calendar) => [
-            'id' => $calendar->id,
-            'title' => $calendar->calendar_title,
-            'start' => $calendar->start_date_time,
-            'end' => $calendar->due_date_time,
-            'description' => $calendar->description
-        ])) !!},
+        events: {!! json_encode($calendars->map(function($calendar) {
+            $title = $calendar->calendar_title;
+            $description = $calendar->description;
+
+            if ($calendar->lead) {
+                $title .= ' - ' . $calendar->lead->title . ' (Ticket #' . $calendar->lead->id . ')';
+                $description .= "\n\nLead Details:\nTitle: " . $calendar->lead->title .
+                              "\nTicket No: " . $calendar->lead->id .
+                              "\nInstitution: " . ($calendar->lead->institution->institution_name ?? 'N/A') .
+                              "\nTelephone: " . ($calendar->lead->telephone ?? 'N/A');
+            }
+
+            return [
+                'id' => $calendar->id,
+                'title' => $title,
+                'start' => $calendar->start_date_time,
+                'end' => $calendar->due_date_time,
+                'description' => $description,
+                'lead_id' => $calendar->lead_id
+            ];
+        })) !!},
 
         select(info) {
             currentEvent = null;
             eventForm.reset();
             deleteEventBtn.classList.add('d-none'); // Hide delete button on new event
+            document.getElementById('leadLinkContainer').style.display = 'none'; // Hide lead link for new events
             eventIdInput.value = '';
             startInput.value = info.startStr;
             endInput.value = info.endStr;
@@ -135,6 +155,17 @@
             descriptionInput.value = info.event.extendedProps.description ?? '';
             startInput.value = info.event.start?.toISOString().slice(0, 16) ?? '';
             endInput.value = info.event.end?.toISOString().slice(0, 16) ?? '';
+
+            // Show lead link if event has a lead_id
+            const leadLinkContainer = document.getElementById('leadLinkContainer');
+            const leadViewLink = document.getElementById('leadViewLink');
+            if (info.event.extendedProps.lead_id) {
+                leadViewLink.href = `/lead/show/${info.event.extendedProps.lead_id}`;
+                leadLinkContainer.style.display = 'block';
+            } else {
+                leadLinkContainer.style.display = 'none';
+            }
+
             eventModal.show();
         }
     });
@@ -172,7 +203,11 @@
                     title: data.title,
                     start: data.start,
                     end: data.end,
-                    description: data.description
+                    description: data.description,
+                    extendedProps: {
+                        description: data.description,
+                        lead_id: data.lead_id
+                    }
                 });
             }
             eventModal.hide();

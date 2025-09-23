@@ -135,4 +135,9 @@ class Lead extends Model
 
         return $query;
     }
+
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
+    }
 }
