@@ -10,9 +10,11 @@
     <div class="card-header">
         <h3 class="card-title">Leads</h3>
 
+        @if(auth()->user()->hasRole('Admin'))
         <a href="{{ route('lead.export') }}" class="btn btn-success" style="float: right">
             <i class="fas fa-file-excel"></i> Export to Excel
         </a>
+        @endif
     </div>
 
     <div class="card-body">

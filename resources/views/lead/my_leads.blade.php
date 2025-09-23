@@ -10,8 +10,8 @@
     <div class="card-header">
         <h3 class="card-title">Leads</h3>
 
-        <a href="{{ route('lead.export') }}" class="btn btn-success" style="float: right">
-            <i class="fas fa-file-excel"></i> Export to Excel
+        <a href="{{ route('my-leads.export') }}" class="btn btn-success" style="float: right">
+            <i class="fas fa-file-excel"></i> Export My Leads
         </a>
     </div>
 

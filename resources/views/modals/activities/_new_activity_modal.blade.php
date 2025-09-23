@@ -234,31 +234,6 @@
 
 
                     <div class="row">
-
-                        <div class="col-md-4 department-group pt-3">
-                            {!! Html::label('Assign Department', 'department') !!}
-                            {!! Html::select('department', $departments)->class(
-                                    'form-control
-                                                                                                                                                                                                                                                            assigned-department-select2',
-                                )->id('department')->placeholder('--Specify--')->style('width:100%') !!}
-                        </div>
-
-                        <div class="col-md-4 agent-group pt-3">
-                            {!! Html::label('Assign Agent', 'agent') !!}
-                            {!! Html::select('agent', $agentsList)->class(
-                                    'form-control
-                                                                                                                                                                                                                                                            assigned-agent-select2',
-                                )->id('agent')->placeholder('--Specify--')->style('width:100%') !!}
-                        </div>
-
-
-                        <div class="col-md-4 status-group pt-3">
-                            {!! Html::label('Status*', 'status') !!}
-                            {!! Html::select('status', $activityStatuses)->class('form-control')->id('status')->placeholder('--Specify--')->style('width:100%') !!}
-                        </div>
-
-                    </div>
-                    <div class="row">
                         <div class="col-md-12 pt-3">
                             <div class="icheck-primary">
                                 <input type="checkbox" id="addToCalendar" name="addToCalendar" value="1">

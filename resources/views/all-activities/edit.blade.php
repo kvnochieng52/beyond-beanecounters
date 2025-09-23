@@ -162,37 +162,6 @@
 
         </div>
 
-            <div class="row">
-                <div class="col-md-4 department-group pt-3">
-                    <label for="department">Department</label>
-                    <select name="department" class="form-control">
-                        @foreach ($departments as $department)
-                            <option value="{{ $department->id }}" {{ $department->id == $editActivity->assigned_department_id ? 'selected' : '' }}>{{ $department->department_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-md-4 agent-group pt-3">
-                    <label for="agent">Assign Agent</label>
-                    <select name="agent" class="form-control">
-                        @foreach ($agentsLists as $id => $name)
-                            <option value="{{ $id }}" {{ $id == $editActivity->assigned_user_id ? 'selected' : '' }}>{{ $name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-md-4 status-group pt-3">
-                    <label for="status">Status*</label>
-                    <select name="status" class="form-control">
-                        @foreach ($activity_statuses as $activity_status)
-                        <option value="{{ $activity_status->id }}" {{ $activity_status->id == $editActivity->status_id ? 'selected' : '' }} >
-                            {{ $activity_status->activity_status_name }}
-                        </option>
-                        @endforeach
-
-                    </select>
-                </div>
-            </div>
 
             <div class="row">
                 <div class="col-md-12 pt-3">

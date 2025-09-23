@@ -600,12 +600,31 @@ class LeadController extends Controller
 
     public function export()
     {
-        return Excel::download(new LeadsExport, 'leads-' . date('Y-m-d') . '.xlsx');
+        $user = auth()->user();
+
+        // Only allow Admin users to export all leads
+        if (!$user->hasRole('Admin')) {
+            abort(403, 'Unauthorized access. Only administrators can export all leads.');
+        }
+
+        return Excel::download(new LeadsExport($user), 'leads-' . date('Y-m-d') . '.xlsx');
     }
 
+    public function exportMyLeads()
+    {
+        $user = auth()->user();
+        return Excel::download(new LeadsExport($user), 'my-leads-' . date('Y-m-d') . '.xlsx');
+    }
 
     public function exportByStatus($status)
     {
+        $user = auth()->user();
+
+        // Only allow Admin users to export leads by status
+        if (!$user->hasRole('Admin')) {
+            abort(403, 'Unauthorized access. Only administrators can export leads by status.');
+        }
+
         return Excel::download(new LeadsByStatusExport($status), 'leads-status-' . $status . '-' . date('Y-m-d') . '.xlsx');
     }
 

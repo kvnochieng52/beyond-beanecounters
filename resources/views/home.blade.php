@@ -175,6 +175,206 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
+                <h3 class="card-title">PTP Reminders & Scheduled Activities</h3>
+            </div>
+            <div class="card-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" id="ptpTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="ptp-today-tab" data-bs-toggle="tab" data-bs-target="#ptp-today" type="button" role="tab" aria-controls="ptp-today" aria-selected="true">
+                            PTP for Today
+                            @if($ptpsToday->count() > 0)
+                                <span class="badge text-white ms-1" style="background-color: #dc3545;">{{ $ptpsToday->count() }}</span>
+                            @else
+                                <span class="badge bg-secondary ms-1">{{ $ptpsToday->count() }}</span>
+                            @endif
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="ptp-week-tab" data-bs-toggle="tab" data-bs-target="#ptp-week" type="button" role="tab" aria-controls="ptp-week" aria-selected="false">
+                            PTP for This Week
+                            @if($ptpsThisWeek->count() > 0)
+                                <span class="badge text-white ms-1" style="background-color: #dc3545;">{{ $ptpsThisWeek->count() }}</span>
+                            @else
+                                <span class="badge bg-secondary ms-1">{{ $ptpsThisWeek->count() }}</span>
+                            @endif
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="activities-today-tab" data-bs-toggle="tab" data-bs-target="#activities-today" type="button" role="tab" aria-controls="activities-today" aria-selected="false">
+                            Activities Today
+                            @if($activitiesToday->count() > 0)
+                                <span class="badge text-white ms-1" style="background-color: #dc3545;">{{ $activitiesToday->count() }}</span>
+                            @else
+                                <span class="badge bg-secondary ms-1">{{ $activitiesToday->count() }}</span>
+                            @endif
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab content -->
+                <div class="tab-content mt-3" id="ptpTabContent">
+                    <!-- Today's PTPs -->
+                    <div class="tab-pane fade show active" id="ptp-today" role="tabpanel" aria-labelledby="ptp-today-tab">
+                        @if($ptpsToday->count() > 0)
+                            <div class="table-responsive">
+                                <table class="table table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Lead Name</th>
+                                            <th>Institution</th>
+                                            <th>PTP Amount</th>
+                                            <th>Email</th>
+                                            <th>Telephone</th>
+                                            <th>PTP Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($ptpsToday as $ptp)
+                                        <tr>
+                                            <td><strong>{{ $ptp->lead_name }}</strong></td>
+                                            <td>{{ $ptp->institution_name }}</td>
+                                            <td class="text-success"><strong>KSH {{ number_format($ptp->act_ptp_amount, 2) }}</strong></td>
+                                            <td>{{ $ptp->lead_email }}</td>
+                                            <td>{{ $ptp->lead_telephone }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($ptp->act_ptp_date)->format('M d, Y') }}</td>
+                                            <td>
+                                                <a href="/lead/{{ $ptp->lead_id }}" class="btn btn-primary btn-xs">
+                                                    <i class="fas fa-eye"></i> View Lead
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i> No PTPs scheduled for today.
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- This Week's PTPs -->
+                    <div class="tab-pane fade" id="ptp-week" role="tabpanel" aria-labelledby="ptp-week-tab">
+                        @if($ptpsThisWeek->count() > 0)
+                            <div class="table-responsive">
+                                <table class="table table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Lead Name</th>
+                                            <th>Institution</th>
+                                            <th>PTP Amount</th>
+                                            <th>Email</th>
+                                            <th>Telephone</th>
+                                            <th>PTP Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($ptpsThisWeek as $ptp)
+                                        <tr class="{{ \Carbon\Carbon::parse($ptp->act_ptp_date)->isToday() ? 'table-warning' : '' }}">
+                                            <td><strong>{{ $ptp->lead_name }}</strong></td>
+                                            <td>{{ $ptp->institution_name }}</td>
+                                            <td class="text-success"><strong>KSH {{ number_format($ptp->act_ptp_amount, 2) }}</strong></td>
+                                            <td>{{ $ptp->lead_email }}</td>
+                                            <td>{{ $ptp->lead_telephone }}</td>
+                                            <td>
+                                                {{ \Carbon\Carbon::parse($ptp->act_ptp_date)->format('M d, Y') }}
+                                                @if(\Carbon\Carbon::parse($ptp->act_ptp_date)->isToday())
+                                                    <span class="badge bg-warning">Today</span>
+                                                @elseif(\Carbon\Carbon::parse($ptp->act_ptp_date)->isTomorrow())
+                                                    <span class="badge bg-info">Tomorrow</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="/lead/{{ $ptp->lead_id }}" class="btn btn-primary btn-xs">
+                                                    <i class="fas fa-eye"></i> View Lead
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i> No PTPs scheduled for this week.
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Today's Activities -->
+                    <div class="tab-pane fade" id="activities-today" role="tabpanel" aria-labelledby="activities-today-tab">
+                        @if($activitiesToday->count() > 0)
+                            <div class="table-responsive">
+                                <table class="table table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Activity Type</th>
+                                            <th>Lead Name</th>
+                                            <th>Description</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>Priority</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($activitiesToday as $activity)
+                                        <tr>
+                                            <td>
+                                                <i class="fas fa-{{ $activity->activity_type_icon }}"></i>
+                                                {{ $activity->activity_type_title }}
+                                            </td>
+                                            <td><strong>{{ $activity->lead_name }}</strong></td>
+                                            <td>{{ Str::limit($activity->description, 50) }}</td>
+                                            <td>
+                                                @if($activity->start_date_time)
+                                                    {{ \Carbon\Carbon::parse($activity->start_date_time)->format('h:i A') }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($activity->due_date_time)
+                                                    {{ \Carbon\Carbon::parse($activity->due_date_time)->format('h:i A') }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($activity->lead_priority_name)
+                                                    <span class="badge bg-{{ $activity->priority_color }}">
+                                                        {{ $activity->lead_priority_name }}
+                                                    </span>
+                                                @else
+                                                    <span class="badge bg-secondary">Normal</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="/lead/{{ $activity->lead_id }}" class="btn btn-primary btn-xs">
+                                                    <i class="fas fa-eye"></i> View Lead
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <div class="alert alert-info">
+                                <i class="fas fa-calendar-check"></i> No activities scheduled for today.
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
                 <h3 class="card-title">Recent Leads</h3>
             </div>
             <div class="card-body table-responsive p-0">
@@ -236,27 +436,6 @@
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Overdue Activities</h3>
-            </div>
-            <div class="card-body table-responsive p-0">
-
-                <table class="table table-striped table-valign-middle">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Defaulter Name</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>A. Status</th>
-                        </tr>
-                    </thead>
-
-                </table>
-            </div>
-        </div>
-
 
     </div>
 
@@ -272,6 +451,7 @@
 
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var ctx = document.getElementById('leadsStatusDonutChart').getContext('2d');
@@ -301,6 +481,17 @@
                     }
                 }
             }
+        });
+
+        // Initialize Bootstrap tabs
+        var triggerTabList = [].slice.call(document.querySelectorAll('#ptpTabs button'))
+        triggerTabList.forEach(function (triggerEl) {
+            var tabTrigger = new bootstrap.Tab(triggerEl)
+
+            triggerEl.addEventListener('click', function (event) {
+                event.preventDefault()
+                tabTrigger.show()
+            })
         });
     });
 </script>

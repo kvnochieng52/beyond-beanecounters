@@ -12,4 +12,5 @@ class LeadStatus extends Model
     const PENDING = 1;
     const PAID = 2;
     const PARTIALLY_PAID = 3;
+    const OPEN = 7;
 }

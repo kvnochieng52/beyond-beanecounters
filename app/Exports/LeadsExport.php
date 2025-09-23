@@ -9,9 +9,23 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class LeadsExport implements FromQuery, WithHeadings, WithMapping
 {
+    protected $user;
+
+    public function __construct($user = null)
+    {
+        $this->user = $user;
+    }
+
     public function query()
     {
-        return Lead::query()->orderBy('id', 'DESC');
+        $query = Lead::query()->orderBy('id', 'DESC');
+
+        // If user is provided and is not an admin, filter by assigned agent
+        if ($this->user && !$this->user->hasRole('Admin')) {
+            $query->where('assigned_agent', $this->user->id);
+        }
+
+        return $query;
     }
 
     public function headings(): array

@@ -549,10 +549,18 @@
                         orderable: false,
                         searchable: false,
                         render: function(data, type, row) {
-                            return `
+                            const canEdit = @json(auth()->user()->hasRole('Admin'));
+
+                            let buttons = '';
+
+                            if (canEdit) {
+                                buttons += `
                     <button class="btn btn-warning btn-xs edit-transaction-btn" data-id="${row.id}" data-transaction="${row.transaction_type_title}" data-penaltyTypeId="${row.penalty_type_id}">
                         <i class="fas fa-edit"></i> Edit
                     </button>`;
+                            }
+
+                            return buttons;
                         }
                     }
 
