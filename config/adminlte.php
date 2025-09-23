@@ -524,12 +524,6 @@ return [
         ],
 
         [
-            'text' => 'Leads Report',
-            'url' => '/reports/leads',
-            'icon' => 'fas fa-fw fa-users',
-        ],
-
-        [
             'text' => 'Users',
             'icon' => 'fas fa-fw fa-users',
             'can' => ['is_admin'],
