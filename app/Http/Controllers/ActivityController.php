@@ -187,21 +187,32 @@ class ActivityController extends Controller
 
         // Only add to calendar if checkbox is checked AND we have both start and end dates
         if ($request['addToCalendar'] == 1 && !empty($request['start_date']) && !empty($request['end_date'])) {
-            $calendar = new Calendar();
-            // Use the proper activity title from the activity type
-            $activityType = ActivityType::find($request['activityType']);
-            $calendar->calendar_title = $activityType ? $activityType->activity_type_title : 'Activity';
-            $calendar->start_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['start_date'] . ' ' . $startTime);
-            $calendar->due_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['end_date'] . ' ' . $endTime);
-            $calendar->description = $request['description'];
-            $calendar->lead_id = $request['leadID'];
-            $calendar->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
-            $calendar->assigned_team_id = null;
-            $calendar->assigned_user_id = Auth::user()->id;
-            $calendar->created_by = Auth::id();
-            $calendar->updated_by = Auth::id();
+            try {
+                $calendar = new Calendar();
+                // Use the proper activity title from the activity type
+                $activityType = ActivityType::find($request['activityType']);
+                $calendar->calendar_title = $activityType ? $activityType->activity_type_title : 'Activity';
+                $calendar->start_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['start_date'] . ' ' . $startTime);
+                $calendar->due_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['end_date'] . ' ' . $endTime);
+                $calendar->description = $request['description'];
+                $calendar->lead_id = $request['leadID'];
+                $calendar->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
+                $calendar->assigned_team_id = null;
+                $calendar->assigned_user_id = Auth::user()->id;
+                $calendar->created_by = Auth::id();
+                $calendar->updated_by = Auth::id();
 
-            $calendar->save();
+                $calendar->save();
+                \Log::info('Calendar entry created successfully for activity', ['calendar_id' => $calendar->id, 'activity_title' => $calendar->calendar_title]);
+            } catch (\Exception $e) {
+                \Log::error('Failed to create calendar entry for activity', [
+                    'error' => $e->getMessage(),
+                    'start_date' => $request['start_date'],
+                    'end_date' => $request['end_date'],
+                    'start_time' => $startTime,
+                    'end_time' => $endTime
+                ]);
+            }
         }
 
 
@@ -377,19 +388,30 @@ class ActivityController extends Controller
 
         // Optional: Update Calendar entry if needed (if already exists or if required to be added on update)
         if ($request['addToCalendar'] == 1 && !empty($request['start_date']) && !empty($request['end_date'])) {
-            $calendar = new Calendar();
-            // Use the activity title from the request or the existing activity
-            $calendar->calendar_title = $request['activity_title'] ?: $activity->activity_title;
-            $calendar->start_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['start_date'] . ' ' . $startTime);
-            $calendar->due_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['end_date'] . ' ' . $endTime);
-            $calendar->description = $request['description'];
-            $calendar->lead_id = $request['leadID'];
-            $calendar->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
-            $calendar->assigned_team_id = null;
-            $calendar->assigned_user_id = Auth::user()->id;
-            $calendar->created_by = Auth::id();
-            $calendar->updated_by = Auth::id();
-            $calendar->save();
+            try {
+                $calendar = new Calendar();
+                // Use the activity title from the request or the existing activity
+                $calendar->calendar_title = $request['activity_title'] ?: $activity->activity_title;
+                $calendar->start_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['start_date'] . ' ' . $startTime);
+                $calendar->due_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['end_date'] . ' ' . $endTime);
+                $calendar->description = $request['description'];
+                $calendar->lead_id = $request['leadID'];
+                $calendar->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
+                $calendar->assigned_team_id = null;
+                $calendar->assigned_user_id = Auth::user()->id;
+                $calendar->created_by = Auth::id();
+                $calendar->updated_by = Auth::id();
+                $calendar->save();
+                \Log::info('Calendar entry updated successfully for activity', ['calendar_id' => $calendar->id, 'activity_title' => $calendar->calendar_title]);
+            } catch (\Exception $e) {
+                \Log::error('Failed to create/update calendar entry for activity', [
+                    'error' => $e->getMessage(),
+                    'start_date' => $request['start_date'],
+                    'end_date' => $request['end_date'],
+                    'start_time' => $startTime,
+                    'end_time' => $endTime
+                ]);
+            }
         }
 
         return redirect('/lead/' . $request['leadID'] . '?section=activities')->with('success', 'Activity Updated Successfully');
@@ -435,19 +457,30 @@ class ActivityController extends Controller
 
         // Optional: Update Calendar entry if needed (if already exists or if required to be added on update)
         if ($request['addToCalendar'] == 1 && !empty($request['start_date']) && !empty($request['end_date'])) {
-            $calendar = new Calendar();
-            // Use the activity title from the request or the existing activity
-            $calendar->calendar_title = $request['activity_title'] ?: $activity->activity_title;
-            $calendar->start_date_time = Carbon::createFromFormat('Y-m-d h:i A', $request['start_date'] . ' ' . $startTime);
-            $calendar->due_date_time = Carbon::createFromFormat('Y-m-d h:i A', $request['end_date'] . ' ' . $endTime);
-            $calendar->description = $request['description'];
-            $calendar->lead_id = $request['leadID'];
-            $calendar->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
-            $calendar->assigned_team_id = null;
-            $calendar->assigned_user_id = Auth::user()->id;
-            $calendar->created_by = Auth::id();
-            $calendar->updated_by = Auth::id();
-            $calendar->save();
+            try {
+                $calendar = new Calendar();
+                // Use the activity title from the request or the existing activity
+                $calendar->calendar_title = $request['activity_title'] ?: $activity->activity_title;
+                $calendar->start_date_time = Carbon::createFromFormat('Y-m-d h:i A', $request['start_date'] . ' ' . $startTime);
+                $calendar->due_date_time = Carbon::createFromFormat('Y-m-d h:i A', $request['end_date'] . ' ' . $endTime);
+                $calendar->description = $request['description'];
+                $calendar->lead_id = $request['leadID'];
+                $calendar->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
+                $calendar->assigned_team_id = null;
+                $calendar->assigned_user_id = Auth::user()->id;
+                $calendar->created_by = Auth::id();
+                $calendar->updated_by = Auth::id();
+                $calendar->save();
+                \Log::info('Calendar entry created/updated successfully for all-activity', ['calendar_id' => $calendar->id, 'activity_title' => $calendar->calendar_title]);
+            } catch (\Exception $e) {
+                \Log::error('Failed to create/update calendar entry for all-activity', [
+                    'error' => $e->getMessage(),
+                    'start_date' => $request['start_date'],
+                    'end_date' => $request['end_date'],
+                    'start_time' => $startTime,
+                    'end_time' => $endTime
+                ]);
+            }
         }
 
         return redirect('/activity')->with('success', 'Activity Updated Successfully');
