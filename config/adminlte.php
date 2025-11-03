@@ -346,6 +346,7 @@ return [
                     'url' => '/bulk/upload',
                     'can' => ['Create Lead'],
                 ],
+
             ]
         ],
 
@@ -478,6 +479,13 @@ return [
                 [
                     'text' => 'Lead Due Notifications',
                     'url' => '/due-notifications',
+                ],
+
+
+                [
+                    'text' => 'Bulk Update Leads',
+                    'url' => '/lead-bulk-update',
+                    //'can' => [''],
                 ],
             ]
         ],

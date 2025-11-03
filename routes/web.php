@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\LeadController;
+use App\Http\Controllers\LeadBulkUpdateController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BulkController;
@@ -32,6 +33,11 @@ Route::group(['middleware' => ['auth', 'user_is_active']], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::resource('/lead', LeadController::class);
+
+    // Lead Bulk Update Routes
+    Route::get('/lead-bulk-update', [LeadBulkUpdateController::class, 'index'])->name('lead.bulk-update.index');
+    Route::post('/lead-bulk-update/upload', [LeadBulkUpdateController::class, 'upload'])->name('lead.bulk-update.upload');
+    Route::get('/lead-bulk-update/template', [LeadBulkUpdateController::class, 'downloadTemplate'])->name('lead.bulk-update.template');
     Route::resource('/text', TextController::class);
     Route::resource('contacts', ContactController::class);
     Route::post('/get-contacts', [ContactController::class, 'getContacts']);
