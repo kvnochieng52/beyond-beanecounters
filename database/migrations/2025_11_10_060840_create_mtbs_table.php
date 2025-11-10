@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('mtbs', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('lead_id');
+            $table->unsignedBigInteger('lead_id');
             $table->decimal('amount_paid', 15, 2);
             $table->date('date_paid');
             $table->enum('payment_channel', ['Mpesa', 'CASH', 'CHEQUE']);
             $table->text('description')->nullable();
-            $table->bigInteger('created_by');
-            $table->bigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
 
             $table->foreign('lead_id')->references('id')->on('leads')->onDelete('cascade');
