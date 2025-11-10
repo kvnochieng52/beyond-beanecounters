@@ -186,11 +186,11 @@
                                 data-bs-target="#ptp-today" type="button" role="tab" aria-controls="ptp-today"
                                 aria-selected="true">
                                 PTP for Today
-                                @if ($ptpsToday->count() > 0)
+                                @if ($ptpsToday->total() > 0)
                                     <span class="badge text-white ms-1"
-                                        style="background-color: #dc3545;">{{ $ptpsToday->count() }}</span>
+                                        style="background-color: #dc3545;">{{ $ptpsToday->total() }}</span>
                                 @else
-                                    <span class="badge bg-secondary ms-1">{{ $ptpsToday->count() }}</span>
+                                    <span class="badge bg-secondary ms-1">{{ $ptpsToday->total() }}</span>
                                 @endif
                             </button>
                         </li>
@@ -198,11 +198,11 @@
                             <button class="nav-link" id="ptp-week-tab" data-bs-toggle="tab" data-bs-target="#ptp-week"
                                 type="button" role="tab" aria-controls="ptp-week" aria-selected="false">
                                 PTP for This Week
-                                @if ($ptpsThisWeek->count() > 0)
+                                @if ($ptpsThisWeek->total() > 0)
                                     <span class="badge text-white ms-1"
-                                        style="background-color: #dc3545;">{{ $ptpsThisWeek->count() }}</span>
+                                        style="background-color: #dc3545;">{{ $ptpsThisWeek->total() }}</span>
                                 @else
-                                    <span class="badge bg-secondary ms-1">{{ $ptpsThisWeek->count() }}</span>
+                                    <span class="badge bg-secondary ms-1">{{ $ptpsThisWeek->total() }}</span>
                                 @endif
                             </button>
                         </li>
@@ -226,12 +226,23 @@
                         <!-- Today's PTPs -->
                         <div class="tab-pane fade show active" id="ptp-today" role="tabpanel"
                             aria-labelledby="ptp-today-tab">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="mb-0">PTPs Due Today ({{ $ptpsToday->total() }} total)</h6>
+                                @if ($ptpsToday->count() > 0)
+                                    <a href="{{ route('export.ptp.today') }}" class="btn btn-success btn-sm">
+                                        <i class="fas fa-file-excel"></i> Export to Excel
+                                    </a>
+                                @endif
+                            </div>
+
                             @if ($ptpsToday->count() > 0)
                                 <div class="table-responsive">
                                     <table class="table table-striped table-sm">
                                         <thead>
                                             <tr>
+                                                <th>Ticket No</th>
                                                 <th>Lead Name</th>
+                                                <th>Assigned Agent</th>
                                                 <th>Institution</th>
                                                 <th>PTP Amount</th>
                                                 <th>Email</th>
@@ -243,7 +254,18 @@
                                         <tbody>
                                             @foreach ($ptpsToday as $ptp)
                                                 <tr>
+                                                    <td><strong>#{{ $ptp->lead_id }}</strong></td>
                                                     <td><strong>{{ $ptp->lead_name }}</strong></td>
+                                                    <td>
+                                                        @if($ptp->assigned_agent_name)
+                                                            {{ $ptp->assigned_agent_name }}
+                                                            @if($ptp->assigned_agent_code)
+                                                                <br><small class="text-muted">{{ $ptp->assigned_agent_code }}</small>
+                                                            @endif
+                                                        @else
+                                                            <span class="text-muted">Unassigned</span>
+                                                        @endif
+                                                    </td>
                                                     <td>{{ $ptp->institution_name }}</td>
                                                     <td class="text-success"><strong>KSH
                                                             {{ number_format($ptp->act_ptp_amount, 2) }}</strong></td>
@@ -262,6 +284,11 @@
                                         </tbody>
                                     </table>
                                 </div>
+
+                                <!-- Pagination -->
+                                <div class="d-flex justify-content-center">
+                                    {{ $ptpsToday->appends(['ptp_week_page' => request('ptp_week_page')])->links() }}
+                                </div>
                             @else
                                 <div class="alert alert-info">
                                     <i class="fas fa-info-circle"></i> No PTPs scheduled for today.
@@ -271,12 +298,23 @@
 
                         <!-- This Week's PTPs -->
                         <div class="tab-pane fade" id="ptp-week" role="tabpanel" aria-labelledby="ptp-week-tab">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="mb-0">PTPs This Week ({{ $ptpsThisWeek->total() }} total)</h6>
+                                @if ($ptpsThisWeek->count() > 0)
+                                    <a href="{{ route('export.ptp.week') }}" class="btn btn-success btn-sm">
+                                        <i class="fas fa-file-excel"></i> Export to Excel
+                                    </a>
+                                @endif
+                            </div>
+
                             @if ($ptpsThisWeek->count() > 0)
                                 <div class="table-responsive">
                                     <table class="table table-striped table-sm">
                                         <thead>
                                             <tr>
+                                                <th>Ticket No</th>
                                                 <th>Lead Name</th>
+                                                <th>Assigned Agent</th>
                                                 <th>Institution</th>
                                                 <th>PTP Amount</th>
                                                 <th>Email</th>
@@ -289,7 +327,18 @@
                                             @foreach ($ptpsThisWeek as $ptp)
                                                 <tr
                                                     class="{{ \Carbon\Carbon::parse($ptp->act_ptp_date)->isToday() ? 'table-warning' : '' }}">
+                                                    <td><strong>#{{ $ptp->lead_id }}</strong></td>
                                                     <td><strong>{{ $ptp->lead_name }}</strong></td>
+                                                    <td>
+                                                        @if($ptp->assigned_agent_name)
+                                                            {{ $ptp->assigned_agent_name }}
+                                                            @if($ptp->assigned_agent_code)
+                                                                <br><small class="text-muted">{{ $ptp->assigned_agent_code }}</small>
+                                                            @endif
+                                                        @else
+                                                            <span class="text-muted">Unassigned</span>
+                                                        @endif
+                                                    </td>
                                                     <td>{{ $ptp->institution_name }}</td>
                                                     <td class="text-success"><strong>KSH
                                                             {{ number_format($ptp->act_ptp_amount, 2) }}</strong></td>
@@ -313,6 +362,11 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                </div>
+
+                                <!-- Pagination -->
+                                <div class="d-flex justify-content-center">
+                                    {{ $ptpsThisWeek->appends(['ptp_today_page' => request('ptp_today_page')])->links() }}
                                 </div>
                             @else
                                 <div class="alert alert-info">

@@ -129,9 +129,36 @@ class ActivityController extends Controller
             'leadID' => 'required|exists:leads,id',
         ]);
 
+        // Check for duplicate activities within the last 5 minutes
+        if (Activity::hasSimilarActivity($request['leadID'], $request['activityType'], Auth::user()->id)) {
+            return redirect()->back()
+                ->with('warning', 'A similar activity was recently created for this lead. Please wait a few minutes before creating another.')
+                ->withInput();
+        }
 
+        // Check for duplicate PTP if PTP is being added
+        if ($request['addPTP'] == 1 && !empty($request['ptp_payment_date'])) {
+            $ptpDate = Carbon::createFromFormat('d-m-Y', $request['ptp_payment_date'])->format('Y-m-d');
+            if (Activity::hasPTPForDate($request['leadID'], $ptpDate)) {
+                return redirect()->back()
+                    ->with('warning', 'A PTP already exists for this lead on the selected date.')
+                    ->withInput();
+            }
+        }
 
-        $activity = new Activity();
+        // Check for duplicate payment if payment is being added
+        if (($request['activityType'] == 19 || $request['activityType'] == 16 || $request['activityType'] == 5 || $request['activityType'] == 28)
+            && !empty($request['payment_transID'])) {
+            if (Activity::hasPaymentWithTransactionId($request['leadID'], $request['payment_transID'])) {
+                return redirect()->back()
+                    ->with('warning', 'A payment with this transaction ID already exists for this lead.')
+                    ->withInput();
+            }
+        }
+
+        // Wrap the entire activity creation in a database transaction
+        return DB::transaction(function () use ($request) {
+            $activity = new Activity();
 
         $activity->activity_type_id = $request['activityType'];
         $activity->activity_title = ActivityType::find($request['activityType'])->activity_type_title;
@@ -188,22 +215,34 @@ class ActivityController extends Controller
         // Only add to calendar if checkbox is checked AND we have both start and end dates
         if ($request['addToCalendar'] == 1 && !empty($request['start_date']) && !empty($request['end_date'])) {
             try {
-                $calendar = new Calendar();
-                // Use the proper activity title from the activity type
-                $activityType = ActivityType::find($request['activityType']);
-                $calendar->calendar_title = $activityType ? $activityType->activity_type_title : 'Activity';
-                $calendar->start_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['start_date'] . ' ' . $startTime);
-                $calendar->due_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['end_date'] . ' ' . $endTime);
-                $calendar->description = $request['description'];
-                $calendar->lead_id = $request['leadID'];
-                $calendar->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
-                $calendar->assigned_team_id = null;
-                $calendar->assigned_user_id = Auth::user()->id;
-                $calendar->created_by = Auth::id();
-                $calendar->updated_by = Auth::id();
+                $startDateTime = Carbon::createFromFormat('d-m-Y h:i A', $request['start_date'] . ' ' . $startTime);
 
-                $calendar->save();
-                \Log::info('Calendar entry created successfully for activity', ['calendar_id' => $calendar->id, 'activity_title' => $calendar->calendar_title]);
+                // Check if a calendar entry already exists for this lead, user, and start time
+                $existingCalendar = Calendar::where('lead_id', $request['leadID'])
+                    ->where('created_by', Auth::id())
+                    ->where('start_date_time', $startDateTime)
+                    ->first();
+
+                if (!$existingCalendar) {
+                    $calendar = new Calendar();
+                    // Use the proper activity title from the activity type
+                    $activityType = ActivityType::find($request['activityType']);
+                    $calendar->calendar_title = $activityType ? $activityType->activity_type_title : 'Activity';
+                    $calendar->start_date_time = $startDateTime;
+                    $calendar->due_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['end_date'] . ' ' . $endTime);
+                    $calendar->description = $request['description'];
+                    $calendar->lead_id = $request['leadID'];
+                    $calendar->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
+                    $calendar->assigned_team_id = null;
+                    $calendar->assigned_user_id = Auth::user()->id;
+                    $calendar->created_by = Auth::id();
+                    $calendar->updated_by = Auth::id();
+
+                    $calendar->save();
+                    \Log::info('Calendar entry created successfully for activity', ['calendar_id' => $calendar->id, 'activity_title' => $calendar->calendar_title]);
+                } else {
+                    \Log::info('Calendar entry already exists, skipping creation', ['existing_calendar_id' => $existingCalendar->id]);
+                }
             } catch (\Exception $e) {
                 \Log::error('Failed to create calendar entry for activity', [
                     'error' => $e->getMessage(),
@@ -346,8 +385,8 @@ class ActivityController extends Controller
         $leadDetails->updated_at = Carbon::now();
         $leadDetails->save();
 
-
-        return redirect('/lead/' . $request['leadID'] . '?section=activities')->with('success', 'Activity Saved Successfully');
+            return redirect('/lead/' . $request['leadID'] . '?section=activities')->with('success', 'Activity Saved Successfully');
+        });
     }
 
     public function editActivity(Request $request, $id)
@@ -389,20 +428,39 @@ class ActivityController extends Controller
         // Optional: Update Calendar entry if needed (if already exists or if required to be added on update)
         if ($request['addToCalendar'] == 1 && !empty($request['start_date']) && !empty($request['end_date'])) {
             try {
-                $calendar = new Calendar();
-                // Use the activity title from the request or the existing activity
-                $calendar->calendar_title = $request['activity_title'] ?: $activity->activity_title;
-                $calendar->start_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['start_date'] . ' ' . $startTime);
-                $calendar->due_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['end_date'] . ' ' . $endTime);
-                $calendar->description = $request['description'];
-                $calendar->lead_id = $request['leadID'];
-                $calendar->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
-                $calendar->assigned_team_id = null;
-                $calendar->assigned_user_id = Auth::user()->id;
-                $calendar->created_by = Auth::id();
-                $calendar->updated_by = Auth::id();
-                $calendar->save();
-                \Log::info('Calendar entry updated successfully for activity', ['calendar_id' => $calendar->id, 'activity_title' => $calendar->calendar_title]);
+                $startDateTime = Carbon::createFromFormat('d-m-Y h:i A', $request['start_date'] . ' ' . $startTime);
+
+                // Check if a calendar entry already exists for this lead, user, and start time
+                $existingCalendar = Calendar::where('lead_id', $request['leadID'])
+                    ->where('created_by', Auth::id())
+                    ->where('start_date_time', $startDateTime)
+                    ->first();
+
+                if ($existingCalendar) {
+                    // Update existing calendar entry
+                    $existingCalendar->calendar_title = $request['activity_title'] ?: $activity->activity_title;
+                    $existingCalendar->due_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['end_date'] . ' ' . $endTime);
+                    $existingCalendar->description = $request['description'];
+                    $existingCalendar->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
+                    $existingCalendar->updated_by = Auth::id();
+                    $existingCalendar->save();
+                    \Log::info('Calendar entry updated successfully for activity', ['calendar_id' => $existingCalendar->id, 'activity_title' => $existingCalendar->calendar_title]);
+                } else {
+                    // Create new calendar entry
+                    $calendar = new Calendar();
+                    $calendar->calendar_title = $request['activity_title'] ?: $activity->activity_title;
+                    $calendar->start_date_time = $startDateTime;
+                    $calendar->due_date_time = Carbon::createFromFormat('d-m-Y h:i A', $request['end_date'] . ' ' . $endTime);
+                    $calendar->description = $request['description'];
+                    $calendar->lead_id = $request['leadID'];
+                    $calendar->priority_id = !empty($request['priority']) ? $request['priority'] : 1;
+                    $calendar->assigned_team_id = null;
+                    $calendar->assigned_user_id = Auth::user()->id;
+                    $calendar->created_by = Auth::id();
+                    $calendar->updated_by = Auth::id();
+                    $calendar->save();
+                    \Log::info('Calendar entry created successfully for activity', ['calendar_id' => $calendar->id, 'activity_title' => $calendar->calendar_title]);
+                }
             } catch (\Exception $e) {
                 \Log::error('Failed to create/update calendar entry for activity', [
                     'error' => $e->getMessage(),

@@ -10,6 +10,31 @@ class Activity extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'activity_title',
+        'description',
+        'priority_id',
+        'start_date_time',
+        'due_date_time',
+        'activity_type_id',
+        'lead_id',
+        'assigned_department_id',
+        'assigned_user_id',
+        'status_id',
+        'calendar_add',
+        'ptp_check',
+        'act_ptp_amount',
+        'act_ptp_date',
+        'act_ptp_retire_date',
+        'act_payment_amount',
+        'act_payment_transid',
+        'act_payment_method',
+        'act_call_disposition_id',
+        'ref_text_id',
+        'created_by',
+        'updated_by'
+    ];
+
 
     public static function query()
     {
@@ -88,5 +113,66 @@ class Activity extends Model
             ->groupBy('created_date');
         //  ->paginate(3);
         return $query;
+    }
+
+    /**
+     * Check if a similar activity already exists for a lead within a timeframe
+     */
+    public static function hasSimilarActivity($leadId, $activityTypeId, $createdBy, $minutesWindow = 5)
+    {
+        $timeThreshold = now()->subMinutes($minutesWindow);
+
+        return self::where('lead_id', $leadId)
+            ->where('activity_type_id', $activityTypeId)
+            ->where('created_by', $createdBy)
+            ->where('created_at', '>=', $timeThreshold)
+            ->exists();
+    }
+
+    /**
+     * Check if a PTP activity already exists for a lead on the same date
+     */
+    public static function hasPTPForDate($leadId, $ptpDate, $excludeId = null)
+    {
+        $query = self::where('lead_id', $leadId)
+            ->whereNotNull('act_ptp_date')
+            ->whereDate('act_ptp_date', $ptpDate);
+
+        if ($excludeId) {
+            $query->where('id', '!=', $excludeId);
+        }
+
+        return $query->exists();
+    }
+
+    /**
+     * Check if a payment activity already exists for a lead with same transaction ID
+     */
+    public static function hasPaymentWithTransactionId($leadId, $transactionId, $excludeId = null)
+    {
+        if (empty($transactionId)) {
+            return false;
+        }
+
+        $query = self::where('lead_id', $leadId)
+            ->where('act_payment_transid', $transactionId)
+            ->whereNotNull('act_payment_amount');
+
+        if ($excludeId) {
+            $query->where('id', '!=', $excludeId);
+        }
+
+        return $query->exists();
+    }
+
+    /**
+     * Get the latest activity for a lead by type
+     */
+    public static function getLatestActivityByType($leadId, $activityTypeId)
+    {
+        return self::where('lead_id', $leadId)
+            ->where('activity_type_id', $activityTypeId)
+            ->orderBy('created_at', 'desc')
+            ->first();
     }
 }

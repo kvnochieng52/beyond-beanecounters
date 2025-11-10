@@ -32,6 +32,10 @@ Auth::routes();
 Route::group(['middleware' => ['auth', 'user_is_active']], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    // PTP Export Routes
+    Route::get('/export/ptp-today', [HomeController::class, 'exportPTPToday'])->name('export.ptp.today');
+    Route::get('/export/ptp-this-week', [HomeController::class, 'exportPTPThisWeek'])->name('export.ptp.week');
     Route::resource('/lead', LeadController::class);
 
     // Lead Bulk Update Routes
@@ -58,6 +62,13 @@ Route::group(['middleware' => ['auth', 'user_is_active']], function () {
     Route::post('/transactions/update', [TransactionController::class, 'updateTransaction'])->name('transactions.update');
 
     Route::get('/transactions/invoice/{leadID}', [TransactionController::class, 'generateInvoice'])->name('transactions.invoice');
+
+    // MTB Routes
+    Route::get('/mtb/data', [\App\Http\Controllers\MtbController::class, 'getMtbs'])->name('mtb.data');
+    Route::post('/mtb/store', [\App\Http\Controllers\MtbController::class, 'store'])->name('mtb.store');
+    Route::get('/mtb/{id}/edit', [\App\Http\Controllers\MtbController::class, 'edit'])->name('mtb.edit');
+    Route::put('/mtb/update', [\App\Http\Controllers\MtbController::class, 'update'])->name('mtb.update');
+    Route::delete('/mtb/{id}', [\App\Http\Controllers\MtbController::class, 'destroy'])->name('mtb.destroy');
 
     Route::prefix('leads')->group(
         function () {

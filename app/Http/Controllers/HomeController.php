@@ -7,9 +7,12 @@ use App\Models\Institution;
 use App\Models\Lead;
 use App\Models\LeadStatus;
 use App\Models\Text;
+use App\Exports\PTPTodayExport;
+use App\Exports\PTPThisWeekExport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
 {
@@ -90,27 +93,30 @@ class HomeController extends Controller
                 'leads.title as lead_name',
                 'leads.email as lead_email',
                 'leads.telephone as lead_telephone',
-                'institutions.institution_name'
+                'institutions.institution_name',
+                'assigned_agents.name as assigned_agent_name',
+                'assigned_agents.agent_code as assigned_agent_code'
             ])
             ->leftJoin('leads', 'activities.lead_id', '=', 'leads.id')
             ->leftJoin('institutions', 'leads.institution_id', '=', 'institutions.id')
+            ->leftJoin('users as assigned_agents', 'leads.assigned_agent', '=', 'assigned_agents.id')
             ->whereNotNull('activities.act_ptp_date')
             ->whereNotNull('activities.act_ptp_amount');
 
         if ($isAdmin) {
             // Admin sees all PTPs
-            $ptpsToday = (clone $ptpBaseQuery)->whereDate('activities.act_ptp_date', $today)->get();
-            $ptpsThisWeek = (clone $ptpBaseQuery)->whereBetween('activities.act_ptp_date', [$today, $weekEnd])->get();
+            $ptpsToday = (clone $ptpBaseQuery)->whereDate('activities.act_ptp_date', $today)->paginate(8, ['*'], 'ptp_today_page');
+            $ptpsThisWeek = (clone $ptpBaseQuery)->whereBetween('activities.act_ptp_date', [$today, $weekEnd])->paginate(8, ['*'], 'ptp_week_page');
         } else {
             // User sees only PTPs they created
             $ptpsToday = (clone $ptpBaseQuery)
                 ->where('activities.created_by', $userId)
                 ->whereDate('activities.act_ptp_date', $today)
-                ->get();
+                ->paginate(8, ['*'], 'ptp_today_page');
             $ptpsThisWeek = (clone $ptpBaseQuery)
                 ->where('activities.created_by', $userId)
                 ->whereBetween('activities.act_ptp_date', [$today, $weekEnd])
-                ->get();
+                ->paginate(8, ['*'], 'ptp_week_page');
         }
 
         // Get scheduled activities for today
@@ -152,5 +158,78 @@ class HomeController extends Controller
             'ptpsThisWeek' => $ptpsThisWeek,
             'activitiesToday' => $activitiesToday
         ]);
+    }
+
+    public function exportPTPToday()
+    {
+        $user = auth()->user();
+        $isAdmin = $user->hasRole('Admin');
+        $userId = $user->id;
+        $today = Carbon::today();
+
+        // Build the same query as in index method
+        $ptpQuery = Activity::select([
+                'activities.id as activity_id',
+                'activities.act_ptp_date',
+                'activities.act_ptp_amount',
+                'leads.id as lead_id',
+                'leads.title as lead_name',
+                'leads.email as lead_email',
+                'leads.telephone as lead_telephone',
+                'institutions.institution_name',
+                'assigned_agents.name as assigned_agent_name',
+                'assigned_agents.agent_code as assigned_agent_code'
+            ])
+            ->leftJoin('leads', 'activities.lead_id', '=', 'leads.id')
+            ->leftJoin('institutions', 'leads.institution_id', '=', 'institutions.id')
+            ->leftJoin('users as assigned_agents', 'leads.assigned_agent', '=', 'assigned_agents.id')
+            ->whereNotNull('activities.act_ptp_date')
+            ->whereNotNull('activities.act_ptp_amount')
+            ->whereDate('activities.act_ptp_date', $today);
+
+        if (!$isAdmin) {
+            $ptpQuery->where('activities.created_by', $userId);
+        }
+
+        $ptps = $ptpQuery->get();
+
+        return Excel::download(new PTPTodayExport($ptps), 'ptp-today-' . date('Y-m-d') . '.xlsx');
+    }
+
+    public function exportPTPThisWeek()
+    {
+        $user = auth()->user();
+        $isAdmin = $user->hasRole('Admin');
+        $userId = $user->id;
+        $today = Carbon::today();
+        $weekEnd = Carbon::today()->endOfWeek();
+
+        // Build the same query as in index method
+        $ptpQuery = Activity::select([
+                'activities.id as activity_id',
+                'activities.act_ptp_date',
+                'activities.act_ptp_amount',
+                'leads.id as lead_id',
+                'leads.title as lead_name',
+                'leads.email as lead_email',
+                'leads.telephone as lead_telephone',
+                'institutions.institution_name',
+                'assigned_agents.name as assigned_agent_name',
+                'assigned_agents.agent_code as assigned_agent_code'
+            ])
+            ->leftJoin('leads', 'activities.lead_id', '=', 'leads.id')
+            ->leftJoin('institutions', 'leads.institution_id', '=', 'institutions.id')
+            ->leftJoin('users as assigned_agents', 'leads.assigned_agent', '=', 'assigned_agents.id')
+            ->whereNotNull('activities.act_ptp_date')
+            ->whereNotNull('activities.act_ptp_amount')
+            ->whereBetween('activities.act_ptp_date', [$today, $weekEnd]);
+
+        if (!$isAdmin) {
+            $ptpQuery->where('activities.created_by', $userId);
+        }
+
+        $ptps = $ptpQuery->get();
+
+        return Excel::download(new PTPThisWeekExport($ptps), 'ptp-this-week-' . date('Y-m-d') . '.xlsx');
     }
 }

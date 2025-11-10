@@ -86,6 +86,14 @@
                                         PAYMENTS</a>
                                 </li>
 
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->get('section') == 'mtb' ? 'active' : '' }}"
+                                        id="custom-tabs-four-mtb-tab"
+                                        href="/lead/{{ $leadDetails->id }}?section=mtb" role="tab"
+                                        aria-controls="custom-tabs-four-mtb" aria-selected="false">
+                                        MTB</a>
+                                </li>
+
                                 {{-- <li class="nav-item">
                                     <a class="nav-link {{ request()->get('section') == 'status' ? 'active' : '' }}"
                                         id="custom-tabs-four-status-tab" role="tab"
@@ -164,6 +172,12 @@
                                     id="custom-tabs-four-transaction-history" role="tabpanel"
                                     aria-labelledby="custom-tabs-four-transaction-history-tab">
                                     @include('lead.show._transaction_history')
+                                </div>
+
+                                <div class="tab-pane fade {{ request()->get('section') == 'mtb' ? 'show active' : '' }}"
+                                    id="custom-tabs-four-mtb" role="tabpanel"
+                                    aria-labelledby="custom-tabs-four-mtb-tab">
+                                    @include('lead.show._mtb')
                                 </div>
 
                                 <div class="tab-pane fade {{ request()->get('section') == 'status' ? 'show active' : '' }}"
@@ -504,6 +518,80 @@
 
 
 
+            $('#mtbTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('mtb.data') }}',
+                    data: function(d) {
+                        d.lead_id = '{{ $leadDetails->id }}'; // Pass lead_id
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'amount_paid',
+                        name: 'amount_paid',
+                        render: function(data) {
+                            return parseFloat(data).toFixed(2);
+                        }
+                    },
+                    {
+                        data: 'date_paid',
+                        name: 'date_paid',
+                        render: function(data) {
+                            return formatDate(data, 'date');
+                        }
+                    },
+                    {
+                        data: 'payment_channel',
+                        name: 'payment_channel'
+                    },
+                    {
+                        data: 'description',
+                        name: 'description'
+                    },
+                    {
+                        data: 'created_by_name',
+                        name: 'created_by.name'
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        render: function(data) {
+                            return formatDate(data, 'datetime');
+                        }
+                    },
+                    {
+                        data: null,
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            const canEdit = @json(auth()->user()->hasAnyRole(['Admin', 'Supervisor', 'Manager']));
+
+                            let buttons = '';
+
+                            if (canEdit) {
+                                buttons += `
+                    <button class="btn btn-warning btn-xs edit-mtb-btn" data-id="${row.id}">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button class="btn btn-danger btn-xs delete-mtb-btn" data-id="${row.id}">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>`;
+                            }
+
+                            return buttons;
+                        }
+                    }
+                ]
+            });
+
             $('#transactionsTable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -565,6 +653,49 @@
                     }
 
                 ]
+            });
+
+            // Handle Edit MTB Button Click
+            $(document).on('click', '.edit-mtb-btn', function() {
+                var mtbId = $(this).data('id');
+
+                // Open modal
+                $('#edit_mtb_modal').modal('show');
+
+                // Load MTB details
+                $.ajax({
+                    url: '/mtb/' + mtbId + '/edit',
+                    method: 'GET',
+                    success: function(response) {
+                        $('#edit_mtb_id').val(response.id);
+                        $('#edit_amount_paid').val(response.amount_paid);
+                        $('#edit_date_paid').val(response.date_paid);
+                        $('#edit_payment_channel').val(response.payment_channel);
+                        $('#edit_description').val(response.description);
+                    }
+                });
+            });
+
+            // Handle Delete MTB Button Click
+            $(document).on('click', '.delete-mtb-btn', function() {
+                var mtbId = $(this).data('id');
+
+                if (confirm('Are you sure you want to delete this MTB record?')) {
+                    $.ajax({
+                        url: '/mtb/' + mtbId,
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            $('#mtbTable').DataTable().ajax.reload();
+                            alert('MTB record deleted successfully!');
+                        },
+                        error: function() {
+                            alert('Error deleting MTB record!');
+                        }
+                    });
+                }
             });
 
             // Handle Edit Button Click
