@@ -20,6 +20,10 @@ class ActivityReportController extends Controller
 {
     public function index()
     {
+        // Only allow Admin and Supervisor users to access activity reports
+        if (!auth()->user()->hasRole('Admin') && !auth()->user()->hasRole('Supervisor')) {
+            abort(403, 'Unauthorized access. Only administrators and supervisors can access activity reports.');
+        }
 
 
         return view('activity_report.index')->with([
@@ -86,6 +90,11 @@ class ActivityReportController extends Controller
 
     public function generateReport(Request $request)
     {
+        // Only allow Admin and Supervisor users to generate activity reports
+        if (!auth()->user()->hasRole('Admin') && !auth()->user()->hasRole('Supervisor')) {
+            abort(403, 'Unauthorized access. Only administrators and supervisors can generate activity reports.');
+        }
+
         // Validate required fields
         $request->validate([
             'from_date' => 'required|date_format:d-m-Y',

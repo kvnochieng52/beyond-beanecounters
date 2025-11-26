@@ -33,6 +33,9 @@ Route::group(['middleware' => ['auth', 'user_is_active']], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
+    // CEO Dashboard - Admin only
+    Route::get('/ceo-dashboard', [HomeController::class, 'ceoDashboard'])->name('ceo.dashboard');
+
     // PTP Export Routes
     Route::get('/export/ptp-today', [HomeController::class, 'exportPTPToday'])->name('export.ptp.today');
     Route::get('/export/ptp-this-week', [HomeController::class, 'exportPTPThisWeek'])->name('export.ptp.week');
@@ -176,6 +179,14 @@ Route::group(['middleware' => ['auth', 'user_is_active']], function () {
         // Leads Report
         Route::get('/leads', [ReportController::class, 'leadsReport'])->name('reports.leads');
         Route::post('/leads/generate', [ReportController::class, 'generateLeadsReport'])->name('reports.leads.generate');
+
+        // Payment Report
+        Route::get('/payment-report', [ReportController::class, 'paymentReport'])->name('reports.payment-report');
+        Route::match(['get', 'post'], '/payment-report/generate', [ReportController::class, 'generatePaymentReport'])->name('reports.payment-report.generate');
+
+        // PTP Report
+        Route::get('/ptp-report', [ReportController::class, 'ptpReport'])->name('reports.ptp-report');
+        Route::match(['get', 'post'], '/ptp-report/generate', [ReportController::class, 'generatePTPReport'])->name('reports.ptp-report.generate');
     });
 });
 

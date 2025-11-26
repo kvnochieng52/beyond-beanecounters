@@ -23,7 +23,7 @@ class BackgroundReportsController extends Controller
         $report = BackgroundReport::findOrFail($id);
 
         // Check if user can download this report
-        if (!Auth::user()->hasRole('Admin') && $report->requested_by !== Auth::id()) {
+        if (!Auth::user()->hasRole('Admin') && !Auth::user()->hasRole('Supervisor') && $report->requested_by !== Auth::id()) {
             abort(403, 'Unauthorized to download this report.');
         }
 
@@ -45,7 +45,7 @@ class BackgroundReportsController extends Controller
         $report = BackgroundReport::findOrFail($id);
 
         // Check if user can delete this report
-        if (!Auth::user()->hasRole('Admin') && $report->requested_by !== Auth::id()) {
+        if (!Auth::user()->hasRole('Admin') && !Auth::user()->hasRole('Supervisor') && $report->requested_by !== Auth::id()) {
             abort(403, 'Unauthorized to delete this report.');
         }
 
@@ -63,8 +63,8 @@ class BackgroundReportsController extends Controller
     {
         $query = BackgroundReport::with('user');
 
-        // If user is not admin, only show their reports
-        if (!Auth::user()->hasRole('Admin')) {
+        // If user is not admin or supervisor, only show their reports
+        if (!Auth::user()->hasRole('Admin') && !Auth::user()->hasRole('Supervisor')) {
             $query->where('requested_by', Auth::id());
         }
 
@@ -99,7 +99,7 @@ class BackgroundReportsController extends Controller
                     </a>';
                 }
 
-                if (Auth::user()->hasRole('Admin') || $report->requested_by === Auth::id()) {
+                if (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Supervisor') || $report->requested_by === Auth::id()) {
                     $actions .= '<button onclick="deleteReport(' . $report->id . ')" class="btn btn-sm btn-danger">
                         <i class="fas fa-trash"></i> Delete
                     </button>';

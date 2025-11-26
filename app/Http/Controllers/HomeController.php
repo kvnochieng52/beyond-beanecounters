@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\Institution;
 use App\Models\Lead;
 use App\Models\LeadStatus;
+use App\Models\Payment;
 use App\Models\Text;
 use App\Exports\PTPTodayExport;
 use App\Exports\PTPThisWeekExport;
@@ -163,8 +164,11 @@ class HomeController extends Controller
     public function exportPTPToday()
     {
         $user = auth()->user();
-        $isAdmin = $user->hasRole('Admin');
-        $userId = $user->id;
+        // Only allow Admin users to export PTP data
+        if (!$user->hasRole('Admin')) {
+            abort(403, 'Unauthorized access. Only administrators can export PTP data.');
+        }
+
         $today = Carbon::today();
 
         // Build the same query as in index method
@@ -187,10 +191,6 @@ class HomeController extends Controller
             ->whereNotNull('activities.act_ptp_amount')
             ->whereDate('activities.act_ptp_date', $today);
 
-        if (!$isAdmin) {
-            $ptpQuery->where('activities.created_by', $userId);
-        }
-
         $ptps = $ptpQuery->get();
 
         return Excel::download(new PTPTodayExport($ptps), 'ptp-today-' . date('Y-m-d') . '.xlsx');
@@ -199,8 +199,11 @@ class HomeController extends Controller
     public function exportPTPThisWeek()
     {
         $user = auth()->user();
-        $isAdmin = $user->hasRole('Admin');
-        $userId = $user->id;
+        // Only allow Admin users to export PTP data
+        if (!$user->hasRole('Admin')) {
+            abort(403, 'Unauthorized access. Only administrators can export PTP data.');
+        }
+
         $today = Carbon::today();
         $weekEnd = Carbon::today()->endOfWeek();
 
@@ -224,12 +227,116 @@ class HomeController extends Controller
             ->whereNotNull('activities.act_ptp_amount')
             ->whereBetween('activities.act_ptp_date', [$today, $weekEnd]);
 
-        if (!$isAdmin) {
-            $ptpQuery->where('activities.created_by', $userId);
-        }
-
         $ptps = $ptpQuery->get();
 
         return Excel::download(new PTPThisWeekExport($ptps), 'ptp-this-week-' . date('Y-m-d') . '.xlsx');
+    }
+
+    public function ceoDashboard()
+    {
+        // Only allow Admin users to access CEO Dashboard
+        if (!auth()->user()->hasRole('Admin')) {
+            abort(403, 'Unauthorized access. Only administrators can access CEO Dashboard.');
+        }
+
+        // Get current date metrics
+        $today = Carbon::today();
+        $thisMonth = Carbon::now()->startOfMonth();
+        $thisMonthEnd = Carbon::now()->endOfMonth();
+
+        // Calculate metrics
+        $totalLeads = Lead::count();
+        $totalValue = Lead::sum('amount');
+        $activeUsers = DB::table('users')->where('is_active', 1)->count();
+
+        // PTPs Today
+        $ptpsToday = Activity::whereNotNull('act_ptp_date')
+            ->whereNotNull('act_ptp_amount')
+            ->whereDate('act_ptp_date', $today)
+            ->count();
+
+        $ptpsTodayValue = Activity::whereNotNull('act_ptp_date')
+            ->whereNotNull('act_ptp_amount')
+            ->whereDate('act_ptp_date', $today)
+            ->sum('act_ptp_amount');
+
+        // PTPs This Month
+        $ptpsThisMonthValue = Activity::whereNotNull('act_ptp_date')
+            ->whereNotNull('act_ptp_amount')
+            ->whereBetween('act_ptp_date', [$thisMonth, $thisMonthEnd])
+            ->sum('act_ptp_amount');
+
+        // Locked payments (assuming payments with status pending/locked)
+        $lockedPayments = Payment::where('status_id', '!=', 2) // Assuming 2 is completed
+            ->sum('amount');
+
+        // Active clients count (leads with recent activity in last 30 days)
+        $activeClients = Lead::whereExists(function ($query) {
+            $query->select(DB::raw(1))
+                ->from('activities')
+                ->whereColumn('activities.lead_id', 'leads.id')
+                ->where('activities.created_at', '>=', Carbon::now()->subDays(30));
+        })->count();
+
+        // Additional data for charts
+        // Monthly leads data for the last 6 months
+        $monthlyLeads = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $month = Carbon::now()->subMonths($i);
+            $monthlyLeads[] = [
+                'month' => $month->format('M Y'),
+                'count' => Lead::whereYear('created_at', $month->year)
+                    ->whereMonth('created_at', $month->month)
+                    ->count()
+            ];
+        }
+
+        // Lead status distribution
+        $leadStatusData = DB::table('leads')
+            ->join('lead_statuses', 'leads.status_id', '=', 'lead_statuses.id')
+            ->select('lead_statuses.lead_status_name as status', DB::raw('count(*) as count'))
+            ->groupBy('lead_statuses.lead_status_name')
+            ->get();
+
+        // PTP completion rate by month
+        $ptpCompletionRate = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $month = Carbon::now()->subMonths($i);
+            $totalPtps = Activity::whereNotNull('act_ptp_date')
+                ->whereYear('act_ptp_date', $month->year)
+                ->whereMonth('act_ptp_date', $month->month)
+                ->count();
+
+            // Assuming PTPs are "completed" when there's a payment on or after the PTP date
+            $completedPtps = Activity::whereNotNull('act_ptp_date')
+                ->whereYear('act_ptp_date', $month->year)
+                ->whereMonth('act_ptp_date', $month->month)
+                ->whereExists(function ($query) {
+                    $query->select(DB::raw(1))
+                        ->from('payments')
+                        ->whereColumn('payments.lead_id', 'activities.lead_id')
+                        ->whereColumn('payments.created_at', '>=', 'activities.act_ptp_date');
+                })
+                ->count();
+
+            $ptpCompletionRate[] = [
+                'month' => $month->format('M Y'),
+                'rate' => $totalPtps > 0 ? round(($completedPtps / $totalPtps) * 100, 2) : 0
+            ];
+        }
+
+        return view('ceo-dashboard')->with([
+            'activeClients' => $activeClients,
+            'totalLeads' => $totalLeads,
+            'totalValue' => $totalValue,
+            'activeUsers' => $activeUsers,
+            'ptpsToday' => $ptpsToday,
+            'ptpsTodayValue' => $ptpsTodayValue,
+            'ptpsThisMonthValue' => $ptpsThisMonthValue,
+            'lockedPayments' => $lockedPayments,
+            'monthlyLeads' => $monthlyLeads,
+            'leadStatusData' => $leadStatusData,
+            'ptpCompletionRate' => $ptpCompletionRate
+        ]);
     }
 }

@@ -421,6 +421,7 @@
                     [10, 25, 50, 100, -1],
                     [10, 25, 50, 100, "All"]
                 ],
+                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Supervisor'))
                 dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
                     '<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6">>' +
                     '<"row"<"col-sm-12"tr>>' +
@@ -445,7 +446,12 @@
                         extend: 'print',
                         className: 'btn btn-secondary btn-sm'
                     }
-                ]
+                ],
+                @else
+                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
+                    '<"row"<"col-sm-12"tr>>' +
+                    '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                @endif
             });
 
 

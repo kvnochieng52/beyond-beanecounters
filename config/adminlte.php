@@ -322,6 +322,13 @@ return [
         ],
 
         [
+            'text' => 'CEO Dashboard',
+            'url' => '/ceo-dashboard',
+            'icon' => 'nav-icon fas fa-chart-line',
+            'can' => ['is_admin'],
+        ],
+
+        [
             'text' => 'Leads',
             'icon' => 'fas fa-fw fa-user-plus',
             // 'can' => ['Create Lead'],
@@ -493,40 +500,60 @@ return [
         [
             'text' => 'Reports',
             'icon' => 'fas fa-fw fa-file',
-            'can' => ['is_admin'],
+            'can' => ['is_admin', 'is_supervisor'],
             'submenu' => [
                 [
                     'text' => 'Collection Rates',
                     'url' => '/reports/collection-rates',
                     'icon' => 'fas fa-fw fa-chart-pie',
+                    'can' => ['is_admin'],
                 ],
                 [
                     'text' => 'Outstanding Debts',
                     'url' => '/reports/outstanding-debts',
                     'icon' => 'fas fa-fw fa-money-bill-wave',
+                    'can' => ['is_admin'],
                 ],
                 [
                     'text' => 'Agent Performance',
                     'url' => '/reports/agent-performance',
                     'icon' => 'fas fa-fw fa-user-check',
+                    'can' => ['is_admin'],
                 ],
 
                 [
                     'text' => 'Actvities Report',
                     'url' => 'activity-reports/',
                     'icon' => 'fas fa-fw fa-user-file',
+                    'can' => ['is_admin', 'is_supervisor'],
                 ],
 
                 [
                     'text' => 'Leads Report',
                     'url' => '/reports/leads',
                     'icon' => 'fas fa-fw fa-users',
+                    'can' => ['is_admin'],
                 ],
 
                 [
                     'text' => 'Background Reports',
                     'url' => '/background-reports',
                     'icon' => 'fas fa-fw fa-clock',
+                    'can' => ['is_admin', 'is_supervisor'],
+                ],
+
+                [
+                    'text' => 'Payment Report',
+                    'url' => '/reports/payment-report',
+                    'icon' => 'fas fa-fw fa-credit-card',
+                    'can' => ['is_admin'],
+                ],
+
+                [
+                    'text' => 'PTP Report',
+                    'url' => '/reports/ptp-report',
+                    'icon' => 'fas fa-fw fa-handshake',
+                    'can' => ['is_admin'],
                 ],
             ]
         ],

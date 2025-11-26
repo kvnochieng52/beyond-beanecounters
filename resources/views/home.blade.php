@@ -228,7 +228,7 @@
                             aria-labelledby="ptp-today-tab">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h6 class="mb-0">PTPs Due Today ({{ $ptpsToday->total() }} total)</h6>
-                                @if ($ptpsToday->count() > 0)
+                                @if ($ptpsToday->count() > 0 && auth()->user()->hasRole('Admin'))
                                     <a href="{{ route('export.ptp.today') }}" class="btn btn-success btn-sm">
                                         <i class="fas fa-file-excel"></i> Export to Excel
                                     </a>
@@ -300,7 +300,7 @@
                         <div class="tab-pane fade" id="ptp-week" role="tabpanel" aria-labelledby="ptp-week-tab">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h6 class="mb-0">PTPs This Week ({{ $ptpsThisWeek->total() }} total)</h6>
-                                @if ($ptpsThisWeek->count() > 0)
+                                @if ($ptpsThisWeek->count() > 0 && auth()->user()->hasRole('Admin'))
                                     <a href="{{ route('export.ptp.week') }}" class="btn btn-success btn-sm">
                                         <i class="fas fa-file-excel"></i> Export to Excel
                                     </a>

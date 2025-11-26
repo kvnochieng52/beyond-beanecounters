@@ -614,6 +614,10 @@ class LeadController extends Controller
     public function exportMyLeads()
     {
         $user = auth()->user();
+        // Only allow Admin users to export My Leads
+        if (!$user->hasRole('Admin')) {
+            abort(403, 'Unauthorized access. Only administrators can export My Leads.');
+        }
         return Excel::download(new LeadsExport($user), 'my-leads-' . date('Y-m-d') . '.xlsx');
     }
 

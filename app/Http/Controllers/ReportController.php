@@ -9,6 +9,7 @@ use App\Exports\CollectionRateExport;
 use App\Exports\OutstandingDebtExport;
 use App\Exports\LeadsReportExport;
 use App\Jobs\ProcessLeadsReport;
+use App\Models\Activity;
 use App\Models\Institution;
 use App\Models\Lead;
 use App\Models\Transaction;
@@ -644,5 +645,289 @@ class ReportController extends Controller
 
         return redirect()->route('background-reports.index')
             ->with('success', 'Leads report has been queued for background processing. You will be able to download it once completed.');
+    }
+
+    public function paymentReport()
+    {
+        // Only allow Admin users to access payment reports
+        if (!auth()->user()->hasRole('Admin')) {
+            abort(403, 'Unauthorized access. Only administrators can access payment reports.');
+        }
+
+        $institutions = Institution::where('is_active', 1)->get();
+        $agents = \App\Models\User::where('is_active', 1)->get();
+
+        return view('reports.payment_report', compact('institutions', 'agents'));
+    }
+
+    public function generatePaymentReport(Request $request)
+    {
+        // Only allow Admin users to generate payment reports
+        if (!auth()->user()->hasRole('Admin')) {
+            abort(403, 'Unauthorized access. Only administrators can generate payment reports.');
+        }
+
+        $request->validate([
+            'from_date' => 'required|date_format:d-m-Y',
+            'to_date' => 'required|date_format:d-m-Y|after_or_equal:from_date',
+        ]);
+
+        $fromDate = Carbon::createFromFormat('d-m-Y', $request->from_date)->startOfDay();
+        $toDate = Carbon::createFromFormat('d-m-Y', $request->to_date)->endOfDay();
+
+        // Base query for payments with related data
+        $paymentsQuery = \App\Models\Payment::select([
+                'payments.*',
+                'leads.title as lead_name',
+                'leads.id as ticket_number',
+                'leads.amount as lead_amount',
+                'leads.balance as lead_balance',
+                'institutions.institution_name',
+                'users.name as agent_name',
+                'users.agent_code',
+                'payment_statuses.payment_status_name'
+            ])
+            ->leftJoin('leads', 'payments.lead_id', '=', 'leads.id')
+            ->leftJoin('institutions', 'leads.institution_id', '=', 'institutions.id')
+            ->leftJoin('users', 'leads.assigned_agent', '=', 'users.id')
+            ->leftJoin('payment_statuses', 'payments.status_id', '=', 'payment_statuses.id')
+            ->whereBetween('payments.created_at', [$fromDate, $toDate]);
+
+        // Apply filters
+        if ($request->filled('institution_id') && $request->institution_id != '') {
+            $paymentsQuery->where('leads.institution_id', $request->institution_id);
+        }
+
+        if ($request->filled('agent_id') && $request->agent_id != '') {
+            $paymentsQuery->where('leads.assigned_agent', $request->agent_id);
+        }
+
+        if ($request->filled('payment_status') && $request->payment_status != '') {
+            $paymentsQuery->where('payments.status_id', $request->payment_status);
+        }
+
+        $payments = $paymentsQuery->orderBy('payments.created_at', 'desc')->get();
+
+        // Calculate summary data
+        $totalPayments = $payments->count();
+        $totalAmount = $payments->sum('amount');
+        $avgPaymentAmount = $totalPayments > 0 ? $totalAmount / $totalPayments : 0;
+
+        // Group by institution
+        $institutionSummary = $payments->groupBy('institution_name')->map(function ($institutionPayments) {
+            return [
+                'count' => $institutionPayments->count(),
+                'total_amount' => $institutionPayments->sum('amount'),
+                'avg_amount' => $institutionPayments->avg('amount')
+            ];
+        });
+
+        // Group by agent
+        $agentSummary = $payments->groupBy('agent_name')->map(function ($agentPayments) {
+            return [
+                'count' => $agentPayments->count(),
+                'total_amount' => $agentPayments->sum('amount'),
+                'avg_amount' => $agentPayments->avg('amount')
+            ];
+        });
+
+        // Group by date
+        $dailySummary = $payments->groupBy(function($payment) {
+            return Carbon::parse($payment->created_at)->format('Y-m-d');
+        })->map(function ($dayPayments) {
+            return [
+                'count' => $dayPayments->count(),
+                'total_amount' => $dayPayments->sum('amount')
+            ];
+        });
+
+        $data = [
+            'payments' => $payments,
+            'filters' => [
+                'from_date' => $request->from_date,
+                'to_date' => $request->to_date,
+                'institution_id' => $request->institution_id ?? '',
+                'agent_id' => $request->agent_id ?? '',
+                'payment_status' => $request->payment_status ?? ''
+            ],
+            'summary' => [
+                'total_payments' => $totalPayments,
+                'total_amount' => $totalAmount,
+                'avg_payment_amount' => $avgPaymentAmount,
+                'institution_summary' => $institutionSummary,
+                'agent_summary' => $agentSummary,
+                'daily_summary' => $dailySummary
+            ]
+        ];
+
+        if ($request->has('export') && $request->export == 'excel') {
+            return Excel::download(new \App\Exports\PaymentReportExport($data), 'payment_report_' . date('Y-m-d') . '.xlsx');
+        }
+
+        return view('reports.payment_report_result', compact('data'));
+    }
+
+    public function ptpReport()
+    {
+        // Only allow Admin users to access PTP reports
+        if (!auth()->user()->hasRole('Admin')) {
+            abort(403, 'Unauthorized access. Only administrators can access PTP reports.');
+        }
+
+        $institutions = Institution::where('is_active', 1)->get();
+        $agents = \App\Models\User::where('is_active', 1)->get();
+
+        return view('reports.ptp_report', compact('institutions', 'agents'));
+    }
+
+    public function generatePTPReport(Request $request)
+    {
+        // Only allow Admin users to generate PTP reports
+        if (!auth()->user()->hasRole('Admin')) {
+            abort(403, 'Unauthorized access. Only administrators can generate PTP reports.');
+        }
+
+        $request->validate([
+            'from_date' => 'required|date_format:d-m-Y',
+            'to_date' => 'required|date_format:d-m-Y|after_or_equal:from_date',
+        ]);
+
+        $fromDate = Carbon::createFromFormat('d-m-Y', $request->from_date)->startOfDay();
+        $toDate = Carbon::createFromFormat('d-m-Y', $request->to_date)->endOfDay();
+
+        // Base query for PTPs with related data
+        $ptpQuery = Activity::select([
+                'activities.id as activity_id',
+                'activities.act_ptp_date',
+                'activities.act_ptp_amount',
+                'activities.created_at as ptp_created_date',
+                'leads.id as ticket_number',
+                'leads.title as lead_title',
+                'leads.amount as lead_amount',
+                'leads.balance as lead_balance',
+                'institutions.institution_name',
+                'assigned_agents.name as assigned_agent_name',
+                'assigned_agents.agent_code as assigned_agent_code',
+                'created_by_users.name as created_by_name',
+                'created_by_users.agent_code as created_by_code'
+            ])
+            ->leftJoin('leads', 'activities.lead_id', '=', 'leads.id')
+            ->leftJoin('institutions', 'leads.institution_id', '=', 'institutions.id')
+            ->leftJoin('users as assigned_agents', 'leads.assigned_agent', '=', 'assigned_agents.id')
+            ->leftJoin('users as created_by_users', 'activities.created_by', '=', 'created_by_users.id')
+            ->whereNotNull('activities.act_ptp_date')
+            ->whereNotNull('activities.act_ptp_amount');
+
+        // Apply date range filter based on filter type
+        $filterType = $request->input('date_filter_type', 'created'); // 'created' or 'due'
+
+        if ($filterType === 'due') {
+            // Filter by PTP due date
+            $ptpQuery->whereBetween('activities.act_ptp_date', [$fromDate->format('Y-m-d'), $toDate->format('Y-m-d')]);
+        } else {
+            // Filter by PTP created date (default)
+            $ptpQuery->whereBetween('activities.created_at', [$fromDate, $toDate]);
+        }
+
+        // Apply other filters
+        if ($request->filled('institution_id') && $request->institution_id != '') {
+            $ptpQuery->where('leads.institution_id', $request->institution_id);
+        }
+
+        if ($request->filled('agent_id') && $request->agent_id != '') {
+            $ptpQuery->where('leads.assigned_agent', $request->agent_id);
+        }
+
+        if ($request->filled('created_by_agent') && $request->created_by_agent != '') {
+            $ptpQuery->where('activities.created_by', $request->created_by_agent);
+        }
+
+        // Filter by PTP due date range if specified
+        if ($request->filled('ptp_due_from') && $request->filled('ptp_due_to')) {
+            $ptpDueFrom = Carbon::createFromFormat('d-m-Y', $request->ptp_due_from)->format('Y-m-d');
+            $ptpDueTo = Carbon::createFromFormat('d-m-Y', $request->ptp_due_to)->format('Y-m-d');
+            $ptpQuery->whereBetween('activities.act_ptp_date', [$ptpDueFrom, $ptpDueTo]);
+        }
+
+        $ptps = $ptpQuery->orderBy('activities.created_at', 'desc')->get();
+
+        // Calculate summary data
+        $totalPTPs = $ptps->count();
+        $totalAmount = $ptps->sum('act_ptp_amount');
+        $avgPTPAmount = $totalPTPs > 0 ? $totalAmount / $totalPTPs : 0;
+
+        // Group by institution
+        $institutionSummary = $ptps->groupBy('institution_name')->map(function ($institutionPTPs) {
+            return [
+                'count' => $institutionPTPs->count(),
+                'total_amount' => $institutionPTPs->sum('act_ptp_amount'),
+                'avg_amount' => $institutionPTPs->avg('act_ptp_amount')
+            ];
+        });
+
+        // Group by agent
+        $agentSummary = $ptps->groupBy('assigned_agent_name')->map(function ($agentPTPs) {
+            return [
+                'count' => $agentPTPs->count(),
+                'total_amount' => $agentPTPs->sum('act_ptp_amount'),
+                'avg_amount' => $agentPTPs->avg('act_ptp_amount')
+            ];
+        });
+
+        // Group by created by
+        $createdBySummary = $ptps->groupBy('created_by_name')->map(function ($createdByPTPs) {
+            return [
+                'count' => $createdByPTPs->count(),
+                'total_amount' => $createdByPTPs->sum('act_ptp_amount'),
+                'avg_amount' => $createdByPTPs->avg('act_ptp_amount')
+            ];
+        });
+
+        // Group by due date
+        $dueDateSummary = $ptps->groupBy(function($ptp) {
+            return Carbon::parse($ptp->act_ptp_date)->format('Y-m-d');
+        })->map(function ($datePTPs) {
+            return [
+                'count' => $datePTPs->count(),
+                'total_amount' => $datePTPs->sum('act_ptp_amount')
+            ];
+        });
+
+        // Calculate overdue PTPs
+        $today = Carbon::today();
+        $overduePTPs = $ptps->filter(function($ptp) use ($today) {
+            return Carbon::parse($ptp->act_ptp_date)->lt($today);
+        });
+
+        $data = [
+            'ptps' => $ptps,
+            'filters' => [
+                'from_date' => $request->from_date,
+                'to_date' => $request->to_date,
+                'institution_id' => $request->institution_id ?? '',
+                'agent_id' => $request->agent_id ?? '',
+                'created_by_agent' => $request->created_by_agent ?? '',
+                'date_filter_type' => $filterType,
+                'ptp_due_from' => $request->ptp_due_from ?? '',
+                'ptp_due_to' => $request->ptp_due_to ?? ''
+            ],
+            'summary' => [
+                'total_ptps' => $totalPTPs,
+                'total_amount' => $totalAmount,
+                'avg_ptp_amount' => $avgPTPAmount,
+                'overdue_ptps' => $overduePTPs->count(),
+                'overdue_amount' => $overduePTPs->sum('act_ptp_amount'),
+                'institution_summary' => $institutionSummary,
+                'agent_summary' => $agentSummary,
+                'created_by_summary' => $createdBySummary,
+                'due_date_summary' => $dueDateSummary
+            ]
+        ];
+
+        if ($request->has('export') && $request->export == 'excel') {
+            return Excel::download(new \App\Exports\PTPReportExport($data), 'ptp_report_' . date('Y-m-d') . '.xlsx');
+        }
+
+        return view('reports.ptp_report_result', compact('data'));
     }
 }
