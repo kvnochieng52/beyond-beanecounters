@@ -39,7 +39,7 @@
         <div class="col-lg-3 col-6">
             <div class="small-box" style="background-color: #5cb85c; color: white;">
                 <div class="inner">
-                    <h3>{{ number_format($totalValue / 1000000, 1) }}M</h3>
+                    <h3 class="full-figure">{{ number_format($totalValue, 0) }}</h3>
                     <p>TOTAL VALUE (KSHS)</p>
                 </div>
                 <div class="icon">
@@ -81,7 +81,7 @@
         <div class="col-lg-3 col-6">
             <div class="small-box" style="background-color: #5cb85c; color: white;">
                 <div class="inner">
-                    <h3>{{ number_format($ptpsTodayValue / 1000, 0) }}K</h3>
+                    <h3 class="full-figure">{{ number_format($ptpsTodayValue, 0) }}</h3>
                     <p>PTPS TODAY (VALUE)</p>
                 </div>
                 <div class="icon">
@@ -94,7 +94,7 @@
         <div class="col-lg-3 col-6">
             <div class="small-box" style="background-color: #5bc0de; color: white;">
                 <div class="inner">
-                    <h3>{{ number_format($ptpsThisMonthValue / 1000, 0) }}K</h3>
+                    <h3 class="full-figure">{{ number_format($ptpsThisMonthValue, 0) }}</h3>
                     <p>PTPS THIS MONTH (VALUE)</p>
                 </div>
                 <div class="icon">
@@ -107,7 +107,7 @@
         <div class="col-lg-3 col-6">
             <div class="small-box" style="background-color: #f0ad4e; color: white;">
                 <div class="inner">
-                    <h3>{{ number_format($lockedPayments / 1000, 0) }}K</h3>
+                    <h3 class="full-figure">{{ number_format($lockedPayments, 0) }}</h3>
                     <p>LOCKED PAYMENTS(MTD)</p>
                 </div>
                 <div class="icon">
@@ -243,6 +243,14 @@
 
         .small-box .inner {
             padding: 20px;
+        }
+
+        .small-box .inner h3.full-figure {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            white-space: nowrap;
+            padding: 0;
         }
     </style>
 @stop
