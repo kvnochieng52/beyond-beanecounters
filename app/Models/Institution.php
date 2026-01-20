@@ -20,6 +20,12 @@ class Institution extends Model
         'description',
         'created_by',
         'updated_by',
-        'how_to_pay_instructions'
+        'how_to_pay_instructions',
+        'client_contract_type_id'
     ];
+
+    public function clientContractType()
+    {
+        return $this->belongsTo(ClientContractType::class);
+    }
 }

@@ -12,7 +12,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // Send daily PTP reminders at 8:00 AM every day
+        $schedule->command('ptp:daily-reminders')
+                 ->dailyAt('08:00')
+                 ->description('Send daily PTP reminders for today\'s due dates')
+                 ->withoutOverlapping();
     }
 
     /**

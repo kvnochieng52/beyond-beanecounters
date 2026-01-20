@@ -35,6 +35,11 @@ class Activity extends Model
         'updated_by'
     ];
 
+    public function lead()
+    {
+        return $this->belongsTo(Lead::class, 'lead_id');
+    }
+
 
     public static function query()
     {

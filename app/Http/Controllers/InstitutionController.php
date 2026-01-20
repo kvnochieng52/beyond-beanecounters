@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Institution;
+use App\Models\ClientContractType;
 use Illuminate\Http\Request;
 
 class InstitutionController extends Controller
@@ -22,7 +23,8 @@ class InstitutionController extends Controller
 
     public function create()
     {
-        return view('institutions.create');
+        $clientContractTypes = ClientContractType::all();
+        return view('institutions.create', compact('clientContractTypes'));
     }
 
     public function store(Request $request)
@@ -38,7 +40,8 @@ class InstitutionController extends Controller
 
     public function edit(Institution $institution)
     {
-        return view('institutions.edit', compact('institution'));
+        $clientContractTypes = ClientContractType::all();
+        return view('institutions.edit', compact('institution', 'clientContractTypes'));
     }
 
     public function update(Request $request, Institution $institution)

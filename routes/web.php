@@ -26,6 +26,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransBulkController;
 use App\Http\Controllers\BulkWaiverDiscountController;
 use App\Http\Controllers\BackgroundReportsController;
+use App\Http\Controllers\ReminderProcessController;
 
 Auth::routes();
 
@@ -232,6 +233,17 @@ Route::prefix('background-reports')->group(function () {
     Route::get('/data', [BackgroundReportsController::class, 'getData'])->name('background-reports.data');
     Route::get('/{id}/download', [BackgroundReportsController::class, 'download'])->name('background-reports.download');
     Route::delete('/{id}', [BackgroundReportsController::class, 'destroy'])->name('background-reports.destroy');
+});
+
+// Reminder Process Routes
+Route::prefix('reminder-processes')->name('reminder-processes.')->group(function () {
+    Route::get('/', [ReminderProcessController::class, 'index'])->name('index');
+    Route::get('/create', [ReminderProcessController::class, 'create'])->name('create');
+    Route::post('/', [ReminderProcessController::class, 'store'])->name('store');
+    Route::post('/run-now', [ReminderProcessController::class, 'runNow'])->name('run-now');
+    Route::post('/run-today', [ReminderProcessController::class, 'runTodayReminders'])->name('run-today');
+    Route::get('/{id}', [ReminderProcessController::class, 'show'])->name('show');
+    Route::delete('/{id}', [ReminderProcessController::class, 'destroy'])->name('destroy');
 });
 
 

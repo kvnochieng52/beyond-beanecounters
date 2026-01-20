@@ -424,6 +424,11 @@ return [
                     'text' => 'Contacts',
                     'url' => '/contacts',
                 ],
+                [
+                    'text' => 'PTP Reminder Automation',
+                    'url' => '/reminder-processes',
+                    'icon' => 'fas fa-clock',
+                ],
             ]
         ],
 

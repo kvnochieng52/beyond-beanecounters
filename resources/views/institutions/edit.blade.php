@@ -37,6 +37,16 @@
             </div>
 
             <div class="form-group">
+                <label for="client_contract_type_id">Client Contract Type</label>
+                <select name="client_contract_type_id" class="form-control">
+                    <option value="">Select Contract Type</option>
+                    @foreach($clientContractTypes as $type)
+                        <option value="{{ $type->id }}" {{ $institution->client_contract_type_id == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="contact_person">How to Pay Instructions</label>
                 <textarea name="how_to_pay_instructions" class="form-control">{{$institution->how_to_pay_instructions}}</textarea>
             </div>
