@@ -256,12 +256,18 @@ class ActivityController extends Controller
 
 
         if ($request['activityType'] == 8) {
+            $lead = Lead::find($request['leadID']);
+            $institution = $lead->institution;
+            
+            // Check if institution has direct contract type (contract_type_id = 1)
+            $isDirectContract = $institution && $institution->client_contract_type_id == 1;
+            
             $text = new Text();
             $text->text_title = "ACTIVITY: " . $request['sms_template'];
             $text->contact_type = 'manual';
             $text->message = $request['description'];
             $text->contacts_count = 1;
-            $text->recepient_contacts = Lead::find($request['leadID'])->telephone;
+            $text->recepient_contacts = $lead->telephone;
             $text->created_by = auth()->id(); // Assuming authentication is used
             $text->updated_by = auth()->id();
 
@@ -275,9 +281,14 @@ class ActivityController extends Controller
                 $text->scheduled = 0;
             }
 
-            $text->status = TextStatus::PENDING_APPROVAL; // Default status, can be updated later
+            // If institution has direct contract type, send SMS directly; otherwise, set to pending approval
+            $text->status = $isDirectContract ? TextStatus::SENT : TextStatus::PENDING_APPROVAL;
             $text->save();
 
+            // If direct contract, dispatch the SMS job immediately
+            if ($isDirectContract) {
+                SendSmsJob::dispatch($text);
+            }
 
             $activity->ref_text_id = $text->id;
         }
