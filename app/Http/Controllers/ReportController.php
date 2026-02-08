@@ -1006,7 +1006,7 @@ class ReportController extends Controller
         $dateTo = Carbon::parse($request->date_to)->endOfDay();
         $monthStart = Carbon::parse($request->date_from)->startOfMonth()->startOfDay();
         $monthEnd = Carbon::parse($request->date_from)->endOfMonth()->endOfDay();
-        
+
         $institutionId = $request->institution_id ?? null;
         $agentId = $request->agent_id ?? null;
         $createdByAgent = $request->created_by_agent ?? null;
@@ -1075,9 +1075,12 @@ class ReportController extends Controller
                     $q->where('institution_id', $institutionId);
                 });
             }
-            $rightPartyPtpCount = $rightPartyPtpQuery->count();
+            $rightPartyPtpCount = $rightPartyPtpQuery->clone()->count();
             $rightPartyPtpValue = $rightPartyPtpQuery->sum('act_ptp_amount') ?? 0;
             // 8. PTP for the month - count and value (activities with disposition=3)
+
+
+
             $ptpMonthQuery = Activity::where('created_by', $agent->id)
                 ->where('act_call_disposition_id', 3)
                 ->whereBetween('created_at', [$monthStart, $monthEnd]);
@@ -1086,7 +1089,10 @@ class ReportController extends Controller
                     $q->where('institution_id', $institutionId);
                 });
             }
-            $ptpMonthCount = $ptpMonthQuery->count();
+
+
+
+            $ptpMonthCount = $ptpMonthQuery->clone()->count();
             $ptpMonthValue = $ptpMonthQuery->sum('act_ptp_amount') ?? 0;
 
             // 10. MTD Today count and value
@@ -1097,7 +1103,7 @@ class ReportController extends Controller
                     $q->where('institution_id', $institutionId);
                 });
             }
-            $mtdTodayCount = $mtdTodayQuery->count();
+            $mtdTodayCount = $mtdTodayQuery->clone()->count();
             $mtdTodayValue = $mtdTodayQuery->sum('amount_paid') ?? 0;
 
             // 12. MTD Monthly
