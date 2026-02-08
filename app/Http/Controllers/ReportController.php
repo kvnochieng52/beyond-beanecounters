@@ -1002,13 +1002,10 @@ class ReportController extends Controller
             'date_from' => 'required|date',
             'date_to' => 'required|date|after_or_equal:date_from',
         ]);
-
         $dateFrom = Carbon::parse($request->date_from)->startOfDay();
         $dateTo = Carbon::parse($request->date_to)->endOfDay();
         $monthStart = Carbon::parse($request->date_from)->startOfMonth();
         $monthEnd = Carbon::parse($request->date_from)->endOfMonth();
-
-        $institutionId = $request->institution_id ?? null;
         $agentId = $request->agent_id ?? null;
         $createdByAgent = $request->created_by_agent ?? null;
 
