@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editMtbModalLabel">Edit MTB Record</h5>
+                <h5 class="modal-title" id="editMtbModalLabel">Edit MTD Record</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -20,14 +20,15 @@
                             <div class="form-group">
                                 <label for="edit_amount_paid">Amount Paid <span class="text-danger">*</span></label>
                                 <input type="number" class="form-control" name="amount_paid" id="edit_amount_paid"
-                                       step="0.01" min="0" required>
+                                    step="0.01" min="0" required>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="edit_date_paid">Date Paid <span class="text-danger">*</span></label>
-                                <input type="date" class="form-control" name="date_paid" id="edit_date_paid" required>
+                                <input type="date" class="form-control" name="date_paid" id="edit_date_paid"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -35,7 +36,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="edit_payment_channel">Payment Channel <span class="text-danger">*</span></label>
+                                <label for="edit_payment_channel">Payment Channel <span
+                                        class="text-danger">*</span></label>
                                 <select class="form-control" name="payment_channel" id="edit_payment_channel" required>
                                     <option value="">Select Payment Channel</option>
                                     <option value="Mpesa">Mpesa</option>
@@ -60,7 +62,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Update MTB Record</button>
+                    <button type="submit" class="btn btn-primary">Update MTD Record</button>
                 </div>
             </form>
         </div>

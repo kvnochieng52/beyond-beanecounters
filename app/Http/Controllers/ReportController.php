@@ -13,6 +13,8 @@ use App\Models\Activity;
 use App\Models\Institution;
 use App\Models\Lead;
 use App\Models\Transaction;
+use App\Models\TransactionType;
+use App\Models\TransactionStatus;
 use App\Models\BackgroundReport;
 use App\Models\LeadStatus;
 use App\Models\LeadPriority;
@@ -675,9 +677,9 @@ class ReportController extends Controller
         $fromDate = Carbon::createFromFormat('d-m-Y', $request->from_date)->startOfDay();
         $toDate = Carbon::createFromFormat('d-m-Y', $request->to_date)->endOfDay();
 
-        // Base query for payments with related data
-        $paymentsQuery = \App\Models\Payment::select([
-                'payments.*',
+        // Base query for transactions (payments) with related data
+        $paymentsQuery = Transaction::select([
+                'transactions.*',
                 'leads.title as lead_name',
                 'leads.id as ticket_number',
                 'leads.amount as lead_amount',
@@ -685,13 +687,16 @@ class ReportController extends Controller
                 'institutions.institution_name',
                 'users.name as agent_name',
                 'users.agent_code',
-                'payment_statuses.payment_status_name'
+                'transaction_types.transaction_type_title',
+                'transaction_statuses.transaction_status_name as payment_status_name'
             ])
-            ->leftJoin('leads', 'payments.lead_id', '=', 'leads.id')
+            ->leftJoin('leads', 'transactions.lead_id', '=', 'leads.id')
             ->leftJoin('institutions', 'leads.institution_id', '=', 'institutions.id')
             ->leftJoin('users', 'leads.assigned_agent', '=', 'users.id')
-            ->leftJoin('payment_statuses', 'payments.status_id', '=', 'payment_statuses.id')
-            ->whereBetween('payments.created_at', [$fromDate, $toDate]);
+            ->leftJoin('transaction_types', 'transactions.transaction_type', '=', 'transaction_types.id')
+            ->leftJoin('transaction_statuses', 'transactions.status_id', '=', 'transaction_statuses.id')
+            ->where('transactions.transaction_type', TransactionType::PAYMENT)
+            ->whereBetween('transactions.created_at', [$fromDate, $toDate]);
 
         // Apply filters
         if ($request->filled('institution_id') && $request->institution_id != '') {
@@ -703,10 +708,10 @@ class ReportController extends Controller
         }
 
         if ($request->filled('payment_status') && $request->payment_status != '') {
-            $paymentsQuery->where('payments.status_id', $request->payment_status);
+            $paymentsQuery->where('transactions.status_id', $request->payment_status);
         }
 
-        $payments = $paymentsQuery->orderBy('payments.created_at', 'desc')->get();
+        $payments = $paymentsQuery->orderBy('transactions.created_at', 'desc')->get();
 
         // Calculate summary data
         $totalPayments = $payments->count();

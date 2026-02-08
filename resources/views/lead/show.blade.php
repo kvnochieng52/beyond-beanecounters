@@ -88,10 +88,9 @@
 
                                 <li class="nav-item">
                                     <a class="nav-link {{ request()->get('section') == 'mtb' ? 'active' : '' }}"
-                                        id="custom-tabs-four-mtb-tab"
-                                        href="/lead/{{ $leadDetails->id }}?section=mtb" role="tab"
-                                        aria-controls="custom-tabs-four-mtb" aria-selected="false">
-                                        MTB</a>
+                                        id="custom-tabs-four-mtb-tab" href="/lead/{{ $leadDetails->id }}?section=mtb"
+                                        role="tab" aria-controls="custom-tabs-four-mtb" aria-selected="false">
+                                        MTD</a>
                                 </li>
 
                                 {{-- <li class="nav-item">
@@ -175,8 +174,7 @@
                                 </div>
 
                                 <div class="tab-pane fade {{ request()->get('section') == 'mtb' ? 'show active' : '' }}"
-                                    id="custom-tabs-four-mtb" role="tabpanel"
-                                    aria-labelledby="custom-tabs-four-mtb-tab">
+                                    id="custom-tabs-four-mtb" role="tabpanel" aria-labelledby="custom-tabs-four-mtb-tab">
                                     @include('lead.show._mtb')
                                 </div>
 
