@@ -144,29 +144,14 @@ class SendAgentPerformanceReport extends Command
             ];
         }
 
-        // Get all institutions where agents have collections today
-        // Try to get from transactions first
+        // Get all institutions (active institutions only)
         $institutions = DB::table('institutions')
-            ->join('leads', 'institutions.id', '=', 'leads.institution_id')
-            ->leftJoin('transactions', 'leads.id', '=', 'transactions.lead_id')
-            ->whereIn('leads.assigned_agent', $agents)
-            ->where(function ($query) use ($startOfDay, $endOfDay) {
-                $query->whereBetween('transactions.created_at', [$startOfDay, $endOfDay])
-                    ->orWhereNull('transactions.id');
-            })
-            ->distinct('institutions.id')
-            ->pluck('institutions.institution_name', 'institutions.id')
+            ->where('is_active', 1)
+            ->orderBy('institution_name')
+            ->pluck('institution_name', 'id')
             ->toArray();
 
-        // If no institutions found from transactions, get from leads
-        if (empty($institutions)) {
-            $institutions = DB::table('institutions')
-                ->join('leads', 'institutions.id', '=', 'leads.institution_id')
-                ->whereIn('leads.assigned_agent', $agents)
-                ->distinct('institutions.id')
-                ->pluck('institutions.institution_name', 'institutions.id')
-                ->toArray();
-        }
+        // If no institutions, return empty data
 
         // Build agent data
         $agentData = [];
@@ -223,9 +208,10 @@ class SendAgentPerformanceReport extends Command
 
             // Add collections by institution
             foreach ($institutions as $instId => $instName) {
+                // Get transaction total amount by this agent for this institution
                 $institutionCollection = DB::table('transactions')
                     ->join('leads', 'transactions.lead_id', '=', 'leads.id')
-                    ->where('transactions.created_by', $agentId)
+                    ->where('leads.assigned_agent', $agentId)
                     ->where('leads.institution_id', $instId)
                     ->where('transactions.transaction_type', 2) // PAYMENT
                     ->whereBetween('transactions.created_at', [$startOfDay, $endOfDay])
