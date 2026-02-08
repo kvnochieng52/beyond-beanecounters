@@ -56,6 +56,42 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box" style="background-color: #17A2B8;">
+                <div class="inner">
+                    <h3 style="color: white;">{{ number_format($data['summary']['total_mtd_records']) }}</h3>
+                    <p style="color: white;">Total MTD Records</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-exchange-alt" style="color: white;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box" style="background-color: #6F42C1;">
+                <div class="inner">
+                    <h3 style="color: white;">KSH {{ number_format($data['summary']['total_mtd_amount'], 2) }}</h3>
+                    <p style="color: white;">Total MTD Amount</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-money-bill" style="color: white;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box" style="background-color: #FFC107;">
+                <div class="inner">
+                    <h3 style="color: #333;">KSH {{ number_format($data['summary']['avg_mtd_amount'], 2) }}</h3>
+                    <p style="color: #333;">Average MTD</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-chart-line" style="color: #333;"></i>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Filter Information -->
@@ -266,7 +302,164 @@
                 </div>
             </div>
         </div>
-    @endif
+
+        <!-- MTD (Money Transfer Data) Records Section -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h3 class="card-title">MTD Records</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-sm" id="mtdTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date Paid</th>
+                                <th>Ticket No</th>
+                                <th>Lead Name</th>
+                                <th>Institution</th>
+                                <th>Agent</th>
+                                <th>Amount Paid (KSH)</th>
+                                <th>Payment Channel</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if($data['mtd_records']->count() > 0)
+                                @foreach($data['mtd_records'] as $index => $mtd)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ Carbon\Carbon::parse($mtd->date_paid)->format('d M Y') }}</td>
+                                        <td><strong>#{{ $mtd->ticket_number }}</strong></td>
+                                        <td>{{ $mtd->lead_name ?? 'N/A' }}</td>
+                                        <td>{{ $mtd->institution_name ?? 'N/A' }}</td>
+                                        <td>
+                                            {{ $mtd->agent_name ?? 'Unassigned' }}
+                                            @if($mtd->agent_code)
+                                                <br><small class="text-muted">{{ $mtd->agent_code }}</small>
+                                            @endif
+                                        </td>
+                                        <td><strong>{{ number_format($mtd->amount_paid, 2) }}</strong></td>
+                                        <td>{{ $mtd->payment_channel ?? '-' }}</td>
+                                        <td>{{ $mtd->description ? Str::limit($mtd->description, 30) : '-' }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="9" class="text-center text-muted">No MTD records found for the selected criteria</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    @else
+        <!-- Detailed Report (by Agent/Institution) -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Detailed Payment Report</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-sm" id="paymentsTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Ticket No</th>
+                                <th>Lead Name</th>
+                                <th>Institution</th>
+                                <th>Agent</th>
+                                <th>Payment Amount (KSH)</th>
+                                <th>Transaction ID</th>
+                                <th>Status</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($data['payments'] as $index => $payment)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ Carbon\Carbon::parse($payment->created_at)->format('d M Y') }}</td>
+                                    <td><strong>#{{ $payment->ticket_number }}</strong></td>
+                                    <td>{{ $payment->lead_name ?? 'N/A' }}</td>
+                                    <td>{{ $payment->institution_name ?? 'N/A' }}</td>
+                                    <td>
+                                        {{ $payment->agent_name ?? 'Unassigned' }}
+                                        @if($payment->agent_code)
+                                            <br><small class="text-muted">{{ $payment->agent_code }}</small>
+                                        @endif
+                                    </td>
+                                    <td><strong>{{ number_format($payment->amount, 2) }}</strong></td>
+                                    <td>{{ $payment->transaction_id ?? '-' }}</td>
+                                    <td>
+                                        @if($payment->payment_status_name)
+                                            <span class="badge badge-info">{{ $payment->payment_status_name }}</span>
+                                        @else
+                                            <span class="badge badge-secondary">Unknown</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ $payment->description ? Str::limit($payment->description, 30) : '-' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- MTD (Money Transfer Data) Records Section -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h3 class="card-title">MTD Records</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-sm" id="mtdTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date Paid</th>
+                                <th>Ticket No</th>
+                                <th>Lead Name</th>
+                                <th>Institution</th>
+                                <th>Agent</th>
+                                <th>Amount Paid (KSH)</th>
+                                <th>Payment Channel</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if($data['mtd_records']->count() > 0)
+                                @foreach($data['mtd_records'] as $index => $mtd)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ Carbon\Carbon::parse($mtd->date_paid)->format('d M Y') }}</td>
+                                        <td><strong>#{{ $mtd->ticket_number }}</strong></td>
+                                        <td>{{ $mtd->lead_name ?? 'N/A' }}</td>
+                                        <td>{{ $mtd->institution_name ?? 'N/A' }}</td>
+                                        <td>
+                                            {{ $mtd->agent_name ?? 'Unassigned' }}
+                                            @if($mtd->agent_code)
+                                                <br><small class="text-muted">{{ $mtd->agent_code }}</small>
+                                            @endif
+                                        </td>
+                                        <td><strong>{{ number_format($mtd->amount_paid, 2) }}</strong></td>
+                                        <td>{{ $mtd->payment_channel ?? '-' }}</td>
+                                        <td>{{ $mtd->description ? Str::limit($mtd->description, 30) : '-' }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="9" class="text-center text-muted">No MTD records found for the selected criteria</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
     <!-- Charts Section -->
     @if($data['payments']->count() > 0)

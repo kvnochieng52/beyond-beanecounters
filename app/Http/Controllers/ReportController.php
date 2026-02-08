@@ -713,10 +713,43 @@ class ReportController extends Controller
 
         $payments = $paymentsQuery->orderBy('transactions.created_at', 'desc')->get();
 
+        // Get MTD (Money Transfer Data) records from the mtbs table
+        $mtdQuery = \DB::table('mtbs')
+            ->select([
+                'mtbs.*',
+                'leads.title as lead_name',
+                'leads.id as ticket_number',
+                'leads.amount as lead_amount',
+                'leads.balance as lead_balance',
+                'institutions.institution_name',
+                'users.name as agent_name',
+                'users.agent_code'
+            ])
+            ->leftJoin('leads', 'mtbs.lead_id', '=', 'leads.id')
+            ->leftJoin('institutions', 'leads.institution_id', '=', 'institutions.id')
+            ->leftJoin('users', 'mtbs.created_by', '=', 'users.id')
+            ->whereBetween('mtbs.date_paid', [$fromDate->toDateString(), $toDate->toDateString()]);
+
+        // Apply same filters to MTD
+        if ($request->filled('institution_id') && $request->institution_id != '') {
+            $mtdQuery->where('leads.institution_id', $request->institution_id);
+        }
+
+        if ($request->filled('agent_id') && $request->agent_id != '') {
+            $mtdQuery->where('leads.assigned_agent', $request->agent_id);
+        }
+
+        $mtdRecords = $mtdQuery->orderBy('mtbs.date_paid', 'desc')->get();
+
         // Calculate summary data
         $totalPayments = $payments->count();
         $totalAmount = $payments->sum('amount');
         $avgPaymentAmount = $totalPayments > 0 ? $totalAmount / $totalPayments : 0;
+
+        // Calculate MTD summary
+        $totalMtdRecords = $mtdRecords->count();
+        $totalMtdAmount = $mtdRecords->sum('amount_paid');
+        $avgMtdAmount = $totalMtdRecords > 0 ? $totalMtdAmount / $totalMtdRecords : 0;
 
         // Group by institution
         $institutionSummary = $payments->groupBy('institution_name')->map(function ($institutionPayments) {
@@ -748,6 +781,7 @@ class ReportController extends Controller
 
         $data = [
             'payments' => $payments,
+            'mtd_records' => $mtdRecords,
             'filters' => [
                 'from_date' => $request->from_date,
                 'to_date' => $request->to_date,
@@ -759,6 +793,9 @@ class ReportController extends Controller
                 'total_payments' => $totalPayments,
                 'total_amount' => $totalAmount,
                 'avg_payment_amount' => $avgPaymentAmount,
+                'total_mtd_records' => $totalMtdRecords,
+                'total_mtd_amount' => $totalMtdAmount,
+                'avg_mtd_amount' => $avgMtdAmount,
                 'institution_summary' => $institutionSummary,
                 'agent_summary' => $agentSummary,
                 'daily_summary' => $dailySummary
