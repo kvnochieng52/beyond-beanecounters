@@ -2,18 +2,29 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithTitle;
-use Maatwebsite\Excel\Concerns\WithStyles;
-use Maatwebsite\Excel\Concerns\WithColumnWidths;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Style\Font;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Carbon\Carbon;
 
-class PaymentReportExport implements FromCollection, WithHeadings, WithMapping, WithTitle, WithStyles, WithColumnWidths
+class PaymentReportExport implements WithMultipleSheets
+{
+    protected $data;
+
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
+
+    public function sheets(): array
+    {
+        return [
+            new PaymentSheetExport($this->data),
+            new MTDSheetExport($this->data),
+        ];
+    }
+}
+
+// Payment Sheet Export Class
+class PaymentSheetExport implements \Maatwebsite\Excel\Concerns\FromCollection, \Maatwebsite\Excel\Concerns\WithHeadings, \Maatwebsite\Excel\Concerns\WithMapping, \Maatwebsite\Excel\Concerns\WithTitle, \Maatwebsite\Excel\Concerns\WithStyles, \Maatwebsite\Excel\Concerns\WithColumnWidths
 {
     protected $data;
 
@@ -69,10 +80,10 @@ class PaymentReportExport implements FromCollection, WithHeadings, WithMapping, 
     {
         $fromDate = $this->data['filters']['from_date'];
         $toDate = $this->data['filters']['to_date'];
-        return "Payment Report ({$fromDate} to {$toDate})";
+        return "Payments ({$fromDate} to {$toDate})";
     }
 
-    public function styles(Worksheet $sheet)
+    public function styles(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet)
     {
         return [
             // Header row styling
@@ -94,22 +105,22 @@ class PaymentReportExport implements FromCollection, WithHeadings, WithMapping, 
                     'bold' => true,
                 ],
                 'alignment' => [
-                    'horizontal' => Alignment::HORIZONTAL_CENTER,
-                    'vertical' => Alignment::VERTICAL_CENTER,
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
                 ],
             ],
 
             // All cells alignment
             'A:M' => [
                 'alignment' => [
-                    'vertical' => Alignment::VERTICAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
                 ],
             ],
 
             // Number columns right alignment
             'G:I' => [
                 'alignment' => [
-                    'horizontal' => Alignment::HORIZONTAL_RIGHT,
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT,
                 ],
             ],
         ];
@@ -131,6 +142,120 @@ class PaymentReportExport implements FromCollection, WithHeadings, WithMapping, 
             'K' => 15,  // Payment Status
             'L' => 25,  // Description
             'M' => 18,  // Created At
+        ];
+    }
+}
+
+// MTD Sheet Export Class
+class MTDSheetExport implements \Maatwebsite\Excel\Concerns\FromCollection, \Maatwebsite\Excel\Concerns\WithHeadings, \Maatwebsite\Excel\Concerns\WithMapping, \Maatwebsite\Excel\Concerns\WithTitle, \Maatwebsite\Excel\Concerns\WithStyles, \Maatwebsite\Excel\Concerns\WithColumnWidths
+{
+    protected $data;
+
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
+
+    public function collection()
+    {
+        return collect($this->data['mtd_records']);
+    }
+
+    public function headings(): array
+    {
+        return [
+            'Date Paid',
+            'Ticket No',
+            'Lead Name',
+            'Institution',
+            'Agent Name',
+            'Agent Code',
+            'Amount Paid (KSH)',
+            'Payment Channel',
+            'Description',
+            'Created By'
+        ];
+    }
+
+    public function map($mtd): array
+    {
+        return [
+            Carbon::parse($mtd->date_paid)->format('d-m-Y'),
+            '#' . $mtd->ticket_number,
+            $mtd->lead_name ?? 'N/A',
+            $mtd->institution_name ?? 'N/A',
+            $mtd->agent_name ?? 'Unassigned',
+            $mtd->agent_code ?? '-',
+            number_format($mtd->amount_paid, 2),
+            $mtd->payment_channel ?? '-',
+            $mtd->description ?? '-',
+            $mtd->created_by ?? '-'
+        ];
+    }
+
+    public function title(): string
+    {
+        $fromDate = $this->data['filters']['from_date'];
+        $toDate = $this->data['filters']['to_date'];
+        return "MTD Records ({$fromDate} to {$toDate})";
+    }
+
+    public function styles(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet)
+    {
+        return [
+            // Header row styling
+            1 => [
+                'font' => [
+                    'bold' => true,
+                    'size' => 12,
+                ],
+                'fill' => [
+                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                    'startColor' => [
+                        'argb' => 'FF6F42C1',
+                    ],
+                ],
+                'font' => [
+                    'color' => [
+                        'argb' => 'FFFFFFFF',
+                    ],
+                    'bold' => true,
+                ],
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                ],
+            ],
+
+            // All cells alignment
+            'A:J' => [
+                'alignment' => [
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                ],
+            ],
+
+            // Number columns right alignment
+            'G' => [
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT,
+                ],
+            ],
+        ];
+    }
+
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 12,  // Date Paid
+            'B' => 12,  // Ticket No
+            'C' => 20,  // Lead Name
+            'D' => 20,  // Institution
+            'E' => 18,  // Agent Name
+            'F' => 12,  // Agent Code
+            'G' => 15,  // Amount Paid
+            'H' => 18,  // Payment Channel
+            'I' => 25,  // Description
+            'J' => 15,  // Created By
         ];
     }
 }

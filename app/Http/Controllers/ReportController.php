@@ -630,8 +630,8 @@ class ReportController extends Controller
 
         // Generate report name
         $reportName = 'Leads Report (' .
-                     Carbon::parse($request->from_date)->format('d/m/Y') . ' - ' .
-                     Carbon::parse($request->to_date)->format('d/m/Y') . ')';
+            Carbon::parse($request->from_date)->format('d/m/Y') . ' - ' .
+            Carbon::parse($request->to_date)->format('d/m/Y') . ')';
 
         // Create background report entry
         $backgroundReport = BackgroundReport::create([
@@ -679,17 +679,17 @@ class ReportController extends Controller
 
         // Base query for transactions (payments) with related data
         $paymentsQuery = Transaction::select([
-                'transactions.*',
-                'leads.title as lead_name',
-                'leads.id as ticket_number',
-                'leads.amount as lead_amount',
-                'leads.balance as lead_balance',
-                'institutions.institution_name',
-                'users.name as agent_name',
-                'users.agent_code',
-                'transaction_types.transaction_type_title',
-                'transaction_statuses.status_name as payment_status_name'
-            ])
+            'transactions.*',
+            'leads.title as lead_name',
+            'leads.id as ticket_number',
+            'leads.amount as lead_amount',
+            'leads.balance as lead_balance',
+            'institutions.institution_name',
+            'users.name as agent_name',
+            'users.agent_code',
+            'transaction_types.transaction_type_title',
+            'transaction_statuses.status_name as payment_status_name'
+        ])
             ->leftJoin('leads', 'transactions.lead_id', '=', 'leads.id')
             ->leftJoin('institutions', 'leads.institution_id', '=', 'institutions.id')
             ->leftJoin('users', 'leads.assigned_agent', '=', 'users.id')
@@ -770,7 +770,7 @@ class ReportController extends Controller
         });
 
         // Group by date
-        $dailySummary = $payments->groupBy(function($payment) {
+        $dailySummary = $payments->groupBy(function ($payment) {
             return Carbon::parse($payment->created_at)->format('Y-m-d');
         })->map(function ($dayPayments) {
             return [
@@ -839,20 +839,20 @@ class ReportController extends Controller
 
         // Base query for PTPs with related data
         $ptpQuery = Activity::select([
-                'activities.id as activity_id',
-                'activities.act_ptp_date',
-                'activities.act_ptp_amount',
-                'activities.created_at as ptp_created_date',
-                'leads.id as ticket_number',
-                'leads.title as lead_title',
-                'leads.amount as lead_amount',
-                'leads.balance as lead_balance',
-                'institutions.institution_name',
-                'assigned_agents.name as assigned_agent_name',
-                'assigned_agents.agent_code as assigned_agent_code',
-                'created_by_users.name as created_by_name',
-                'created_by_users.agent_code as created_by_code'
-            ])
+            'activities.id as activity_id',
+            'activities.act_ptp_date',
+            'activities.act_ptp_amount',
+            'activities.created_at as ptp_created_date',
+            'leads.id as ticket_number',
+            'leads.title as lead_title',
+            'leads.amount as lead_amount',
+            'leads.balance as lead_balance',
+            'institutions.institution_name',
+            'assigned_agents.name as assigned_agent_name',
+            'assigned_agents.agent_code as assigned_agent_code',
+            'created_by_users.name as created_by_name',
+            'created_by_users.agent_code as created_by_code'
+        ])
             ->leftJoin('leads', 'activities.lead_id', '=', 'leads.id')
             ->leftJoin('institutions', 'leads.institution_id', '=', 'institutions.id')
             ->leftJoin('users as assigned_agents', 'leads.assigned_agent', '=', 'assigned_agents.id')
@@ -926,7 +926,7 @@ class ReportController extends Controller
         });
 
         // Group by due date
-        $dueDateSummary = $ptps->groupBy(function($ptp) {
+        $dueDateSummary = $ptps->groupBy(function ($ptp) {
             return Carbon::parse($ptp->act_ptp_date)->format('Y-m-d');
         })->map(function ($datePTPs) {
             return [
@@ -937,7 +937,7 @@ class ReportController extends Controller
 
         // Calculate overdue PTPs
         $today = Carbon::today();
-        $overduePTPs = $ptps->filter(function($ptp) use ($today) {
+        $overduePTPs = $ptps->filter(function ($ptp) use ($today) {
             return Carbon::parse($ptp->act_ptp_date)->lt($today);
         });
 
