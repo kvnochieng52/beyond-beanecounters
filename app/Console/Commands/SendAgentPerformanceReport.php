@@ -40,36 +40,52 @@ class SendAgentPerformanceReport extends Command
 
             // Generate Excel file
             $fileName = 'agent_performance_report_' . now()->format('Y-m-d_H-i-s') . '.xlsx';
-            $relativeFolder = 'app/temp';
-            $tempPath = storage_path($relativeFolder);
-            
-            // Create temp directory if doesn't exist
+            $relativeFolder = 'temp';
+            $tempPath = storage_path('app/' . $relativeFolder);
+
+            // Create temp directory with proper permissions for Linux
             if (!is_dir($tempPath)) {
-                mkdir($tempPath, 0755, true);
+                @mkdir($tempPath, 0777, true);
+                @chmod($tempPath, 0777);
             }
-            
-            $filePath = $tempPath . DIRECTORY_SEPARATOR . $fileName;
-            
+
+            $filePath = $tempPath . '/' . $fileName;
+
             // Export Excel file
             try {
                 Excel::store(new AgentPerformanceExport($data), $relativeFolder . '/' . $fileName, 'local');
                 $this->info('Excel file created');
             } catch (\Exception $e) {
                 $this->error('Error creating Excel file: ' . $e->getMessage());
-                \Log::error('Excel Generation Error', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+                \Log::error('Excel Generation Error', ['error' => $e->getMessage()]);
                 return;
             }
 
             // Verify file was created (wait a moment for file to be written)
-            sleep(1);
+            sleep(2);
+            
+            // Check if file exists with multiple strategies
             if (!file_exists($filePath)) {
-                // Try to find the file in the directory
-                $files = glob($tempPath . DIRECTORY_SEPARATOR . 'agent_performance_report*.xlsx');
+                // Try glob pattern with forward slashes
+                $pattern = $tempPath . '/agent_performance_report_*.xlsx';
+                $files = glob($pattern);
+                
                 if (!empty($files)) {
-                    $filePath = end($files);
-                    $this->info('Found file at: ' . $filePath);
+                    // Sort by modification time, get newest
+                    usort($files, function($a, $b) {
+                        return filemtime($b) - filemtime($a);
+                    });
+                    $filePath = $files[0];
+                    $this->info('Located file: ' . basename($filePath));
                 } else {
-                    $this->error('File not found. Checked: ' . $filePath);
+                    $this->error('Failed to create file at: ' . $filePath);
+                    // Debug info
+                    if (is_dir($tempPath)) {
+                        $contents = array_slice(scandir($tempPath), 2);
+                        $this->error('Directory exists but contains: ' . implode(', ', array_slice($contents, 0, 3)));
+                    } else {
+                        $this->error('Temp directory does not exist: ' . $tempPath);
+                    }
                     return;
                 }
             }
@@ -79,8 +95,8 @@ class SendAgentPerformanceReport extends Command
                 try {
                     Mail::send('emails.agent-performance-report', ['user' => $user, 'generatedAt' => now()], function ($message) use ($user, $filePath, $fileName) {
                         $message->to($user->email)
-                                ->subject('Agent Performance Report - ' . now()->format('d M Y g:i A'));
-                        
+                            ->subject('Agent Performance Report - ' . now()->format('d M Y g:i A'));
+
                         // Attach Excel file
                         $message->attach($filePath, [
                             'as' => $fileName,
@@ -101,7 +117,6 @@ class SendAgentPerformanceReport extends Command
             }
 
             $this->info('Agent Performance Report generation and distribution completed successfully!');
-
         } catch (\Exception $e) {
             $this->error('Error generating Agent Performance Report: ' . $e->getMessage());
             \Log::error('Agent Performance Report Error', ['error' => $e->getMessage()]);
@@ -146,7 +161,7 @@ class SendAgentPerformanceReport extends Command
 
         foreach ($agents as $agentId) {
             $agent = DB::table('users')->find($agentId);
-            
+
             // Calls made - total call_dispositions
             $callsMade = DB::table('activities')
                 ->where('created_by', $agentId)
