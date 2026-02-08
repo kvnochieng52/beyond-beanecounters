@@ -1077,9 +1077,9 @@ class ReportController extends Controller
             }
             $rightPartyPtpCount = $rightPartyPtpQuery->count();
             $rightPartyPtpValue = $rightPartyPtpQuery->sum('act_ptp_amount') ?? 0;
-
-            // 8. PTP for the month - count
-            $ptpMonthQuery = Ptp::where('created_by', $agent->id)
+            // 8. PTP for the month - count and value (activities with disposition=3)
+            $ptpMonthQuery = Activity::where('created_by', $agent->id)
+                ->where('act_call_disposition_id', 3)
                 ->whereBetween('created_at', [$monthStart, $monthEnd]);
             if ($institutionId) {
                 $ptpMonthQuery->whereHas('lead', function ($q) use ($institutionId) {
@@ -1087,7 +1087,7 @@ class ReportController extends Controller
                 });
             }
             $ptpMonthCount = $ptpMonthQuery->count();
-            $ptpMonthValue = $ptpMonthQuery->sum('ptp_amount') ?? 0;
+            $ptpMonthValue = $ptpMonthQuery->sum('act_ptp_amount') ?? 0;
 
             // 10. MTD Today count and value
             $mtdTodayQuery = Mtb::where('created_by', $agent->id)
