@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AdminAgentPerformanceExport;
 use App\Exports\AgentLeadsExport;
 use App\Exports\AgentPerformanceExport;
 use App\Exports\CollectionProgressExport;
@@ -18,7 +19,9 @@ use App\Models\TransactionStatus;
 use App\Models\BackgroundReport;
 use App\Models\LeadStatus;
 use App\Models\LeadPriority;
-use App\Models\LeadCategory;
+use App\Models\User;
+use App\Models\Ptp;
+use App\Models\Mtb;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -984,5 +987,176 @@ class ReportController extends Controller
         }
 
         return view('reports.ptp_report_result', compact('data'));
+    }
+
+    public function adminAgentPerformance()
+    {
+        $institutions = Institution::where('is_active', 1)->get();
+        $agents = User::where('is_active', 1)->orderBy('name')->get();
+        return view('reports.admin_agent_performance', compact('institutions', 'agents'));
+    }
+
+    public function generateAdminAgentPerformance(Request $request)
+    {
+        $request->validate([
+            'date_from' => 'required|date',
+            'date_to' => 'required|date|after_or_equal:date_from',
+        ]);
+
+        $dateFrom = Carbon::parse($request->date_from)->startOfDay();
+        $dateTo = Carbon::parse($request->date_to)->endOfDay();
+        $monthStart = Carbon::parse($request->date_from)->startOfMonth();
+        $monthEnd = Carbon::parse($request->date_from)->endOfMonth();
+
+        $institutionId = $request->institution_id ?? null;
+        $agentId = $request->agent_id ?? null;
+        $createdByAgent = $request->created_by_agent ?? null;
+
+        // Get agents (either all, or filtered by created_by, or specific agent)
+        $agentsQuery = User::where('is_active', 1);
+
+        if ($createdByAgent) {
+            // Get agents who created records
+            $agentIds = Activity::where('created_by', $createdByAgent)
+                ->distinct()
+                ->pluck('assigned_user_id');
+            $agentsQuery->whereIn('id', $agentIds);
+        } elseif ($agentId) {
+            $agentsQuery->where('id', $agentId);
+        }
+
+        $agents = $agentsQuery->get();
+        $reportData = [];
+
+        foreach ($agents as $agent) {
+            // 1. Agent name
+            $agentName = $agent->name;
+
+            // 2. Leads worked - leads assigned to or created by this agent
+            $leadsWorked = Lead::where(function ($q) use ($agent, $institutionId) {
+                $q->where('assigned_agent', $agent->id)
+                    ->orWhere('created_by', $agent->id);
+            });
+            if ($institutionId) {
+                $leadsWorked->where('institution_id', $institutionId);
+            }
+            $leadsWorkedCount = $leadsWorked->count();
+
+            // 3. Negotiation in progress - leads with activities having disposition=4
+            $negotiationQuery = Activity::where('created_by', $agent->id)
+                ->where('act_call_disposition_id', 4)
+                ->distinct();
+            if ($institutionId) {
+                $negotiationQuery->whereHas('lead', function ($q) use ($institutionId) {
+                    $q->where('institution_id', $institutionId);
+                });
+            }
+            $negotiationCount = $negotiationQuery->distinct('lead_id')->count('lead_id');
+
+            // 4. Promised to pay - PTPs created in date range by this agent
+            $ptpsCreatedTodayQuery = Ptp::where('created_by', $agent->id)
+                ->whereBetween('created_at', [$dateFrom, $dateTo]);
+            if ($institutionId) {
+                $ptpsCreatedTodayQuery->whereHas('lead', function ($q) use ($institutionId) {
+                    $q->where('institution_id', $institutionId);
+                });
+            }
+            $ptpsCreatedTodayCount = $ptpsCreatedTodayQuery->count();
+
+            // 5. Good Leads = Negotiation + PTP
+            $goodLeads = $negotiationCount + $ptpsCreatedTodayCount;
+
+            // 6. Right Party PTP Today - activities with disposition=4 and PTP due today
+            $rightPartyPtpQuery = Activity::where('created_by', $agent->id)
+                ->where('act_call_disposition_id', 4)
+                ->whereDate('act_ptp_date', $dateFrom->format('Y-m-d'));
+            if ($institutionId) {
+                $rightPartyPtpQuery->whereHas('lead', function ($q) use ($institutionId) {
+                    $q->where('institution_id', $institutionId);
+                });
+            }
+            $rightPartyPtpCount = $rightPartyPtpQuery->count();
+            $rightPartyPtpValue = $rightPartyPtpQuery->sum('act_ptp_amount') ?? 0;
+
+            // 8. PTP for the month - count
+            $ptpMonthQuery = Ptp::where('created_by', $agent->id)
+                ->whereBetween('created_at', [$monthStart, $monthEnd]);
+            if ($institutionId) {
+                $ptpMonthQuery->whereHas('lead', function ($q) use ($institutionId) {
+                    $q->where('institution_id', $institutionId);
+                });
+            }
+            $ptpMonthCount = $ptpMonthQuery->count();
+            $ptpMonthValue = $ptpMonthQuery->sum('ptp_amount') ?? 0;
+
+            // 10. MTD Today count and value
+            $mtdTodayQuery = Mtb::where('created_by', $agent->id)
+                ->whereBetween('created_at', [$dateFrom, $dateTo]);
+            if ($institutionId) {
+                $mtdTodayQuery->whereHas('lead', function ($q) use ($institutionId) {
+                    $q->where('institution_id', $institutionId);
+                });
+            }
+            $mtdTodayCount = $mtdTodayQuery->count();
+            $mtdTodayValue = $mtdTodayQuery->sum('amount_paid') ?? 0;
+
+            // 12. MTD Monthly
+            $mtdMonthQuery = Mtb::where('created_by', $agent->id)
+                ->whereBetween('created_at', [$monthStart, $monthEnd]);
+            if ($institutionId) {
+                $mtdMonthQuery->whereHas('lead', function ($q) use ($institutionId) {
+                    $q->where('institution_id', $institutionId);
+                });
+            }
+            $mtdMonthValue = $mtdMonthQuery->sum('amount_paid') ?? 0;
+
+            // 13. Payments Posted So far (for the month)
+            $paymentsQuery = Transaction::where('created_by', $agent->id)
+                ->where('transaction_type', TransactionType::PAYMENT)
+                ->whereBetween('created_at', [$monthStart, $monthEnd]);
+            if ($institutionId) {
+                $paymentsQuery->whereHas('lead', function ($q) use ($institutionId) {
+                    $q->where('institution_id', $institutionId);
+                });
+            }
+            $paymentsPostedValue = $paymentsQuery->sum('amount') ?? 0;
+
+            $reportData[] = [
+                'agent_name' => $agentName,
+                'agent_id' => $agent->id,
+                'leads_worked' => $leadsWorkedCount,
+                'negotiation_in_progress' => $negotiationCount,
+                'ptp_created_today' => $ptpsCreatedTodayCount,
+                'good_leads' => $goodLeads,
+                'right_party_ptp_count' => $rightPartyPtpCount,
+                'right_party_ptp_value' => $rightPartyPtpValue,
+                'ptp_month_count' => $ptpMonthCount,
+                'ptp_month_value' => $ptpMonthValue,
+                'mtd_today_count' => $mtdTodayCount,
+                'mtd_today_value' => $mtdTodayValue,
+                'mtd_month_value' => $mtdMonthValue,
+                'payments_posted_value' => $paymentsPostedValue
+            ];
+        }
+
+        $data = [
+            'report_data' => $reportData,
+            'filters' => [
+                'date_from' => $request->date_from,
+                'date_to' => $request->date_to,
+                'institution_id' => $institutionId,
+                'agent_id' => $agentId,
+                'created_by_agent' => $createdByAgent,
+            ]
+        ];
+
+        if ($request->has('export') && $request->export == 'excel') {
+            return Excel::download(
+                new AdminAgentPerformanceExport($reportData),
+                'admin_agent_performance_' . date('Y-m-d') . '.xlsx'
+            );
+        }
+
+        return view('reports.admin_agent_performance_result', compact('data'));
     }
 }

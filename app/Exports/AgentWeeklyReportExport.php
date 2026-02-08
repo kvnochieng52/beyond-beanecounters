@@ -23,7 +23,43 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
 
     public function collection()
     {
-        return $this->data['agents'];
+        $agentsCollection = $this->data['agents'];
+
+        // Calculate totals
+        $totals = [
+            'agent_name' => 'TOTALS',
+            'agent_code' => '',
+            'calls_made' => 0,
+            'ptp_count' => 0,
+            'ptp_value' => 0,
+            'total_collected' => 0,
+            'mtd_collected' => 0,
+        ];
+
+        // Sum all numeric columns
+        foreach ($agentsCollection as $agent) {
+            $totals['calls_made'] += $agent['calls_made'];
+            $totals['ptp_count'] += $agent['ptp_count'];
+            $totals['ptp_value'] += $agent['ptp_value'];
+            $totals['total_collected'] += $agent['total_collected'];
+            $totals['mtd_collected'] += $agent['mtd_collected'];
+        }
+
+        // Sum institution columns
+        if (!empty($this->data['institutions'])) {
+            foreach ($this->data['institutions'] as $instId => $instName) {
+                $totals['inst_' . $instId] = 0;
+                foreach ($agentsCollection as $agent) {
+                    $totals['inst_' . $instId] += $agent['inst_' . $instId] ?? 0;
+                }
+            }
+        }
+
+        // Add the totals row with a marker
+        $totals['is_total_row'] = true;
+        $agentsCollection->push($totals);
+
+        return $agentsCollection;
     }
 
     public function headings(): array
@@ -78,7 +114,7 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
 
     public function styles(Worksheet $sheet)
     {
-        return [
+        $styles = [
             // Header row styling
             1 => [
                 'font' => [
@@ -122,6 +158,30 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
                 ],
             ],
         ];
+
+        // Add totals row styling (last row)
+        $lastRow = $sheet->getHighestRow();
+        $styles['A' . $lastRow . ':Z' . $lastRow] = [
+            'font' => [
+                'bold' => true,
+                'size' => 11,
+                'color' => [
+                    'argb' => 'FFFFFFFF',
+                ],
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => [
+                    'argb' => 'FF366092',
+                ],
+            ],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_RIGHT,
+                'vertical' => Alignment::VERTICAL_CENTER,
+            ],
+        ];
+
+        return $styles;
     }
 
     public function columnWidths(): array

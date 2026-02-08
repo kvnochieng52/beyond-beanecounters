@@ -33,7 +33,8 @@
             <div
                 style="background-color: #fef3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 3px;">
                 <p style="color: #856404; margin: 0; font-size: 13px;">
-                    <strong>⏰ Report Schedule:</strong> This automated report is sent daily at 8:30 AM and covers the past 7 days of activity.
+                    <strong>⏰ Report Schedule:</strong> This automated report is sent daily at 8:30 AM and covers the
+                    past 7 days of activity.
                 </p>
             </div>
 

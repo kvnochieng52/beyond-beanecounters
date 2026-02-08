@@ -8,7 +8,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('mtb.store') }}" method="POST" class="mtb_form">
+            <form action="{{ route('mtb.store') }}" method="POST" class="mtb_form" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <input type="hidden" name="lead_id" value="{{ $leadDetails->id }}">
@@ -49,6 +49,18 @@
                             <div class="form-group">
                                 <label for="description">Description</label>
                                 <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="attachments">Attachments (Optional)</label>
+                                <input type="file" class="form-control" name="attachments[]" id="attachments"
+                                    multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xlsx,.xls">
+                                <small class="text-muted d-block mt-2">Allowed: PDF, DOC, DOCX, JPG, PNG, XLSX, XLS (Max
+                                    5MB each)</small>
                             </div>
                         </div>
                     </div>

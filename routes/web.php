@@ -74,6 +74,11 @@ Route::group(['middleware' => ['auth', 'user_is_active']], function () {
     Route::put('/mtb/update', [\App\Http\Controllers\MtbController::class, 'update'])->name('mtb.update');
     Route::delete('/mtb/{id}', [\App\Http\Controllers\MtbController::class, 'destroy'])->name('mtb.destroy');
 
+    // MTB Attachments Routes
+    Route::get('/mtb/attachments/data', [\App\Http\Controllers\MtbController::class, 'getMtbAttachments'])->name('mtb.attachments.data');
+    Route::get('/mtb/attachment/{id}/download', [\App\Http\Controllers\MtbController::class, 'downloadAttachment'])->name('mtb.download-attachment');
+    Route::delete('/mtb/attachment/{id}', [\App\Http\Controllers\MtbController::class, 'deleteAttachment'])->name('mtb.attachment.delete');
+
     Route::prefix('leads')->group(
         function () {
             Route::post('/leads-update-status', [LeadController::class, 'updateStatus'])->name('leads-update-status');
@@ -188,6 +193,10 @@ Route::group(['middleware' => ['auth', 'user_is_active']], function () {
         // PTP Report
         Route::get('/ptp-report', [ReportController::class, 'ptpReport'])->name('reports.ptp-report');
         Route::match(['get', 'post'], '/ptp-report/generate', [ReportController::class, 'generatePTPReport'])->name('reports.ptp-report.generate');
+
+        // Admin Agent Performance Report
+        Route::get('/admin-agent-performance', [ReportController::class, 'adminAgentPerformance'])->name('reports.admin-agent-performance');
+        Route::match(['get', 'post'], '/admin-agent-performance/generate', [ReportController::class, 'generateAdminAgentPerformance'])->name('reports.admin-agent-performance.generate');
     });
 });
 

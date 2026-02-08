@@ -554,6 +554,21 @@
                         name: 'description'
                     },
                     {
+                        data: 'id',
+                        name: 'attachments',
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            const hasAttachments = row.attachments_count > 0;
+                            const disabledClass = hasAttachments ? '' : 'disabled';
+                            const disabledAttr = hasAttachments ? '' : 'disabled';
+                            return `<button class="btn btn-sm btn-info view-attachments-btn ${disabledClass}" 
+                                    data-mtb-id="${row.id}" ${disabledAttr}>
+                                <i class="fas fa-paperclip"></i> View (${row.attachments_count})
+                            </button>`;
+                        }
+                    },
+                    {
                         data: 'created_by_name',
                         name: 'created_by.name'
                     },
@@ -1160,6 +1175,85 @@
                     $('._discount').show();
                 }
             }
+
+            // MTB Attachments handling
+            $(document).on('click', '.view-attachments-btn', function(e) {
+                // Prevent opening modal if button is disabled
+                if ($(this).prop('disabled')) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                const mtbId = $(this).data('mtb-id');
+                $('#mtbAttachmentsTable').DataTable().destroy();
+
+                $('#mtbAttachmentsTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('mtb.attachments.data') }}',
+                        data: function(d) {
+                            d.mtb_id = mtbId;
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex',
+                            orderable: false,
+                            searchable: false
+                        },
+                        {
+                            data: 'original_name',
+                            name: 'original_name'
+                        },
+                        {
+                            data: 'file_type',
+                            name: 'file_type'
+                        },
+                        {
+                            data: 'file_size_formatted',
+                            name: 'file_size_formatted'
+                        },
+                        {
+                            data: 'created_by_name',
+                            name: 'created_by_name'
+                        },
+                        {
+                            data: 'created_at',
+                            name: 'created_at'
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
+                        }
+                    ]
+                });
+
+                $('#mtb_attachments_modal').modal('show');
+            });
+
+            window.deleteAttachment = function(attachmentId) {
+                if (confirm('Are you sure you want to delete this attachment?')) {
+                    $.ajax({
+                        url: '{{ route('mtb.attachment.delete', ':id') }}'.replace(':id',
+                            attachmentId),
+                        type: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            alert(response.success);
+                            $('#mtbAttachmentsTable').DataTable().ajax.reload();
+                        },
+                        error: function(error) {
+                            alert('Error deleting attachment');
+                        }
+                    });
+                }
+            };
+
 
 
 

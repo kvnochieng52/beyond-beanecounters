@@ -21,12 +21,42 @@
             <th>Date Paid</th>
             <th>Payment Channel</th>
             <th>Description</th>
+            <th>Attachments</th>
             <th>Created By</th>
             <th>Created At</th>
             <th>Action</th>
         </tr>
     </thead>
 </table>
+
+<!-- Attachments Modal -->
+<div class="modal fade" id="mtb_attachments_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">MTD Attachments</h5>
+                <button type="button" class="close" data-bs-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="mtbAttachmentsTable" class="table table-bordered table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>File Name</th>
+                            <th>File Type</th>
+                            <th>File Size</th>
+                            <th>Uploaded By</th>
+                            <th>Uploaded At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 @include('modals.mtb._new_mtb_modal')
 @include('modals.mtb._edit_mtb_modal')

@@ -26,10 +26,10 @@ class SendAgentWeeklyReport extends Command
             $thisSunday = $today->copy()->startOfWeek(Carbon::SUNDAY);
             // Get the Sunday from 7 days ago
             $lastSunday = $thisSunday->copy()->subDays(7);
-            
+
             $startOfWeek = $lastSunday->startOfDay();
             $endOfDay = $thisSunday->endOfDay();
-            
+
             $data = $this->generateWeeklyReportData($startOfWeek, $endOfDay);
 
             // If no agents, skip sending
@@ -102,7 +102,7 @@ class SendAgentWeeklyReport extends Command
             foreach ($activeUsers as $user) {
                 try {
                     Mail::send('emails.agent-weekly-report', [
-                        'user' => $user, 
+                        'user' => $user,
                         'generatedAt' => now(),
                         'startDate' => $startOfWeek->format('d M Y'),
                         'endDate' => $endOfDay->format('d M Y')

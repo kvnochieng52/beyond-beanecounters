@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mtb;
+use App\Models\MtbAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class MtbController extends Controller
@@ -24,6 +26,7 @@ class MtbController extends Controller
                     'mtbs.created_at'
                 )
                 ->where('mtbs.lead_id', $request['lead_id'])
+                ->withCount('attachments')
                 ->orderBy('id', 'DESC');
 
             return DataTables::of($mtbs)
@@ -42,7 +45,8 @@ class MtbController extends Controller
             'amount_paid' => 'required|numeric|min:0',
             'date_paid' => 'required|date',
             'payment_channel' => 'required|in:Mpesa,CASH,CHEQUE',
-            'description' => 'nullable|string'
+            'description' => 'nullable|string',
+            'attachments.*' => 'nullable|file|max:5120' // Max 5MB per file
         ]);
 
         $mtb = new Mtb();
@@ -54,6 +58,11 @@ class MtbController extends Controller
         $mtb->created_by = Auth::user()->id;
         $mtb->updated_by = Auth::user()->id;
         $mtb->save();
+
+        // Handle file attachments
+        if ($request->hasFile('attachments')) {
+            $this->storeAttachments($request->file('attachments'), $mtb->id);
+        }
 
         return redirect()->back()->with('success', 'MTB record created successfully!');
     }
@@ -99,5 +108,118 @@ class MtbController extends Controller
         $mtb->delete();
 
         return response()->json(['success' => 'MTB record deleted successfully!']);
+    }
+
+    public function getMtbAttachments(Request $request)
+    {
+        if ($request->ajax()) {
+            $attachments = MtbAttachment::where('mtb_id', $request['mtb_id'])
+                ->leftJoin('users', 'mtb_attachments.created_by', '=', 'users.id')
+                ->select(
+                    'mtb_attachments.id',
+                    'mtb_attachments.original_name',
+                    'mtb_attachments.file_size',
+                    'mtb_attachments.file_type',
+                    'users.name as created_by_name',
+                    'mtb_attachments.created_at'
+                )
+                ->orderBy('mtb_attachments.id', 'DESC');
+
+            return DataTables::of($attachments)
+                ->addIndexColumn()
+                ->editColumn('file_type', function ($row) {
+                    // Map MIME types to simple names
+                    $mimeMap = [
+                        'application/pdf' => 'PDF',
+                        'application/msword' => 'Word',
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'Word',
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.template' => 'Word',
+                        'application/vnd.ms-excel' => 'Excel',
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'Excel',
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.template' => 'Excel',
+                        'image/jpeg' => 'Image',
+                        'image/jpg' => 'Image',
+                        'image/png' => 'Image',
+                        'image/gif' => 'Image',
+                        'image/webp' => 'Image',
+                        'image/bmp' => 'Image',
+                        'image/svg+xml' => 'Image',
+                        'text/plain' => 'Text',
+                        'text/csv' => 'CSV',
+                        'application/vnd.ms-powerpoint' => 'PowerPoint',
+                        'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'PowerPoint',
+                    ];
+
+                    return $mimeMap[$row->file_type] ?? ucfirst(str_replace('application/', '', $row->file_type));
+                })
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->format('Y-m-d H:i:s');
+                })
+                ->addColumn('file_size_formatted', function ($row) {
+                    $bytes = $row->file_size;
+                    $units = ['B', 'KB', 'MB', 'GB'];
+                    $bytes = max($bytes, 0);
+                    $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+                    $pow = min($pow, count($units) - 1);
+                    $bytes /= (1 << (10 * $pow));
+                    return round($bytes, 2) . ' ' . $units[$pow];
+                })
+                ->addColumn('action', function ($row) {
+                    return '<a href="' . route('mtb.download-attachment', $row->id) . '" class="btn btn-sm btn-info" title="Download"><i class="fa fa-download"></i></a>
+                            <button class="btn btn-sm btn-danger" onclick="deleteAttachment(' . $row->id . ')" title="Delete"><i class="fa fa-trash"></i></button>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function downloadAttachment($id)
+    {
+        $attachment = MtbAttachment::findOrFail($id);
+        $filePath = storage_path('app/' . $attachment->file_path);
+
+        if (!file_exists($filePath)) {
+            return back()->with('error', 'File not found!');
+        }
+
+        return response()->download($filePath, $attachment->original_name);
+    }
+
+    public function deleteAttachment($id)
+    {
+        $attachment = MtbAttachment::findOrFail($id);
+        $filePath = storage_path('app/' . $attachment->file_path);
+
+        // Delete file from storage
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+
+        $attachment->delete();
+
+        return response()->json(['success' => 'Attachment deleted successfully!']);
+    }
+
+    private function storeAttachments($files, $mtbId)
+    {
+        foreach ($files as $file) {
+            $originalName = $file->getClientOriginalName();
+            $fileName = time() . '_' . uniqid() . '_' . $originalName;
+            $relativePath = 'mtb-attachments/' . $mtbId;
+
+            // Store file
+            $path = $file->storeAs($relativePath, $fileName, 'local');
+
+            // Create attachment record
+            MtbAttachment::create([
+                'mtb_id' => $mtbId,
+                'file_name' => $fileName,
+                'original_name' => $originalName,
+                'file_size' => $file->getSize(),
+                'file_type' => $file->getMimeType(),
+                'file_path' => $path,
+                'created_by' => Auth::user()->id
+            ]);
+        }
     }
 }
