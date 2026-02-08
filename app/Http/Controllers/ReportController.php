@@ -1004,13 +1004,12 @@ class ReportController extends Controller
         ]);
         $dateFrom = Carbon::parse($request->date_from)->startOfDay();
         $dateTo = Carbon::parse($request->date_to)->endOfDay();
-        $monthStart = Carbon::parse($request->date_from)->startOfMonth();
-        $monthEnd = Carbon::parse($request->date_from)->endOfMonth();
+        $monthStart = Carbon::parse($request->date_from)->startOfMonth()->startOfDay();
+        $monthEnd = Carbon::parse($request->date_from)->endOfMonth()->endOfDay();
         
         $institutionId = $request->institution_id ?? null;
         $agentId = $request->agent_id ?? null;
         $createdByAgent = $request->created_by_agent ?? null;
-
         // Get agents (either all, or filtered by created_by, or specific agent)
         $agentsQuery = User::where('is_active', 1);
 
@@ -1018,7 +1017,7 @@ class ReportController extends Controller
             // Get agents who created records
             $agentIds = Activity::where('created_by', $createdByAgent)
                 ->distinct()
-                ->pluck('assigned_user_id');
+                ->pluck('created_by');
             $agentsQuery->whereIn('id', $agentIds);
         } elseif ($agentId) {
             $agentsQuery->where('id', $agentId);
