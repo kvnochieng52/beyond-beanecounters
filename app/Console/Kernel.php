@@ -14,9 +14,16 @@ class Kernel extends ConsoleKernel
     {
         // Send daily PTP reminders at 8:00 AM every day
         $schedule->command('ptp:daily-reminders')
-                 ->dailyAt('08:00')
-                 ->description('Send daily PTP reminders for today\'s due dates')
-                 ->withoutOverlapping();
+            ->dailyAt('08:00')
+            ->description('Send daily PTP reminders for today\'s due dates')
+            ->withoutOverlapping();
+
+        // Send Agent Performance Report every 2 hours from 8:20 AM to 7:00 PM (6 times a day)
+        // Using cron: minute 20 of hours 8, 10, 12, 14, 16, 18
+        $schedule->command('report:agent-performance')
+            ->cron('20 8,10,12,14,16,18 * * *')
+            ->description('Generate and send Agent Performance Report every 2 hours')
+            ->withoutOverlapping();
     }
 
     /**
@@ -24,7 +31,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

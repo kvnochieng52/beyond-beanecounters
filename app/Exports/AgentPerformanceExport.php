@@ -4,12 +4,15 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Illuminate\Support\Collection;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use Carbon\Carbon;
 
-class AgentPerformanceExport implements FromCollection, WithHeadings, WithTitle, WithStyles
+class AgentPerformanceExport implements FromCollection, WithHeadings, WithMapping, WithTitle, WithStyles, WithColumnWidths
 {
     protected $data;
 
@@ -18,160 +21,130 @@ class AgentPerformanceExport implements FromCollection, WithHeadings, WithTitle,
         $this->data = $data;
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
     public function collection()
     {
-        $rows = [
-            [
-                'Report Type',
-                'Agent Performance Report',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-            ],
-            [
-                'Date Range',
-                $this->data['start_date'] . ' to ' . $this->data['end_date'],
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-            ],
-            [
-                'Total Assigned Amount',
-                number_format($this->data['total_assigned'], 2),
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-            ],
-            [
-                'Total Collected Amount',
-                number_format($this->data['total_collected'], 2),
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-            ],
-            [
-                'Overall Collection Rate',
-                number_format($this->data['overall_collection_rate'], 2) . '%',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-            ],
-            [
-                '', '', '', '', '', '', '', '', '',
-            ],
-            [
-                'Agent Performance Breakdown',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-            ],
-            [
-                'Agent Name',
-                'Total Leads',
-                'Assigned Amount',
-                'Collected Amount',
-                'Collection Rate',
-                'Closed Leads',
-                'Overdue Cases',
-                'Avg Days to Close',
-                'Performance Rating',
-            ],
-        ];
-
-        // Add agent data
-        foreach ($this->data['agents'] as $agent) {
-            // Calculate performance rating
-            $performanceRating = $this->calculatePerformanceRating($agent);
-            
-            $rows[] = [
-                $agent['name'],
-                $agent['total_leads'],
-                number_format($agent['assigned_amount'], 2),
-                number_format($agent['collected_amount'], 2),
-                number_format($agent['collection_rate'], 2) . '%',
-                $agent['closed_leads'],
-                $agent['overdue_cases'],
-                number_format($agent['avg_days_to_close'], 1),
-                $performanceRating,
-            ];
-        }
-
-        return new Collection($rows);
-    }
-
-    /**
-     * Calculate performance rating based on metrics
-     */
-    private function calculatePerformanceRating($agent)
-    {
-        // Simple rating algorithm based on collection rate
-        $rate = $agent['collection_rate'];
-        
-        if ($rate >= 90) return 'Excellent';
-        if ($rate >= 75) return 'Very Good';
-        if ($rate >= 60) return 'Good';
-        if ($rate >= 40) return 'Average';
-        if ($rate >= 20) return 'Below Average';
-        return 'Poor';
+        return $this->data['agents'];
     }
 
     public function headings(): array
     {
-        return [
-            'Report Generated on',
-            date('Y-m-d H:i:s'),
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
+        $headings = [
+            'Agent Name',
+            'Agent Code',
+            'Calls Made',
+            'PTP Count',
+            'PTP Value (KSH)',
+            'Total Collected (KSH)',
+            'MTD Collected (KSH)',
         ];
+
+        // Add institution columns
+        if (!empty($this->data['institutions'])) {
+            foreach ($this->data['institutions'] as $institutionName) {
+                $headings[] = $institutionName . ' (KSH)';
+            }
+        }
+
+        return $headings;
+    }
+
+    public function map($agent): array
+    {
+        $row = [
+            $agent['agent_name'],
+            $agent['agent_code'],
+            $agent['calls_made'],
+            $agent['ptp_count'],
+            number_format($agent['ptp_value'], 2),
+            number_format($agent['total_collected'], 2),
+            number_format($agent['mtd_collected'], 2),
+        ];
+
+        // Add institution collections in the same order as headings
+        if (!empty($this->data['institutions'])) {
+            foreach ($this->data['institutions'] as $instId => $instName) {
+                $amount = $agent['inst_' . $instId] ?? 0;
+                $row[] = number_format($amount, 2);
+            }
+        }
+
+        return $row;
     }
 
     public function title(): string
     {
-        return 'Agent Performance Report';
+        return 'Agent Performance ' . Carbon::parse($this->data['date'])->format('d M Y');
     }
 
     public function styles(Worksheet $sheet)
     {
         return [
-            // Style the first row (headings)
-            1 => ['font' => ['bold' => true]],
-            // Style the agent performance breakdown header
-            7 => ['font' => ['bold' => true]],
-            // Style the agent columns header
-            8 => ['font' => ['bold' => true]],
+            // Header row styling
+            1 => [
+                'font' => [
+                    'bold' => true,
+                    'size' => 11,
+                    'color' => [
+                        'argb' => 'FFFFFFFF',
+                    ],
+                ],
+                'fill' => [
+                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                    'startColor' => [
+                        'argb' => 'FF1F4E78',
+                    ],
+                ],
+                'alignment' => [
+                    'horizontal' => Alignment::HORIZONTAL_CENTER,
+                    'vertical' => Alignment::VERTICAL_CENTER,
+                    'wrapText' => true,
+                ],
+            ],
+
+            // All cells alignment
+            'A:Z' => [
+                'alignment' => [
+                    'vertical' => Alignment::VERTICAL_CENTER,
+                ],
+            ],
+
+            // Number columns right alignment
+            'C:Z' => [
+                'alignment' => [
+                    'horizontal' => Alignment::HORIZONTAL_RIGHT,
+                ],
+            ],
+
+            // Currency columns formatting (columns E onwards, starting from row 2)
+            'E2:Z999' => [
+                'alignment' => [
+                    'horizontal' => Alignment::HORIZONTAL_RIGHT,
+                ],
+            ],
         ];
+    }
+
+    public function columnWidths(): array
+    {
+        $widths = [
+            'A' => 25,  // Agent Name
+            'B' => 15,  // Agent Code
+            'C' => 12,  // Calls Made
+            'D' => 12,  // PTP Count
+            'E' => 18,  // PTP Value
+            'F' => 18,  // Total Collected
+            'G' => 18,  // MTD Collected
+        ];
+
+        // Add width for institution columns
+        if (!empty($this->data['institutions'])) {
+            $col = 'H';
+            foreach ($this->data['institutions'] as $instName) {
+                $widths[$col] = 18;
+                $col++;
+            }
+        }
+
+        return $widths;
     }
 }
