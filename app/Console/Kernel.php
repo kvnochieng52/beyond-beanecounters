@@ -24,6 +24,13 @@ class Kernel extends ConsoleKernel
             ->cron('20 8,10,12,14,16,18 * * *')
             ->description('Generate and send Agent Performance Report every 2 hours')
             ->withoutOverlapping();
+
+        // Send Agent Weekly Report daily at 8:30 AM
+        // Shows last 7 days of activity
+        $schedule->command('report:agent-weekly')
+            ->dailyAt('08:30')
+            ->description('Generate and send Agent Weekly Report daily')
+            ->withoutOverlapping();
     }
 
     /**
