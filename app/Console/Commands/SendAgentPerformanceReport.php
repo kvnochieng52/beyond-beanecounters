@@ -205,10 +205,10 @@ class SendAgentPerformanceReport extends Command
                 ->whereBetween('created_at', [$startOfDay, $endOfDay])
                 ->sum('amount') ?? 0;
 
-            // MTD Collected Today - from mtbs table created by agent
+            // MTD Collected Today - from mtbs table created by agent (using created_at timestamp)
             $mtdCollected = DB::table('mtbs')
                 ->where('created_by', $agentId)
-                ->whereBetween('date_paid', [$startOfDay->toDateString(), $endOfDay->toDateString()])
+                ->whereBetween('created_at', [$startOfDay, $endOfDay])
                 ->sum('amount_paid') ?? 0;
 
             $row = [
