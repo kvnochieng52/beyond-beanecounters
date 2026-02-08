@@ -1011,16 +1011,18 @@ class ReportController extends Controller
         $agentId = $request->agent_id ?? null;
         $createdByAgent = $request->created_by_agent ?? null;
         // Get agents (either all, or filtered by created_by, or specific agent)
-        $agentsQuery = User::where('is_active', 1);
-
         if ($createdByAgent) {
-            // Get agents who created records
+            // Get agents who created records by this supervisor
             $agentIds = Activity::where('created_by', $createdByAgent)
                 ->distinct()
                 ->pluck('created_by');
-            $agentsQuery->whereIn('id', $agentIds);
+            $agentsQuery = User::whereIn('id', $agentIds)->where('is_active', 1);
         } elseif ($agentId) {
-            $agentsQuery->where('id', $agentId);
+            $agentsQuery = User::where('id', $agentId);
+        } else {
+            // Get all users who have created activities (not just those in users table)
+            $agentIds = Activity::distinct()->pluck('created_by');
+            $agentsQuery = User::whereIn('id', $agentIds)->where('is_active', 1);
         }
 
         $agents = $agentsQuery->get();
