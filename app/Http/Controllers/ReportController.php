@@ -1053,9 +1053,9 @@ class ReportController extends Controller
             }
             $negotiationCount = $negotiationQuery->distinct('lead_id')->count('lead_id');
 
-            // 4. Promised to pay - PTPs created in date range by this agent
+            // 4. Promised to pay - PTPs created TODAY by this agent
             $ptpsCreatedTodayQuery = Ptp::where('created_by', $agent->id)
-                ->whereBetween('created_at', [$dateFrom, $dateTo]);
+                ->whereDate('created_at', Carbon::today());
             if ($institutionId) {
                 $ptpsCreatedTodayQuery->whereHas('lead', function ($q) use ($institutionId) {
                     $q->where('institution_id', $institutionId);
