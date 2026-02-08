@@ -63,16 +63,16 @@ class SendAgentPerformanceReport extends Command
 
             // Verify file was created (wait a moment for file to be written)
             sleep(2);
-            
+
             // Check if file exists with multiple strategies
             if (!file_exists($filePath)) {
                 // Try glob pattern with forward slashes
                 $pattern = $tempPath . '/agent_performance_report_*.xlsx';
                 $files = glob($pattern);
-                
+
                 if (!empty($files)) {
                     // Sort by modification time, get newest
-                    usort($files, function($a, $b) {
+                    usort($files, function ($a, $b) {
                         return filemtime($b) - filemtime($a);
                     });
                     $filePath = $files[0];
@@ -145,22 +145,37 @@ class SendAgentPerformanceReport extends Command
         }
 
         // Get all institutions where agents have collections today
+        // Try to get from transactions first
         $institutions = DB::table('institutions')
             ->join('leads', 'institutions.id', '=', 'leads.institution_id')
-            ->join('transactions', 'leads.id', '=', 'transactions.lead_id')
-            ->join('users', 'leads.assigned_agent', '=', 'users.id')
-            ->whereIn('users.id', $agents)
-            ->where('transactions.transaction_type', 2) // PAYMENT type
-            ->whereBetween('transactions.created_at', [$startOfDay, $endOfDay])
-            ->distinct()
+            ->leftJoin('transactions', 'leads.id', '=', 'transactions.lead_id')
+            ->whereIn('leads.assigned_agent', $agents)
+            ->where(function ($query) use ($startOfDay, $endOfDay) {
+                $query->whereBetween('transactions.created_at', [$startOfDay, $endOfDay])
+                    ->orWhereNull('transactions.id');
+            })
+            ->distinct('institutions.id')
             ->pluck('institutions.institution_name', 'institutions.id')
             ->toArray();
+
+        // If no institutions found from transactions, get from leads
+        if (empty($institutions)) {
+            $institutions = DB::table('institutions')
+                ->join('leads', 'institutions.id', '=', 'leads.institution_id')
+                ->whereIn('leads.assigned_agent', $agents)
+                ->distinct('institutions.id')
+                ->pluck('institutions.institution_name', 'institutions.id')
+                ->toArray();
+        }
 
         // Build agent data
         $agentData = [];
 
         foreach ($agents as $agentId) {
             $agent = DB::table('users')->find($agentId);
+
+            // Get agent code - handle null values
+            $agentCode = $agent->agent_code ?? $agent->code ?? '-';
 
             // Calls made - total call_dispositions
             $callsMade = DB::table('activities')
@@ -199,8 +214,8 @@ class SendAgentPerformanceReport extends Command
                 ->sum('mtbs.amount_paid') ?? 0;
 
             $row = [
-                'agent_name' => $agent->name,
-                'agent_code' => $agent->agent_code,
+                'agent_name' => $agent->name ?? 'Unknown',
+                'agent_code' => $agentCode,
                 'calls_made' => $callsMade,
                 'ptp_count' => $ptpCount,
                 'ptp_value' => $ptpValue,
