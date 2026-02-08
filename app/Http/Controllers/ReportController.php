@@ -1067,44 +1067,61 @@ class ReportController extends Controller
             $goodLeads = $negotiationCount + $ptpsCreatedTodayCount;
 
             // 6. Right Party PTP Today - activities with disposition=4 and PTP due today
-            $rightPartyPtpQuery = Activity::where('created_by', $agent->id)
+            // 6. Right Party PTP Today - activities with disposition=3 due today
+            $rightPartyPtpCountQuery = Activity::where('created_by', $agent->id)
                 ->where('act_call_disposition_id', 3)
                 ->whereDate('act_ptp_date', Carbon::today());
+            $rightPartyPtpValueQuery = Activity::where('created_by', $agent->id)
+                ->where('act_call_disposition_id', 3)
+                ->whereDate('act_ptp_date', Carbon::today());
+            
             if ($institutionId) {
-                $rightPartyPtpQuery->whereHas('lead', function ($q) use ($institutionId) {
+                $rightPartyPtpCountQuery->whereHas('lead', function ($q) use ($institutionId) {
+                    $q->where('institution_id', $institutionId);
+                });
+                $rightPartyPtpValueQuery->whereHas('lead', function ($q) use ($institutionId) {
                     $q->where('institution_id', $institutionId);
                 });
             }
-            $rightPartyPtpCount = $rightPartyPtpQuery->clone()->count();
-            $rightPartyPtpValue = $rightPartyPtpQuery->sum('act_ptp_amount') ?? 0;
+            
+            $rightPartyPtpCount = $rightPartyPtpCountQuery->count();
+            $rightPartyPtpValue = $rightPartyPtpValueQuery->sum('act_ptp_amount') ?? 0;
+
             // 8. PTP for the month - count and value (activities with disposition=3)
-
-
-
-            $ptpMonthQuery = Activity::where('created_by', $agent->id)
+            $ptpMonthCountQuery = Activity::where('created_by', $agent->id)
                 ->where('act_call_disposition_id', 3)
                 ->whereBetween('created_at', [$monthStart, $monthEnd]);
+            $ptpMonthValueQuery = Activity::where('created_by', $agent->id)
+                ->where('act_call_disposition_id', 3)
+                ->whereBetween('created_at', [$monthStart, $monthEnd]);
+            
             if ($institutionId) {
-                $ptpMonthQuery->whereHas('lead', function ($q) use ($institutionId) {
+                $ptpMonthCountQuery->whereHas('lead', function ($q) use ($institutionId) {
+                    $q->where('institution_id', $institutionId);
+                });
+                $ptpMonthValueQuery->whereHas('lead', function ($q) use ($institutionId) {
                     $q->where('institution_id', $institutionId);
                 });
             }
-
-
-
-            $ptpMonthCount = $ptpMonthQuery->clone()->count();
-            $ptpMonthValue = $ptpMonthQuery->sum('act_ptp_amount') ?? 0;
+            
+            $ptpMonthCount = $ptpMonthCountQuery->count();
+            $ptpMonthValue = $ptpMonthValueQuery->sum('act_ptp_amount') ?? 0;
 
             // 10. MTD Today count and value
-            $mtdTodayQuery = Mtb::where('created_by', $agent->id)
+            $mtdTodayCountQuery = Mtb::where('created_by', $agent->id)
+                ->whereBetween('created_at', [$dateFrom, $dateTo]);
+            $mtdTodayValueQuery = Mtb::where('created_by', $agent->id)
                 ->whereBetween('created_at', [$dateFrom, $dateTo]);
             if ($institutionId) {
-                $mtdTodayQuery->whereHas('lead', function ($q) use ($institutionId) {
+                $mtdTodayCountQuery->whereHas('lead', function ($q) use ($institutionId) {
+                    $q->where('institution_id', $institutionId);
+                });
+                $mtdTodayValueQuery->whereHas('lead', function ($q) use ($institutionId) {
                     $q->where('institution_id', $institutionId);
                 });
             }
-            $mtdTodayCount = $mtdTodayQuery->clone()->count();
-            $mtdTodayValue = $mtdTodayQuery->sum('amount_paid') ?? 0;
+            $mtdTodayCount = $mtdTodayCountQuery->count();
+            $mtdTodayValue = $mtdTodayValueQuery->sum('amount_paid') ?? 0;
 
             // 12. MTD Monthly
             $mtdMonthQuery = Mtb::where('created_by', $agent->id)
