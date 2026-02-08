@@ -525,6 +525,12 @@ return [
                     'icon' => 'fas fa-fw fa-user-check',
                     'can' => ['is_admin'],
                 ],
+                [
+                    'text' => 'Admin Agent Performance',
+                    'url' => '/reports/admin-agent-performance',
+                    'icon' => 'fas fa-fw fa-chart-bar',
+                    'can' => ['is_admin'],
+                ],
 
                 [
                     'text' => 'Actvities Report',
