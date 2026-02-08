@@ -688,7 +688,7 @@ class ReportController extends Controller
                 'users.name as agent_name',
                 'users.agent_code',
                 'transaction_types.transaction_type_title',
-                'transaction_statuses.transaction_status_name as payment_status_name'
+                'transaction_statuses.status_name as payment_status_name'
             ])
             ->leftJoin('leads', 'transactions.lead_id', '=', 'leads.id')
             ->leftJoin('institutions', 'leads.institution_id', '=', 'institutions.id')
