@@ -1034,6 +1034,7 @@ class ReportController extends Controller
 
             // 2. Leads worked - count distinct leads from activities created by this agent
             $leadsWorkedQuery = Activity::where('created_by', $agent->id)
+                ->whereBetween('created_at', [$dateFrom, $dateTo])
                 ->distinct();
             if ($institutionId) {
                 $leadsWorkedQuery->whereHas('lead', function ($q) use ($institutionId) {
