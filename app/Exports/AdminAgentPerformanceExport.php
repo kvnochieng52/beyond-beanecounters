@@ -78,18 +78,18 @@ class AdminAgentPerformanceExport implements FromCollection, WithHeadings, WithM
     {
         return [
             $row['agent_name'],
-            $row['leads_worked'],
-            $row['negotiation_in_progress'],
-            $row['ptp_created_today'],
-            $row['good_leads'],
-            $row['right_party_ptp_count'],
-            $row['right_party_ptp_value'],
-            $row['ptp_month_count'],
-            $row['ptp_month_value'],
-            $row['mtd_today_count'],
-            $row['mtd_today_value'],
-            $row['mtd_month_value'],
-            $row['payments_posted_value']
+            $row['leads_worked'] ?? 0,
+            $row['negotiation_in_progress'] ?? 0,
+            $row['ptp_created_today'] ?? 0,
+            $row['good_leads'] ?? 0,
+            $row['right_party_ptp_count'] ?? 0,
+            $row['right_party_ptp_value'] ?? 0,
+            $row['ptp_month_count'] ?? 0,
+            $row['ptp_month_value'] ?? 0,
+            $row['mtd_today_count'] ?? 0,
+            $row['mtd_today_value'] ?? 0,
+            $row['mtd_month_value'] ?? 0,
+            $row['payments_posted_value'] ?? 0
         ];
     }
 

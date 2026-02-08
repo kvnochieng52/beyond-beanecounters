@@ -1074,7 +1074,7 @@ class ReportController extends Controller
             $rightPartyPtpValueQuery = Activity::where('created_by', $agent->id)
                 ->where('act_call_disposition_id', 3)
                 ->whereDate('act_ptp_date', Carbon::today());
-            
+
             if ($institutionId) {
                 $rightPartyPtpCountQuery->whereHas('lead', function ($q) use ($institutionId) {
                     $q->where('institution_id', $institutionId);
@@ -1083,7 +1083,7 @@ class ReportController extends Controller
                     $q->where('institution_id', $institutionId);
                 });
             }
-            
+
             $rightPartyPtpCount = $rightPartyPtpCountQuery->count();
             $rightPartyPtpValue = $rightPartyPtpValueQuery->sum('act_ptp_amount') ?? 0;
 
@@ -1094,7 +1094,7 @@ class ReportController extends Controller
             $ptpMonthValueQuery = Activity::where('created_by', $agent->id)
                 ->where('act_call_disposition_id', 3)
                 ->whereBetween('created_at', [$monthStart, $monthEnd]);
-            
+
             if ($institutionId) {
                 $ptpMonthCountQuery->whereHas('lead', function ($q) use ($institutionId) {
                     $q->where('institution_id', $institutionId);
@@ -1103,7 +1103,7 @@ class ReportController extends Controller
                     $q->where('institution_id', $institutionId);
                 });
             }
-            
+
             $ptpMonthCount = $ptpMonthCountQuery->count();
             $ptpMonthValue = $ptpMonthValueQuery->sum('act_ptp_amount') ?? 0;
 
