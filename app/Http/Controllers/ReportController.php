@@ -22,6 +22,7 @@ use App\Models\LeadCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
@@ -714,7 +715,7 @@ class ReportController extends Controller
         $payments = $paymentsQuery->orderBy('transactions.created_at', 'desc')->get();
 
         // Get MTD (Money Transfer Data) records from the mtbs table
-        $mtdQuery = \DB::table('mtbs')
+        $mtdQuery = DB::table('mtbs')
             ->select([
                 'mtbs.*',
                 'leads.title as lead_name',
@@ -723,11 +724,13 @@ class ReportController extends Controller
                 'leads.balance as lead_balance',
                 'institutions.institution_name',
                 'users.name as agent_name',
-                'users.agent_code'
+                'users.agent_code',
+                'created_user.name as created_by_name'
             ])
             ->leftJoin('leads', 'mtbs.lead_id', '=', 'leads.id')
             ->leftJoin('institutions', 'leads.institution_id', '=', 'institutions.id')
-            ->leftJoin('users', 'mtbs.created_by', '=', 'users.id')
+            ->leftJoin('users', 'leads.assigned_agent', '=', 'users.id')
+            ->leftJoin('users as created_user', 'mtbs.created_by', '=', 'created_user.id')
             ->whereBetween('mtbs.date_paid', [$fromDate->toDateString(), $toDate->toDateString()]);
 
         // Apply same filters to MTD
@@ -769,6 +772,15 @@ class ReportController extends Controller
             ];
         });
 
+        // Group by agent for MTD
+        $mtdAgentSummary = $mtdRecords->groupBy('agent_name')->map(function ($mtdAgentRecords) {
+            return [
+                'count' => $mtdAgentRecords->count(),
+                'total_amount' => $mtdAgentRecords->sum('amount_paid'),
+                'avg_amount' => $mtdAgentRecords->avg('amount_paid')
+            ];
+        });
+
         // Group by date
         $dailySummary = $payments->groupBy(function ($payment) {
             return Carbon::parse($payment->created_at)->format('Y-m-d');
@@ -798,6 +810,7 @@ class ReportController extends Controller
                 'avg_mtd_amount' => $avgMtdAmount,
                 'institution_summary' => $institutionSummary,
                 'agent_summary' => $agentSummary,
+                'mtd_agent_summary' => $mtdAgentSummary,
                 'daily_summary' => $dailySummary
             ]
         ];

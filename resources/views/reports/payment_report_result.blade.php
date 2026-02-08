@@ -180,6 +180,48 @@
             </div>
         </div>
 
+        <!-- MTD Report by Agent -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h3 class="card-title">MTD Report by Agent</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Agent Name</th>
+                                <th>Agent Code</th>
+                                <th>Total MTD Records</th>
+                                <th>Total Amount (KSH)</th>
+                                <th>Average Amount (KSH)</th>
+                                <th>Percentage of Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($data['summary']['mtd_agent_summary'] as $agentName => $summary)
+                                @if($agentName)
+                                    <tr>
+                                        <td>{{ $agentName ?? 'Unassigned' }}</td>
+                                        <td>
+                                            @php
+                                                $mtdAgent = $data['mtd_records']->where('agent_name', $agentName)->first();
+                                            @endphp
+                                            {{ $mtdAgent->agent_code ?? '-' }}
+                                        </td>
+                                        <td>{{ number_format($summary['count']) }}</td>
+                                        <td>{{ number_format($summary['total_amount'], 2) }}</td>
+                                        <td>{{ number_format($summary['avg_amount'], 2) }}</td>
+                                        <td>{{ number_format(($summary['total_amount'] / $data['summary']['total_mtd_amount']) * 100, 2) }}%</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     @elseif(request('report_type') == 'by_institution')
         <!-- Report by Institution -->
         <div class="card">

@@ -189,7 +189,7 @@ class MTDSheetExport implements \Maatwebsite\Excel\Concerns\FromCollection, \Maa
             number_format($mtd->amount_paid, 2),
             $mtd->payment_channel ?? '-',
             $mtd->description ?? '-',
-            $mtd->created_by ?? '-'
+            $mtd->created_by_name ?? 'N/A'
         ];
     }
 
