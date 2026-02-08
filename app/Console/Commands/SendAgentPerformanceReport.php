@@ -209,9 +209,10 @@ class SendAgentPerformanceReport extends Command
             // Add collections by institution
             foreach ($institutions as $instId => $instName) {
                 // Get transaction total amount by this agent for this institution
+                // Join transactions with leads to get institution_id
                 $institutionCollection = DB::table('transactions')
                     ->join('leads', 'transactions.lead_id', '=', 'leads.id')
-                    ->where('leads.assigned_agent', $agentId)
+                    ->where('transactions.created_by', $agentId)
                     ->where('leads.institution_id', $instId)
                     ->where('transactions.transaction_type', 2) // PAYMENT
                     ->whereBetween('transactions.created_at', [$startOfDay, $endOfDay])
