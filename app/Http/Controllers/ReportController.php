@@ -1006,6 +1006,8 @@ class ReportController extends Controller
         $dateTo = Carbon::parse($request->date_to)->endOfDay();
         $monthStart = Carbon::parse($request->date_from)->startOfMonth();
         $monthEnd = Carbon::parse($request->date_from)->endOfMonth();
+        
+        $institutionId = $request->institution_id ?? null;
         $agentId = $request->agent_id ?? null;
         $createdByAgent = $request->created_by_agent ?? null;
 
