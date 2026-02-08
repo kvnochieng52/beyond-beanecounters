@@ -1068,7 +1068,7 @@ class ReportController extends Controller
 
             // 6. Right Party PTP Today - activities with disposition=4 and PTP due today
             $rightPartyPtpQuery = Activity::where('created_by', $agent->id)
-                ->where('act_call_disposition_id', 4)
+                ->where('act_call_disposition_id', 3)
                 ->whereDate('act_ptp_date', Carbon::today());
             if ($institutionId) {
                 $rightPartyPtpQuery->whereHas('lead', function ($q) use ($institutionId) {
