@@ -1032,15 +1032,15 @@ class ReportController extends Controller
             // 1. Agent name
             $agentName = $agent->name;
 
-            // 2. Leads worked - leads assigned to or created by this agent
-            $leadsWorked = Lead::where(function ($q) use ($agent, $institutionId) {
-                $q->where('assigned_agent', $agent->id)
-                    ->orWhere('created_by', $agent->id);
-            });
+            // 2. Leads worked - count distinct leads from activities created by this agent
+            $leadsWorkedQuery = Activity::where('created_by', $agent->id)
+                ->distinct();
             if ($institutionId) {
-                $leadsWorked->where('institution_id', $institutionId);
+                $leadsWorkedQuery->whereHas('lead', function ($q) use ($institutionId) {
+                    $q->where('institution_id', $institutionId);
+                });
             }
-            $leadsWorkedCount = $leadsWorked->count();
+            $leadsWorkedCount = $leadsWorkedQuery->distinct('lead_id')->count('lead_id');
 
             // 3. Negotiation in progress - leads with activities having disposition=4
             $negotiationQuery = Activity::where('created_by', $agent->id)
