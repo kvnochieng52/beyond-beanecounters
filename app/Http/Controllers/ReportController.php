@@ -14,6 +14,7 @@ use App\Jobs\ProcessLeadsReport;
 use App\Models\Activity;
 use App\Models\Institution;
 use App\Models\Lead;
+use App\Models\LeadCategory;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\TransactionStatus;
