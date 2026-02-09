@@ -216,12 +216,15 @@ class SendAgentWeeklyReport extends Command
 
             // Add collections by institution (for that week only, matching MTD Collected period)
             foreach ($institutions as $instId => $instName) {
-                // Get MTD collected for this agent for this institution for that week
+                // Get MTD collected for this agent for this institution for that week (using subquery to avoid duplicates)
                 $institutionCollection = DB::table('mtbs')
-                    ->join('leads', 'mtbs.lead_id', '=', 'leads.id')
                     ->where('mtbs.created_by', $agentId)
-                    ->where('leads.institution_id', $instId)
                     ->whereBetween('mtbs.created_at', [$startDate, $endDate])
+                    ->whereIn('mtbs.lead_id', function ($query) use ($instId) {
+                        $query->select('id')
+                            ->from('leads')
+                            ->where('institution_id', $instId);
+                    })
                     ->sum('mtbs.amount_paid');
 
                 $row['inst_' . $instId] = $institutionCollection ?? 0;
