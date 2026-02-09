@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Ptp extends Model
 {
     use HasFactory;
+
+    public function lead()
+    {
+        return $this->belongsTo(Lead::class);
+    }
 }

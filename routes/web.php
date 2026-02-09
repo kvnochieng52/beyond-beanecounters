@@ -27,6 +27,7 @@ use App\Http\Controllers\TransBulkController;
 use App\Http\Controllers\BulkWaiverDiscountController;
 use App\Http\Controllers\BackgroundReportsController;
 use App\Http\Controllers\ReminderProcessController;
+use App\Http\Controllers\Examples\RmsSmsExampleController;
 
 Auth::routes();
 
@@ -197,6 +198,10 @@ Route::group(['middleware' => ['auth', 'user_is_active']], function () {
         // Admin Agent Performance Report
         Route::get('/admin-agent-performance', [ReportController::class, 'adminAgentPerformance'])->name('reports.admin-agent-performance');
         Route::match(['get', 'post'], '/admin-agent-performance/generate', [ReportController::class, 'generateAdminAgentPerformance'])->name('reports.admin-agent-performance.generate');
+
+        // Dispositions Report
+        Route::get('/dispositions', [ReportController::class, 'dispositionsReport'])->name('reports.dispositions');
+        Route::match(['get', 'post'], '/dispositions/generate', [ReportController::class, 'generateDispositionsReport'])->name('reports.dispositions.generate');
     });
 });
 
@@ -261,3 +266,6 @@ Route::post('/text/approve-decline', [TextController::class, 'approveDecline'])-
 
 Route::get('/activity/export', [ActivityController::class, 'exportActivities'])->name('activity.export');
 Route::get('/activity/export-direct', [ActivityController::class, 'exportActivitiesDirect'])->name('activity.export.direct');
+
+// RMS SMS Test Route
+Route::get('/test-sms', [RmsSmsExampleController::class, 'testSms'])->name('test.sms');

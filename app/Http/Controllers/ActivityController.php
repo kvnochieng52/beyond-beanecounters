@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\SendSmsJob;
+use App\Facades\RmsSms;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Activity;
@@ -263,8 +264,9 @@ class ActivityController extends Controller
                     $lead = Lead::find($request['leadID']);
                     $institution = $lead->institution;
 
-                    // Check if institution has direct contract type (contract_type_id = 1)
+                    // Check client contract type
                     $isDirectContract = $institution && $institution->client_contract_type_id == 1;
+                    $isRmsClient = $institution && $institution->client_contract_type_id == 3;
 
                     $text = new Text();
                     $text->text_title = "ACTIVITY: " . $request['sms_template'];
@@ -272,7 +274,7 @@ class ActivityController extends Controller
                     $text->message = $request['description'];
                     $text->contacts_count = 1;
                     $text->recepient_contacts = $lead->telephone;
-                    $text->created_by = auth()->id(); // Assuming authentication is used
+                    $text->created_by = auth()->id();
                     $text->updated_by = auth()->id();
 
                     if ($request->has('setStartDate')) {
@@ -285,13 +287,16 @@ class ActivityController extends Controller
                         $text->scheduled = 0;
                     }
 
-                    // If institution has direct contract type, send SMS directly; otherwise, set to pending approval
-                    $text->status = $isDirectContract ? TextStatus::SENT : TextStatus::PENDING_APPROVAL;
+                    // Set status based on contract type
+                    $text->status = ($isDirectContract || $isRmsClient) ? TextStatus::SENT : TextStatus::PENDING_APPROVAL;
                     $text->save();
 
-                    // If direct contract, dispatch the SMS job immediately
+                    // Send SMS immediately if direct or RMS contract
                     if ($isDirectContract) {
                         SendSmsJob::dispatch($text);
+                    } elseif ($isRmsClient) {
+                        // Use RMS SMS gateway for RMS clients
+                        RmsSms::send($lead->telephone, $request['description']);
                     }
 
                     $activity->ref_text_id = $text->id;
@@ -400,14 +405,17 @@ class ActivityController extends Controller
                 $leadDetails->updated_at = Carbon::now();
                 $leadDetails->save();
 
-                // Send automatic SMS for Call Disposition ID 6 (Ringing No Response) - only for direct contract institutions
+                // Send automatic SMS for Call Disposition ID 6 (Ringing No Response) - for direct or RMS contract institutions
                 if ($request['call_disposition'] == 6) {
                     $lead = Lead::select('leads.*', 'institutions.institution_name', 'institutions.how_to_pay_instructions', 'institutions.client_contract_type_id')
                         ->join('institutions', 'leads.institution_id', '=', 'institutions.id')
                         ->where('leads.id', $request['leadID'])
                         ->first();
 
-                    if ($lead && $lead->client_contract_type_id == 1) {
+                    $isDirectContract = $lead && $lead->client_contract_type_id == 1;
+                    $isRmsClient = $lead && $lead->client_contract_type_id == 3;
+
+                    if ($lead && ($isDirectContract || $isRmsClient)) {
                         // Build the message using the template
                         $messageTemplate = "{name}, we have tried calling you without success. Kindly but urgently get in touch with us to discuss your debt with {institution_name} of KES {amount}. The debt ought to be settled to avoid additional penalties and other charges. Pay through {paybill_no}, account number {account_number}. Notify us on 0701967176.";
 
@@ -417,7 +425,7 @@ class ActivityController extends Controller
                             $messageTemplate
                         );
 
-                        // Create Text record - only for direct contract institutions
+                        // Create Text record
                         $text = new Text();
                         $text->text_title = "AUTOMATIC: Ringing No Response";
                         $text->contact_type = 'manual';
@@ -452,8 +460,13 @@ class ActivityController extends Controller
                         $smsActivity->updated_by = Auth::user()->id;
                         $smsActivity->save();
 
-                        // Dispatch the SMS job immediately
-                        SendSmsJob::dispatch($text);
+                        // Send SMS via appropriate gateway
+                        if ($isDirectContract) {
+                            SendSmsJob::dispatch($text);
+                        } elseif ($isRmsClient) {
+                            // Use RMS SMS gateway for RMS clients
+                            RmsSms::send($lead->telephone, $message);
+                        }
                     }
                 }
 

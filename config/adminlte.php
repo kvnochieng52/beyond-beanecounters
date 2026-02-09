@@ -566,6 +566,13 @@ return [
                     'icon' => 'fas fa-fw fa-handshake',
                     'can' => ['is_admin'],
                 ],
+
+                [
+                    'text' => 'Dispositions Report',
+                    'url' => '/reports/dispositions',
+                    'icon' => 'fas fa-fw fa-phone-alt',
+                    'can' => ['is_admin'],
+                ],
             ]
         ],
 

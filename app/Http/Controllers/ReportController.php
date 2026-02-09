@@ -7,6 +7,7 @@ use App\Exports\AgentLeadsExport;
 use App\Exports\AgentPerformanceExport;
 use App\Exports\CollectionProgressExport;
 use App\Exports\CollectionRateExport;
+use App\Exports\DispositionsReportExport;
 use App\Exports\OutstandingDebtExport;
 use App\Exports\LeadsReportExport;
 use App\Jobs\ProcessLeadsReport;
@@ -1182,5 +1183,95 @@ class ReportController extends Controller
         }
 
         return view('reports.admin_agent_performance_result', compact('data'));
+    }
+
+    public function dispositionsReport()
+    {
+        $institutions = Institution::where('is_active', 1)->get();
+        $users = User::where('is_active', 1)->get();
+        return view('reports.dispositions', compact('institutions', 'users'));
+    }
+
+    public function generateDispositionsReport(Request $request)
+    {
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'agent_id' => 'nullable|exists:users,id',
+            'institution_id' => 'nullable|exists:institutions,id',
+        ]);
+
+        $dateStart = Carbon::parse($request->start_date)->startOfDay();
+        $dateEnd = Carbon::parse($request->end_date)->endOfDay();
+
+        // Get all dispositions
+        $dispositions = DB::table('call_dispositions')
+            ->where('is_active', 1)
+            ->orderBy('id')
+            ->get();
+
+        // Get all institutions
+        $institutions = Institution::where('is_active', 1)
+            ->orderBy('institution_name')
+            ->get();
+
+        // Build the report data as a pivot table
+        $reportData = [];
+
+        foreach ($dispositions as $disposition) {
+            $row = [
+                'disposition_id' => $disposition->id,
+                'disposition_name' => $disposition->call_disposition_name,
+                'total' => 0
+            ];
+
+            foreach ($institutions as $institution) {
+                $query = Lead::where('call_disposition_id', $disposition->id)
+                    ->where('institution_id', $institution->id)
+                    ->whereBetween('updated_at', [$dateStart, $dateEnd]);
+
+                // Apply optional filters
+                if ($request->filled('agent_id')) {
+                    // Filter by assigned agent or agent who created the lead
+                    $query->where(function($q) use ($request) {
+                        $q->where('assigned_agent', $request->agent_id)
+                          ->orWhere('created_by', $request->agent_id);
+                    });
+                }
+
+                if ($request->filled('institution_id')) {
+                    $query->where('institution_id', $request->institution_id);
+                }
+
+                $count = $query->count();
+                $row[$institution->id] = $count;
+                $row['total'] += $count;
+            }
+
+            $reportData[] = $row;
+        }
+
+        $data = [
+            'start_date' => $dateStart->format('Y-m-d'),
+            'end_date' => $dateEnd->format('Y-m-d'),
+            'dispositions' => $dispositions,
+            'institutions' => $institutions,
+            'report_data' => $reportData,
+            'filters' => [
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'agent_id' => $request->agent_id,
+                'institution_id' => $request->institution_id,
+            ]
+        ];
+
+        if ($request->has('export') && $request->export == 'excel') {
+            return Excel::download(
+                new DispositionsReportExport($data),
+                'dispositions_report_' . $dateStart->format('Y-m-d') . '_to_' . $dateEnd->format('Y-m-d') . '.xlsx'
+            );
+        }
+
+        return view('reports.dispositions_result', compact('data'));
     }
 }
