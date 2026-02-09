@@ -11,6 +11,22 @@ use Yajra\DataTables\Facades\DataTables;
 
 class MtbController extends Controller
 {
+    public function getAgents(Request $request)
+    {
+        $agents = \App\Models\User::where('is_active', 1)
+            ->select('id', 'name', 'agent_code')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($agent) {
+                return [
+                    'id' => $agent->id,
+                    'text' => $agent->name . ' (' . ($agent->agent_code ?? '-') . ')'
+                ];
+            });
+
+        return response()->json(['results' => $agents]);
+    }
+
     public function getMtbs(Request $request)
     {
         if ($request->ajax()) {
@@ -46,6 +62,7 @@ class MtbController extends Controller
             'date_paid' => 'required|date',
             'payment_channel' => 'required|in:Mpesa,CASH,CHEQUE',
             'description' => 'nullable|string',
+            'agent_id' => 'nullable|exists:users,id',
             'attachments.*' => 'nullable|file|max:5120' // Max 5MB per file
         ]);
 
@@ -55,8 +72,11 @@ class MtbController extends Controller
         $mtb->date_paid = $request->date_paid;
         $mtb->payment_channel = $request->payment_channel;
         $mtb->description = $request->description;
-        $mtb->created_by = Auth::user()->id;
-        $mtb->updated_by = Auth::user()->id;
+
+        // Use selected agent if provided, otherwise use current user
+        $createdBy = $request->filled('agent_id') ? $request->agent_id : Auth::user()->id;
+        $mtb->created_by = $createdBy;
+        $mtb->updated_by = $createdBy;
         $mtb->save();
 
         // Handle file attachments

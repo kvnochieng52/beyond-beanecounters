@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth', 'user_is_active']], function () {
 
     // MTB Routes
     Route::get('/mtb/data', [\App\Http\Controllers\MtbController::class, 'getMtbs'])->name('mtb.data');
+    Route::get('/mtb/agents', [\App\Http\Controllers\MtbController::class, 'getAgents'])->name('mtb.get-agents');
     Route::post('/mtb/store', [\App\Http\Controllers\MtbController::class, 'store'])->name('mtb.store');
     Route::get('/mtb/{id}/edit', [\App\Http\Controllers\MtbController::class, 'edit'])->name('mtb.edit');
     Route::put('/mtb/update', [\App\Http\Controllers\MtbController::class, 'update'])->name('mtb.update');

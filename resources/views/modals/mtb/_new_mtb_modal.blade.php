@@ -42,6 +42,17 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_id">Agent (Optional - Post on behalf of another)</label>
+                                <select class="form-control select2-agent" name="agent_id" id="agent_id"
+                                    style="width: 100%;">
+                                    <option value="">Select Agent (or leave blank for current user)</option>
+                                </select>
+                                <small class="text-muted d-block mt-1">Can post on behalf of another agent</small>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -76,3 +87,48 @@
         </div>
     </div>
 </div>
+
+<script>
+    function initializeAgentSelect() {
+        if (typeof $ === 'undefined') {
+            setTimeout(initializeAgentSelect, 100);
+            return;
+        }
+        
+        $(document).ready(function() {
+            // Load agents when page loads
+            loadAgents();
+            
+            function loadAgents() {
+                $.ajax({
+                    url: '{{ route('mtb.get-agents') }}',
+                    dataType: 'json',
+                    data: { q: '' },
+                    success: function(data) {
+                        var $select = $('.select2-agent');
+                        $select.empty();
+                        $select.append($('<option></option>').val('').text('Select Agent (or leave blank for current user)'));
+                        $.each(data.results, function(i, item) {
+                            $select.append($('<option></option>').val(item.id).text(item.text));
+                        });
+                        
+                        // Initialize Select2 after populating options
+                        $select.select2({
+                            placeholder: 'Select Agent (or leave blank for current user)',
+                            allowClear: true,
+                            width: '100%',
+                            dropdownParent: $('#new_mtb_modal')
+                        });
+                    }
+                });
+            }
+        });
+    }
+    
+    // Initialize when jQuery is available
+    if (typeof jQuery !== 'undefined') {
+        initializeAgentSelect();
+    } else {
+        document.addEventListener('DOMContentLoaded', initializeAgentSelect);
+    }
+</script>

@@ -214,20 +214,17 @@ class SendAgentWeeklyReport extends Command
                 'mtd_collected' => $mtdCollected,
             ];
 
-            // Add collections by institution (MTD - Month To Date from 1st of month to end of week)
-            $monthStart = $endDate->copy()->startOfMonth()->startOfDay();
-
+            // Add collections by institution (for that week only, matching MTD Collected period)
             foreach ($institutions as $instId => $instName) {
-                // Get MTD from MTB table by this agent for this institution
-                // MTD = from 1st of month to the end date of the week being reported
-                $institutionMTD = DB::table('mtbs')
+                // Get MTD collected for this agent for this institution for that week
+                $institutionCollection = DB::table('mtbs')
                     ->join('leads', 'mtbs.lead_id', '=', 'leads.id')
                     ->where('mtbs.created_by', $agentId)
                     ->where('leads.institution_id', $instId)
-                    ->whereBetween('mtbs.created_at', [$monthStart, $endDate])
+                    ->whereBetween('mtbs.created_at', [$startDate, $endDate])
                     ->sum('mtbs.amount_paid');
 
-                $row['inst_' . $instId] = $institutionMTD ?? 0;
+                $row['inst_' . $instId] = $institutionCollection ?? 0;
             }
 
             $agentData[] = $row;
