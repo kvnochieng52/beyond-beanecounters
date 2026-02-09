@@ -9,7 +9,8 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Report for {{ \Carbon\Carbon::parse($data['start_date'])->format('M d, Y') }} to {{ \Carbon\Carbon::parse($data['end_date'])->format('M d, Y') }}</h3>
+            <h3 class="card-title">Report for {{ \Carbon\Carbon::parse($data['start_date'])->format('M d, Y') }} to
+                {{ \Carbon\Carbon::parse($data['end_date'])->format('M d, Y') }}</h3>
             <div class="card-tools">
                 <a href="{{ route('reports.dispositions') }}" class="btn btn-sm btn-primary">
                     <i class="fas fa-arrow-left"></i> Back to Filter
@@ -18,10 +19,10 @@
                     @csrf
                     <input type="hidden" name="start_date" value="{{ $data['start_date'] }}">
                     <input type="hidden" name="end_date" value="{{ $data['end_date'] }}">
-                    @if($data['filters']['agent_id'])
+                    @if ($data['filters']['agent_id'])
                         <input type="hidden" name="agent_id" value="{{ $data['filters']['agent_id'] }}">
                     @endif
-                    @if($data['filters']['institution_id'])
+                    @if ($data['filters']['institution_id'])
                         <input type="hidden" name="institution_id" value="{{ $data['filters']['institution_id'] }}">
                     @endif
                     <input type="hidden" name="export" value="excel">
@@ -32,19 +33,19 @@
             </div>
         </div>
         <div class="card-body">
-            @if($data['filters']['agent_id'])
+            @if ($data['filters']['agent_id'])
                 <div class="alert alert-info">
-                    <strong>Filter Applied:</strong> Agent: 
+                    <strong>Filter Applied:</strong> Agent:
                     @php
                         $agent = \App\Models\User::find($data['filters']['agent_id']);
                         echo $agent ? $agent->name . ' (' . $agent->agent_code . ')' : 'Unknown';
                     @endphp
                 </div>
             @endif
-            
-            @if($data['filters']['institution_id'])
+
+            @if ($data['filters']['institution_id'])
                 <div class="alert alert-info">
-                    <strong>Filter Applied:</strong> Institution: 
+                    <strong>Filter Applied:</strong> Institution:
                     @php
                         $institution = \App\Models\Institution::find($data['filters']['institution_id']);
                         echo $institution ? $institution->institution_name : 'Unknown';
@@ -59,7 +60,7 @@
                             <th class="text-center" style="width: 250px;">
                                 <strong>Disposition</strong>
                             </th>
-                            @foreach($data['institutions'] as $institution)
+                            @foreach ($data['institutions'] as $institution)
                                 <th class="text-center">
                                     <small>{{ $institution->institution_name }}</small>
                                 </th>
@@ -75,7 +76,7 @@
                                 <td>
                                     <strong>{{ $row['disposition_name'] }}</strong>
                                 </td>
-                                @foreach($data['institutions'] as $institution)
+                                @foreach ($data['institutions'] as $institution)
                                     <td class="text-center">
                                         @php
                                             $count = $row[$institution->id] ?? 0;
@@ -101,10 +102,12 @@
                             <th class="text-center">
                                 <strong>Total Leads</strong>
                             </th>
-                            @foreach($data['institutions'] as $institution)
+                            @foreach ($data['institutions'] as $institution)
                                 <th class="text-center">
                                     @php
-                                        $institutionTotal = collect($data['report_data'])->sum(function($row) use ($institution) {
+                                        $institutionTotal = collect($data['report_data'])->sum(function ($row) use (
+                                            $institution,
+                                        ) {
                                             return $row[$institution->id] ?? 0;
                                         });
                                     @endphp

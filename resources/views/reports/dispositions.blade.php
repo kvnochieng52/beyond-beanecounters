@@ -18,7 +18,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="start_date">Start Date <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control @error('start_date') is-invalid @enderror" id="start_date" name="start_date" value="{{ old('start_date', date('Y-m-01')) }}" required>
+                            <input type="date" class="form-control @error('start_date') is-invalid @enderror"
+                                id="start_date" name="start_date" value="{{ old('start_date', date('Y-m-01')) }}" required>
                             @error('start_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -29,7 +30,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="end_date">End Date <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control @error('end_date') is-invalid @enderror" id="end_date" name="end_date" value="{{ old('end_date', date('Y-m-d')) }}" required>
+                            <input type="date" class="form-control @error('end_date') is-invalid @enderror"
+                                id="end_date" name="end_date" value="{{ old('end_date', date('Y-m-d')) }}" required>
                             @error('end_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -43,10 +45,12 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="agent_id">Agent (Optional)</label>
-                            <select class="form-control @error('agent_id') is-invalid @enderror" id="agent_id" name="agent_id">
+                            <select class="form-control @error('agent_id') is-invalid @enderror" id="agent_id"
+                                name="agent_id">
                                 <option value="">All Agents</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}" {{ old('agent_id') == $user->id ? 'selected' : '' }}>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}"
+                                        {{ old('agent_id') == $user->id ? 'selected' : '' }}>
                                         {{ $user->name }} ({{ $user->agent_code }})
                                     </option>
                                 @endforeach
@@ -61,10 +65,12 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="institution_id">Institution (Optional)</label>
-                            <select class="form-control @error('institution_id') is-invalid @enderror" id="institution_id" name="institution_id">
+                            <select class="form-control @error('institution_id') is-invalid @enderror" id="institution_id"
+                                name="institution_id">
                                 <option value="">All Institutions</option>
-                                @foreach($institutions as $institution)
-                                    <option value="{{ $institution->id }}" {{ old('institution_id') == $institution->id ? 'selected' : '' }}>
+                                @foreach ($institutions as $institution)
+                                    <option value="{{ $institution->id }}"
+                                        {{ old('institution_id') == $institution->id ? 'selected' : '' }}>
                                         {{ $institution->institution_name }}
                                     </option>
                                 @endforeach

@@ -1234,9 +1234,9 @@ class ReportController extends Controller
                 // Apply optional filters
                 if ($request->filled('agent_id')) {
                     // Filter by assigned agent or agent who created the lead
-                    $query->where(function($q) use ($request) {
+                    $query->where(function ($q) use ($request) {
                         $q->where('assigned_agent', $request->agent_id)
-                          ->orWhere('created_by', $request->agent_id);
+                            ->orWhere('created_by', $request->agent_id);
                     });
                 }
 

@@ -206,19 +206,22 @@ class SendAgentPerformanceReport extends Command
                 'mtd_collected' => $mtdCollected,
             ];
 
-            // Add collections by institution
+            // Add collections by institution (MTD - Month To Date)
+            $monthStart = Carbon::createFromFormat('Y-m-d', $date)->startOfMonth()->startOfDay();
+            $monthEnd = Carbon::createFromFormat('Y-m-d', $date)->endOfDay();
+
             foreach ($institutions as $instId => $instName) {
-                // Get transaction total amount by this agent for this institution
-                // Join transactions with leads to get institution_id
-                $institutionCollection = DB::table('transactions')
+                // Get MTD transaction total by this agent for this institution
+                // Uses month-to-date range (1st of month to today)
+                $institutionMTDCollection = DB::table('transactions')
                     ->join('leads', 'transactions.lead_id', '=', 'leads.id')
                     ->where('transactions.created_by', $agentId)
                     ->where('leads.institution_id', $instId)
                     ->where('transactions.transaction_type', 2) // PAYMENT
-                    ->whereBetween('transactions.created_at', [$startOfDay, $endOfDay])
+                    ->whereBetween('transactions.created_at', [$monthStart, $monthEnd])
                     ->sum('transactions.amount') ?? 0;
 
-                $row['inst_' . $instId] = $institutionCollection;
+                $row['inst_' . $instId] = $institutionMTDCollection;
             }
 
             $agentData[] = $row;

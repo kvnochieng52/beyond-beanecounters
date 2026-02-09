@@ -52,7 +52,7 @@ class DispositionsReportExport implements FromCollection, WithHeadings, WithTitl
         $rows[] = [];
         $totalRow = ['Total Leads'];
         foreach ($this->data['institutions'] as $institution) {
-            $institutionTotal = collect($this->data['report_data'])->sum(function($row) use ($institution) {
+            $institutionTotal = collect($this->data['report_data'])->sum(function ($row) use ($institution) {
                 return $row[$institution->id] ?? 0;
             });
             $totalRow[] = $institutionTotal;
