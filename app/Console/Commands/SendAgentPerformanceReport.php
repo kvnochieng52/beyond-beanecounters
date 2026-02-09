@@ -206,21 +206,21 @@ class SendAgentPerformanceReport extends Command
                 'mtd_collected' => $mtdCollected,
             ];
 
-            // Add collections by institution (MTD - Month To Date)
+            // Add collections by institution (MTD - Month To Date from 1st of month to this day)
             $monthStart = Carbon::createFromFormat('Y-m-d', $date)->startOfMonth()->startOfDay();
-            $monthEnd = Carbon::createFromFormat('Y-m-d', $date)->endOfDay();
+            $dayEnd = Carbon::createFromFormat('Y-m-d', $date)->endOfDay();
 
             foreach ($institutions as $instId => $instName) {
                 // Get MTD from MTB table by this agent for this institution
-                // Uses month-to-date range (1st of month to today)
-                $institutionMTDCollection = DB::table('mtbs')
+                // MTD = from 1st of month to the specific day being reported
+                $institutionMTD = DB::table('mtbs')
                     ->join('leads', 'mtbs.lead_id', '=', 'leads.id')
                     ->where('mtbs.created_by', $agentId)
                     ->where('leads.institution_id', $instId)
-                    ->whereBetween('mtbs.created_at', [$monthStart, $monthEnd])
-                    ->sum('mtbs.amount_paid') ?? 0;
+                    ->whereBetween('mtbs.created_at', [$monthStart, $dayEnd])
+                    ->sum('mtbs.amount_paid');
 
-                $row['inst_' . $instId] = $institutionMTDCollection;
+                $row['inst_' . $instId] = $institutionMTD ?? 0;
             }
 
             $agentData[] = $row;
