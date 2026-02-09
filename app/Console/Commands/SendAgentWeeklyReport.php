@@ -218,15 +218,14 @@ class SendAgentWeeklyReport extends Command
             $monthStart = $endDate->copy()->startOfMonth()->startOfDay();
 
             foreach ($institutions as $instId => $instName) {
-                // Get MTD transaction total by this agent for this institution
+                // Get MTD from MTB table by this agent for this institution
                 // Uses month-to-date range (1st of month to end of week being reported)
-                $institutionMTDCollection = DB::table('transactions')
-                    ->join('leads', 'transactions.lead_id', '=', 'leads.id')
-                    ->where('transactions.created_by', $agentId)
+                $institutionMTDCollection = DB::table('mtbs')
+                    ->join('leads', 'mtbs.lead_id', '=', 'leads.id')
+                    ->where('mtbs.created_by', $agentId)
                     ->where('leads.institution_id', $instId)
-                    ->where('transactions.transaction_type', 2) // PAYMENT
-                    ->whereBetween('transactions.created_at', [$monthStart, $endDate])
-                    ->sum('transactions.amount') ?? 0;
+                    ->whereBetween('mtbs.created_at', [$monthStart, $endDate])
+                    ->sum('mtbs.amount_paid') ?? 0;
 
                 $row['inst_' . $instId] = $institutionMTDCollection;
             }
