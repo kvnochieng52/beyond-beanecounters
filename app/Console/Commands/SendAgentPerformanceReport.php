@@ -30,11 +30,12 @@ class SendAgentPerformanceReport extends Command
                 return;
             }
 
-            // Get all active users
-            $activeUsers = User::where('is_active', 1)->get();
+            // Get recipient emails from .env
+            $recipientEmails = explode(',', env('REPORT_RECIPIENTS', ''));
+            $recipientEmails = array_map('trim', array_filter($recipientEmails));
 
-            if ($activeUsers->isEmpty()) {
-                $this->warn('No active users found to send report to.');
+            if (empty($recipientEmails)) {
+                $this->warn('No recipient emails found in REPORT_RECIPIENTS.');
                 return;
             }
 
@@ -90,11 +91,11 @@ class SendAgentPerformanceReport extends Command
                 }
             }
 
-            // Send report to each active user
-            foreach ($activeUsers as $user) {
+            // Send report to each recipient email
+            foreach ($recipientEmails as $email) {
                 try {
-                    Mail::send('emails.agent-performance-report', ['user' => $user, 'generatedAt' => now()], function ($message) use ($user, $filePath, $fileName) {
-                        $message->to($user->email)
+                    Mail::send('emails.agent-performance-report', ['generatedAt' => now()], function ($message) use ($email, $filePath, $fileName) {
+                        $message->to($email)
                             ->subject('Agent Performance Report - ' . now()->format('d M Y g:i A'));
 
                         // Attach Excel file
@@ -104,10 +105,10 @@ class SendAgentPerformanceReport extends Command
                         ]);
                     });
 
-                    $this->info("Report sent to: {$user->email}");
+                    $this->info("Report sent to: {$email}");
                 } catch (\Exception $e) {
-                    $this->error("Failed to send report to {$user->email}: " . $e->getMessage());
-                    \Log::error("Agent Performance Report sending failed for {$user->email}", ['error' => $e->getMessage()]);
+                    $this->error("Failed to send report to {$email}: " . $e->getMessage());
+                    \Log::error("Agent Performance Report sending failed for {$email}", ['error' => $e->getMessage()]);
                 }
             }
 
@@ -127,11 +128,13 @@ class SendAgentPerformanceReport extends Command
     {
         $startOfDay = Carbon::createFromFormat('Y-m-d', $date)->startOfDay();
         $endOfDay = Carbon::createFromFormat('Y-m-d', $date)->endOfDay();
+        $startOfMonth = Carbon::createFromFormat('Y-m-d', $date)->startOfMonth();
 
-        // Get all agents with call disposition on this day
+        // Get all agents with call disposition on this day (activity types 1-7 only)
         $agents = DB::table('users')
             ->join('activities', 'users.id', '=', 'activities.created_by')
             ->where('activities.act_call_disposition_id', '!=', null)
+            ->whereIn('activities.activity_type_id', [1, 2, 3, 4, 5, 6, 7])
             ->whereBetween('activities.created_at', [$startOfDay, $endOfDay])
             ->distinct()
             ->pluck('users.id');
@@ -162,10 +165,11 @@ class SendAgentPerformanceReport extends Command
             // Get agent code - handle null values
             $agentCode = $agent->agent_code ?? $agent->code ?? '-';
 
-            // Calls made - total call_dispositions
+            // Calls made - total call_dispositions (activity types 1-7 only)
             $callsMade = DB::table('activities')
                 ->where('created_by', $agentId)
                 ->where('act_call_disposition_id', '!=', null)
+                ->whereIn('activity_type_id', [1, 2, 3, 4, 5, 6, 7])
                 ->whereBetween('created_at', [$startOfDay, $endOfDay])
                 ->count();
 
@@ -183,17 +187,16 @@ class SendAgentPerformanceReport extends Command
                 ->whereBetween('created_at', [$startOfDay, $endOfDay])
                 ->sum('act_ptp_amount') ?? 0;
 
-            // Total Collected Today - from transactions created by agent
-            $totalCollected = DB::table('transactions')
+            // Total Collected Today - from mtbs table created by agent (using created_at timestamp)
+            $totalCollected = DB::table('mtbs')
                 ->where('created_by', $agentId)
-                ->where('transaction_type', 2) // PAYMENT
                 ->whereBetween('created_at', [$startOfDay, $endOfDay])
-                ->sum('amount') ?? 0;
+                ->sum('amount_paid') ?? 0;
 
-            // MTD Collected Today - from mtbs table created by agent (using created_at timestamp)
+            // MTD Collected - from start of month to today
             $mtdCollected = DB::table('mtbs')
                 ->where('created_by', $agentId)
-                ->whereBetween('created_at', [$startOfDay, $endOfDay])
+                ->whereBetween('created_at', [$startOfMonth, $endOfDay])
                 ->sum('amount_paid') ?? 0;
 
             $row = [

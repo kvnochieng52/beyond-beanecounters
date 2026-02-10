@@ -38,11 +38,12 @@ class SendAgentWeeklyReport extends Command
                 return;
             }
 
-            // Get all active users
-            $activeUsers = User::where('is_active', 1)->get();
+            // Get recipient emails from .env
+            $recipientEmails = explode(',', env('REPORT_RECIPIENTS', ''));
+            $recipientEmails = array_map('trim', array_filter($recipientEmails));
 
-            if ($activeUsers->isEmpty()) {
-                $this->warn('No active users found to send report to.');
+            if (empty($recipientEmails)) {
+                $this->warn('No recipient emails found in REPORT_RECIPIENTS.');
                 return;
             }
 
@@ -98,16 +99,15 @@ class SendAgentWeeklyReport extends Command
                 }
             }
 
-            // Send report to each active user
-            foreach ($activeUsers as $user) {
+            // Send report to each recipient email
+            foreach ($recipientEmails as $email) {
                 try {
                     Mail::send('emails.agent-weekly-report', [
-                        'user' => $user,
                         'generatedAt' => now(),
                         'startDate' => $startOfWeek->format('d M Y'),
                         'endDate' => $endOfDay->format('d M Y')
-                    ], function ($message) use ($user, $filePath, $fileName) {
-                        $message->to($user->email)
+                    ], function ($message) use ($email, $filePath, $fileName) {
+                        $message->to($email)
                             ->subject('Agent Weekly Report - Week of ' . now()->copy()->subDays(6)->format('d M Y'));
 
                         // Attach Excel file
@@ -117,10 +117,10 @@ class SendAgentWeeklyReport extends Command
                         ]);
                     });
 
-                    $this->info("Weekly report sent to: {$user->email}");
+                    $this->info("Weekly report sent to: {$email}");
                 } catch (\Exception $e) {
-                    $this->error("Failed to send report to {$user->email}: " . $e->getMessage());
-                    \Log::error("Agent Weekly Report sending failed for {$user->email}", ['error' => $e->getMessage()]);
+                    $this->error("Failed to send report to {$email}: " . $e->getMessage());
+                    \Log::error("Agent Weekly Report sending failed for {$email}", ['error' => $e->getMessage()]);
                 }
             }
 
@@ -138,10 +138,11 @@ class SendAgentWeeklyReport extends Command
 
     private function generateWeeklyReportData($startDate, $endDate)
     {
-        // Get all agents with call disposition within the week
+        // Get all agents with call disposition within the week (activity types 1-7 only)
         $agents = DB::table('users')
             ->join('activities', 'users.id', '=', 'activities.created_by')
             ->where('activities.act_call_disposition_id', '!=', null)
+            ->whereIn('activities.activity_type_id', [1, 2, 3, 4, 5, 6, 7])
             ->whereBetween('activities.created_at', [$startDate, $endDate])
             ->distinct()
             ->pluck('users.id');
@@ -170,10 +171,11 @@ class SendAgentWeeklyReport extends Command
             // Get agent code - handle null values
             $agentCode = $agent->agent_code ?? $agent->code ?? '-';
 
-            // Calls made - total call_dispositions for the week
+            // Calls made - total call_dispositions for the week (activity types 1-7 only)
             $callsMade = DB::table('activities')
                 ->where('created_by', $agentId)
                 ->where('act_call_disposition_id', '!=', null)
+                ->whereIn('activity_type_id', [1, 2, 3, 4, 5, 6, 7])
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->count();
 
