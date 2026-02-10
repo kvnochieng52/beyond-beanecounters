@@ -102,7 +102,11 @@ class SendAgentWeeklyReport extends Command
             // Send report to each recipient email
             foreach ($recipientEmails as $email) {
                 try {
+                    // Create a generic user object for the template
+                    $user = (object) ['name' => 'Team Member'];
+                    
                     Mail::send('emails.agent-weekly-report', [
+                        'user' => $user,
                         'generatedAt' => now(),
                         'startDate' => $startOfWeek->format('d M Y'),
                         'endDate' => $endOfDay->format('d M Y')
