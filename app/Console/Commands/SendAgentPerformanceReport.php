@@ -97,7 +97,7 @@ class SendAgentPerformanceReport extends Command
                     // Create a generic user object for the template
                     $user = (object) ['name' => 'Team Member'];
                     
-                    Mail::send('emails.agent-performance-report', ['user' => $user, 'generatedAt' => now()], function ($message) use ($email) {
+                    Mail::send('emails.agent-performance-report', ['user' => $user, 'generatedAt' => now()], function ($message) use ($email, $filePath, $fileName) {
                         $message->to($email)
                             ->subject('Agent Performance Report - ' . now()->format('d M Y g:i A'));
 
