@@ -159,9 +159,11 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
             ],
         ];
 
-        // Add totals row styling (last row)
+        // Add totals row styling (last row) - extend to all columns
         $lastRow = $sheet->getHighestRow();
-        $styles['A' . $lastRow . ':Z' . $lastRow] = [
+        $lastCol = $sheet->getHighestColumn();
+
+        $styles['A' . $lastRow . ':' . $lastCol . $lastRow] = [
             'font' => [
                 'bold' => true,
                 'size' => 11,
