@@ -1296,9 +1296,9 @@ class ReportController extends Controller
         $dateEnd = Carbon::createFromFormat('m/d/Y', $request->end_date)->endOfDay();
 
         // If agent is specified, filter by agent
-        $agentId = $request->agent_id;
+        $selectedAgentId = $request->agent_id;
 
-        $data = $this->generateWeeklyReportData($dateStart, $dateEnd, $agentId);
+        $data = $this->generateWeeklyReportData($dateStart, $dateEnd, $selectedAgentId);
 
         if ($request->has('export') && $request->export == 'excel') {
             return Excel::download(
@@ -1310,7 +1310,7 @@ class ReportController extends Controller
         return view('reports.weekly_agent_performance_result', compact('data'));
     }
 
-    private function generateWeeklyReportData($startDate, $endDate, $agentId = null)
+    private function generateWeeklyReportData($startDate, $endDate, $selectedAgentId = null)
     {
         // Get all agents with call disposition within the period
         $agentsQuery = DB::table('users')
@@ -1320,8 +1320,8 @@ class ReportController extends Controller
             ->distinct();
 
         // If specific agent requested, filter by it
-        if ($agentId) {
-            $agentsQuery->where('users.id', $agentId);
+        if ($selectedAgentId) {
+            $agentsQuery->where('users.id', $selectedAgentId);
         }
 
         $agents = $agentsQuery->pluck('users.id');
@@ -1335,7 +1335,7 @@ class ReportController extends Controller
                 'filters' => [
                     'start_date' => $startDate->format('m/d/Y'),
                     'end_date' => $endDate->format('m/d/Y'),
-                    'agent_id' => $agentId
+                    'agent_id' => $selectedAgentId
                 ]
             ];
         }
@@ -1432,7 +1432,7 @@ class ReportController extends Controller
             'filters' => [
                 'start_date' => $startDate->format('m/d/Y'),
                 'end_date' => $endDate->format('m/d/Y'),
-                'agent_id' => $agentId
+                'agent_id' => $selectedAgentId
             ]
         ];
     }
