@@ -1368,7 +1368,7 @@ class ReportController extends Controller
                 ->count();
 
             $daysInPeriod = max(1, $startDate->diffInDays($endDate) + 1);
-            $averageDispositions = round($callsMade / $daysInPeriod, 2);
+            $averageDispositions = ceil($callsMade / $daysInPeriod);
 
             // Total Collected: MTD collected value for the current week to date from Monday
             $weeklyMtdCollected = DB::table('mtbs')

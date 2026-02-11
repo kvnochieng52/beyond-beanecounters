@@ -114,7 +114,7 @@
                                 <tfoot>
                                     <tr>
                                         <th colspan="2">TOTALS</th>
-                                        <th>{{ number_format($data['agents']->avg('average_dispositions'), 2) }}</th>
+                                        <th>{{ number_format($data['agents']->avg('average_dispositions'), 0) }}</th>
                                         <th>{{ number_format($data['agents']->sum('total_collected'), 2) }}</th>
                                         <th>{{ number_format($data['agents']->sum('mtd_collected'), 2) }}</th>
                                         @foreach ($data['institutions'] as $instId => $instName)
