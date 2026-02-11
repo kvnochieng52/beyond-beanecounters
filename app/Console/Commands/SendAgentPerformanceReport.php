@@ -171,7 +171,7 @@ class SendAgentPerformanceReport extends Command
             // Calls made - total call_dispositions (activity types 1-7 only)
             $callsMade = DB::table('activities')
                 ->where('created_by', $agentId)
-                ->where('act_call_disposition_id', '!=', null)
+                ->where('act_call_disposition_id', '>', 0)
                 //->whereIn('activity_type_id', [1, 2, 3, 4, 5, 6, 7])
                 ->whereBetween('created_at', [$startOfDay, $endOfDay])
                 ->count();
