@@ -98,16 +98,16 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
             $agent['agent_code'],
             $agent['average_dispositions'],
             $agent['ptp_count'],
-            $agent['ptp_value'], // Remove number_format for PTP Value
-            $agent['total_collected'], // Remove number_format for Total Collected  
-            $agent['mtd_collected'], // Remove number_format for MTD Collected
+            number_format($agent['ptp_value'], 2), // Match web view formatting
+            number_format($agent['total_collected'], 2), // Match web view formatting
+            number_format($agent['mtd_collected'], 2), // Match web view formatting
         ];
 
         // Add institution collections in the same order as headings
         if (!empty($this->data['institutions'])) {
             foreach ($this->data['institutions'] as $instId => $instName) {
                 $amount = $agent['inst_' . $instId] ?? 0;
-                $row[] = $amount; // Remove number_format for institution amounts
+                $row[] = number_format($amount, 2); // Match web view formatting
             }
         }
 
