@@ -104,7 +104,7 @@ class SendAgentWeeklyReport extends Command
                 try {
                     // Create a generic user object for the template
                     $user = (object) ['name' => 'Team Member'];
-                    
+
                     Mail::send('emails.agent-weekly-report', [
                         'user' => $user,
                         'generatedAt' => now(),

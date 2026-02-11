@@ -1227,21 +1227,19 @@ class ReportController extends Controller
             ];
 
             foreach ($institutions as $institution) {
-                $query = Lead::where('call_disposition_id', $disposition->id)
-                    ->where('institution_id', $institution->id)
-                    ->whereBetween('updated_at', [$dateStart, $dateEnd]);
+                $query = Activity::where('activities.act_call_disposition_id', $disposition->id)
+                    ->join('leads', 'activities.lead_id', '=', 'leads.id')
+                    ->where('leads.institution_id', $institution->id)
+                    ->whereBetween('activities.created_at', [$dateStart, $dateEnd]);
 
                 // Apply optional filters
                 if ($request->filled('agent_id')) {
-                    // Filter by assigned agent or agent who created the lead
-                    $query->where(function ($q) use ($request) {
-                        $q->where('assigned_agent', $request->agent_id)
-                            ->orWhere('created_by', $request->agent_id);
-                    });
+                    // Filter by agent who created the activity
+                    $query->where('activities.created_by', $request->agent_id);
                 }
 
                 if ($request->filled('institution_id')) {
-                    $query->where('institution_id', $request->institution_id);
+                    $query->where('leads.institution_id', $request->institution_id);
                 }
 
                 $count = $query->count();

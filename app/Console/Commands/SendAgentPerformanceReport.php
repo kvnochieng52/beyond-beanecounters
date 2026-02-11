@@ -96,7 +96,7 @@ class SendAgentPerformanceReport extends Command
                 try {
                     // Create a generic user object for the template
                     $user = (object) ['name' => 'Team Member'];
-                    
+
                     Mail::send('emails.agent-performance-report', ['user' => $user, 'generatedAt' => now()], function ($message) use ($email, $filePath, $fileName) {
                         $message->to($email)
                             ->subject('Agent Performance Report - ' . now()->format('d M Y g:i A'));
@@ -172,7 +172,7 @@ class SendAgentPerformanceReport extends Command
             $callsMade = DB::table('activities')
                 ->where('created_by', $agentId)
                 ->where('act_call_disposition_id', '!=', null)
-                ->whereIn('activity_type_id', [1, 2, 3, 4, 5, 6, 7])
+                //->whereIn('activity_type_id', [1, 2, 3, 4, 5, 6, 7])
                 ->whereBetween('created_at', [$startOfDay, $endOfDay])
                 ->count();
 
