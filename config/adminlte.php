@@ -573,6 +573,13 @@ return [
                     'icon' => 'fas fa-fw fa-phone-alt',
                     'can' => ['is_admin'],
                 ],
+
+                [
+                    'text' => 'Weekly Agent Performance',
+                    'url' => '/reports/weekly-agent-performance',
+                    'icon' => 'fas fa-fw fa-chart-line',
+                    'can' => ['is_admin', 'is_supervisor'],
+                ],
             ]
         ],
 

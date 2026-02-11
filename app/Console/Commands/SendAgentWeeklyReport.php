@@ -17,6 +17,13 @@ class SendAgentWeeklyReport extends Command
 
     public function handle()
     {
+        $this->info('Weekly Agent Performance Report email has been disabled.');
+        $this->info('Users can now access this report via the menu: Reports > Weekly Agent Performance');
+        return;
+
+        // DISABLED: Email functionality moved to menu-based report
+        // Users can now access this report via: Reports > Weekly Agent Performance
+        /*
         $this->info('Generating Agent Weekly Report...');
 
         try {
@@ -138,6 +145,7 @@ class SendAgentWeeklyReport extends Command
             $this->error('Error generating Agent Weekly Report: ' . $e->getMessage());
             \Log::error('Agent Weekly Report Error', ['error' => $e->getMessage()]);
         }
+        */
     }
 
     private function generateWeeklyReportData($startDate, $endDate)
@@ -145,8 +153,8 @@ class SendAgentWeeklyReport extends Command
         // Get all agents with call disposition within the week (activity types 1-7 only)
         $agents = DB::table('users')
             ->join('activities', 'users.id', '=', 'activities.created_by')
-            ->where('activities.act_call_disposition_id', '!=', null)
-            ->whereIn('activities.activity_type_id', [1, 2, 3, 4, 5, 6, 7])
+            ->where('activities.act_call_disposition_id', '>', 0)
+            //->whereIn('activities.activity_type_id', [1, 2, 3, 4, 5, 6, 7])
             ->whereBetween('activities.created_at', [$startDate, $endDate])
             ->distinct()
             ->pluck('users.id');
@@ -178,8 +186,8 @@ class SendAgentWeeklyReport extends Command
             // Calls made - total call_dispositions for the week (activity types 1-7 only)
             $callsMade = DB::table('activities')
                 ->where('created_by', $agentId)
-                ->where('act_call_disposition_id', '!=', null)
-                ->whereIn('activity_type_id', [1, 2, 3, 4, 5, 6, 7])
+                ->where('act_call_disposition_id', '>', 0)
+                //->whereIn('activity_type_id', [1, 2, 3, 4, 5, 6, 7])
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->count();
 

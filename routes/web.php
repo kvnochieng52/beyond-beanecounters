@@ -203,6 +203,10 @@ Route::group(['middleware' => ['auth', 'user_is_active']], function () {
         // Dispositions Report
         Route::get('/dispositions', [ReportController::class, 'dispositionsReport'])->name('reports.dispositions');
         Route::match(['get', 'post'], '/dispositions/generate', [ReportController::class, 'generateDispositionsReport'])->name('reports.dispositions.generate');
+
+        // Weekly Agent Performance Report
+        Route::get('/weekly-agent-performance', [ReportController::class, 'weeklyAgentPerformance'])->name('reports.weekly-agent-performance');
+        Route::match(['get', 'post'], '/weekly-agent-performance/generate', [ReportController::class, 'generateWeeklyAgentPerformance'])->name('reports.weekly-agent-performance.generate');
     });
 });
 

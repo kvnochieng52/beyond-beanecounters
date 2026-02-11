@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\AdminAgentPerformanceExport;
 use App\Exports\AgentLeadsExport;
 use App\Exports\AgentPerformanceExport;
+use App\Exports\AgentWeeklyReportExport;
 use App\Exports\CollectionProgressExport;
 use App\Exports\CollectionRateExport;
 use App\Exports\DispositionsReportExport;
@@ -1272,5 +1273,151 @@ class ReportController extends Controller
         }
 
         return view('reports.dispositions_result', compact('data'));
+    }
+
+    public function weeklyAgentPerformance()
+    {
+        $institutions = Institution::where('is_active', 1)->get();
+        $agents = User::where('is_active', 1)->whereHas('roles', function ($query) {
+            $query->whereIn('name', ['agent', 'supervisor']);
+        })->get();
+
+        return view('reports.weekly_agent_performance', compact('institutions', 'agents'));
+    }
+
+    public function generateWeeklyAgentPerformance(Request $request)
+    {
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        $dateStart = Carbon::createFromFormat('m/d/Y', $request->start_date)->startOfDay();
+        $dateEnd = Carbon::createFromFormat('m/d/Y', $request->end_date)->endOfDay();
+
+        // If agent is specified, filter by agent
+        $agentId = $request->agent_id;
+
+        $data = $this->generateWeeklyReportData($dateStart, $dateEnd, $agentId);
+
+        if ($request->has('export') && $request->export == 'excel') {
+            return Excel::download(
+                new AgentWeeklyReportExport($data),
+                'weekly_agent_performance_' . $dateStart->format('Y-m-d') . '_to_' . $dateEnd->format('Y-m-d') . '.xlsx'
+            );
+        }
+
+        return view('reports.weekly_agent_performance_result', compact('data'));
+    }
+
+    private function generateWeeklyReportData($startDate, $endDate, $agentId = null)
+    {
+        // Get all agents with call disposition within the period
+        $agentsQuery = DB::table('users')
+            ->join('activities', 'users.id', '=', 'activities.created_by')
+            ->where('activities.act_call_disposition_id', '>', 0)
+            ->whereBetween('activities.created_at', [$startDate, $endDate])
+            ->distinct();
+
+        // If specific agent requested, filter by it
+        if ($agentId) {
+            $agentsQuery->where('users.id', $agentId);
+        }
+
+        $agents = $agentsQuery->pluck('users.id');
+
+        if ($agents->isEmpty()) {
+            return [
+                'agents' => collect(),
+                'institutions' => collect(),
+                'period' => $startDate->format('d M Y') . ' - ' . $endDate->format('d M Y'),
+                'mtd_start' => Carbon::now()->startOfMonth()->format('d M Y'),
+                'filters' => [
+                    'start_date' => $startDate->format('m/d/Y'),
+                    'end_date' => $endDate->format('m/d/Y'),
+                    'agent_id' => $agentId
+                ]
+            ];
+        }
+
+        // Get all institutions (active institutions only)
+        $institutions = DB::table('institutions')
+            ->where('is_active', 1)
+            ->orderBy('institution_name')
+            ->pluck('institution_name', 'id')
+            ->toArray();
+
+        // Get current month start for MTD calculations
+        $currentMonthStart = Carbon::now()->startOfMonth();
+        $currentMonthEnd = Carbon::now()->endOfDay();
+
+        // Build agent data
+        $agentData = [];
+
+        foreach ($agents as $agentId) {
+            $agent = DB::table('users')->find($agentId);
+
+            // Get agent code - handle null values
+            $agentCode = $agent->agent_code ?? $agent->code ?? '-';
+
+            // Average Dispositions for the week (calls made / number of days in period)
+            $callsMade = DB::table('activities')
+                ->where('created_by', $agentId)
+                ->where('act_call_disposition_id', '>', 0)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->count();
+
+            $daysInPeriod = max(1, $startDate->diffInDays($endDate) + 1);
+            $averageDispositions = round($callsMade / $daysInPeriod, 2);
+
+            // Total Collected: MTD collected value for the current week to date from Monday
+            $weeklyMtdCollected = DB::table('mtbs')
+                ->where('created_by', $agentId)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->sum('amount_paid') ?? 0;
+
+            // MTD Collected: MTD collected value for current month to date from 1st
+            $mtdCollected = DB::table('mtbs')
+                ->where('created_by', $agentId)
+                ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
+                ->sum('amount_paid') ?? 0;
+
+            $row = [
+                'agent_name' => $agent->name ?? 'Unknown',
+                'agent_code' => $agentCode,
+                'average_dispositions' => $averageDispositions,
+                'total_collected' => $weeklyMtdCollected,
+                'mtd_collected' => $mtdCollected,
+            ];
+
+            // Add collections by institution for this week per institution
+            foreach ($institutions as $instId => $instName) {
+                $institutionCollection = DB::table('mtbs')
+                    ->where('mtbs.created_by', $agentId)
+                    ->whereBetween('mtbs.created_at', [$startDate, $endDate])
+                    ->whereIn('mtbs.lead_id', function ($query) use ($instId) {
+                        $query->select('id')
+                            ->from('leads')
+                            ->where('institution_id', $instId);
+                    })
+                    ->sum('mtbs.amount_paid');
+
+                $row['inst_' . $instId] = $institutionCollection ?? 0;
+            }
+
+            $agentData[] = $row;
+        }
+
+        return [
+            'agents' => collect($agentData),
+            'institutions' => $institutions,
+            'period' => $startDate->format('d M Y') . ' - ' . $endDate->format('d M Y'),
+            'mtd_start' => $currentMonthStart->format('d M Y'),
+            'filters' => [
+                'start_date' => $startDate->format('m/d/Y'),
+                'end_date' => $endDate->format('m/d/Y'),
+                'agent_id' => $agentId
+            ]
+        ];
     }
 }
