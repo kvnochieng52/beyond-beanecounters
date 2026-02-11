@@ -1298,7 +1298,11 @@ class ReportController extends Controller
         // If agent is specified, filter by agent
         $selectedAgentId = $request->agent_id;
 
+        // Generate data once and use for both browser and Excel
         $data = $this->generateWeeklyReportData($dateStart, $dateEnd, $selectedAgentId);
+
+        // Sort agents by name for consistent ordering
+        $data['agents'] = $data['agents']->sortBy('agent_name');
 
         if ($request->has('export') && $request->export == 'excel') {
             return Excel::download(
@@ -1317,7 +1321,8 @@ class ReportController extends Controller
             ->join('activities', 'users.id', '=', 'activities.created_by')
             ->where('activities.act_call_disposition_id', '>', 0)
             ->whereBetween('activities.created_at', [$startDate, $endDate])
-            ->distinct();
+            ->distinct()
+            ->orderBy('users.name'); // Add consistent ordering
 
         // If specific agent requested, filter by it
         if ($selectedAgentId) {

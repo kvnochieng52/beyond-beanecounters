@@ -23,9 +23,10 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
 
     public function collection()
     {
-        $agentsCollection = collect($this->data['agents']);
+        // Use the exact same agent collection from controller without modifications
+        $agentsCollection = $this->data['agents'];
 
-        // Calculate totals
+        // Calculate totals for the totals row only
         $totals = [
             'agent_name' => 'TOTALS',
             'agent_code' => '',
@@ -36,7 +37,7 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
             'mtd_collected' => 0,
         ];
 
-        // Sum all numeric columns
+        // Sum all numeric columns for totals
         foreach ($agentsCollection as $agent) {
             $totals['average_dispositions'] += $agent['average_dispositions'];
             $totals['ptp_count'] += $agent['ptp_count'];
@@ -50,7 +51,7 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
             $totals['average_dispositions'] = round($totals['average_dispositions'] / $agentsCollection->count());
         }
 
-        // Sum institution columns
+        // Sum institution columns for totals
         if (!empty($this->data['institutions'])) {
             foreach ($this->data['institutions'] as $instId => $instName) {
                 $totals['inst_' . $instId] = 0;
@@ -63,10 +64,8 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
         // Add the totals row with a marker
         $totals['is_total_row'] = true;
 
-        // Create a new collection with all agents plus totals
-        $exportCollection = $agentsCollection->values()->push($totals);
-
-        return $exportCollection;
+        // Return original collection plus totals - no modifications to original data
+        return $agentsCollection->push($totals);
     }
 
     public function headings(): array
