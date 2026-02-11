@@ -23,7 +23,7 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
 
     public function collection()
     {
-        $agentsCollection = $this->data['agents'];
+        $agentsCollection = collect($this->data['agents']);
 
         // Calculate totals
         $totals = [
@@ -62,9 +62,11 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
 
         // Add the totals row with a marker
         $totals['is_total_row'] = true;
-        $agentsCollection->push($totals);
 
-        return $agentsCollection;
+        // Create a new collection with all agents plus totals
+        $exportCollection = $agentsCollection->values()->push($totals);
+
+        return $exportCollection;
     }
 
     public function headings(): array
