@@ -1321,8 +1321,7 @@ class ReportController extends Controller
             ->join('activities', 'users.id', '=', 'activities.created_by')
             ->where('activities.act_call_disposition_id', '>', 0)
             ->whereBetween('activities.created_at', [$startDate, $endDate])
-            ->distinct()
-            ->orderBy('users.name'); // Add consistent ordering
+            ->distinct();
 
         // If specific agent requested, filter by it
         if ($selectedAgentId) {
