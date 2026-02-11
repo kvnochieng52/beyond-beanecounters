@@ -29,7 +29,7 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
         $totals = [
             'agent_name' => 'TOTALS',
             'agent_code' => '',
-            'calls_made' => 0,
+            'average_dispositions' => 0,
             'ptp_count' => 0,
             'ptp_value' => 0,
             'total_collected' => 0,
@@ -38,11 +38,16 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
 
         // Sum all numeric columns
         foreach ($agentsCollection as $agent) {
-            $totals['calls_made'] += $agent['calls_made'];
+            $totals['average_dispositions'] += $agent['average_dispositions'];
             $totals['ptp_count'] += $agent['ptp_count'];
             $totals['ptp_value'] += $agent['ptp_value'];
             $totals['total_collected'] += $agent['total_collected'];
             $totals['mtd_collected'] += $agent['mtd_collected'];
+        }
+
+        // Calculate average for dispositions instead of sum
+        if ($agentsCollection->count() > 0) {
+            $totals['average_dispositions'] = round($totals['average_dispositions'] / $agentsCollection->count());
         }
 
         // Sum institution columns
@@ -67,7 +72,7 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
         $headings = [
             'Agent Name',
             'Agent Code',
-            'Calls Made',
+            'Avg. Dispositions/Day',
             'PTP Count',
             'PTP Value (KSH)',
             'Total Collected (KSH)',
@@ -89,7 +94,7 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
         $row = [
             $agent['agent_name'],
             $agent['agent_code'],
-            $agent['calls_made'],
+            $agent['average_dispositions'],
             $agent['ptp_count'],
             number_format($agent['ptp_value'], 2),
             number_format($agent['total_collected'], 2),
@@ -191,7 +196,7 @@ class AgentWeeklyReportExport implements FromCollection, WithHeadings, WithMappi
         $widths = [
             'A' => 25,  // Agent Name
             'B' => 15,  // Agent Code
-            'C' => 12,  // Calls Made
+            'C' => 20,  // Avg. Dispositions/Day
             'D' => 12,  // PTP Count
             'E' => 18,  // PTP Value
             'F' => 18,  // Total Collected

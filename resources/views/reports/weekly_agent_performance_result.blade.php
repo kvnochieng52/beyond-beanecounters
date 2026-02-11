@@ -70,6 +70,31 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-info">
+                                    <i class="fas fa-handshake"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total PTPs</span>
+                                    <span class="info-box-number">{{ $data['agents']->sum('ptp_count') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-success">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total PTP Value</span>
+                                    <span
+                                        class="info-box-number">{{ number_format($data['agents']->sum('ptp_value'), 2) }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -90,6 +115,8 @@
                                         <th>Agent Name</th>
                                         <th>Agent Code</th>
                                         <th>Avg. Dispositions/Day</th>
+                                        <th>PTP Count</th>
+                                        <th>PTP Value</th>
                                         <th>Total Collected (Week)</th>
                                         <th>MTD Collected</th>
                                         @foreach ($data['institutions'] as $instId => $instName)
@@ -103,6 +130,8 @@
                                             <td>{{ $agent['agent_name'] }}</td>
                                             <td>{{ $agent['agent_code'] }}</td>
                                             <td>{{ $agent['average_dispositions'] }}</td>
+                                            <td>{{ $agent['ptp_count'] }}</td>
+                                            <td>{{ number_format($agent['ptp_value'], 2) }}</td>
                                             <td>{{ number_format($agent['total_collected'], 2) }}</td>
                                             <td>{{ number_format($agent['mtd_collected'], 2) }}</td>
                                             @foreach ($data['institutions'] as $instId => $instName)
@@ -115,6 +144,8 @@
                                     <tr>
                                         <th colspan="2">TOTALS</th>
                                         <th>{{ number_format($data['agents']->avg('average_dispositions'), 0) }}</th>
+                                        <th>{{ $data['agents']->sum('ptp_count') }}</th>
+                                        <th>{{ number_format($data['agents']->sum('ptp_value'), 2) }}</th>
                                         <th>{{ number_format($data['agents']->sum('total_collected'), 2) }}</th>
                                         <th>{{ number_format($data['agents']->sum('mtd_collected'), 2) }}</th>
                                         @foreach ($data['institutions'] as $instId => $instName)
@@ -160,16 +191,17 @@
                 "scrollX": true,
                 "pageLength": 25,
                 "order": [
-                    [3, "desc"]
+                    [5, "desc"]
                 ], // Order by Total Collected (Week) descending
                 "columnDefs": [{
-                        "targets": [2, 3, 4], // Average dispositions, total collected, MTD collected
+                        "targets": [2, 3, 4, 5,
+                        6], // Average dispositions, PTP count, PTP value, total collected, MTD collected
                         "className": "text-right"
                     },
                     @if (count($data['institutions']) > 0)
                         {
                             "targets": [
-                                {{ implode(',', range(5, 5 + count($data['institutions']) - 1)) }}
+                                {{ implode(',', range(7, 7 + count($data['institutions']) - 1)) }}
                             ], // Institution columns
                             "className": "text-right"
                         }

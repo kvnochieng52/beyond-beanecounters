@@ -1382,10 +1382,26 @@ class ReportController extends Controller
                 ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
                 ->sum('amount_paid') ?? 0;
 
+            // PTP Count - where disposition = 3 for the selected period
+            $ptpCount = DB::table('activities')
+                ->where('created_by', $agentId)
+                ->where('act_call_disposition_id', 3)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->count();
+
+            // PTP Value - sum of amounts where disposition = 3 for the selected period
+            $ptpValue = DB::table('activities')
+                ->where('created_by', $agentId)
+                ->where('act_call_disposition_id', 3)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->sum('act_ptp_amount') ?? 0;
+
             $row = [
                 'agent_name' => $agent->name ?? 'Unknown',
                 'agent_code' => $agentCode,
                 'average_dispositions' => $averageDispositions,
+                'ptp_count' => $ptpCount,
+                'ptp_value' => $ptpValue,
                 'total_collected' => $weeklyMtdCollected,
                 'mtd_collected' => $mtdCollected,
             ];
