@@ -1368,6 +1368,7 @@ class ReportController extends Controller
             $callsMade = DB::table('activities')
                 ->where('created_by', $agentId)
                 ->where('act_call_disposition_id', '>', 0)
+                ->where('activity_type_id', '!=', 8)
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->count();
 
