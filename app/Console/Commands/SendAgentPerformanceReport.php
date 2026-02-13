@@ -24,12 +24,6 @@ class SendAgentPerformanceReport extends Command
             $today = Carbon::now()->toDateString();
             $data = $this->generateReportData($today);
 
-            // If no agents, skip sending
-            if ($data['agents']->isEmpty()) {
-                $this->warn('No agents with activity found for today.');
-                return;
-            }
-
             // Get recipient emails from .env
             $recipientEmails = explode(',', env('REPORT_RECIPIENTS', ''));
             $recipientEmails = array_map('trim', array_filter($recipientEmails));
@@ -133,22 +127,12 @@ class SendAgentPerformanceReport extends Command
         $endOfDay = Carbon::createFromFormat('Y-m-d', $date)->endOfDay();
         $startOfMonth = Carbon::createFromFormat('Y-m-d', $date)->startOfMonth();
 
-        // Get all agents with call disposition on this day (activity types 1-7 only)
-        $agents = DB::table('users')
-            ->join('activities', 'users.id', '=', 'activities.created_by')
-            ->where('activities.act_call_disposition_id', '!=', null)
-            ->whereIn('activities.activity_type_id', [1, 2, 3, 4, 5, 6, 7])
-            ->whereBetween('activities.created_at', [$startOfDay, $endOfDay])
-            ->distinct()
-            ->pluck('users.id');
-
-        if ($agents->isEmpty()) {
-            return [
-                'agents' => collect(),
-                'institutions' => collect(),
-                'date' => $date
-            ];
-        }
+        // Get all active agents (show all agents even if they have zero leads worked)
+        $agents = User::where('is_active', 1)
+            ->whereHas('roles', function ($query) {
+                $query->whereIn('name', ['agent', 'supervisor']);
+            })
+            ->pluck('id');
 
         // Get all institutions (active institutions only)
         $institutions = DB::table('institutions')
@@ -168,13 +152,14 @@ class SendAgentPerformanceReport extends Command
             // Get agent code - handle null values
             $agentCode = $agent->agent_code ?? $agent->code ?? '-';
 
-            // Calls made - total call_dispositions (activity types 1-7 only)
+            // Calls made - count distinct leads worked (similar to admin agent performance report)
             $callsMade = DB::table('activities')
                 ->where('created_by', $agentId)
                 ->where('act_call_disposition_id', '>', 0)
                 //->whereIn('activity_type_id', [1, 2, 3, 4, 5, 6, 7])
                 ->whereBetween('created_at', [$startOfDay, $endOfDay])
-                ->count();
+                ->distinct('lead_id')
+                ->count('lead_id');
 
             // PTP Count - where disposition = 3
             $ptpCount = DB::table('activities')
