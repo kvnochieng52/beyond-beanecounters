@@ -89,11 +89,11 @@ class AgentPerformanceExport implements FromCollection, WithHeadings, WithMappin
         $row = [
             $agent['agent_name'],
             $agent['agent_code'],
-            $agent['calls_made'],
-            $agent['ptp_count'],
-            number_format($agent['ptp_value'], 2),
-            number_format($agent['total_collected'], 2),
-            number_format($agent['mtd_collected'], 2),
+            $agent['calls_made'] ?? 0,
+            $agent['ptp_count'] ?? 0,
+            number_format($agent['ptp_value'] ?? 0, 2),
+            number_format($agent['total_collected'] ?? 0, 2),
+            number_format($agent['mtd_collected'] ?? 0, 2),
         ];
 
         // Add institution collections in the same order as headings
