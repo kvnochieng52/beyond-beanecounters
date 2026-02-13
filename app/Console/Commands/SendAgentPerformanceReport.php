@@ -127,11 +127,8 @@ class SendAgentPerformanceReport extends Command
         $endOfDay = Carbon::createFromFormat('Y-m-d', $date)->endOfDay();
         $startOfMonth = Carbon::createFromFormat('Y-m-d', $date)->startOfMonth();
 
-        // Get all active agents (show all agents even if they have zero leads worked)
+        // Get all active users (show all active users regardless of role)
         $agents = User::where('is_active', 1)
-            ->whereHas('roles', function ($query) {
-                $query->whereIn('name', ['agent', 'supervisor']);
-            })
             ->pluck('id');
 
         // Get all institutions (active institutions only)
