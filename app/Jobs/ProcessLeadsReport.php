@@ -64,6 +64,7 @@ class ProcessLeadsReport implements ShouldQueue
                 'lead_priorities.color_code AS lead_priority_color_code',
                 'lead_priorities.description AS lead_priority_description',
                 'departments.department_name',
+                'call_dispositions.call_disposition_name',
                 DB::raw('DATE(leads.created_at) as created_date'),
             ])
                 ->leftJoin('defaulter_types', 'leads.defaulter_type_id', 'defaulter_types.id')
@@ -77,7 +78,8 @@ class ProcessLeadsReport implements ShouldQueue
                 ->leftJoin('lead_stages', 'leads.stage_id', 'lead_stages.id')
                 ->leftJoin('lead_categories', 'leads.category_id', 'lead_categories.id')
                 ->leftJoin('lead_priorities', 'leads.priority_id', 'lead_priorities.id')
-                ->leftJoin('departments', 'leads.assigned_department', 'departments.id');
+                ->leftJoin('departments', 'leads.assigned_department', 'departments.id')
+                ->leftJoin('call_dispositions', 'leads.call_disposition_id', 'call_dispositions.id');
 
             // Apply filters
             if (!empty($filters['from_date']) && !empty($filters['to_date'])) {
