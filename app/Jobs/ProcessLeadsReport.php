@@ -41,6 +41,9 @@ class ProcessLeadsReport implements ShouldQueue
                 'started_at' => now(),
             ]);
 
+            // Set time limit to 0 to prevent timeout for large reports
+            set_time_limit(0);
+
             $filters = $this->backgroundReport->filters;
 
             // Build the leads query using the same structure as Lead::query()
@@ -115,15 +118,17 @@ class ProcessLeadsReport implements ShouldQueue
             // Order by created date
             $query->orderBy('leads.created_at', 'desc');
 
-            // Get the filtered data
-            $leads = $query->get();
+            // Get the filtered data using lazy collection for large datasets
+            $leads = $query->cursor();
 
             // Generate filename
             $filename = 'leads_report_' . now()->format('Y_m_d_H_i_s') . '.xlsx';
             $filepath = 'reports/' . $filename;
 
-            // Create the export
-            Excel::store(new LeadsReportExport($leads, $filters), $filepath);
+            // Create the export with memory optimization
+            ini_set('memory_limit', '1G');
+            
+            Excel::store(new LeadsReportExport($leads, $filters), $filepath, 'local', \Maatwebsite\Excel\Excel::XLSX);
 
             // Update background report with completion
             $this->backgroundReport->update([
